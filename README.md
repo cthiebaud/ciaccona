@@ -1,1 +1,1 @@
-![Facsimile](images/bach_chaconne_first_page_manuscript_facsimile.webp)
+![Facsimile](documents/bach_chaconne_first_page_manuscript_facsimile.webp)
