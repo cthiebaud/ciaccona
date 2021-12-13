@@ -60,15 +60,14 @@ voiceFive = #(context-spec-music (make-voice-props-set 4) 'Voice)
         }
       }
       \new TabVoice {
-        \set strokeFingerOrientations = #'(left)
         \set Staff.stringTunings = \stringTuning <d, a, d g b e'>
-        <d,,-\RH #1 f,-\RH #2 a,-\RH #3 >2
+        <d,,-\RH #1 f,-\RH #2 a,-\RH #3 >4. a,8
         <d, g, bes, e>4
         <cis, g, a,\4 e>4.
         e8
         <d,, f,\5 a,\4 f\2>4
-        <bes,,\6 f,\5 d\3>4
-        c\3
+        <bes,,\6 f,\5 d\3>4.
+        c8\3
         <g,,\6 bes,\4 g,\3>4
         <a,,\5 f,\4 a,\3>4
         <cis, g,>16 f, e, f,
@@ -139,10 +138,8 @@ voiceFive = #(context-spec-music (make-voice-props-set 4) 'Voice)
     indent = #0
     \context {
       \TabVoice
-      \override StrokeFinger.digit-names = ##("p" "i" "m" "a" "x")
       \consists "New_fingering_engraver"
     }
-
   }
   \midi {}
 }
