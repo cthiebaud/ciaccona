@@ -1,3 +1,5 @@
+\version "2.22.1"
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%%%%%  Cut here ----- Start 'bbarred.ly'
 
@@ -47,17 +49,16 @@ bbarre =
 
 #(define RH rightHandFinger)
 
-\version "2.22.1"
-
 \score {
   \relative c' {
 
     \time 3/4
     \key d \minor
 
+    % 0
     \partial 2
     <<
-      { a'4.-3\4\RH #3  a8 }
+      { a'4.-3\4\RH #3 a8 }
       \\
       { < f-4\5\RH #2 d,-0\RH #1 >2 }
     >>
