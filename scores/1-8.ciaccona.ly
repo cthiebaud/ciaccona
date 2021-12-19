@@ -67,6 +67,12 @@ voiceFive = #(context-spec-music (make-voice-props-set 4) 'Voice)
     >>
 
   }
-  \layout {}
+  \layout {
+    clip-regions
+    = #(list
+        (cons
+         (make-rhythmic-location 5 0 1)
+         (make-rhythmic-location 7 0 1)))
+  }
   \midi {}
 }
