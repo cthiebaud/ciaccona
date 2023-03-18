@@ -44,22 +44,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
     <style>
-        .grad {
-            background: rgb(0, 0, 0);
-            background: linear-gradient(to bottom, white, black);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
 
-        body {
+    body {
             /* https://css-tricks.com/the-trick-to-viewport-units-on-mobile/ */
             /* fallback for browsers that do not support custom properties */
             height: 100vh;
             /* custom properties */
             height: calc(var(--vh, 1vh) * 100);
-            padding: 1.5rem 0;
         }
-
+        
         a {
             text-decoration: none;
         }
@@ -84,14 +77,16 @@
         }
 
         .score img {
+            background-color: rgba(255, 255, 255, .7);
+            background-clip: padding-box;
             border-radius: 0 3rem 3rem 0;
             position: absolute;
             left: 0;
             top: 0;
-            height: 100%;
+            height: 88%;
             object-fit: cover;
             object-position: 0% 50%;
-            padding: 0.3rem;
+            margin: .3rem;
         }
 
         .magnificient-card {
@@ -109,11 +104,24 @@
             color: black
         }
 
+        .Δ {
+            font-family: 'Cinzel', serif;
+            font-size: smaller;
+            float: left;
+            padding: 0 .3rem;
+            margin: 0;
+            position: relative;
+            background-color: rgba(0, 0, 0, .25);
+            border-bottom-right-radius: 1rem;
+            color: rgba(255, 255, 255, .75);
+        }
+
         /* https://alvarotrigo.com/blog/how-to-create-a-youtube-video-background-with-css/ */
         .video-container {
             width: 100vw;
             height: 100vh;
         }
+
         iframe {
             top: 50%;
             top: 50%;
@@ -124,12 +132,14 @@
             position: fixed;
             z-index: -1;
         }
+
         @media (min-aspect-ratio: 16/9) {
             .video-container iframe {
                 /* height = 100 * (9 / 16) = 56.25 */
                 height: 56.25vw;
             }
         }
+
         @media (max-aspect-ratio: 16/9) {
             .video-container iframe {
                 /* width = 100 / (9 / 16) = 177.777777 */
@@ -143,10 +153,10 @@
 
     <div class="video-container">
         <!-- https://youtube.com/shorts/wjzmWjSKAYI -->
-                <iframe src="https://www.youtube.com/embed/Vslz1tDsaWw?controls=0&autoplay=1&mute=1&playsinline=1"></iframe>
+        <iframe src="https://www.youtube.com/embed/Vslz1tDsaWw?controls=0&autoplay=1&mute=1&playsinline=1"></iframe>
     </div>
 
-    <main id="gridContainer" class="container-fluid my-center" style="position: absolute; top:0; left:0; z-index: 999;">
+    <main id="gridContainer" class="container-fluid my-center" style="position: absolute; top:0; left:0; z-index: 999; padding: .5rem">
         <div id="gridContainerRow" class="row">
             <div id="gridContainerCol" class="col-lg-12 text-center">
                 <div id="grid">
@@ -292,7 +302,7 @@
 
         const $bricksTemporaryContainer = $("<span>");
         const templateForTheme =
-            `<!-- /bars/bwv-1004_5_for_PNGs-page1.jpg -->
+            `
 <div class="grid-brick">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; height: 100%;">
         <div class="magnificient-card p-2">
@@ -327,8 +337,8 @@
 <div class="grid-brick text-end">
     <div class="brick font-monospace d-flex align-items-center" style="${bg}">
         <div class="score flex-grow-1">
-            <img src="bars/bwv-1004_5_for_PNGs-page${1 + barFrom / 4}.jpg" style="width: ${(_widths_[i].w * .9) - 120}px">
-            <span style="font-family: 'Cinzel', serif; font-size: smaller; float: left; padding: 0 .3rem 0 0; margin: 0 0 0 .3rem; position: relative; ${bg}; border-bottom-right-radius:1rem; color: #${c.textColor};">
+            <img src="bars/bwv-1004_5_for_PNGs-page${1 + barFrom / 4}.png" style="width: ${(_widths_[i].w * .9) - 120}px">
+            <span class="Δ">
                 ${tonality}
             </span>
         </div>
@@ -356,7 +366,7 @@
 <div class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="background-color: black">
         <div class="score" style="position: inherit">
-            <img src="bars/bwv-1004_5_for_PNGs-page65.jpg" style="width:${_widths_[i].w * .95 - 120}px">
+            <img src="bars/bwv-1004_5_for_PNGs-page65.png" style="width:${_widths_[i].w * .95 - 120}px">
         </div>
         <div style="background-image: url('Bachsiegel.svg'); background-size: contain; background-repeat: no-repeat; background-color: #ddd; background-position-x: center; background-size: 80%; background-position-y: 66%; border-radius: 1rem;">
         </div>    
