@@ -1,0 +1,2 @@
+@image{./87/lily-d91a1a8a-1}
+@c eof
