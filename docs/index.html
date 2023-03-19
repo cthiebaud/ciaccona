@@ -234,7 +234,7 @@
         ]
 
         let _first_color_ = [
-            { rgb: "ffffff", p_rgb: "f2f1f0", sim: 97, pantone: "P 179-1 C", name: "Pastel White" }
+            { rgb: "f3f3f2", p_rgb: "f2f1f0", sim: 97, pantone: "P 179-1 C", name: "Bleached Silk" }
         ]
 
         let _other_colors_ = [
@@ -271,6 +271,10 @@
             { rgb: "4b57db", p_rgb: "275ea3", sim: 89, pantone: "10261 C", name: "Warm Blue" },
             { rgb: "bfd6d9", p_rgb: "bcd5d6", sim: 99, pantone: "5523 U", name: "Wind Speed" },
         ];
+
+        let _last_color_ = [
+            { rgb: "000000", p_rgb: "232222", sim: 92, pantone: "Neutral Black C", name: "Bleached Silk" }
+        ]
 
         let _colors_ = _first_color_.concat(_other_colors_)
 
@@ -385,7 +389,7 @@
         const templateLastChord =
             `
 <div class="grid-brick">
-    <div class="brick d-flex align-items-center justify-content-center" style="background-color: black">
+    <div class="brick d-flex align-items-center justify-content-center" style="background-color: #${_last_color_[0].p_rgb}">
         <div class="score flex-grow-1">
             <img src="bars/bwv-1004_5_for_PNGs-page65.png" style="width:${_widths_[i].w * .95 - 120}px">
         </div>
