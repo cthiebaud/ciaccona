@@ -180,6 +180,7 @@
             </li>
 
             <li><a class="dropdown-item" href="#" onclick="location = '/?yt=r67BASAgP5Q'">Isabelle Faust</a></li>
+            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">Midori Gotō</a></li>
             <li style="display:none;"><a class="dropdown-item" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">Christophe Thiebaud</a></li>
         </ul>
     </div>
@@ -207,6 +208,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
 
     <script src="timings/IsabelleFaust-r67BASAgP5Q.js"></script>
+    <script src="timings/MidoriGotō-KgSKvOAJMb8.js"></script>
 
     <script>
         if (ytID) {
@@ -551,14 +553,20 @@
 
         $gridById.empty().append($bricks).isotope('appended', $bricks);
 
+        let previousPlayOnBar;
+
         $(".score").click(function (e) {
 
+            const d = $(this).data()
+            console.log('bar', d.bar)
             const state = player.getPlayerState()
-            if (state == 1) {
-                player.pauseVideo();
+            if (previousPlayOnBar == d.bar){
+                if (state == 1) {
+                    player.pauseVideo();
+                } else {
+                    player.playVideo()
+                }
             } else {
-                const d = $(this).data()
-                console.log('bar', d.bar)
                 if (typeof (d.bar) != "undefined" && ytID) {
                     let all = eval(ytID)
                     let lui = all[d.bar]
@@ -570,6 +578,7 @@
 
                     player.seekTo(duration.asSeconds())
                     player.playVideo()
+                    previousPlayOnBar = d.bar
                 }
             }
         });
