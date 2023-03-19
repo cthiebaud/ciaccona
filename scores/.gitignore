@@ -1,3 +1,5 @@
+*.png
+*.midi
 pages/*.png
 pages/cropped/*
 pages/cropped_transparent/*
