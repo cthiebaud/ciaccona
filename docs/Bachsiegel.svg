@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" viewBox="-.768 -327.082 600.00003 600">
+  <filter id="blurMe">
+    <feGaussianBlur stdDeviation="5" />
+  </filter>
   <defs>
     <path id="a" fill-opacity="0" stroke="#000" stroke-width="3" d="M-.76800001-85.191711h594.64697v551.5387h-594.64697z" opacity=".935691"/>
   </defs>

@@ -22,6 +22,15 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
 
     <script>
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+        let ytID = params.yt; // "some_value"   
+        console.log(ytID)     
+    </script>
+
+    <script>
         // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
         const vh = window.innerHeight * 0.01;
         const vw = window.innerWidth * 0.01;
@@ -59,6 +68,12 @@
             text-decoration: none;
         }
 
+        .push2right {
+            max-width: 24rem;
+            height: 100vh !important;
+            overflow-y: scroll;
+        }
+
         .grid-brick {
             font-size: 1.4rem;
             width: 23rem;
@@ -67,7 +82,7 @@
         }
 
         .grid-brick.Δ2 {
-            background-color: rgba(255, 255, 255, .5);
+            background-color: rgba(128, 128, 128, .3);
         }
 
         .brick {
@@ -96,19 +111,27 @@
             margin: .3rem;
         }
 
+        .siegel {
+            background-image: url('Bachsiegel_glowing_bubble.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: #ddd;
+            background-position-x: center;
+            background-size: 60%;
+            background-position-y: 50%;
+            border-radius: 1rem;
+        }
+
         .magnificient-card {
             font-family: 'Cinzel', serif;
             font-size: 24px;
             outline: 1px solid gray;
             outline-offset: -2px;
-            padding: 12px;
             background-clip: content-box;
-            backdrop-filter: blur(1px);
             text-align: center;
-            padding: 2px 2px;
-            background-color: rgba(255, 255, 255, .666);
+            background-color: rgba(255, 255, 255, .5);
             border-radius: 1rem;
-            color: black
+            color: #121212;
         }
 
         .Δ {
@@ -155,12 +178,13 @@
 
 
     <main id="gridContainer" class="container-fluid my-center" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem;">
-        <div id="gridContainerRow" class="row"> <!-- justify-content-end -->
-            <div class="col">
-                <iframe id="player" class="video-container" src="https://www.youtube.com/embed/Vslz1tDsaWw?controls=1&autoplay=0&mute=1&playsinline=1&enablejsapi=1"><!-- style="width: 1080px; height: 720px;" -->
+        <div id="gridContainerRow" class="row justify-content-end"> <!--  -->
+            <div id="playerWrapper" class="col" style="display: none">
+                <!-- style="width: 1080px; height: 720px;" -->
+                <iframe id="player" class="video-container" src="https://www.youtube.com/embed/Vslz1tDsaWw?controls=1&autoplay=0&mute=1&playsinline=1&enablejsapi=1">
                 </iframe>
             </div>
-            <div id="gridContainerCol" class="col" style="max-width: 24rem; height: 100vh !important; overflow-y: scroll;">
+            <div id="gridContainerCol" class="col"> <!--  -->
                 <div id="grid">
                 </div>
             </div>
@@ -174,51 +198,53 @@
     <script src="https://cdn.jsdelivr.net/npm/isotope-packery@latest/packery-mode.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/dist/bezier-easing.min.js"></script>
     <script>
-        // 2. This code loads the IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
+        if (ytID) {
+            // 2. This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
 
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // 3. This function creates an <iframe> (and YouTube player)
-        //    after the API code downloads.
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '1390',
-                width: '1640',
-                videoId: 'Vslz1tDsaWw',
-                playerVars: {
-                    'playsinline': 1,
-                    'autoplay': 0,
-                    'mute': 0
-                },
-                events: {
-                    'onReady': onPlayerReady  /*,
-                    'onStateChange': onPlayerStateChange */
-                }
-            });
-        }
+            // 3. This function creates an <iframe> (and YouTube player)
+            //    after the API code downloads.
+            var player;
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                    videoId: ytID, // 'Vslz1tDsaWw'
+                    playerVars: {
+                        'playsinline': 1,
+                        'autoplay': 0,
+                    },
+                    events: {
+                        'onReady': onPlayerReady  /*,
+                        'onStateChange': onPlayerStateChange */
+                    }
+                });
+            }
 
-        // 4. The API will call this function when the video player is ready.
-        function onPlayerReady(event) {
-            // event.target.playVideo();
-            event.target.unMute()
-        }
+            // 4. The API will call this function when the video player is ready.
+            function onPlayerReady(event) {
+                // event.target.playVideo();
+                event.target.unMute()
+                $('#playerWrapper').show()
+                $('#gridContainerCol').addClass('push2right')
+                $("#grid").isotope('layout')
+            }
 
-        // 5. The API calls this function when the player's state changes.
-        //    The function indicates that when playing a video (state=1),
-        //    the player should play for six seconds and then stop.
-        // var done = false;
-        // function onPlayerStateChange(event) {
-        //     // if (event.data == YT.PlayerState.PLAYING && !done) {
-        //     //     setTimeout(stopVideo, 6000);
-        //     //     done = true;
-        //     // }
-        // }// 
-        function stopVideo() {
-            // player.stopVideo();
+            // 5. The API calls this function when the player's state changes.
+            //    The function indicates that when playing a video (state=1),
+            //    the player should play for six seconds and then stop.
+            // var done = false;
+            // function onPlayerStateChange(event) {
+            //     // if (event.data == YT.PlayerState.PLAYING && !done) {
+            //     //     setTimeout(stopVideo, 6000);
+            //     //     done = true;
+            //     // }
+            // }// 
+            function stopVideo() {
+                // player.stopVideo();
+            }
         }
     </script>
     <script type='module'>
@@ -247,43 +273,43 @@
             15,
             // 16 minor vars
             42,
-            1*60 + 15,
-            1*60 + 45,
-            2*60 + 12,
-            2*60 + 40,
-            3*60 + 7,
-            3*60 + 33,
-            3*60 + 58,
-            4*60 + 37,
-            5*60 + 6,
-            5*60 + 20,
-            5*60 + 44,
-            6*60 + 7,
-            6*60 + 29,
-            6*60 + 52,
-            7*60 + 8,
+            1 * 60 + 15,
+            1 * 60 + 45,
+            2 * 60 + 12,
+            2 * 60 + 40,
+            3 * 60 + 7,
+            3 * 60 + 33,
+            3 * 60 + 58,
+            4 * 60 + 37,
+            5 * 60 + 6,
+            5 * 60 + 20,
+            5 * 60 + 44,
+            6 * 60 + 7,
+            6 * 60 + 29,
+            6 * 60 + 52,
+            7 * 60 + 8,
             // 10 minor vars
-            7*60 + 41,
-            8*60 + 5,
-            8*60 + 30,
-            8*60 + 43,
-            9*60 + 7,
-            9*60 + 33,
-            10*60,
-            10*60 + 28,
-            10*60 + 55,
-            11*60 + 22,
+            7 * 60 + 41,
+            8 * 60 + 5,
+            8 * 60 + 30,
+            8 * 60 + 43,
+            9 * 60 + 7,
+            9 * 60 + 33,
+            10 * 60,
+            10 * 60 + 28,
+            10 * 60 + 55,
+            11 * 60 + 22,
             // 6 minor vars
-            11*60 + 56.5,
-            12*60 + 30,
-            12*60 + 54,
-            13*60 + 8,
-            13*60 + 45,
-            14*60 + 14,
+            11 * 60 + 56.5,
+            12 * 60 + 30,
+            12 * 60 + 54,
+            13 * 60 + 8,
+            13 * 60 + 45,
+            14 * 60 + 14,
             // last note
-            14*60 + 46
+            14 * 60 + 46
         ]
-        
+
 
         const _widths_ = [
             { w: 270 },
@@ -391,15 +417,18 @@
                 s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
                 s.stripeColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
             }
-            s.p_rgb = tinycolor(s.p_rgb).setAlpha(.666).toString("hex8").slice(1)
-            s.textColor = tinycolor(s.textColor).setAlpha(.666).toString("hex8").slice(1)
-            s.stripeColor = tinycolor(s.stripeColor).setAlpha(.666).toString("hex8").slice(1)
+            // some transparency to show video behind
+            if (ytID) {
+                s.p_rgb = tinycolor(s.p_rgb).setAlpha(.666).toString("hex8").slice(1)
+                s.textColor = tinycolor(s.textColor).setAlpha(.666).toString("hex8").slice(1)
+                s.stripeColor = tinycolor(s.stripeColor).setAlpha(.666).toString("hex8").slice(1)
+            }
         }
 
 
         let j = 0
         for (let s of _colors_) {
-            console.log(j++, tinycolor(s.p_rgb).isLight(), s.luminance, s.nl, s.brightnessChange, 'bg', s.p_rgb, 'text', s.textColor, 'readability', tinycolor.readability(s.p_rgb, s.textColor))
+            // console.log(j++, tinycolor(s.p_rgb).isLight(), s.luminance, s.nl, s.brightnessChange, 'bg', s.p_rgb, 'text', s.textColor, 'readability', tinycolor.readability(s.p_rgb, s.textColor))
         }
 
         let $gridById = $("#grid")
@@ -417,8 +446,8 @@
             `
 <div class="grid-brick">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; height: 100%;">
-        <div class="magnificient-card p-2">
-            Ciaccona
+        <div class="magnificient-card p-2" style="backdrop-filter: blur(1px);">
+            ${'&nbsp;Ciaccona&nbsp;'}
         </div>
     </div>
 </div>`
@@ -446,9 +475,9 @@
 
             const templateVariations =
                 `
-<div class="grid-brick ${tonality}2 text-end">
+<div class="grid-brick ${tonality ? tonality + "2 " : ''}text-end">
     <div class="brick font-monospace d-flex align-items-center" style="${bg}">
-        <div class="score flex-grow-1" data-seek="${_seeks_[i+1]}">
+        <div class="score flex-grow-1" data-seek="${_seeks_[i + 1]}">
             <img src="bars/bwv-1004_5_for_PNGs-page${1 + barFrom / 4}.png" style="width: ${(_widths_[i].w * .96) - 120}px">
             <span class="Δ" style="${bg}">
                 ${tonality}
@@ -477,7 +506,7 @@
             `
 <div class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="background-color: #${_last_color_[0].p_rgb}">
-        <div class="score flex-grow-1" data-seek="${_seeks_[i+1]}">
+        <div class="score flex-grow-1" data-seek="${_seeks_[i + 1]}">
             <img src="bars/bwv-1004_5_for_PNGs-page65.png" style="width:${_widths_[i].w * .95 - 120}px">
         </div>
     </div>
@@ -487,9 +516,9 @@
             `
 <div class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="border-radius: 0; background-color: black">
-        <div style="background-image: url('Bachsiegel.svg'); background-size: contain; background-repeat: no-repeat; background-color: #ddd; background-position-x: center; background-size: 75%; background-position-y: 50%; border-radius: 1rem;">
-            <div class="magnificient-card p-2">
-                BWV 1004
+        <div class="siegel">
+            <div class="magnificient-card p-2" style="backdrop-filter: blur(.2px);">
+                ${'&nbsp;BWV&nbsp;1004&nbsp;'}
             </div>
         </div>    
     </div>
@@ -504,9 +533,11 @@
 
         $(".score").click(function (e) {
             const d = $(this).data()
-            console.log(d.seek)
-            player.seekTo(d.seek)
-            player.playVideo()
+            // console.log(d.seek)
+            if (d.seek) {
+                player.seekTo(d.seek)
+                player.playVideo()
+            }
         });
 
     </script>
