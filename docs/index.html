@@ -112,7 +112,7 @@
         }
 
         .siegel {
-            background-image: url('Bachsiegel_glowing_bubble.svg');
+            background-image: url('svg/Bachsiegel_glowing_bubble.svg');
             background-size: contain;
             background-repeat: no-repeat;
             background-color: #ddd;
@@ -162,8 +162,12 @@
             display: block;
             margin: 0 auto;
         }
+        li a.dropdown-item {
+            max-height: 32px;
+        }
         li a.dropdown-item img {
-            height: 32px
+            height: 40px;
+            overflow-y: visible;
         }
         li a.dropdown-item div {
             margin-left: 1rem; 
@@ -176,18 +180,21 @@
     <div class="dropdown" style="float: left; background: transparent; z-index: 1000; border: none; margin: .5rem;">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
             style="background: #00000040; border: none;">
-            <img src="YouTube_social_white_square_(2017).svg" style="width: 32px; height:auto;">
+            <img src="svg/YouTube_social_white_square_(2017).svg" style="width: 32px; height:auto;">
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item d-flex justify-content-center" href="#" onclick="location = '/'"><div style="font-size:larger;">∅</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'"><img src="svg/violin.svg"  ><div>Isabelle Faust  </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">&nbsp;                       <div>Midori Gotō    </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Ilb3no_cwnI'">&nbsp;                       <div>Veronika Eberle</div></a></li>
+            
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'"><img src="violin.svg"  ><div>Isabelle Faust </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'"><img src="violin.svg"  ><div>Midori Gotō    </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="marimba.svg" ><div>Mika Stoltzman </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="guitar.svg"  ><div>Raphaella Smits</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="svg/guitar.svg"  ><div>Raphaella Smits</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">&nbsp;                      <div>Moi</div></a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'"><img src="guitar.svg"  ><div>Moi</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="svg/marimba.svg" style="top: -0.7rem; position: relative;"><div>Mika Stoltzman </div></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/'">&nbsp;<div style="font-size:larger;">∅</div></a></li>
         </ul>
     </div>
 
@@ -217,6 +224,7 @@
     <script src="timings/MidoriGotō-KgSKvOAJMb8.js"></script>
     <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
     <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
+    <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
@@ -584,7 +592,9 @@
                         lui.m = new moment(lui["Time Recorded"])
                     }
                     let duration = moment.duration(lui.m.diff(all[0].m));
-
+                    if (all.offset) {
+                        duration.add(all.offset)
+                    }
                     player.seekTo(duration.asSeconds())
                     player.playVideo()
                     previousPlayOnBar = d.bar
