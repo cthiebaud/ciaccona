@@ -1,11 +1,8 @@
-const Jcy7E4uHYK8= [
-    {
-      "#": "000",
-      "Label": "Start #1",
-      "Interval": "---",
-      "Total": "---",
-      "Time Recorded": "2023-03-19T23:57:14.307Z"
-    },
+const Jcy7E4uHYK8 = {
+  /* offset : moment.duration({seconds: 36, minutes: 14}),
+   adjust : moment.duration({seconds: .5}), */
+  start : moment("2023-03-19T23:57:14.307Z"),
+  bars : [
     {
       "#": "001",
       "Label": "Split #1",
@@ -13,13 +10,13 @@ const Jcy7E4uHYK8= [
       "Total": "00:00:05.582",
       "Time Recorded": "2023-03-19T23:57:19.889Z"
     },
-    /*{
+    {
       "#": "002",
       "Label": "Split #2",
       "Interval": "00:00:05.386",
       "Total": "00:00:10.968",
       "Time Recorded": "2023-03-19T23:57:25.275Z"
-    },*/
+    },
     {
       "#": "003",
       "Label": "Split #3",
@@ -1841,6 +1838,4 @@ const Jcy7E4uHYK8= [
       "Time Recorded": "2023-03-20T00:11:44.738Z"
     }
   ]
-
-  Jcy7E4uHYK8[0].m = moment(Jcy7E4uHYK8[0]["Time Recorded"]);
-  // console.log(Jcy7E4uHYK8[0].m)
+}
