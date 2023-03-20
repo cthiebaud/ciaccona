@@ -591,7 +591,7 @@
                 if (typeof (d.bar) != "undefined" && ytID) {
                     let all = eval(ytID)
                     let bars = all.bars
-                    let elle = bars[d.bar == 0 ? 1 : d.bar]
+                    let elle = bars[d.bar]
                     console.log(elle["Time Recorded"])
                     if (!elle.m) {
                         elle.m = new moment(elle["Time Recorded"])
