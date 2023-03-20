@@ -6,20 +6,20 @@ const BYg7Di8CH9w = [
       "Total": "---",
       "Time Recorded": "2023-03-19T23:07:16.811Z"
     },
-     /*{
+    {
       "#": "001",
       "Label": "Split #1",
       "Interval": "00:00:03.072",
       "Total": "00:00:03.072",
       "Time Recorded": "2023-03-19T23:07:19.883Z"
-    },*/
-    {
+    },
+    /*{
       "#": "002",
       "Label": "Split #2",
       "Interval": "00:00:04.715",
       "Total": "00:00:07.787",
       "Time Recorded": "2023-03-19T23:07:24.598Z"
-    },
+    },*/
     {
       "#": "003",
       "Label": "Split #3",
