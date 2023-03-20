@@ -162,15 +162,18 @@
             display: block;
             margin: 0 auto;
         }
+
         li a.dropdown-item {
             max-height: 32px;
         }
+
         li a.dropdown-item img {
             height: 40px;
             overflow-y: visible;
         }
+
         li a.dropdown-item div {
-            margin-left: 1rem; 
+            margin-left: 1rem;
         }
     </style>
 </head>
@@ -184,18 +187,31 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=mg9kT7XiLoU'"><img src="svg/violin.svg"><div>Amandine Beyer</div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Ilb3no_cwnI'">&nbsp;                    <div>Veronika Eberle</div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'">&nbsp;                    <div>Isabelle Faust </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">&nbsp;                    <div>Midori Gotō    </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=XkfsGCIiHb4'">&nbsp;                    <div>Bella Hristova </div></a></li>
-            
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="svg/guitar.svg"  ><div>Raphaella Smits</div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">&nbsp;                      <div>Moi</div></a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="svg/marimba.svg" style="top: -0.7rem; position: relative;"><div>Mika Stoltzman </div></a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=mg9kT7XiLoU'"><img src="svg/violin.svg">
+                    <div>Amandine Beyer</div>
+                </a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Ilb3no_cwnI'">&nbsp; <div>Veronika Eberle</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'">&nbsp; <div>Isabelle Faust </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">&nbsp; <div>Midori Gotō </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=XkfsGCIiHb4'">&nbsp; <div>Bella Hristova </div></a></li>
+
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="svg/guitar.svg">
+                    <div>Raphaella Smits</div>
+                </a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">&nbsp; <div>Moi</div></a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="svg/marimba.svg"
+                        style="top: -0.7rem; position: relative;">
+                    <div>Mika Stoltzman </div>
+                </a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/'">&nbsp;<div style="font-size:larger;">∅</div></a></li>
         </ul>
     </div>
@@ -577,35 +593,42 @@
         let previousPlayOnBar;
 
         $(".score").click(function (e) {
-
-            const d = $(this).data()
-            console.log('bar', d.bar)
-            const state = player.getPlayerState()
-            if (previousPlayOnBar == d.bar){
-                if (state == 1) {
-                    player.pauseVideo();
-                } else {
-                    player.playVideo()
+            e.stopPropagation();
+            if (!ytID) {
+                if ($('.dropdown').find('.dropdown-menu').is(":hidden")) {
+                    $('.dropdown-toggle').dropdown('toggle');
                 }
             } else {
-                if (typeof (d.bar) != "undefined" && ytID) {
-                    let all = eval(ytID)
-                    let bars = all.bars
-                    let elle = bars[d.bar]
-                    console.log(elle["Time Recorded"])
-                    if (!elle.m) {
-                        elle.m = new moment(elle["Time Recorded"])
+
+                const d = $(this).data()
+                console.log('bar', d.bar)
+                const state = player.getPlayerState()
+                if (previousPlayOnBar == d.bar) {
+                    if (state == 1) {
+                        player.pauseVideo();
+                    } else {
+                        player.playVideo()
                     }
-                    let duration = moment.duration(elle.m.diff(all.start))
-                    if (all.offset) {
-                        duration.add(all.offset)
+                } else {
+                    if (typeof (d.bar) != "undefined" && ytID) {
+                        let all = eval(ytID)
+                        let bars = all.bars
+                        let elle = bars[d.bar]
+                        console.log(elle["Time Recorded"])
+                        if (!elle.m) {
+                            elle.m = new moment(elle["Time Recorded"])
+                        }
+                        let duration = moment.duration(elle.m.diff(all.start))
+                        if (all.offset) {
+                            duration.add(all.offset)
+                        }
+                        if (all.adjust) {
+                            duration.subtract(all.adjust)
+                        }
+                        player.seekTo(duration.asSeconds())
+                        player.playVideo()
+                        previousPlayOnBar = d.bar
                     }
-                    if (all.adjust) {
-                        duration.subtract(all.adjust)
-                    }
-                    player.seekTo(duration.asSeconds())
-                    player.playVideo()
-                    previousPlayOnBar = d.bar
                 }
             }
         });
