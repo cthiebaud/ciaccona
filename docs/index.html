@@ -175,15 +175,13 @@
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="dropdown-item" href="#" onclick="location = '/'">∅</a></li>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" onclick="location = '/?yt=r67BASAgP5Q'">Isabelle Faust</a></li>
             <li><a class="dropdown-item" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">Midori Gotō</a></li>
             <li><a class="dropdown-item" href="#" onclick="location = '/?yt=BYg7Di8CH9w'">Mika Stoltzman</a></li>
             <li><a class="dropdown-item" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'">Raphaella Smits</a></li>
-            <li style="display:none;"><a class="dropdown-item" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">Christophe Thiebaud</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">Moi</a></li>
         </ul>
     </div>
 
@@ -213,6 +211,7 @@
     <script src="timings/MidoriGotō-KgSKvOAJMb8.js"></script>
     <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
     <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
+    <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
         if (ytID) {
@@ -573,7 +572,7 @@
             } else {
                 if (typeof (d.bar) != "undefined" && ytID) {
                     let all = eval(ytID)
-                    let lui = all[d.bar]
+                    let lui = all[d.bar == 0 ? 1 : d.bar]
                     console.log(lui["Time Recorded"])
                     if (!lui.m) {
                         lui.m = new moment(lui["Time Recorded"])
