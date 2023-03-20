@@ -1,11 +1,8 @@
-const BYg7Di8CH9w = [
-   {
-      "#": "000",
-      "Label": "Start #1",
-      "Interval": "---",
-      "Total": "---",
-      "Time Recorded": "2023-03-19T23:07:16.811Z"
-    },
+const BYg7Di8CH9w = {
+  /* offset : moment.duration({seconds: 36, minutes: 14}),
+   adjust : moment.duration({seconds: .5}), */
+  start : moment("2023-03-19T23:07:16.811Z"),
+  bars : [
     {
       "#": "001",
       "Label": "Split #1",
@@ -13,13 +10,13 @@ const BYg7Di8CH9w = [
       "Total": "00:00:03.072",
       "Time Recorded": "2023-03-19T23:07:19.883Z"
     },
-    /*{
+    {
       "#": "002",
       "Label": "Split #2",
       "Interval": "00:00:04.715",
       "Total": "00:00:07.787",
       "Time Recorded": "2023-03-19T23:07:24.598Z"
-    },*/
+    },
     {
       "#": "003",
       "Label": "Split #3",
@@ -1876,6 +1873,4 @@ const BYg7Di8CH9w = [
       "Time Recorded": "2023-03-19T23:24:07.183Z"
     }
   ]
-  
-  BYg7Di8CH9w[0].m = moment(BYg7Di8CH9w[0]["Time Recorded"]);
-  console.log(BYg7Di8CH9w[0].m)
+}

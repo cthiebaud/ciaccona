@@ -184,9 +184,11 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'"><img src="svg/violin.svg"  ><div>Isabelle Faust  </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">&nbsp;                       <div>Midori Gotō    </div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Ilb3no_cwnI'">&nbsp;                       <div>Veronika Eberle</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=mg9kT7XiLoU'"><img src="svg/violin.svg"><div>Amandine Beyer</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Ilb3no_cwnI'">&nbsp;                    <div>Veronika Eberle</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'">&nbsp;                    <div>Isabelle Faust </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">&nbsp;                    <div>Midori Gotō    </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=XkfsGCIiHb4'">&nbsp;                    <div>Bella Hristova </div></a></li>
             
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="svg/guitar.svg"  ><div>Raphaella Smits</div></a></li>
@@ -225,6 +227,8 @@
     <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
     <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
     <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
+    <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
+    <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
@@ -586,14 +590,18 @@
             } else {
                 if (typeof (d.bar) != "undefined" && ytID) {
                     let all = eval(ytID)
-                    let lui = all[d.bar == 0 ? 1 : d.bar]
-                    console.log(lui["Time Recorded"])
-                    if (!lui.m) {
-                        lui.m = new moment(lui["Time Recorded"])
+                    let bars = all.bars
+                    let elle = bars[d.bar == 0 ? 1 : d.bar]
+                    console.log(elle["Time Recorded"])
+                    if (!elle.m) {
+                        elle.m = new moment(elle["Time Recorded"])
                     }
-                    let duration = moment.duration(lui.m.diff(all[0].m));
+                    let duration = moment.duration(elle.m.diff(all.start))
                     if (all.offset) {
                         duration.add(all.offset)
+                    }
+                    if (all.adjust) {
+                        duration.subtract(all.adjust)
                     }
                     player.seekTo(duration.asSeconds())
                     player.playVideo()

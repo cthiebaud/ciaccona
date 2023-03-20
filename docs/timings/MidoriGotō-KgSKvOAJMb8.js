@@ -1,4 +1,8 @@
-const KgSKvOAJMb8 = [
+const KgSKvOAJMb8 = {
+  /* offset : moment.duration({seconds: 36, minutes: 14}),
+   adjust : moment.duration({seconds: .5}), */
+  start : moment("2023-03-19T22:15:06.941Z"),
+  bars : [
     {
       "#": "000",
       "Label": "Start #1",
@@ -7,19 +11,12 @@ const KgSKvOAJMb8 = [
       "Time Recorded": "2023-03-19T22:15:06.941Z"
     },
     {
-      "#": "000",
-      "Label": "Start #1",
-      "Interval": "---",
-      "Total": "---",
-      "Time Recorded": "2023-03-19T22:15:06.941Z"
-    },
-    /*{
       "#": "001",
       "Label": "Split #1",
       "Interval": "00:00:02.945",
       "Total": "00:00:02.945",
       "Time Recorded": "2023-03-19T22:15:09.886Z"
-    },*/
+    },
     {
       "#": "002",
       "Label": "Split #2",
@@ -1834,6 +1831,4 @@ const KgSKvOAJMb8 = [
       "Time Recorded": "2023-03-19T22:28:52.995Z"
     }
   ]
-
-  KgSKvOAJMb8[0].m = moment(KgSKvOAJMb8[0]["Time Recorded"]);
-  // console.log(r67BASAgP5Q[0].m)
+}

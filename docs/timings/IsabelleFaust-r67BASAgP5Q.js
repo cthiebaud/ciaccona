@@ -1,4 +1,6 @@
-const r67BASAgP5Q = [
+const r67BASAgP5Q = {
+  start: moment("2023-03-19T21:06:14.305Z"),
+  bars: [
   {
     "#": "000",
     "Label": "Start #1",
@@ -7,19 +9,12 @@ const r67BASAgP5Q = [
     "Time Recorded": "2023-03-19T21:06:14.305Z"
   },
   {
-    "#": "000",
-    "Label": "Start #1",
-    "Interval": "---",
-    "Total": "00:00:00.800",
-    "Time Recorded": "2023-03-19T21:06:14.305Z"
-  },
-  /*{
       "#": "001",
       "Label": "Split #1",
       "Interval": "00:00:02.809",
       "Total": "00:00:02.809",
       "Time Recorded": "2023-03-19T21:06:17.114Z"
-    },*/
+    },
     {
       "#": "002",
       "Label": "Split #2",
@@ -1834,6 +1829,4 @@ const r67BASAgP5Q = [
       "Time Recorded": "2023-03-19T21:18:40.544Z"
     }
   ]
-
-  r67BASAgP5Q[0].m = moment(r67BASAgP5Q[0]["Time Recorded"]);
-  // console.log(r67BASAgP5Q[0].m)
+}

@@ -1,12 +1,6 @@
-const Vslz1tDsaWw = [
-    {
-      "#": "000",
-      "Label": "Start #1",
-      "Interval": "---",
-      "Total": "---",
-      "Time Recorded": "2023-03-20T00:42:45.200Z",
-      "Time Recorded original": "2023-03-20T00:42:44.990Z"
-    },
+const Vslz1tDsaWw = {
+  start: moment("2023-03-20T00:42:45.200Z"),
+  bars: [
     {
       "#": "001",
       "Label": "Split #1",
@@ -14,13 +8,13 @@ const Vslz1tDsaWw = [
       "Total": "00:00:14.884",
       "Time Recorded": "2023-03-20T00:42:59.874Z"
     },
-    /*{
+    {
       "#": "002",
       "Label": "Split #2",
       "Interval": "00:00:03.418",
       "Total": "00:00:18.302",
       "Time Recorded": "2023-03-20T00:43:03.292Z"
-    },*/
+    },
     {
       "#": "003",
       "Label": "Split #3",
@@ -1851,6 +1845,4 @@ const Vslz1tDsaWw = [
       "Time Recorded": "2023-03-20T00:57:47.712Z"
     }
   ]
-  
-  Vslz1tDsaWw[0].m = moment(Vslz1tDsaWw[0]["Time Recorded"]);
-  // console.log(Vslz1tDsaWw[0].m)
+}

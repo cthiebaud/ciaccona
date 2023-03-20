@@ -1,11 +1,8 @@
-const Ilb3no_cwnI = [
-    {
-      "#": "000",
-      "Label": "Start #1",
-      "Interval": "---",
-      "Total": "---",
-      "Time Recorded": "2023-03-20T08:38:23.094Z"
-    },
+const Ilb3no_cwnI = {
+  offset: moment.duration({seconds: 40.5, minutes: 14}),
+  /* adjust : moment.duration({seconds: .5}), */
+  start : moment("2023-03-20T08:38:23.094Z"),
+  bars : [
     {
       "#": "001",
       "Label": "Split #1",
@@ -14,13 +11,13 @@ const Ilb3no_cwnI = [
       "Time Recorded original": "2023-03-20T08:38:26.466Z",
       "Time Recorded": "2023-03-20T08:38:25.466Z"
     },
-    /*{
+    {
       "#": "002",
       "Label": "Split #2",
       "Interval": "00:00:02.152",
       "Total": "00:00:05.524",
       "Time Recorded": "2023-03-20T08:38:28.618Z"
-    },*/
+    },
     {
       "#": "003",
       "Label": "Split #3",
@@ -1835,7 +1832,4 @@ const Ilb3no_cwnI = [
       "Time Recorded": "2023-03-20T08:52:08.912Z"
     }
   ]
-
-  Ilb3no_cwnI[0].m = moment(Ilb3no_cwnI[0]["Time Recorded"])
-  Ilb3no_cwnI.offset = moment.duration({seconds: 40.5, minutes: 14});
-  // console.log(Jcy7E4uHYK8[0].m)
+}
