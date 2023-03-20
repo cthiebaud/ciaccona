@@ -162,6 +162,12 @@
             display: block;
             margin: 0 auto;
         }
+        li a.dropdown-item img {
+            height: 32px
+        }
+        li a.dropdown-item div {
+            margin-left: 1rem; 
+        }
     </style>
 </head>
 
@@ -176,12 +182,12 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="dropdown-item" href="#" onclick="location = '/'">∅</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=r67BASAgP5Q'">Isabelle Faust</a></li>
-            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">Midori Gotō</a></li>
-            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=BYg7Di8CH9w'">Mika Stoltzman</a></li>
-            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'">Raphaella Smits</a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'"><img src="violin.svg"  ><div>Isabelle Faust </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'"><img src="violin.svg"  ><div>Midori Gotō    </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="marimba.svg" ><div>Mika Stoltzman </div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="guitar.svg"  ><div>Raphaella Smits</div></a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">Moi</a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'"><img src="guitar.svg"  ><div>Moi</div></a></li>
         </ul>
     </div>
 
