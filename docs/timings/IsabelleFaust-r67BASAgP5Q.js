@@ -1,14 +1,14 @@
 const r67BASAgP5Q = {
   start: moment("2023-03-19T21:06:14.305Z"),
   bars: [
-  {
-    "#": "000",
-    "Label": "Start #1",
-    "Interval": "---",
-    "Total": "00:00:00.800",
-    "Time Recorded": "2023-03-19T21:06:14.305Z"
-  },
-  {
+    {
+      "#": "000",
+      "Label": "Start #1",
+      "Interval": "---",
+      "Total": "00:00:00.800",
+      "Time Recorded": "2023-03-19T21:06:14.305Z"
+    },
+    {
       "#": "001",
       "Label": "Split #1",
       "Interval": "00:00:02.809",

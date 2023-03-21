@@ -1,8 +1,8 @@
 const Jcy7E4uHYK8 = {
   /* offset : moment.duration({seconds: 36, minutes: 14}),
    adjust : moment.duration({seconds: .5}), */
-  start : moment("2023-03-19T23:57:14.307Z"),
-  bars : [
+  start: moment("2023-03-19T23:57:14.307Z"),
+  bars: [
     {
       "#": "001",
       "Label": "Split #1",

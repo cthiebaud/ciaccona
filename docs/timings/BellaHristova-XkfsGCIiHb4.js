@@ -1,5 +1,5 @@
 const XkfsGCIiHb4 = {
-  adjust: moment.duration({seconds: 1}),
+  adjust: moment.duration({ seconds: 1 }),
   start: moment("2023-03-20T09:30:50.302Z"),
   bars: [
     {

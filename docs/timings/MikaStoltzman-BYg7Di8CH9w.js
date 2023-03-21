@@ -1,8 +1,8 @@
 const BYg7Di8CH9w = {
   /* offset : moment.duration({seconds: 36, minutes: 14}),
    adjust : moment.duration({seconds: .5}), */
-  start : moment("2023-03-19T23:07:16.811Z"),
-  bars : [
+  start: moment("2023-03-19T23:07:16.811Z"),
+  bars: [
     {
       "#": "001",
       "Label": "Split #1",

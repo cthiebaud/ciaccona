@@ -1,8 +1,8 @@
 let mg9kT7XiLoU = {
-  offset : moment.duration({seconds: 36, minutes: 14}),
+  offset: moment.duration({ seconds: 36, minutes: 14 }),
   /* adjust : moment.duration({seconds: .5}), */
-  start : moment("2023-03-20T10:03:46.945Z"),
-  bars : [
+  start: moment("2023-03-20T10:03:46.945Z"),
+  bars: [
     {
       "#": "001",
       "Label": "Split #1",
@@ -1823,5 +1823,6 @@ let mg9kT7XiLoU = {
       "Total": "---",
       "Time Recorded": "2023-03-20T10:16:47.445Z"
     }
-  ]}
+  ]
+}
 
