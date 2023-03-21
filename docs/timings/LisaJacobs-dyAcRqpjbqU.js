@@ -1,6 +1,6 @@
 let dyAcRqpjbqU = {
-    /* offset : moment.duration({seconds: 36, minutes: 14}),
-    adjust : moment.duration({seconds: .5}), */
+    /* offset : moment.duration({seconds: 36, minutes: 14}),*/
+    adjust : moment.duration({seconds: .6}), 
     start : moment("2023-03-21T14:25:55.723Z"),
     bars : [
             {
@@ -547,7 +547,8 @@ let dyAcRqpjbqU = {
               "Label": "Split #78",
               "Interval": "00:00:02.584",
               "Total": "00:04:20.141",
-              "Time Recorded": "2023-03-21T14:30:15.864Z"
+              "Time Recorded original": "2023-03-21T14:30:15.864Z",
+              "Time Recorded": "2023-03-21T14:30:16.250Z"
             },
             {
               "#": "079",
@@ -883,7 +884,8 @@ let dyAcRqpjbqU = {
               "Label": "Split #126",
               "Interval": "00:00:02.250",
               "Total": "00:07:12.198",
-              "Time Recorded": "2023-03-21T14:33:07.921Z"
+              "Time Recorded original": "2023-03-21T14:33:07.921Z",
+              "Time Recorded": "2023-03-21T14:33:09.800Z",
             },
             /*{
               "#": 127,
@@ -946,7 +948,8 @@ let dyAcRqpjbqU = {
               "Label": "Split #135",
               "Interval": "00:00:04.343",
               "Total": "00:07:45.768",
-              "Time Recorded": "2023-03-21T14:33:41.491Z"
+              "Time Recorded original": "2023-03-21T14:33:41.491Z",
+              "Time Recorded": "2023-03-21T14:33:42.500Z"
             },
             {
               "#": 136,
