@@ -16,6 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -146,9 +147,35 @@
             color: rgba(255, 255, 255, .75);
         }
 
-        /* https://alvarotrigo.com/blog/how-to-create-a-youtube-video-background-with-css/ */
         .video-container {
+            position: absolute;
+
+            position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	opacity: 1;
+
+            right: 0;
+            bottom: 0;
+            /* object-fit: cover;
+            min-width: 100%;
+            min-height: 100%;
+            left: 50%;
             top: 50%;
+            transform: translate(-50%, -50%); */
+        }
+
+
+        .plyr--video {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+        /* https://alvarotrigo.com/blog/how-to-create-a-youtube-video-background-with-css/ */
+        .video-containerOld {
             top: 50%;
             left: 50%;
             width: 100vw;
@@ -232,13 +259,13 @@
         </ul>
     </div>
 
-    <main id="gridContainer" class="container-fluid my-center" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem;">
-        <div id="gridContainerRow" class="row justify-content-end"> <!--  -->
-            <div id="playerWrapper" class="col video-container" style="display: none">
+    <main id="gridContainer" class="container-fluid my-center" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
+        <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
+            <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="padding:0">
                 <!-- style="width: 1080px; height: 720px;" src="https://www.youtube.com/embed/Vslz1tDsaWw?controls=1&autoplay=0&mute=1&playsinline=1&enablejsapi=1"
                 <iframe id="player" class="video-container" >
-                </iframe> -->
-                <div id="player"></div>
+                </iframe> 
+                <div id="player"></div>-->
             </div>
             <div id="gridContainerCol" class="col"> <!--  -->
                 <div id="grid">
@@ -253,6 +280,8 @@
     <script src="https://cdn.jsdelivr.net/npm/isotope-packery@latest/packery-mode.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/dist/bezier-easing.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.min.js"></script>
+
 
     <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
     <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
@@ -273,6 +302,38 @@
 
             $('#gridContainerCol').hide()
 
+            const $asd = $(
+                `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${ytID}">`
+            );
+
+            $("#playerWrapper").append($asd);
+
+            plyer = new Plyr("#blah2", {
+                muted: false
+            });
+
+            //
+            plyer.on("ready", (event) => {
+                console.log("Plyr ready");
+                $('#playerWrapper').show()
+                $('#gridContainerCol').addClass('push2right').show()
+                $("#grid").isotope('layout')
+                plyer.muted = false
+            });
+            plyer.on("timeupdate", (event) => {
+                console.log("Plyr timeupdate");
+            });
+            plyer.on("playing", (event) => {
+                console.log("Plyr playing");
+            });
+            plyer.on("pause", (event) => {
+                console.log("Plyr pause");
+            });
+            plyer.on("ended", (event) => {
+                console.log("Plyr ended");
+            });
+
+            /*
             // 2. This code loads the IFrame Player API code asynchronously.
             var tag = document.createElement('script');
 
@@ -293,8 +354,8 @@
                         'autoplay': 0,
                     },
                     events: {
-                        'onReady': onPlayerReady  /*,
-                        'onStateChange': onPlayerStateChange */
+                        'onReady': onPlayerReady  /-*,
+                        'onStateChange': onPlayerStateChange *-/
                     }
                 });
             }
@@ -321,6 +382,7 @@
             function stopVideo() {
                 // player.stopVideo();
             }
+            */
         }
     </script>
     <script type='module'>
@@ -623,12 +685,13 @@
 
                 const d = $(this).data()
                 console.log('bar', d.bar)
-                const state = player.getPlayerState()
+                // const state = player.getPlayerState()
+                const isPlaying = plyer.playing
                 if (previousPlayOnBar == d.bar) {
-                    if (state == 1) {
-                        player.pauseVideo();
+                    if (isPlaying) {
+                        plyer.pause();
                     } else {
-                        player.playVideo()
+                        plyer.play()
                     }
                 } else {
                     if (typeof (d.bar) != "undefined" && ytID) {
@@ -646,8 +709,8 @@
                         if (all.adjust) {
                             duration.subtract(all.adjust)
                         }
-                        player.seekTo(duration.asSeconds())
-                        player.playVideo()
+                        plyer.currentTime = duration.asSeconds()
+                        plyer.play()
                         previousPlayOnBar = d.bar
                     }
                 }
