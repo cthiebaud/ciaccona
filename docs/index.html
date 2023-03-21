@@ -26,7 +26,7 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
         // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-        let ytID = params.yt; // "some_value"   
+        let ytID = params.yt; // "some_value"
         console.log(ytID)     
     </script>
 
@@ -200,22 +200,29 @@
                 <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'"><img src="svg/guitar.svg"
-                style="top: -0.5rem; position: relative;">
+                        style="top: -0.5rem; position: relative;">
                     <div>Raphaella Smits</div>
                 </a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">&nbsp; <div>Moi</div></a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=SzxzLtwK-eo'"><img src="svg/piano.svg"
+                        style="top: -0.5rem; position: relative;">
+                    <div>Chiara Massini</div>
+                </a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KHwsHXtVWks'"><img src="svg/harp.svg"
-                    style="top: -0.5rem; position: relative;">
+                        style="top: -0.5rem; position: relative;">
                     <div>Anneleen Lenaerts</div>
                 </a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="svg/marimba.svg"
-                    style="top: -0.66rem; position: relative;">
+                        style="top: -0.66rem; position: relative;">
                     <div>Mika Stoltzman </div>
                 </a></li>
             <li>
@@ -257,6 +264,7 @@
     <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
     <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
     <script src="timings/RachelPodger-i3UhcV76BlE.js"></script>
+    <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
 
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
@@ -624,7 +632,7 @@
                     }
                 } else {
                     if (typeof (d.bar) != "undefined" && ytID) {
-                        let all = eval(ytID)
+                        let all = eval(ytID.replace('-', '_'))
                         let bars = all.bars
                         let elle = bars[d.bar]
                         console.log(elle["Time Recorded"])
