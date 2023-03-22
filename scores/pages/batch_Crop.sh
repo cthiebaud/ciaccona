@@ -7,7 +7,7 @@ ffmpeg -y -i "bwv-1004_5_for_PNGs-page34.png"   -vf  "crop=1142:78:38:22,colorke
 ffmpeg -y -i "bwv-1004_5_for_PNGs-page53.png"   -vf  "crop=1142:78:38:22,colorkey=white:0.3:0.5" "cropped_transparent/bwv-1004_5_for_PNGs-page53.png"
 
 
-docker run -v $(pwd):/app -w /app jeandeaual/lilypond:2.25.2 lilypond -dno-point-and-click -fpng bwv-1004_5_for_PNGs.ly 
-mv *.png pages
+docker run -v $(pwd):/app -w /app jeandeaual/lilypond:2.25.2 lilypond -dno-point-and-click -fsvg bwv-1004_5_for_PNGs.ly 
+mv *.svg pages
 
 docker start 3535ee387493 

@@ -1144,7 +1144,7 @@ melody = << \melodyOne \\ \melodyTwo \\ \melodyThree \\ \melodyFour \\ \breaks >
 	\layout { 
 		\omit BarNumber
 		indent = 0.0
-		#(set-default-paper-size "a4" 'landscape)
+		#(set-default-paper-size "a2" 'landscape)
 		ragged-right = ##t
 		#(layout-set-staff-size 14)
 		\context {

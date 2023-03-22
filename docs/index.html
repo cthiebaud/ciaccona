@@ -28,7 +28,7 @@
         });
         // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
         let ytID = params.yt; // "some_value"
-        console.log(ytID)     
+        if (ytID) console.log(ytID)     
     </script>
 
     <script>
@@ -99,7 +99,8 @@
             margin-right: .3rem;
         }
 
-        .score img {
+        .score img,
+        .score object {
             background-color: rgba(255, 255, 255, .8);
             background-clip: padding-box;
             border-radius: 0 3rem 3rem 0;
@@ -151,11 +152,11 @@
             position: absolute;
 
             position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	opacity: 1;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            opacity: 1;
 
             right: 0;
             bottom: 0;
@@ -281,6 +282,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/dist/bezier-easing.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
 
 
     <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
@@ -546,7 +548,6 @@
             let easing = BezierEasing(.5, .5, .5, .5)
             easing = BezierEasing(0, 1, 1, .4)
             // const nl = normalize(s.luminance, max, min)
-            // console.log(k, _colors_.length-1, 12, s.nl = normalize(k, _colors_.length-1, 12))
             s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
             s.brightnessChange = (1 - easing(s.nl)) * 100 // s.luminance *100 // 
             if (tinycolor(s.p_rgb).isLight()) {
@@ -566,11 +567,6 @@
         // some transparency to show video behind last col as well
         if (ytID) {
             _last_color_[0].p_rgb = tinycolor(_last_color_[0].p_rgb).setAlpha(transparency).toString("hex8").slice(1)
-        }
-
-        let j = 0
-        for (let s of _colors_) {
-            // console.log(j++, tinycolor(s.p_rgb).isLight(), s.luminance, s.nl, s.brightnessChange, 'bg', s.p_rgb, 'text', s.textColor, 'readability', tinycolor.readability(s.p_rgb, s.textColor))
         }
 
         let $gridById = $("#grid")
@@ -615,12 +611,18 @@
                 #${c.p_rgb} 100%); 
                 background-size: 16.97px 16.97px;`
 
+            /* img src="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" style="width: ${(_widths_[i].w * .96) - 120}px" */
+
             const templateVariations =
                 `
 <div class="grid-brick ${tonality ? tonality + "2 " : ''}text-end">
     <div class="brick font-monospace d-flex align-items-center" style="${bg}">
         <div class="score flex-grow-1" data-bar="${barFrom}">
-            <img src="bars/bwv-1004_5_for_PNGs-page${1 + barFrom / 4}.png" style="width: ${(_widths_[i].w * .96) - 120}px">
+
+            <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" type="image/svg+xml"
+                style="visibility: hidden; width: ${(_widths_[i].w * .96) - 120}px">
+            </object>
+
             <span class="Δ" style="${bg}">
                 ${tonality}
             </span>
@@ -649,7 +651,12 @@
 <div class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="background-color: #${_last_color_[0].p_rgb}">
         <div class="score flex-grow-1" data-bar="256">
-            <img src="bars/bwv-1004_5_for_PNGs-page65.png" style="width:${_widths_[i].w * .95 - 120}px">
+
+            <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-65.svg" type="image/svg+xml"
+                style="visibility: hidden; width: ${(_widths_[i].w * .96) - 120}px>
+            </object>
+
+            <!-- img src="bars/bwv-1004_5_for_PNGs-65.svg" style="width:${_widths_[i].w * .95 - 120}px"-->
         </div>
     </div>
 </div>
@@ -672,6 +679,15 @@
         const $bricks = $bricksTemporaryContainer.children();
 
         $gridById.empty().append($bricks).isotope('appended', $bricks);
+
+        window.addEventListener('load', (event) => {
+            $(document.getElementsByTagName('object')).each((i, o             ) => {
+                if (o.getSVGDocument() && o.getSVGDocument().children && o.getSVGDocument().children.length) {
+                    o.getSVGDocument().children[0].setAttribute("viewBox", "24 55 26 1");
+                }
+                $(o).css("visibility", "visible");
+            })
+        });
 
         let previousPlayOnBar;
 
