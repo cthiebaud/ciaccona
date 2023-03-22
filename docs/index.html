@@ -16,6 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -322,7 +323,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
     <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
     <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
@@ -342,34 +343,32 @@
     <script>
         const all = ytID ? eval(ytID.replace('-', '_')) : undefined
         console.log(ytID, all)
-        const createBarDuration = (bar) => {
-            if (!bar.m) {
-                bar.m = new moment(bar["Time Recorded"])
+        if (all) {
+            const createBarDuration = (bar) => {
+                if (!bar.m) {
+                    bar.m = new moment(bar["Time Recorded"])
+                }
+                bar.duration = moment.duration(bar.m.diff(all.start))
+                if (all.offset) {
+                    bar.duration.add(all.offset)
+                }
+                if (all.adjust) {
+                    bar.duration.subtract(all.adjust)
+                }
+                return bar
             }
-            bar.duration = moment.duration(bar.m.diff(all.start))
-            if (all.offset) {
-                bar.duration.add(all.offset)
-            }
-            if (all.adjust) {
-                bar.duration.subtract(all.adjust)
+            all.ciacconaStart = createBarDuration({ m: all.start })
+            for (let bar of all.bars) {
+                createBarDuration(bar)
             }
         }
-        for (let bar of all.bars) {
-            createBarDuration(bar)
-        }
+        let previousPlayOnBar = Cookies.get('previousPlayOnBar');
+        if (!previousPlayOnBar) previousPlayOnBar = 0
 
-        all.ciacconaStart = moment.duration(all.bars[0].m.diff(all.start))
-        if (all.offset) {
-            all.ciacconaStart.add(all.offset)
-        }
-        if (all.adjust) {
-            all.ciacconaStart.subtract(all.adjust)
-        }
 
         const variationsBars = [
         ]
         const index2duration = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
-
         {
             let bar = 0
             for (let i = 0; i < 34; i++) {
@@ -441,25 +440,30 @@
                 $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
                 $("#grid").isotope('layout')
                 plyer.muted = false
-                plyer.play();
-                console.log('ciacconaStart', all.ciacconaStart.asSeconds())
-                plyer.currentTime = all.ciacconaStart.asSeconds()
-                // plyer.pause();
+                plyer.pause();
+                let bar = all.bars[previousPlayOnBar]
+                console.log("seek to ", bar["Time Recorded"], bar.duration.asSeconds())
+                if (Cookies.get('playing') == 'true') {
+                    plyer.play();
+                }
+                plyer.currentTime = bar.duration.asSeconds() // all.ciacconaStart.duration.asSeconds()
             });
             plyer.on("timeupdate", (event) => {
                 const currentTime = event.detail.plyr.currentTime
                 feedbackOnCurrentTime(currentTime)
             });
             plyer.on("playing", (event) => {
+                Cookies.set('playing', 'true', { expires: 7 })
                 console.log("Plyr playing");
             });
             plyer.on("seeking", (event) => {
                 const currentTime = event.detail.plyr.currentTime
-                console.log('seeking', currentTime)
+                console.log('seeked at', currentTime)
                 // feedbackOnCurrentTime(currentTime)
             });
             plyer.on("pause", (event) => {
-                console.log("Plyr pause");
+                Cookies.set('playing', 'false', { expires: 7 })
+                console.log("Plyr paused");
             });
             plyer.on("ended", (event) => {
                 console.log("Plyr ended");
@@ -699,8 +703,6 @@
 
         $gridById.empty().append($bricks).isotope('appended', $bricks);
 
-        let previousPlayOnBar;
-
         $(".brick").click(function (e) {
             e.stopPropagation();
             if (!ytID) {
@@ -722,10 +724,11 @@
                 } else {
                     if (typeof (d.bar) != "undefined" && ytID) {
                         let bar = all.bars[d.bar]
-                        console.log("seeking to ", bar.duration.asSeconds())
+                        console.log("seek to ", bar["Time Recorded"], bar.duration.asSeconds())
                         plyer.currentTime = bar.duration.asSeconds()
                         plyer.play()
                         previousPlayOnBar = d.bar
+                        Cookies.set('previousPlayOnBar', d.bar)
                     }
                 }
             }
