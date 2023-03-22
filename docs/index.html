@@ -31,24 +31,58 @@
     </script>
 
     <script>
-        // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-        const vh = window.innerHeight * 0.01;
-        const vw = window.innerWidth * 0.01;
+        const afterResize = () => {
+            // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+            const vh = window.innerHeight * 0.01
+            const vw = window.innerWidth * 0.01
 
-        // Then we set the value in the --vh custom property to the root of the document
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-        document.documentElement.style.setProperty('--vw', `${vw}px`);
+            // Then we set the value in the --vh custom property to the root of the document
+            document.documentElement.style.setProperty('--vh', `${vh}px`)
+            document.documentElement.style.setProperty('--vw', `${vw}px`)
+        }
+
+        afterResize()
 
         window.addEventListener('resize',
             _.debounce(() => {
-                const vh = window.innerHeight * 0.01;
-                const vw = window.innerWidth * 0.01;
-
-                // Then we set the value in the --vh custom property to the root of the document
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-                document.documentElement.style.setProperty('--vw', `${vw}px`);
+                afterResize()
             }, 750)
         );
+
+        function resizeSVGs() {
+            $(document.getElementsByTagName('object')).each((i, o) => {
+                const width = $(o).width()
+
+                let SVG
+                let interval = setInterval(() => {
+                    SVG = o.getSVGDocument();
+                    if (!(SVG && SVG.children && SVG.children.length)) {
+                        return
+                    } else {
+                        const svg = SVG.children[0]
+                        const box = svg.getBBox()
+                        const viewBox = [box.x, box.y, box.width, box.height].join(" ")
+                        let transform = `matrix(3,0,0,3,${width}, 0)`
+                        if (o.id == 'o33') transform = "matrix(.9,0,0,.9,-10, 0)"
+
+                        svg.setAttribute("viewBox", viewBox)
+                        svg.setAttribute("transform", transform)
+                        svg.removeAttribute("height")
+                        svg.removeAttribute("width")
+                    }
+                    $(o).css("visibility", "visible")
+
+                    clearInterval(interval);
+                }, 100)
+
+            })
+        }
+
+        window.addEventListener('load', (event) => {
+
+            if (!ytID) { resizeSVGs() }
+        });
+
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -253,7 +287,7 @@
                 </iframe> 
                 <div id="player"></div>-->
             </div>
-            <div id="gridContainerCol" class="col"> <!--  -->
+            <div id="gridContainerCol" class="col" style="display: none;"> <!--  -->
                 <div id="grid">
                 </div>
             </div>
@@ -315,9 +349,9 @@
             return previousVar
         }
 
-        if (ytID) {
-
-            $('#gridContainerCol').hide()
+        if (!ytID) {
+            $('#gridContainerCol').removeClass('push2right').show()
+        } else {
 
             const $asd = $(
                 `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${ytID}">`
@@ -363,9 +397,12 @@
             //
             plyer.on("ready", (event) => {
                 console.log("Plyr ready");
-                $('#playerWrapper').show()
-                $('#gridContainerCol').addClass('push2right').show()
-                $("#grid").isotope('layout')
+                setTimeout(() => {
+                    resizeSVGs()
+                    $('#playerWrapper').show()
+                    $('#gridContainerCol').addClass('push2right').show()
+                    $("#grid").isotope('layout')
+                }, 1000);
                 plyer.muted = false
             });
             plyer.on("timeupdate", (event) => {
@@ -617,25 +654,6 @@
         const $bricks = $bricksTemporaryContainer.children();
 
         $gridById.empty().append($bricks).isotope('appended', $bricks);
-
-        window.addEventListener('load', (event) => {
-            $(document.getElementsByTagName('object')).each((i, o) => {
-                const width = $(o).width()
-                if (o.getSVGDocument() && o.getSVGDocument().children && o.getSVGDocument().children.length) {
-                    const svg = o.getSVGDocument().children[0]
-                    const box = svg.getBBox()
-                    const viewBox = [box.x, box.y, box.width, box.height].join(" ")
-                    let transform = `matrix(3,0,0,3,${width}, 0)`
-                    if (o.id == 'o33') transform = "matrix(.9,0,0,.9,-10, 0)"
-
-                    svg.setAttribute("viewBox", viewBox)
-                    svg.setAttribute("transform", transform)
-                    svg.removeAttribute("height")
-                    svg.removeAttribute("width")
-                }
-                $(o).css("visibility", "visible")
-            })
-        });
 
         let previousPlayOnBar;
 
