@@ -334,6 +334,7 @@ melodyOne =  \relative a' {
 	cis,16 [ ( e g bes ] a [ g e' g, ])  f4 | % 255
 	s8 e8 e4. d8 | % 256
 	d2.\fermata \bar "|." % 257
+	s2. | % 258
     }
 
 
@@ -597,6 +598,7 @@ melodyTwo =  \relative f' {
    	s2. | % 255
     s2. | % 256
     s2. | % 257
+	s2. | % 258
   }
 
 melodyThree =  \relative d' {
@@ -859,6 +861,7 @@ melodyThree =  \relative d' {
 	s2. | % 255
 	s2. | % 256
 	s2. | % 257
+	s2. | % 258
    }
 
 melodyFour =  \relative f' {
@@ -1121,13 +1124,15 @@ melodyFour =  \relative f' {
 	s2 d'4 | % 255
 	g,4 a2 | % 256
 	d2. | % 257
+	s2. | % 258 (to push last page lilypond trademark to a SVG not used)
     }
 
 breaks = {
 	s2 \noBreak s2. \noBreak s2. \noBreak s2. \pageBreak
 	\repeat unfold 63 {
-    s2. \noBreak s2. \noBreak s2. \noBreak s2. \pageBreak
-  }
+    	s2. \noBreak s2. \noBreak s2. \noBreak s2. \pageBreak
+    }
+	s2. \pageBreak
 }
 
 

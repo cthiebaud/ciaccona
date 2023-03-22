@@ -27,8 +27,7 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
         // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-        let ytID = params.yt; // "some_value"
-        if (ytID) console.log(ytID)     
+        var ytID = params.yt; // "some_value"
     </script>
 
     <script>
@@ -79,7 +78,13 @@
             font-size: 1.4rem;
             width: 23rem;
             height: 6rem;
-            padding: .5rem
+            padding: .5rem;
+            border-style: dashed;
+            border-width: 0;
+        }
+
+        .grid-brick.playing {
+            border-width: 3px !important;
         }
 
         .grid-brick.Δ2 {
@@ -300,6 +305,33 @@
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
+        var all = undefined
+        if (ytID) {
+            all = eval(ytID.replace('-', '_'))
+            console.log(ytID, all)     
+        }
+        const varBars = [
+        ]
+        let bar = 0
+        for (let i = 0; i < 34; i++) {
+            const duration = (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8);
+            varBars.push(bar)
+            bar = bar + duration
+        }
+        const var2bar = (v) => {
+            return varBars[v]
+        }
+        const bar2var = (b) => {
+            let old = 0
+            for (let i = 0; i < 34; i++) {
+                if (b < varBars[i]) {
+                    return old
+                }
+                old = i;
+            }
+            return old
+        }
+
         if (ytID) {
 
             $('#gridContainerCol').hide()
@@ -314,6 +346,38 @@
                 muted: false
             });
 
+            const feedbackOnCurrentTime = (currentTime) => {
+                const bars = all.bars
+                let i = 0
+                let oldvar = 0
+                let done = false
+                for (let elle of bars) {
+                    if (!elle.m) {
+                        elle.m = new moment(elle["Time Recorded"])
+                    }
+                    let duration = moment.duration(elle.m.diff(all.start))
+                    const d = duration.asSeconds()
+                    if (d > currentTime) {
+                        const varr = bar2var(oldvar)
+                        $(".grid-brick").removeClass("playing")
+                        $(`.grid-brick#gb${varr}`).addClass("playing")
+                        console.log(varr)
+                        done = true
+                        break
+                    }
+                    oldvar = i
+                    i++
+                }
+                if (!done) {
+                    const varr = bar2var(oldvar)
+                    $(".grid-brick").removeClass("playing")
+                    $(`.grid-brick#gb${varr}`).addClass("playing")
+                    console.log(varr)
+                }
+
+                console.log("Plyr timeupdate", event.detail.plyr.currentTime);
+            }
+
             //
             plyer.on("ready", (event) => {
                 console.log("Plyr ready");
@@ -323,10 +387,15 @@
                 plyer.muted = false
             });
             plyer.on("timeupdate", (event) => {
-                console.log("Plyr timeupdate");
+                const currentTime = event.detail.plyr.currentTime
+                feedbackOnCurrentTime(currentTime)
             });
             plyer.on("playing", (event) => {
                 console.log("Plyr playing");
+            });
+            plyer.on("seeking", (event) => {
+                const currentTime = event.detail.plyr.currentTime
+                feedbackOnCurrentTime(currentTime)
             });
             plyer.on("pause", (event) => {
                 console.log("Plyr pause");
@@ -334,57 +403,6 @@
             plyer.on("ended", (event) => {
                 console.log("Plyr ended");
             });
-
-            /*
-            // 2. This code loads the IFrame Player API code asynchronously.
-            var tag = document.createElement('script');
-
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            // 3. This function creates an <iframe> (and YouTube player)
-            //    after the API code downloads.
-            var player;
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('player', {
-                    height: '100%',
-                    width: '100%',
-                    videoId: ytID, // 'Vslz1tDsaWw'
-                    playerVars: {
-                        'playsinline': 1,
-                        'autoplay': 0,
-                    },
-                    events: {
-                        'onReady': onPlayerReady  /-*,
-                        'onStateChange': onPlayerStateChange *-/
-                    }
-                });
-            }
-
-            // 4. The API will call this function when the video player is ready.
-            function onPlayerReady(event) {
-                // event.target.playVideo();
-                event.target.unMute()
-                $('#playerWrapper').show()
-                $('#gridContainerCol').addClass('push2right').show()
-                $("#grid").isotope('layout')
-            }
-
-            // 5. The API calls this function when the player's state changes.
-            //    The function indicates that when playing a video (state=1),
-            //    the player should play for six seconds and then stop.
-            // var done = false;
-            // function onPlayerStateChange(event) {
-            //     // if (event.data == YT.PlayerState.PLAYING && !done) {
-            //     //     setTimeout(stopVideo, 6000);
-            //     //     done = true;
-            //     // }
-            // }// 
-            function stopVideo() {
-                // player.stopVideo();
-            }
-            */
         }
     </script>
     <script type='module'>
@@ -406,50 +424,6 @@
             }
             return array;
         }
-
-        const _seeks_ = [
-            0,
-            // theme
-            15,
-            // 16 minor vars
-            42,
-            1 * 60 + 15,
-            1 * 60 + 45,
-            2 * 60 + 12,
-            2 * 60 + 40,
-            3 * 60 + 7,
-            3 * 60 + 33,
-            3 * 60 + 58,
-            4 * 60 + 37,
-            5 * 60 + 6,
-            5 * 60 + 20,
-            5 * 60 + 44,
-            6 * 60 + 7,
-            6 * 60 + 29,
-            6 * 60 + 52,
-            7 * 60 + 8,
-            // 10 minor vars
-            7 * 60 + 41,
-            8 * 60 + 5,
-            8 * 60 + 30,
-            8 * 60 + 43,
-            9 * 60 + 7,
-            9 * 60 + 33,
-            10 * 60,
-            10 * 60 + 28,
-            10 * 60 + 55,
-            11 * 60 + 22,
-            // 6 minor vars
-            11 * 60 + 56.5,
-            12 * 60 + 30,
-            12 * 60 + 54,
-            13 * 60 + 8,
-            13 * 60 + 45,
-            14 * 60 + 14,
-            // last note
-            14 * 60 + 46
-        ]
-
 
         const _widths_ = [
             { w: 270 },
@@ -485,7 +459,8 @@
             { w: 325 },
             { w: 343 },
             { w: 252 },
-            { w: 188 }
+            { w: 188 },
+            { w: 170 }
         ]
 
         let _first_color_ = [
@@ -543,6 +518,7 @@
         _colors_ = _first_color_.concat(shuffleArray(_other_colors_))
         let k = 0
         const transparency = .667
+        _colors_.push(_last_color_[0])
         for (let s of _colors_) {
             // https://cubic-bezier.com/
             let easing = BezierEasing(.5, .5, .5, .5)
@@ -557,16 +533,14 @@
                 s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
                 s.stripeColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
             }
+            s.borderColor = tinycolor(s.p_rgb).lighten(30).toString("hex6").slice(1)
             // some transparency to show video behind
             if (ytID) {
                 s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
                 s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
                 s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
+                s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
             }
-        }
-        // some transparency to show video behind last col as well
-        if (ytID) {
-            _last_color_[0].p_rgb = tinycolor(_last_color_[0].p_rgb).setAlpha(transparency).toString("hex8").slice(1)
         }
 
         let $gridById = $("#grid")
@@ -611,13 +585,11 @@
                 #${c.p_rgb} 100%); 
                 background-size: 16.97px 16.97px;`
 
-            /* img src="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" style="width: ${(_widths_[i].w * .96) - 120}px" */
-
             const templateVariations =
                 `
-<div class="grid-brick ${tonality ? tonality + "2 " : ''}text-end">
-    <div class="brick font-monospace d-flex align-items-center" style="${bg}">
-        <div class="score flex-grow-1" data-bar="${barFrom}">
+<div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick text-end" style="border-color: #${c.borderColor}">
+    <div class="brick font-monospace d-flex align-items-center" style="${bg}" data-bar="${barFrom}">
+        <div class="score flex-grow-1">
 
             <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" type="image/svg+xml"
                 style="visibility: hidden; width: ${(_widths_[i].w) - 120}px">
@@ -627,13 +599,13 @@
                 ${tonality}
             </span>
         </div>
-        <div style="font-style: italic; font-size:.8rem; color: #${c.textColor};">
+        <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
             ${warning}
         </div>
-        <div style="font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
+        <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
             ${barFrom + 1}<br\>${barTo}
         </div>
-        <div class="fw-bold text-center" style="margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
+        <div class="fw-bold text-center" style="${i == _colors_.length - 1 ? "display:none;" : ""}margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
             ${i == 0 ? "" : i}
         </div>
     </div>
@@ -646,21 +618,6 @@
             i++
         });
 
-        const templateLastChord =
-            `
-<div class="grid-brick">
-    <div class="brick d-flex align-items-center justify-content-center" style="background-color: #${_last_color_[0].p_rgb}">
-        <div class="score flex-grow-1" data-bar="256">
-
-            <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-65.svg" type="image/svg+xml"
-                style="visibility: hidden; width: ${(_widths_[i].w) - 120}px>
-            </object>
-
-            <!-- img src="bars/bwv-1004_5_for_PNGs-65.svg" style="width:${_widths_[i].w- 120}px"-->
-        </div>
-    </div>
-</div>
-`
         const oblivion =
             `
 <div class="grid-brick">
@@ -673,7 +630,6 @@
     </div>
 </div>
 `
-        $bricksTemporaryContainer.append($(templateLastChord));
         $bricksTemporaryContainer.append($(oblivion));
 
         const $bricks = $bricksTemporaryContainer.children();
@@ -688,7 +644,7 @@
                     const box = svg.getBBox()
                     const viewBox = [box.x, box.y, box.width, box.height].join(" ")
                     let transform = `matrix(3,0,0,3,${width}, 0)`
-                    if (o.id == 'o33' ) transform="matrix(.9,0,0,.9,-10, 0)"
+                    if (o.id == 'o33') transform = "matrix(.9,0,0,.9,-10, 0)"
 
                     svg.setAttribute("viewBox", viewBox)
                     svg.setAttribute("transform", transform)
@@ -701,7 +657,7 @@
 
         let previousPlayOnBar;
 
-        $(".score").click(function (e) {
+        $(".brick").click(function (e) {
             e.stopPropagation();
             if (!ytID) {
                 if ($('.dropdown').find('.dropdown-menu').is(":hidden")) {
@@ -721,7 +677,6 @@
                     }
                 } else {
                     if (typeof (d.bar) != "undefined" && ytID) {
-                        let all = eval(ytID.replace('-', '_'))
                         let bars = all.bars
                         let elle = bars[d.bar]
                         console.log(elle["Time Recorded"])
