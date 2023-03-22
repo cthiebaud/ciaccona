@@ -49,16 +49,23 @@
             }, 750)
         );
 
-        function resizeSVGs() {
-            $(document.getElementsByTagName('object')).each((i, o) => {
-                const width = $(o).width()
+        async function resizeSVGs(callback) {
+            const promises = []
 
-                let SVG
-                let interval = setInterval(() => {
-                    SVG = o.getSVGDocument();
-                    if (!(SVG && SVG.children && SVG.children.length)) {
-                        return
-                    } else {
+            $(document.getElementsByTagName('object')).each((i, o) => {
+                const $o = $(o)
+                const width = $o.width()
+
+                promises.push(new Promise((resolve, reject) => {
+                    let interval = setInterval(() => {
+                        let SVG = o.getSVGDocument();
+                        if (!SVG || !SVG.children || SVG.children.length == 0) {
+                            console.log("not yet ...", o.id)
+                            return
+                        }
+
+                        clearInterval(interval);
+
                         const svg = SVG.children[0]
                         const box = svg.getBBox()
                         const viewBox = [box.x, box.y, box.width, box.height].join(" ")
@@ -69,18 +76,29 @@
                         svg.setAttribute("transform", transform)
                         svg.removeAttribute("height")
                         svg.removeAttribute("width")
-                    }
-                    $(o).css("visibility", "visible")
 
-                    clearInterval(interval);
-                }, 100)
-
+                        $o.css({ visibility: "visible" })
+                        resolve($o)
+                    }, 10)
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        reject($o)
+                    }, 10000) // kill it after 10 seconds
+                }))
             })
+            callbackPlusLogresults = (results) => {
+                results.forEach((result) => {
+                    console.log(result.status, result.value.attr('id'))
+                })
+                if (callback) callback()
+            }
+            Promise.allSettled(promises).then(callbackPlusLogresults)
         }
 
         window.addEventListener('load', (event) => {
-
-            if (!ytID) { resizeSVGs() }
+            resizeSVGs(() => {
+                console.log("all SVGs resized!")
+            })
         });
 
     </script>
@@ -275,7 +293,9 @@
             <li>
                 <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/'">&nbsp;<div style="font-size:larger;">∅</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/'">
+                    &nbsp;<div style="font-size:20pt; top: -0.5rem; position: relative;">🏠<!--∅--></div>
+                </a></li>
         </ul>
     </div>
 
@@ -287,7 +307,7 @@
                 </iframe> 
                 <div id="player"></div>-->
             </div>
-            <div id="gridContainerCol" class="col" style="display: none;"> <!--  -->
+            <div id="gridContainerCol" class="col" style="visibility: hidden"> <!--  -->
                 <div id="grid">
                 </div>
             </div>
@@ -322,6 +342,29 @@
     <script>
         const all = ytID ? eval(ytID.replace('-', '_')) : undefined
         console.log(ytID, all)
+        const createBarDuration = (bar) => {
+            if (!bar.m) {
+                bar.m = new moment(bar["Time Recorded"])
+            }
+            bar.duration = moment.duration(bar.m.diff(all.start))
+            if (all.offset) {
+                bar.duration.add(all.offset)
+            }
+            if (all.adjust) {
+                bar.duration.subtract(all.adjust)
+            }
+        }
+        for (let bar of all.bars) {
+            createBarDuration(bar)
+        }
+
+        all.ciacconaStart = moment.duration(all.bars[0].m.diff(all.start))
+        if (all.offset) {
+            all.ciacconaStart.add(all.offset)
+        }
+        if (all.adjust) {
+            all.ciacconaStart.subtract(all.adjust)
+        }
 
         const variationsBars = [
         ]
@@ -350,8 +393,9 @@
         }
 
         if (!ytID) {
-            $('#gridContainerCol').removeClass('push2right').show()
+            $(gridContainerCol).css({ visibility: 'visible' })
         } else {
+            $(gridContainerCol).css({ visibility: 'hidden' })
 
             const $asd = $(
                 `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${ytID}">`
@@ -360,7 +404,7 @@
             $("#playerWrapper").append($asd);
 
             plyer = new Plyr("#blah2", {
-                muted: false
+                mute: 0
             });
 
             const feedbackOnCurrentTime = (currentTime) => {
@@ -368,11 +412,7 @@
                 let oldvar = 0
                 let done = false
                 for (let bar of all.bars) {
-                    if (!bar.m) {
-                        bar.m = new moment(bar["Time Recorded"])
-                    }
-                    let duration = moment.duration(bar.m.diff(all.start))
-                    const d = duration.asSeconds()
+                    const d = bar.duration.asSeconds()
                     if (d > currentTime) {
                         const varr = bar2variation(oldvar)
                         $(".grid-brick").removeClass("playing")
@@ -397,13 +437,14 @@
             //
             plyer.on("ready", (event) => {
                 console.log("Plyr ready");
-                setTimeout(() => {
-                    resizeSVGs()
-                    $('#playerWrapper').show()
-                    $('#gridContainerCol').addClass('push2right').show()
-                    $("#grid").isotope('layout')
-                }, 1000);
+                $('#playerWrapper').show()
+                $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
+                $("#grid").isotope('layout')
                 plyer.muted = false
+                plyer.play();
+                console.log('ciacconaStart', all.ciacconaStart.asSeconds())
+                plyer.currentTime = all.ciacconaStart.asSeconds()
+                // plyer.pause();
             });
             plyer.on("timeupdate", (event) => {
                 const currentTime = event.detail.plyr.currentTime
@@ -414,7 +455,8 @@
             });
             plyer.on("seeking", (event) => {
                 const currentTime = event.detail.plyr.currentTime
-                feedbackOnCurrentTime(currentTime)
+                console.log('seeking', currentTime)
+                // feedbackOnCurrentTime(currentTime)
             });
             plyer.on("pause", (event) => {
                 console.log("Plyr pause");
@@ -610,8 +652,10 @@
     <div class="brick font-monospace d-flex align-items-center" style="${bg}" data-bar="${barFrom}">
         <div class="score flex-grow-1">
 
-            <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" type="image/svg+xml"
-                style="visibility: hidden; width: ${(_widths_[i].w) - 120}px">
+            <object id="o${i}" 
+                    data="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" 
+                    type="image/svg+xml"
+                    style="width: ${(_widths_[i].w) - 120}px; visibility: hidden;" > 
             </object>
 
             <span class="Δ" style="${bg}">
@@ -677,20 +721,9 @@
                     }
                 } else {
                     if (typeof (d.bar) != "undefined" && ytID) {
-                        let bars = all.bars
-                        let elle = bars[d.bar]
-                        console.log(elle["Time Recorded"])
-                        if (!elle.m) {
-                            elle.m = new moment(elle["Time Recorded"])
-                        }
-                        let duration = moment.duration(elle.m.diff(all.start))
-                        if (all.offset) {
-                            duration.add(all.offset)
-                        }
-                        if (all.adjust) {
-                            duration.subtract(all.adjust)
-                        }
-                        plyer.currentTime = duration.asSeconds()
+                        let bar = all.bars[d.bar]
+                        console.log("seeking to ", bar.duration.asSeconds())
+                        plyer.currentTime = bar.duration.asSeconds()
                         plyer.play()
                         previousPlayOnBar = d.bar
                     }
