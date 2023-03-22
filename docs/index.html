@@ -408,26 +408,32 @@
 
             const feedbackOnCurrentTime = (currentTime) => {
                 let i = 0
-                let oldvar = 0
+                let barFound = 0
                 let done = false
+                const found = (bar) => {
+                    const variation = bar2variation(bar)
+                    $(".grid-brick").removeClass("playing")
+                    $(`.grid-brick#gb${variation}`).addClass("playing")
+                    console.log(variation)
+
+                    const startBarOfVariation = variation2bar(variation)
+                    if (previousPlayOnBar != startBarOfVariation) {
+                        previousPlayOnBar = startBarOfVariation
+                        Cookies.set('previousPlayOnBar', previousPlayOnBar)
+                    }
+                }
                 for (let bar of all.bars) {
                     const d = bar.duration.asSeconds()
                     if (d > currentTime) {
-                        const varr = bar2variation(oldvar)
-                        $(".grid-brick").removeClass("playing")
-                        $(`.grid-brick#gb${varr}`).addClass("playing")
-                        console.log(varr)
+                        found(barFound)
                         done = true
                         break
                     }
-                    oldvar = i
+                    barFound = i
                     i++
                 }
                 if (!done) {
-                    const varr = bar2variation(oldvar)
-                    $(".grid-brick").removeClass("playing")
-                    $(`.grid-brick#gb${varr}`).addClass("playing")
-                    console.log(varr)
+                    found(barFound)
                 }
 
                 // console.log("Plyr timeupdate", event.detail.plyr.currentTime);
@@ -446,7 +452,7 @@
                 if (Cookies.get('playing') == 'true') {
                     plyer.play();
                 }
-                plyer.currentTime = bar.duration.asSeconds() // all.ciacconaStart.duration.asSeconds()
+                plyer.currentTime = bar.duration.asSeconds()
             });
             plyer.on("timeupdate", (event) => {
                 const currentTime = event.detail.plyr.currentTime
@@ -459,7 +465,7 @@
             plyer.on("seeking", (event) => {
                 const currentTime = event.detail.plyr.currentTime
                 console.log('seeked at', currentTime)
-                // feedbackOnCurrentTime(currentTime)
+                feedbackOnCurrentTime(currentTime)
             });
             plyer.on("pause", (event) => {
                 Cookies.set('playing', 'false', { expires: 7 })
