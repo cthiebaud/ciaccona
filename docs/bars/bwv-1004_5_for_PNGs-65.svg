@@ -57,14 +57,4 @@ c0 -142 -115 -198 -252 -198c-53 0 -95 22 -95 80z" fill="currentColor"/>
 <g transform="translate(26.4327, 54.7504)">
 <rect x="-0.0614" y="-0.7368" width="0.1228" height="2.4047" ry="0.0421" fill="currentColor"/>
 </g>
-<g transform="translate(147.0858, 239.1133)">
-<a xlink:href="https://lilypond.org/">
-<rect x="0.0000" y="-0.4888" width="61.6377" height="2.1603" fill="none" stroke="none" stroke-width="0.0"/>
-</a>
-</g>
-<g transform="translate(147.0858, 239.1133)">
-<text font-family="serif" font-size="2.2001" text-anchor="start" fill="currentColor">
-<tspan>Music engraving by LilyPond 2.25.2—www.lilypond.org</tspan>
-</text>
-</g>
 </svg>

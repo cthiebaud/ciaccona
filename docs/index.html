@@ -620,7 +620,7 @@
         <div class="score flex-grow-1" data-bar="${barFrom}">
 
             <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" type="image/svg+xml"
-                style="visibility: hidden; width: ${(_widths_[i].w * .96) - 120}px">
+                style="visibility: hidden; width: ${(_widths_[i].w) - 120}px">
             </object>
 
             <span class="Δ" style="${bg}">
@@ -653,10 +653,10 @@
         <div class="score flex-grow-1" data-bar="256">
 
             <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-65.svg" type="image/svg+xml"
-                style="visibility: hidden; width: ${(_widths_[i].w * .96) - 120}px>
+                style="visibility: hidden; width: ${(_widths_[i].w) - 120}px>
             </object>
 
-            <!-- img src="bars/bwv-1004_5_for_PNGs-65.svg" style="width:${_widths_[i].w * .95 - 120}px"-->
+            <!-- img src="bars/bwv-1004_5_for_PNGs-65.svg" style="width:${_widths_[i].w- 120}px"-->
         </div>
     </div>
 </div>
@@ -681,11 +681,21 @@
         $gridById.empty().append($bricks).isotope('appended', $bricks);
 
         window.addEventListener('load', (event) => {
-            $(document.getElementsByTagName('object')).each((i, o             ) => {
+            $(document.getElementsByTagName('object')).each((i, o) => {
+                const width = $(o).width()
                 if (o.getSVGDocument() && o.getSVGDocument().children && o.getSVGDocument().children.length) {
-                    o.getSVGDocument().children[0].setAttribute("viewBox", "24 55 26 1");
+                    const svg = o.getSVGDocument().children[0]
+                    const box = svg.getBBox()
+                    const viewBox = [box.x, box.y, box.width, box.height].join(" ")
+                    let transform = `matrix(3,0,0,3,${width}, 0)`
+                    if (o.id == 'o33' ) transform="matrix(.9,0,0,.9,-10, 0)"
+
+                    svg.setAttribute("viewBox", viewBox)
+                    svg.setAttribute("transform", transform)
+                    svg.removeAttribute("height")
+                    svg.removeAttribute("width")
                 }
-                $(o).css("visibility", "visible");
+                $(o).css("visibility", "visible")
             })
         });
 
