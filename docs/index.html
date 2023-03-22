@@ -66,7 +66,11 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
         // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-        const ytID = params.yt; // "some_value"
+        let ytID = params.yt; // "some_value"
+        const logo = params.logo; // "some_value"
+        if (logo === "true") {
+            ytID = undefined
+        }
     </script>
 
     <script>
@@ -216,6 +220,13 @@
             margin: .3rem;
         }
 
+        body.siegel {
+            background-image: url('svg/Bachsiegel_glowing_bubble.svg'), url('svg/BachsiegelColorWheel.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-blend-mode:color-burn;
+        }
         .siegel {
             background-image: url('svg/Bachsiegel_glowing_bubble.svg');
             background-size: contain;
@@ -341,6 +352,12 @@
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/'">
                     &nbsp;<div style="font-size:20pt; top: -0.5rem; position: relative;">🏠<!--∅--></div>
                 </a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item d-flex justify-content-center" href="#" onclick="location = '/?logo=true'">
+                    &nbsp;<img style="top: -0.5rem; position: relative;" src="svg/BachsiegelColorWheel.svg">
+                </a></li>
         </ul>
     </div>
 
@@ -385,6 +402,10 @@
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
+        if (logo === "true") {
+            $('body').addClass('siegel');
+            $('#gridContainerCol').css({ display: 'none' })
+        }
         const all = ytID ? eval(ytID.replace('-', '_')) : undefined
         console.log(ytID, all)
         if (all) {
