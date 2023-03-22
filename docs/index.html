@@ -27,7 +27,7 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
         // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-        var ytID = params.yt; // "some_value"
+        const ytID = params.yt; // "some_value"
     </script>
 
     <script>
@@ -81,6 +81,7 @@
             padding: .5rem;
             border-style: dashed;
             border-width: 0;
+            cursor: pointer;
         }
 
         .grid-brick.playing {
@@ -155,40 +156,17 @@
 
         .video-container {
             position: absolute;
-
-            position: absolute;
             left: 0;
             right: 0;
             top: 0;
             bottom: 0;
             opacity: 1;
-
-            right: 0;
-            bottom: 0;
-            /* object-fit: cover;
-            min-width: 100%;
-            min-height: 100%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%); */
         }
-
 
         .plyr--video {
             height: 100%;
             width: 100%;
             position: absolute;
-        }
-
-        /* https://alvarotrigo.com/blog/how-to-create-a-youtube-video-background-with-css/ */
-        .video-containerOld {
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: 100vh;
-            transform: translate(-50%, -50%);
-            position: fixed;
-            /* z-index: -1; */
         }
 
         iframe {
@@ -305,31 +283,33 @@
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
-        var all = undefined
-        if (ytID) {
-            all = eval(ytID.replace('-', '_'))
-            console.log(ytID, all)     
-        }
-        const varBars = [
+        const all = ytID ? eval(ytID.replace('-', '_')) : undefined
+        console.log(ytID, all)
+
+        const variationsBars = [
         ]
-        let bar = 0
-        for (let i = 0; i < 34; i++) {
-            const duration = (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8);
-            varBars.push(bar)
-            bar = bar + duration
-        }
-        const var2bar = (v) => {
-            return varBars[v]
-        }
-        const bar2var = (b) => {
-            let old = 0
+        const index2duration = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
+
+        {
+            let bar = 0
             for (let i = 0; i < 34; i++) {
-                if (b < varBars[i]) {
-                    return old
-                }
-                old = i;
+                const duration = index2duration(i)
+                variationsBars.push(bar)
+                bar = bar + duration
             }
-            return old
+        }
+        const variation2bar = (variation) => {
+            return variationsBars[variation]
+        }
+        const bar2variation = (bar) => {
+            let previousVar = 0
+            for (let variation = 0; variation < variationsBars.length; variation++) {
+                if (bar < variationsBars[variation]) {
+                    return previousVar
+                }
+                previousVar = variation;
+            }
+            return previousVar
         }
 
         if (ytID) {
@@ -347,18 +327,17 @@
             });
 
             const feedbackOnCurrentTime = (currentTime) => {
-                const bars = all.bars
                 let i = 0
                 let oldvar = 0
                 let done = false
-                for (let elle of bars) {
-                    if (!elle.m) {
-                        elle.m = new moment(elle["Time Recorded"])
+                for (let bar of all.bars) {
+                    if (!bar.m) {
+                        bar.m = new moment(bar["Time Recorded"])
                     }
-                    let duration = moment.duration(elle.m.diff(all.start))
+                    let duration = moment.duration(bar.m.diff(all.start))
                     const d = duration.asSeconds()
                     if (d > currentTime) {
-                        const varr = bar2var(oldvar)
+                        const varr = bar2variation(oldvar)
                         $(".grid-brick").removeClass("playing")
                         $(`.grid-brick#gb${varr}`).addClass("playing")
                         console.log(varr)
@@ -369,7 +348,7 @@
                     i++
                 }
                 if (!done) {
-                    const varr = bar2var(oldvar)
+                    const varr = bar2variation(oldvar)
                     $(".grid-brick").removeClass("playing")
                     $(`.grid-brick#gb${varr}`).addClass("playing")
                     console.log(varr)
@@ -569,7 +548,7 @@
         let barFrom = 0
         _colors_.forEach(function (c) {
             const tonality = (17 <= i && i < 27) ? "Δ" : "";
-            const duration = (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8);
+            const duration = index2duration(i)
             const warning = duration != 8 ? `(${duration})` : "";
             const barTo = barFrom + duration
             const bg = true ? // !tonality ?
