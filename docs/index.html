@@ -73,6 +73,8 @@
         }
     </script>
 
+    <script src="/resizeSVGs.js"></script>
+
     <script>
         const afterResize = () => {
             // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
@@ -92,6 +94,15 @@
             }, 750)
         );
 
+        window.addEventListener('load', (event) => {
+            resizeSVGs((o) => {
+                $(o).parent().css({ visibility: "visible" })
+            },
+            () => {
+                console.log("all SVGs resized!")
+            })
+        });
+        /*
         async function resizeSVGs(callback) {
             const promises = []
 
@@ -114,7 +125,6 @@
                         const viewBox = [box.x, box.y, box.width, box.height].join(" ")
                         let transform = `matrix(3,0,0,3,${width}, 0)`
                         if (o.id == 'o33') transform = "matrix(.9,0,0,.9,-10, 0)"
-
                         svg.setAttribute("viewBox", viewBox)
                         svg.setAttribute("transform", transform)
                         svg.removeAttribute("height")
@@ -143,7 +153,7 @@
                 // console.log("all SVGs resized!")
             })
         });
-
+    */
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -177,7 +187,6 @@
 
         .grid-brick {
             font-size: 1.4rem;
-            width: 23rem;
             height: 6rem;
             padding: .5rem;
             border-style: dashed;
@@ -187,6 +196,26 @@
 
         .grid-brick.playing {
             border-width: 3px !important;
+            border-radius: 0 !important;
+        }
+
+        .grid-brick.playing .brick {
+            border-radius: 0 !important;
+        }
+
+        .grid-brick.playing .score {
+            width: 100% !important;
+            border-radius: 0 !important;
+        }
+
+        .grid.playing object {
+            border-radius: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .grid-brick.playing .brick :not(:first-child) {
+            display: none !important;
         }
 
         .grid-brick.Δ2 {
@@ -195,30 +224,32 @@
 
         .brick {
             border-radius: 0 3rem 3rem 0;
-            width: 100%;
+            width: 23rem;
             height: 100%;
         }
 
         .score {
             position: relative;
             height: 5rem;
-            overflow: hidden;
             margin-right: .3rem;
             cursor: pointer;
+            width: fit-content;
+            overflow: hidden;
+            border-radius: 0 3rem 3rem 0;
         }
 
         .score img,
         .score object {
             background-color: rgba(255, 255, 255, .8);
             background-clip: padding-box;
-            border-radius: 0 3rem 3rem 0;
-            position: absolute;
             left: 0;
             top: 0;
             height: 88%;
             object-fit: cover;
             object-position: 0% 50%;
             margin: .3rem;
+            display: block;
+            position: absolute;
         }
 
         body.siegel {
@@ -489,8 +520,8 @@
                         previousPlayOnBar = startBarOfVariation
                         Cookies.set('previousPlayOnBar', previousPlayOnBar)
                         console.log('seeked or playing variation', variation, '(should scroll into view)')
-                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }),
-                            setTimeout(() => { }, 1000)
+                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                        // setTimeout(() => { }, 1000)
                     }
                 }
                 for (let bar of all.bars) {
@@ -530,6 +561,10 @@
             });
             plyer.on("timeupdate", (event) => {
                 const currentTime = event.detail.plyr.currentTime
+
+                if (plyer.playing) {
+                    // scroll score
+                }
                 feedbackOnCurrentTime(currentTime)
             });
             plyer.on("playing", (event) => {
@@ -542,6 +577,7 @@
                 feedbackOnCurrentTime(currentTime)
             });
             plyer.on("pause", (event) => {
+                $(".grid-brick").removeClass("playing")
                 Cookies.set('playing', 'false', { expires: 7 })
                 console.log("Plyr pause event");
             });
@@ -732,20 +768,21 @@
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick text-end" style="border-color: #${c.borderColor}">
-    <div class="brick font-monospace d-flex align-items-center" style="${bg}" data-bar="${barFrom}">
-        <div class="score flex-grow-1">
+<div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick" style="border-color: #${c.borderColor}">
+    <div class="brick font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
+        <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; ">
 
             <object id="o${i}" 
                     data="bars/bwv-1004_5_for_PNGs-${1 + barFrom / 4}.svg" 
                     type="image/svg+xml"
-                    style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; pointer-events: none;" > 
+                    style="pointer-events: none;" > 
             </object>
 
             <span class="Δ" style="${bg}">
                 ${tonality}
             </span>
         </div>
+        <div class="flex-grow-1"></div>
         <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
             ${warning}
         </div>
