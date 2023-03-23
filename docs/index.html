@@ -131,7 +131,7 @@
             })
             callbackPlusLogresults = (results) => {
                 results.forEach((result) => {
-                    console.log(result.status, result.value.attr('id'))
+                    // console.log(result.status, result.value.attr('id'))
                 })
                 if (callback) callback()
             }
@@ -140,7 +140,7 @@
 
         window.addEventListener('load', (event) => {
             resizeSVGs(() => {
-                console.log("all SVGs resized!")
+                // console.log("all SVGs resized!")
             })
         });
 
@@ -482,13 +482,15 @@
                 const found = (bar) => {
                     const variation = bar2variation(bar)
                     $(".grid-brick").removeClass("playing")
-                    $(`.grid-brick#gb${variation}`).addClass("playing")
-                    console.log(variation)
+                    $(`.grid-brick#gb${variation}`).addClass("playing");
 
                     const startBarOfVariation = variation2bar(variation)
                     if (previousPlayOnBar != startBarOfVariation) {
                         previousPlayOnBar = startBarOfVariation
                         Cookies.set('previousPlayOnBar', previousPlayOnBar)
+                        console.log('seeked or playing variation', variation, '(should scroll into view)')
+                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }),
+                            setTimeout(() => { }, 1000)
                     }
                 }
                 for (let bar of all.bars) {
@@ -510,18 +512,21 @@
 
             //
             plyer.on("ready", (event) => {
-                console.log("Plyr ready");
+                console.log("Plyr ready event");
                 $('#playerWrapper').show()
                 $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
                 $("#grid").isotope('layout')
                 plyer.muted = false
                 plyer.pause();
-                let bar = all.bars[previousPlayOnBar]
-                console.log("seek to ", bar["Time Recorded"], bar.duration.asSeconds())
-                if (Cookies.get('playing') == 'true') {
-                    plyer.play();
-                }
-                plyer.currentTime = bar.duration.asSeconds()
+                setTimeout(() => {
+                    let bar = all.bars[previousPlayOnBar]
+                    console.log("seeking (on Plyr ready)", bar["Time Recorded"])
+                    if (Cookies.get('playing') == 'true') {
+                        plyer.play();
+                    }
+                    plyer.currentTime = bar.duration.asSeconds()
+                }, 1000)
+
             });
             plyer.on("timeupdate", (event) => {
                 const currentTime = event.detail.plyr.currentTime
@@ -529,19 +534,19 @@
             });
             plyer.on("playing", (event) => {
                 Cookies.set('playing', 'true', { expires: 7 })
-                console.log("Plyr playing");
+                console.log("Plyr playing event");
             });
             plyer.on("seeking", (event) => {
                 const currentTime = event.detail.plyr.currentTime
-                console.log('seeked at', currentTime)
+                console.log('Plyr seeking event at', currentTime)
                 feedbackOnCurrentTime(currentTime)
             });
             plyer.on("pause", (event) => {
                 Cookies.set('playing', 'false', { expires: 7 })
-                console.log("Plyr paused");
+                console.log("Plyr pause event");
             });
             plyer.on("ended", (event) => {
-                console.log("Plyr ended");
+                console.log("Plyr ended event");
             });
         }
     </script>
@@ -787,21 +792,24 @@
             } else {
 
                 const d = $(this).data()
-                console.log('bar', d.bar)
-                // const state = player.getPlayerState()
-                const isPlaying = plyer.playing
-                if (previousPlayOnBar == d.bar) {
-                    if (isPlaying) {
-                        plyer.pause();
+                console.log('clicked on bar', d.bar)
+                if (typeof (d.bar) != "undefined") {
+                    // const state = player.getPlayerState()
+                    const isPlaying = plyer.playing
+                    if (previousPlayOnBar == d.bar) {
+                        // just toggle play state
+                        if (isPlaying) {
+                            plyer.pause();
+                        } else {
+                            plyer.play()
+                        }
                     } else {
-                        plyer.play()
-                    }
-                } else {
-                    if (typeof (d.bar) != "undefined" && ytID) {
                         let bar = all.bars[d.bar]
-                        console.log("seek to ", bar["Time Recorded"], bar.duration.asSeconds())
+                        console.log("seeking (on click)", bar["Time Recorded"])
                         plyer.currentTime = bar.duration.asSeconds()
-                        plyer.play()
+                        if (!isPlaying) {
+                            plyer.play()
+                        }
                         previousPlayOnBar = d.bar
                         Cookies.set('previousPlayOnBar', d.bar)
                     }
