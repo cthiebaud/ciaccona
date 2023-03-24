@@ -94,9 +94,9 @@
             resizeSVGs((o) => {
                 $(o).parent().css({ visibility: "visible" })
             },
-            () => {
-                console.log("all SVGs resized!")
-            })
+                () => {
+                    console.log("all SVGs resized!")
+                })
         });
     </script>
 
@@ -187,14 +187,6 @@
             background-clip: padding-box;
             position: absolute;
             display: block;
-            /*
-            left: 0;
-            top: 0;
-            height: 88%;
-            width: fit-content;
-            object-fit: cover;
-            object-position: 0% 50%;
-            margin: .3rem;*/
         }
 
         body.siegel {
@@ -246,12 +238,25 @@
             top: 0;
             bottom: 0;
             opacity: 1;
+            /* visibility: hidden; */
         }
 
         .plyr--video {
             height: 100%;
             width: 100%;
             position: absolute;
+        }
+
+        /* https://codepen.io/iamrobert/pen/GRpZdQm */
+        .plyr:not(.plyr--playing) .plyr__video-embed {
+            filter: blur(.8rem);
+            position: absolute;
+            opacity: 1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            pointer-events: none;
         }
 
         iframe {
@@ -436,9 +441,10 @@
         }
 
         if (!ytID) {
-            $(gridContainerCol).css({ visibility: 'visible' })
+            $('#gridContainerCol').css({ visibility: 'visible' })
         } else {
-            $(gridContainerCol).css({ visibility: 'hidden' })
+            $("body").css({ "background-color": "black" });
+            $('#gridContainerCol').css({ visibility: 'hidden' })
 
             const $asd = $(
                 `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${ytID}">`
