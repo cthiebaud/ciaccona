@@ -1,7 +1,7 @@
-async function resizeSVGs(elementCallback, finalCallback) {
+async function resizeSVGs(selection, elementCallback, finalCallback) {
     const lesPromessesDeLeSVG = []
 
-    document.querySelectorAll('object').forEach((o) => {
+    selection.forEach((o) => {
         lesPromessesDeLeSVG.push(new Promise((resolve, reject) => {
             let interval = setInterval(() => {
                 let SVG = o.contentDocument;
@@ -27,7 +27,9 @@ async function resizeSVGs(elementCallback, finalCallback) {
         let maxHeight = 0
         results.forEach((result) => {
             if (result.status === "fulfilled") {
+                const o = result.value.o
                 const svg = result.value.svg
+                // console.log(o, svg)
                 const box = svg.getBBox()
                 maxWidth = Math.max(maxWidth, box.width)
                 maxHeight = Math.max(maxHeight, box.height)

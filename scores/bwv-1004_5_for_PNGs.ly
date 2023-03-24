@@ -1128,10 +1128,43 @@ melodyFour =  \relative f' {
     }
 
 breaks = {
-	s2 \noBreak s2. \noBreak s2. \noBreak s2. \pageBreak
-	\repeat unfold 63 {
-    	s2. \noBreak s2. \noBreak s2. \noBreak s2. \pageBreak
+	%% theme
+	s2 \noBreak \repeat unfold 6 { s2. \noBreak } s2. \pageBreak
+	%% var 1 - 7 (7)
+	\repeat unfold 7 {
+    	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
     }
+	%% var 8 
+	\repeat unfold 11 { s2. \noBreak } s2. \pageBreak
+	%% var 9
+	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
+	%% var 10 
+	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
+	%% var 11 - 14 (4)
+	\repeat unfold 4  {
+    	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
+    }
+	%% var 15 
+	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
+	%% var 16 - 18 (4)
+	\repeat unfold 3  {
+    	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
+    }
+	%% var 19 
+	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
+	%% var 20 - 28 (9)
+	\repeat unfold 9  {
+    	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
+    }
+	%% var 29 
+	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
+	%% var 30
+	\repeat unfold 11 { s2. \noBreak } s2. \pageBreak
+	%% var 31 - 32 (2)
+	\repeat unfold 2 {
+    	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
+    }
+	%% last chord
 	s2. \pageBreak
 }
 
