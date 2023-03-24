@@ -9,9 +9,11 @@
     <meta name="keywords" content="Bach, Ciaconna, Chaconne, BWV1004">
     <meta name="author" content="Christophe Thiebaud">
 
+    <!-- HTML Meta Tags -->
     <title>Ciaccona</title>
+    <meta name="description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
 
-
+    <!-- https://realfavicongenerator.net/ -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -33,11 +35,6 @@
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="2400" />
     <meta property="og:image:height" content="1260" />
-
-
-    <!-- HTML Meta Tags -->
-    <title>Ciaccona</title>
-    <meta name="description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://ciaccona.cthiebaud.com/">
@@ -76,7 +73,7 @@
     <script src="/resizeSVGs.js"></script>
 
     <script>
-        const afterResize = () => {
+        const afterResizeWindow = () => {
             // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
             const vh = window.innerHeight * 0.01
             const vw = window.innerWidth * 0.01
@@ -86,11 +83,10 @@
             document.documentElement.style.setProperty('--vw', `${vw}px`)
         }
 
-        afterResize()
-
+        afterResizeWindow()
         window.addEventListener('resize',
             _.debounce(() => {
-                afterResize()
+                afterResizeWindow()
             }, 750)
         );
 
@@ -102,58 +98,6 @@
                 console.log("all SVGs resized!")
             })
         });
-        /*
-        async function resizeSVGs(callback) {
-            const promises = []
-
-            $(document.getElementsByTagName('object')).each((i, o) => {
-                const $o = $(o)
-                const width = $o.width()
-
-                promises.push(new Promise((resolve, reject) => {
-                    let interval = setInterval(() => {
-                        let SVG = o.getSVGDocument();
-                        if (!SVG || !SVG.children || SVG.children.length == 0) {
-                            console.log("not yet ...", o.id)
-                            return
-                        }
-
-                        clearInterval(interval);
-
-                        const svg = SVG.children[0]
-                        const box = svg.getBBox()
-                        const viewBox = [box.x, box.y, box.width, box.height].join(" ")
-                        let transform = `matrix(3,0,0,3,${width}, 0)`
-                        if (o.id == 'o33') transform = "matrix(.9,0,0,.9,-10, 0)"
-                        svg.setAttribute("viewBox", viewBox)
-                        svg.setAttribute("transform", transform)
-                        svg.removeAttribute("height")
-                        svg.removeAttribute("width")
-
-                        $o.css({ visibility: "visible" })
-                        resolve($o)
-                    }, 10)
-                    setTimeout(() => {
-                        clearInterval(interval);
-                        reject($o)
-                    }, 10000) // kill it after 10 seconds
-                }))
-            })
-            callbackPlusLogresults = (results) => {
-                results.forEach((result) => {
-                    // console.log(result.status, result.value.attr('id'))
-                })
-                if (callback) callback()
-            }
-            Promise.allSettled(promises).then(callbackPlusLogresults)
-        }
-
-        window.addEventListener('load', (event) => {
-            resizeSVGs(() => {
-                // console.log("all SVGs resized!")
-            })
-        });
-    */
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,36 +111,37 @@
             height: 100vh;
             /* custom properties */
             height: calc(var(--vh, 1vh) * 100);
-            /*
-            background-image: url('svg/Bachsiegel_glowing_bubble.svg');
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center center;
-            */
         }
 
         a {
             text-decoration: none;
         }
 
-        .push2right {
-            max-width: 24rem;
-            height: 90vh !important;
-            overflow-y: scroll;
-        }
-
         .grid-brick {
             font-size: 1.4rem;
             height: 6rem;
+            width: 24rem;
             padding: .5rem;
             border-style: dashed;
-            border-width: 0;
+            border-width: 4px !important;
             cursor: pointer;
         }
 
+        #gridContainerCol.push2right {
+            max-width: 24rem;
+            height: calc(var(--vh, 1vh) * 90) !important;
+            overflow-y: scroll;
+            margin: 0;
+            padding: 0;
+        }
+
         .grid-brick.playing {
-            border-width: 3px !important;
             border-radius: 0 !important;
+        }
+
+        .grid-brick:not(.playing) {
+            border-radius: 0 !important;
+            border-color: transparent !important;
         }
 
         .grid-brick.playing .brick {
@@ -204,8 +149,8 @@
         }
 
         .grid-brick.playing .score {
-            width: 100% !important;
             border-radius: 0 !important;
+            width: 100% !important;
         }
 
         .grid.playing object {
@@ -224,32 +169,32 @@
 
         .brick {
             border-radius: 0 3rem 3rem 0;
-            width: 23rem;
+            width: 100%;
             height: 100%;
         }
 
         .score {
             position: relative;
             height: 5rem;
-            margin-right: .3rem;
             cursor: pointer;
-            width: fit-content;
             overflow: hidden;
             border-radius: 0 3rem 3rem 0;
         }
 
-        .score img,
         .score object {
             background-color: rgba(255, 255, 255, .8);
+            height: 100%;
             background-clip: padding-box;
+            position: absolute;
+            display: block;
+            /*
             left: 0;
             top: 0;
             height: 88%;
+            width: fit-content;
             object-fit: cover;
             object-position: 0% 50%;
-            margin: .3rem;
-            display: block;
-            position: absolute;
+            margin: .3rem;*/
         }
 
         body.siegel {
@@ -287,7 +232,6 @@
             font-family: 'Cinzel', serif;
             font-size: smaller;
             float: left;
-            margin: .3rem;
             padding-right: .3rem;
             position: relative;
             background-color: rgba(0, 0, 0, .25);
