@@ -1,4 +1,5 @@
 *.png
+*.svg
 *.midi
 pages/*.png
 pages/cropped/*
