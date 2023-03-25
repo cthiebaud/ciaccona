@@ -6,12 +6,12 @@
     <!-- meta name="viewport" content="width=device-width, initial-scale=1" -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <meta name="keywords" content="Bach, Ciaconna, Chaconne, BWV1004">
+    <meta name="keywords" content="Bach, JSBach, BWV1004, Partita, Ciaconna, Chaconne">
     <meta name="author" content="Christophe Thiebaud">
 
     <!-- HTML Meta Tags -->
     <title>Ciaccona</title>
-    <meta name="description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
+    <meta name="description" content='The "Tribune des Critiques de Disques" of the Ciaccona (/Chaconne) of the 2nd Partita BWV 1004 by JS Bach'>
 
     <!-- https://realfavicongenerator.net/ -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -22,42 +22,36 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Open Graph data -->
-    <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="Ciaccona" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ciaccona.cthiebaud.com/" />
-    <meta property="og:description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach" />
-    <meta property="og:site_name" content="ciaccona" />
-
+    <!-- Facebook Meta Tags -->
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="ciaccona.cthiebaud.com" />
+    <meta property="og:url" content="https://ciaccona.cthiebaud.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ciaccona">
+    <meta property="og:description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
     <meta property="og:image" content="https://ciaccona.cthiebaud.com/logo2.jpg" />
     <meta property="og:image:url" content="https://ciaccona.cthiebaud.com/logo2.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="2400" />
     <meta property="og:image:height" content="1260" />
 
-    <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://ciaccona.cthiebaud.com/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Ciaccona">
-    <meta property="og:description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
-    <meta property="og:image" content="https://ciaccona.cthiebaud.com/logo2.jpg">
-
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@cthiebaud">
     <meta property="twitter:domain" content="ciaccona.cthiebaud.com">
     <meta property="twitter:url" content="https://ciaccona.cthiebaud.com/">
     <meta name="twitter:title" content="Ciaccona">
     <meta name="twitter:description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
     <meta name="twitter:image" content="https://ciaccona.cthiebaud.com/logo2.jpg">
 
-
+    <!-- video player -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.css">
-
+    <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
 
+    <!-- early scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
     <script>
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
@@ -73,6 +67,7 @@
     <script src="/resizeSVGs.js"></script>
 
     <script>
+        // <!-- CSS variable for dimensions -->
         const afterResizeWindow = () => {
             // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
             const vh = window.innerHeight * 0.01
@@ -82,7 +77,6 @@
             document.documentElement.style.setProperty('--vh', `${vh}px`)
             document.documentElement.style.setProperty('--vw', `${vw}px`)
         }
-
         afterResizeWindow()
         window.addEventListener('resize',
             _.debounce(() => {
@@ -90,9 +84,11 @@
             }, 750)
         );
 
+        // <!-- resize each SVG to its bounding box -->
         window.addEventListener('load', (event) => {
             resizeSVGs(
                 document.querySelectorAll('object'),
+                6.5,
                 (o) => {
                     $(o).parent().css({ visibility: "visible" })
                 }, () => {
@@ -101,10 +97,12 @@
         });
     </script>
 
+    <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
+    <!-- -->
     <style>
         body {
             /* https://css-tricks.com/the-trick-to-viewport-units-on-mobile/ */
@@ -118,22 +116,27 @@
             text-decoration: none;
         }
 
-        .grid-brick {
-            font-size: 1.4rem;
-            height: 6rem;
-            width: 24rem;
-            padding: .5rem;
-            border-style: dashed;
-            border-width: 4px !important;
-            cursor: pointer;
+        #gridContainerCol {
+            margin: 0;
+            padding: 0;
         }
 
         #gridContainerCol.push2right {
             max-width: 24rem;
-            height: calc(var(--vh, 1vh) * 90) !important;
+            height: calc(var(--vh, 1vh) * 95) !important;
             overflow-y: scroll;
             margin: 0;
             padding: 0;
+        }
+
+        .grid-brick {
+            font-size: 1.4rem;
+            width: 24rem;
+            height: 6rem;
+            padding: .5rem;
+            border-style: dashed;
+            border-width: 4px !important;
+            cursor: pointer;
         }
 
         .grid-brick.playing {
@@ -493,7 +496,7 @@
             }
 
             //
-            plyer.on("ready", (event) => {
+            plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
                 $('#playerWrapper').show()
                 $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
@@ -510,7 +513,7 @@
                 }, 1000)
 
             });
-            plyer.on("timeupdate", (event) => {
+            plyer.on('timeupdate', (event) => {
                 const currentTime = event.detail.plyr.currentTime
 
                 if (plyer.playing) {
@@ -518,21 +521,50 @@
                 }
                 feedbackOnCurrentTime(currentTime)
             });
-            plyer.on("playing", (event) => {
+            plyer.on('playing', (event) => {
                 Cookies.set('playing', 'true', { expires: 7 })
                 console.log("Plyr playing event");
+                /*
+                if (plyer.playing) {
+                    // heuristic to calc score scroll offset
+                    // 1. get object width
+                    const oWidth = $('.grid-brick.playing .score object').width() 
+                    // 2. get parent .score width
+                    const sWidth = $('.grid-brick.playing .score').width() 
+                    // 3. get start time of current variation
+                    let start = all.bars[previousPlayOnBar].m
+                    const start2 = moment.duration(start.diff(all.start))
+                    // 4. get variation duration
+                    let end = all.bars[parseInt(previousPlayOnBar, 10)+1].m
+                    const dur = moment.duration(end.diff(start))
+                    const dur2 = dur.asMilliseconds()
+                    console.log('duration', Math.round(dur2), 'score width', Math.round(oWidth-sWidth))
+
+                    // une petite règle de trois
+                    // offset = ( (currentTime - start) * (oWidth - sWidth) ) duration
+                    const offset = 100*( (currentTime *1000 - start2) * (oWidth - sWidth) ) / (dur2 * 1000)
+
+                    // 
+                    console.log(Math.round(currentTime), Math.round(offset) )
+                    // scroll
+                    toggleAnimate(true, document.querySelector('.grid-brick.playing object'), { action: "start" })
+                }
+                */
             });
-            plyer.on("seeking", (event) => {
+            plyer.on('seeking', (event) => {
                 const currentTime = event.detail.plyr.currentTime
                 console.log('Plyr seeking event at', currentTime)
                 feedbackOnCurrentTime(currentTime)
             });
-            plyer.on("pause", (event) => {
+            plyer.on('pause', (event) => {
+                /*
+                toggleAnimate(document.querySelector('.grid-brick.playing object'), { action: "stop" })
+                */
                 $(".grid-brick").removeClass("playing")
                 Cookies.set('playing', 'false', { expires: 7 })
                 console.log("Plyr pause event");
             });
-            plyer.on("ended", (event) => {
+            plyer.on('ended', (event) => {
                 console.log("Plyr ended event");
             });
         }
@@ -724,7 +756,7 @@
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; ">
 
             <object id="o${i}" 
-                    data="bars/bwv-1004_5_for_PNGs-${i+1}.svg" 
+                    data="scores/bwv-1004_5_for_PNGs-${i + 1}.svg" 
                     type="image/svg+xml"
                     style="pointer-events: none;" > 
             </object>
@@ -777,6 +809,10 @@
                 if ($('.dropdown').find('.dropdown-menu').is(":hidden")) {
                     $('.dropdown-toggle').dropdown('toggle');
                 }
+                /*
+                console.log(e.currentTarget.parentNode)
+                e.currentTarget.parentNode.classList.toggle("playing")
+                */
             } else {
 
                 const d = $(this).data()

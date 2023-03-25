@@ -29,7 +29,7 @@
             padding: .5rem;
             margin: .5rem;
             width: 100%;
-            height: 6rem;
+            height: 32rem;
             overflow: hidden;
         }
 
@@ -40,7 +40,7 @@
             margin: .5rem;
             width: fit-content;
             block-size: fit-content;
-            visibility: hidden;
+            /* visibility: hidden; */
         }
 
         .score object {
@@ -56,16 +56,26 @@
     <script src="/resizeSVGs.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <script>
-        window.addEventListener('load', (event) => {
-            resizeSVGs(
-                document.querySelectorAll('object'),
-                (o) => {
-                    o.parentNode.style.visibility = "visible"
-                },
-                () => {
-                    console.log("all SVGs resized!")
-                })
-        });
+        const resize = true
+        if (!resize) {
+            document.querySelectorAll('object').forEach((o) => {
+                // o.parentNode.style.visibility = "visible"
+            })
+        } else {
+            window.addEventListener('load', (event) => {
+                resizeSVGs(
+                    document.querySelectorAll('object.resize'),
+                    0,
+                    (o) => {
+                        // o.parentNode.style.visibility = "visible"
+                    },
+                    () => {
+                        document.querySelectorAll('object').forEach((o) => {
+                            console.log(o.id, o.getBoundingClientRect())
+                        })
+                    })
+            });
+        }
     </script>
 </head>
 
@@ -88,16 +98,46 @@
     for (let i = 1; i < 35; i++) {
         var new_brick =
             `
-<div class="d-flex justify-content-between align-items-center">
+<!--div class="d-flex row justify-content-between align-items-center crop">
+    <div-- class="flex-fill">
+        <div class="score">
+            <object id="o${i}________" data="scores/bwv-1004_5_for_PNGs-${i}.svg" type="image/svg+xml"
+                    style="pointer-events: none;" >
+        </object>
+    </div>
+</div-->
+<div class="d-flex row justify-content-between align-items-center crop">
     <div class="flex-fill">
         <div class="score">
-            <object id="o${i}" data="bars/bwv-1004_5_for_PNGs-${i}.svg" type="image/svg+xml">
+            <object id="o${i}_____res" class="resize" data="scores/bwv-1004_5_for_PNGs-${i}.svg" type="image/svg+xml"
+                    style="pointer-events: none;" >
         </object>
     </div>
 </div>
+<!-- div class="d-flex row justify-content-between align-items-center">
+    <div class="flex-fill">
+        <div class="score">
+            <object id="o${i}_cro_res" class="resize" data="scores/bwv-1004_5_for_PNGs-${i}_cropped.svg" type="image/svg+xml"
+                    style="pointer-events: none;" >
+        </object>
+    </div>
+</div>
+<div class="d-flex row justify-content-between align-items-center">
+    <div-- class="flex-fill">
+        <div class="score">
+            <object id="o${i}_cro____" data="scores/bwv-1004_5_for_PNGs-${i}_cropped.svg" type="image/svg+xml"
+                    style="pointer-events: none;" >
+        </object>
+    </div>
+</div-->
 `
         $('body>div').append($(new_brick))
     }
+
+    $(".score").click(function (e) {
+        toggleAnimate(e.currentTarget.querySelector('object'))
+    })
+
 </script>
 
 </html>

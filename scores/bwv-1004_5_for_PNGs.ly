@@ -1,6 +1,9 @@
 
 \version "2.18.2"
 
+%% https://superuser.com/a/1717604/261669
+%% #(ly:set-option 'crop #t)
+
 \paper {
     indent = 0.0
     line-width = 18.0\cm
