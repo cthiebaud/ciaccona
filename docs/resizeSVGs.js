@@ -21,7 +21,7 @@ async function resizeSVGs(selection, elementCallback, finalCallback) {
 
                 const svg = SVG.children[0]
 
-                resolve({ o: o, svg: svg, offset: parseInt(o.dataset.svgOffsetX) })
+                resolve({ o: o, svg: svg, offset: o.dataset.svgOffsetX ? parseInt(o.dataset.svgOffsetX) : 0 })
             }, 10)
             setTimeout(() => {
                 clearInterval(interval);
