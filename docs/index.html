@@ -126,8 +126,8 @@
         }
 
         #gridContainerCol.push2right {
-            max-width: 23.5rem;
-            height: calc(var(--vh, 1vh) * 95) !important;
+            max-width: min(var(--vw, 1vw) * 100, 23.5rem);
+            height: calc(var(--vh, 1vh) * 95 - 32px) !important;
             overflow-y: scroll;
             margin: 0;
             padding: 0;
@@ -135,7 +135,7 @@
 
         .grid-brick {
             font-size: 1.4rem;
-            width: 23.5rem;
+            width: min(var(--vw, 1vw) * 100, 23.5rem);
             height: 6rem;
             padding: .5rem;
             border-style: dashed;
