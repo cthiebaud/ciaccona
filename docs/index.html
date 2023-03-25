@@ -899,9 +899,9 @@
         $(".brick").click(function (e) {
             e.stopPropagation();
             if (!ytID) {
-                if ($('.dropdown').find('.dropdown-menu').is(":hidden")) {
+                /* if ($('.dropdown').find('.dropdown-menu').is(":hidden")) { */
                     $('.dropdown-toggle').dropdown('toggle');
-                }
+                /* } */
                 /*
                 console.log(e.currentTarget.parentNode)
                 e.currentTarget.parentNode.classList.toggle("playing")
