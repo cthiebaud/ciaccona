@@ -238,33 +238,21 @@
             border-bottom-right-radius: 1rem;
             color: rgba(255, 255, 255, .75);
         }
-
+        
         .video-container {
             position: absolute;
             left: 0;
             right: 0;
             top: 0;
             bottom: 0;
+            padding: 0;
             opacity: 1;
-            /* visibility: hidden; */
         }
-
+        /* 
         .plyr--video {
             height: 100%;
             width: 100%;
             position: absolute;
-        }
-
-        /* https://codepen.io/iamrobert/pen/GRpZdQm */
-        /*
-        .plyr .plyr__video-embed {
-            position: absolute;
-            opacity: 1;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            object-fit:cover;
         } */
 
         .plyr:not(.plyr--playing) .plyr__video-embed {
@@ -390,11 +378,7 @@
 
     <main id="gridContainer" class="container-fluid my-center" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
-            <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="padding:0">
-                <!-- style="width: 1080px; height: 720px;" src="https://www.youtube.com/embed/Vslz1tDsaWw?controls=1&autoplay=0&mute=1&playsinline=1&enablejsapi=1"
-                <iframe id="player" class="video-container" >
-                </iframe> 
-                <div id="player"></div>-->
+            <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
             </div>
             <div id="gridContainerCol" class="col" style="visibility: hidden"> <!--  -->
                 <div id="grid">
@@ -490,11 +474,11 @@
             $("body").css({ "background-color": "black" });
             $('#gridContainerCol').css({ visibility: 'hidden' })
 
-            const $asd = $(
+            const $blah2 = $(
                 `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${ytID}">`
             );
 
-            $("#playerWrapper").append($asd);
+            $("#playerWrapper").append($blah2);
 
             plyer = new Plyr("#blah2", {
                 mute: 0
@@ -538,7 +522,6 @@
             //
             plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
-                $('#playerWrapper').show()
                 $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
                 $("#grid").isotope('layout')
                 plyer.muted = false
@@ -550,7 +533,8 @@
                         plyer.play();
                     }
                     plyer.currentTime = bar.duration.asSeconds()
-                }, 1000)
+                    $('.video-container').css({visibility: "visible"})
+                }, 666)
 
             });
             plyer.on('timeupdate', (event) => {
