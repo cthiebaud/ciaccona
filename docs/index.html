@@ -88,7 +88,6 @@
         window.addEventListener('load', (event) => {
             resizeSVGs(
                 document.querySelectorAll('object'),
-                6.5,
                 (o) => {
                     $(o).parent().css({ visibility: "visible" })
                 }, () => {
@@ -840,6 +839,8 @@
                 #${c.p_rgb} 100%); 
                 background-size: 16.97px 16.97px;`
 
+            const svgOffsetX = (i == 0 || i == 17 || i == 27 || i == 33 ? "0" : "6.5")
+
             const templateVariations =
                 `
 <div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick" style="border-color: #${c.borderColor}">
@@ -849,7 +850,8 @@
             <object id="o${i}" 
                     data="scores/bwv-1004_5_for_PNGs-${i + 1}.svg" 
                     type="image/svg+xml"
-                    style="pointer-events: none;" > 
+                    style="pointer-events: none;" 
+                    data-svg-offset-x = ${svgOffsetX}> 
             </object>
 
             <span class="Δ" style="${bg}">

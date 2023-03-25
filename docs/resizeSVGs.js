@@ -5,7 +5,7 @@ function getNode(n, v) {
     return n
 }
 
-async function resizeSVGs(selection, xOffset, elementCallback, finalCallback) {
+async function resizeSVGs(selection, elementCallback, finalCallback) {
     const lesPromessesDeLeSVG = []
 
     selection.forEach((o) => {
@@ -21,7 +21,7 @@ async function resizeSVGs(selection, xOffset, elementCallback, finalCallback) {
 
                 const svg = SVG.children[0]
 
-                resolve({ o: o, svg: svg, offset: xOffset })
+                resolve({ o: o, svg: svg, offset: parseInt(o.dataset.svgOffsetX) })
             }, 10)
             setTimeout(() => {
                 clearInterval(interval);
@@ -52,7 +52,7 @@ async function resizeSVGs(selection, xOffset, elementCallback, finalCallback) {
                 const x = centerX - maxWidth / 2
                 const centerY = box.y + box.height / 2
                 const y = centerY - maxHeight / 2
-                const viewBox = [box.x + result.value.offset, y, box.width, maxHeight].join(" ")
+                const viewBox = [box.x + (result.value.offset ? result.value.offset: 0), y, box.width, maxHeight].join(" ")
                 svg.setAttribute("viewBox", viewBox)
                 svg.setAttribute("preserveAspectRatio", "xMinYMid meet")
                 // console.log(viewBox)
