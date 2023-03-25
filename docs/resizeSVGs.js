@@ -1,3 +1,10 @@
+function getNode(n, v) {
+    n = document.createElementNS("http://www.w3.org/2000/svg", n);
+    for (var p in v)
+        n.setAttributeNS(null, p, v[p]);
+    return n
+}
+
 async function resizeSVGs(selection, xOffset, elementCallback, finalCallback) {
     const lesPromessesDeLeSVG = []
 
@@ -59,13 +66,6 @@ async function resizeSVGs(selection, xOffset, elementCallback, finalCallback) {
         if (finalCallback) finalCallback()
     }
     Promise.allSettled(lesPromessesDeLeSVG).then(setViewBoxes)
-}
-
-function getNode(n, v) {
-    n = document.createElementNS("http://www.w3.org/2000/svg", n);
-    for (var p in v)
-        n.setAttributeNS(null, p, v[p]);
-    return n
 }
 
 function toggleAnimate(svg, action) {
