@@ -218,20 +218,22 @@
         }
         div.siegel#logoLeft {
             background-image: url('svg/Bach_Seal_full_left_120x120.svg');
+            /* transform: scale(-.8, .8); */
             left: -111vw;
         }
         div.siegel#logoRight {
             background-image: url('svg/Bach_Seal_full_right_120x120.svg');
+            /* transform: scale(-.8, .8); */
             left: +111vw;
         }
 
-        @keyframes fly-ball {
+        @keyframes fly-from-left {
             100% {
                 transform: translateX(+111vw);
             }
         }
-        @keyframes fly-ball2{
-            100% {
+        @keyframes fly-from-right {
+        100% {
                 transform: translateX(-111vw);
             }
         }
@@ -471,8 +473,10 @@
         </ul>
     </header>
 
-    <div id="logoRight" class="fullscreen siegel" style="display:none;"></div>
-    <div id="logoLeft" class="fullscreen siegel" style="display:none;"></div>
+    <div id="logos">
+        <div id="logoRight" class="fullscreen siegel" style="display:none;"></div>
+        <div id="logoLeft" class="fullscreen siegel" style="display:none;"></div>
+    </div>
 
     <footer style="display: none !important; z-index: 1000;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-between">
         <div class="flex-grow-1" style="margin-top: auto;">
@@ -529,10 +533,8 @@
         if (logo === "true") {
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
-            document.querySelector('div.fullscreen.siegel#logoLeft').addEventListener('animationend', e => {
-            });
-            $('div.fullscreen.siegel#logoLeft').show().css({animation: "fly-ball ease-out 4s forwards"})
-            $('div.fullscreen.siegel#logoRight').show().css({animation: "fly-ball2 ease-out 4s forwards"})
+            $('div.fullscreen.siegel#logoLeft').show().css({animation: "fly-from-left ease 4s forwards"})
+            $('div.fullscreen.siegel#logoRight').show().css({animation: "fly-from-right ease 4s forwards"})
             $('footer.footer').show()
         } else {
             $('header.header').hide()
