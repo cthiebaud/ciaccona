@@ -111,6 +111,16 @@
             height: calc(var(--vh, 1vh) * 100);
         }
 
+        .fullscreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
         .container-fluid {
             height: calc(var(--vh, 1vh) * 100);
         }
@@ -200,15 +210,32 @@
             display: block;
         }
 
-        body.siegel {
+        div.siegel {
             background-image: url('svg/BachsiegelColorWheel.svg');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center center;
-            background-color: #fff;
+            background-color: transparent;
+        }
+        div.siegel#logo {
+            left: -101vw;
+        }
+        div.siegel#logo2 {
+            left: +101vw;
         }
 
-        .siegel {
+        @keyframes fly-ball {
+            100% {
+                transform: translateX(+101vw);
+            }
+        }
+        @keyframes fly-ball2{
+            100% {
+                transform: translateX(-101vw);
+            }
+        }
+
+        .glowing_bubble_siegel {
             background-image: url('svg/Bachsiegel_glowing_bubble.svg');
             background-size: contain;
             background-repeat: no-repeat;
@@ -443,6 +470,9 @@
         </ul>
     </header>
 
+    <div id="logo" class="fullscreen siegel" style="display:none;"></div>
+    <div id="logo2" class="fullscreen siegel" style="display:none;"></div>
+
     <footer style="display: none !important; z-index: 1000;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-between">
         <div class="flex-grow-1" style="margin-top: auto;">
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
@@ -496,12 +526,15 @@
 
     <script>
         if (logo === "true") {
-            $('body').addClass('siegel');
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
+            $('div.fullscreen.siegel#logo').show().css({animation: "fly-ball ease-out 4s forwards"})
+            $('div.fullscreen.siegel#logo2').show().css({animation: "fly-ball2 ease-out 4s forwards"})
             $('footer.footer').show()
         } else {
             $('header.header').hide()
+            $('div.fullscreen.siegel#logo').hide()
+            $('div.fullscreen.siegel#logo2').hide()
             $('footer.footer').hide()
         }
         let all = undefined
@@ -907,7 +940,7 @@
             `
 <div class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="border-radius: 0; background-color: black">
-        <div class="siegel">
+        <div class="glowing_bubble_siegel">
             <div class="magnificient-card p-2" style="backdrop-filter: blur(.2px);">
                 ${'&nbsp;BWV&nbsp;1004&nbsp;'}
             </div>
