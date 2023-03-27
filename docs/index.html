@@ -412,7 +412,7 @@
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=XkfsGCIiHb4'">&nbsp; <div>Bella Hristova </div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=dyAcRqpjbqU'">&nbsp; <div>Lisa Jacobs</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=NCTDf8dNT5s'">&nbsp; <div>Sigiswald Kuijken</div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=i3UhcV76BlE'">&nbsp; <div>Rachel Podger</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=1HSJufg7I1I'">&nbsp; <div>Rachel Podger</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=59KFAY_qf-Q'">&nbsp; <div>Rachell Ellen Wong</div></a></li>
             <li>
                 <hr class="dropdown-divider">
@@ -548,7 +548,7 @@
     <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
     <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
     <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
-    <script src="timings/RachelPodger-i3UhcV76BlE.js"></script>
+    <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
     <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
     <script src="timings/AndreaDeVitis-oxWq93mlAyc.js"></script>
     <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
@@ -563,16 +563,14 @@
             $('header.header').show()
             // $('div.fullscreen.siegel#logoLeft').show().css({ animation: "fly-from-left ease 4s forwards" })
             // $('div.fullscreen.siegel#logoRight').show().css({ animation: "fly-from-right ease 4s forwards" })
-            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
-                console.log('end of animation left')
-                $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
-                    console.log('end of animation right')
-                    /*
-                    $('div#credits').show().animate({ opacity: 1 }, 1000, undefined, () => {
-                        console.log('end of animation credits')
-                    })
-                    */
+            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000)
+            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
+                console.log('end of animation')
+                /*
+                $('div#credits').show().animate({ opacity: 1 }, 1000, undefined, () => {
+                    console.log('end of animation credits')
                 })
+                */
             })
             $('footer.footer').show()
         } else {

@@ -1,6 +1,6 @@
-const i3UhcV76BlE = {
-  /* offset : moment.duration({seconds: 0, minutes: 0}), */
-  adjust: moment.duration({ seconds: .5 }),
+const _1HSJufg7I1I = {
+  offset : moment.duration({seconds: 43, minutes: 15}),
+  adjust: moment.duration({ seconds: 0.2 }),
   start: moment("2023-03-21T17:59:15.239Z"),
   bars: [
     {
