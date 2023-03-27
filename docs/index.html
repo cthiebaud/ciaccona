@@ -89,7 +89,9 @@
             resizeSVGs(
                 document.querySelectorAll('object'),
                 (o) => {
-                    $(o).parent().css({ visibility: "visible" })
+                    if (!ytID) {
+                        $(o).parent().css({ visibility: "visible" })
+                    }
                 }, () => {
                     console.log("all SVGs resized!")
                 })
@@ -216,11 +218,13 @@
             background-position: center center;
             background-color: transparent;
         }
+
         div.siegel#logoLeft {
             background-image: url('svg/Bach_Seal_full_left_120x120.svg');
             /* transform: scale(-.8, .8); */
             left: -111vw;
         }
+
         div.siegel#logoRight {
             background-image: url('svg/Bach_Seal_full_right_120x120.svg');
             /* transform: scale(-.8, .8); */
@@ -232,8 +236,9 @@
                 transform: translateX(+111vw);
             }
         }
+
         @keyframes fly-from-right {
-        100% {
+            100% {
                 transform: translateX(-111vw);
             }
         }
@@ -533,8 +538,8 @@
         if (logo === "true") {
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').show().css({animation: "fly-from-left ease 4s forwards"})
-            $('div.fullscreen.siegel#logoRight').show().css({animation: "fly-from-right ease 4s forwards"})
+            $('div.fullscreen.siegel#logoLeft').show().css({ animation: "fly-from-left ease 4s forwards" })
+            $('div.fullscreen.siegel#logoRight').show().css({ animation: "fly-from-right ease 4s forwards" })
             $('footer.footer').show()
         } else {
             $('header.header').hide()
@@ -599,8 +604,9 @@
 
         if (!ytID) {
             $('#gridContainerCol').css({ visibility: 'visible' })
+            $('.score').css({ visibility: "visible" })
         } else {
-            $("body").css({ "background-color": "black" });
+            $("body").css({ "background-color": "#0E0E10" });
             $('#gridContainerCol').css({ visibility: 'hidden' })
 
             const $blah2 = $(
@@ -613,7 +619,7 @@
                 mute: 0
             });
 
-            const feedbackOnCurrentTime = (currentTime) => {
+            const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
                 let i = 0
                 let barFound = 0
                 let done = false
@@ -623,12 +629,12 @@
                     $(`.grid-brick#gb${variation}`).addClass("playing");
 
                     const startBarOfVariation = variation2bar(variation)
-                    if (previousPlayOnBar != startBarOfVariation) {
+                    if (previousPlayOnBar != startBarOfVariation || forceScroll) {
                         previousPlayOnBar = startBarOfVariation
-                        Cookies.set('previousPlayOnBar', previousPlayOnBar)
-                        console.log('seeked or playing variation', variation, '(should scroll into view)')
+                        Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
+                        console.log(`${source} event, ask variation`, variation, 'to scroll into view')
+
                         $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
-                        // setTimeout(() => { }, 1000)
                     }
                 }
                 for (let bar of all.bars) {
@@ -651,74 +657,51 @@
             //
             plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
-                $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
-                $("#grid").isotope('layout')
-                plyer.muted = false
-                plyer.pause();
                 setTimeout(() => {
+                    $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
+                    $('.score').css({ visibility: "visible" })
+                    $('.video-container').css({ visibility: "visible" })
+                    let previousPlayOnBar = Cookies.get('previousPlayOnBar');
+                    if (!previousPlayOnBar) previousPlayOnBar = 0
+                    const variation = bar2variation(previousPlayOnBar)
+                    $("#grid").isotope('layout').one('arrangeComplete', function () {
+                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                    });
                     let bar = all.bars[previousPlayOnBar]
-                    console.log("seeking (on Plyr ready)", bar["Time Recorded"])
                     if (Cookies.get('playing') == 'true') {
+                        console.log('Dear plyr, as you where playing last time that we saw each other, can you start playing again ?')
                         plyer.play();
                     }
+                    console.log("Dear plyr, as you are ready, can you seek at variation <", variation, "> bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ') ?')
                     plyer.currentTime = bar.duration.asSeconds()
-                    $('.video-container').css({ visibility: "visible" })
-                }, 666)
+                }, 1000)
 
             });
             plyer.on('timeupdate', (event) => {
                 const currentTime = event.detail.plyr.currentTime
 
-                if (plyer.playing) {
-                    // scroll score
-                }
-                feedbackOnCurrentTime(currentTime)
+                feedbackOnCurrentTime(currentTime, 'timeupdate')
             });
             plyer.on('playing', (event) => {
-                Cookies.set('playing', 'true', { expires: 7 })
                 console.log("Plyr playing event");
-                /*
-                if (plyer.playing) {
-                    // heuristic to calc score scroll offset
-                    // 1. get object width
-                    const oWidth = $('.grid-brick.playing .score object').width() 
-                    // 2. get parent .score width
-                    const sWidth = $('.grid-brick.playing .score').width() 
-                    // 3. get start time of current variation
-                    let start = all.bars[previousPlayOnBar].m
-                    const start2 = moment.duration(start.diff(all.start))
-                    // 4. get variation duration
-                    let end = all.bars[parseInt(previousPlayOnBar, 10)+1].m
-                    const dur = moment.duration(end.diff(start))
-                    const dur2 = dur.asMilliseconds()
-                    console.log('duration', Math.round(dur2), 'score width', Math.round(oWidth-sWidth))
-
-                    // une petite règle de trois
-                    // offset = ( (currentTime - start) * (oWidth - sWidth) ) duration
-                    const offset = 100*( (currentTime *1000 - start2) * (oWidth - sWidth) ) / (dur2 * 1000)
-
-                    // 
-                    console.log(Math.round(currentTime), Math.round(offset) )
-                    // scroll
-                    toggleAnimate(true, document.querySelector('.grid-brick.playing object'), { action: "start" })
-                }
-                */
+                Cookies.set('playing', 'true', { expires: 2 })
+                const currentTime = event.detail.plyr.currentTime
+                feedbackOnCurrentTime(currentTime, 'timeupdate', true)
             });
             plyer.on('seeking', (event) => {
                 const currentTime = event.detail.plyr.currentTime
                 console.log('Plyr seeking event at', currentTime)
-                feedbackOnCurrentTime(currentTime)
+                feedbackOnCurrentTime(currentTime, 'seeking')
             });
             plyer.on('pause', (event) => {
-                /*
-                toggleAnimate(document.querySelector('.grid-brick.playing object'), { action: "stop" })
-                */
-                $(".grid-brick").removeClass("playing")
-                Cookies.set('playing', 'false', { expires: 7 })
                 console.log("Plyr pause event");
+                $(".grid-brick").removeClass("playing")
+                Cookies.set('playing', 'false', { expires: 2 })
             });
             plyer.on('ended', (event) => {
                 console.log("Plyr ended event");
+                Cookies.set('playing', 'false', { expires: 2 })
+                Cookies.set('previousPlayOnBar', 0, { expires: 2 })
             });
         }
     </script>
@@ -962,13 +945,7 @@
         $(".brick").click(function (e) {
             e.stopPropagation();
             if (!ytID) {
-                /* if ($('.dropdown').find('.dropdown-menu').is(":hidden")) { */
                 $('.dropdown-toggle').dropdown('toggle');
-                /* } */
-                /*
-                console.log(e.currentTarget.parentNode)
-                e.currentTarget.parentNode.classList.toggle("playing")
-                */
             } else {
 
                 const d = $(this).data()
@@ -979,8 +956,10 @@
                     if (previousPlayOnBar == d.bar) {
                         // just toggle play state
                         if (isPlaying) {
+                            console.log('dear plyr, can you please pause?')
                             plyer.pause();
                         } else {
+                            console.log('dear plyr, can you please play?')
                             plyer.play()
                         }
                     } else {
@@ -988,10 +967,11 @@
                         console.log("seeking (on click)", bar["Time Recorded"])
                         plyer.currentTime = bar.duration.asSeconds()
                         if (!isPlaying) {
+                            console.log('dear plyr, can you please restart playing?')
                             plyer.play()
                         }
                         previousPlayOnBar = d.bar
-                        Cookies.set('previousPlayOnBar', d.bar)
+                        Cookies.set('previousPlayOnBar', d.bar, { expires: 2 })
                     }
                 }
             }
