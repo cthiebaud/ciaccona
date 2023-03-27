@@ -86,6 +86,7 @@
 
         // <!-- resize each SVG to its bounding box -->
         window.addEventListener('load', (event) => {
+            $('#loading').hide()
             resizeSVGs(
                 document.querySelectorAll('object'),
                 (o) => {
@@ -121,6 +122,17 @@
             right: 0;
             height: 100vh;
             width: 100vw;
+        }
+        #loading .spinner-border {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: 5rem; 
+            height: 5rem;
+            color: gray;
         }
 
         .container-fluid {
@@ -275,6 +287,7 @@
             background-color: rgba(0, 0, 0, .25);
             border-bottom-right-radius: 1rem;
             color: rgba(255, 255, 255, .75);
+            padding: 0 .4rem 0 .2rem;
         }
 
         .video-container {
@@ -345,6 +358,7 @@
         .d-flex[style*="display: none"] {
             display: none !important;
         }
+
     </style>
 </head>
 
@@ -493,6 +507,12 @@
                 </svg>
             </a></div>
     </footer>
+
+    <div id="loading" class="fullscreen">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 
     <main id="gridContainer" class="container-fluid my-center flex-shrink-0"
         style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
