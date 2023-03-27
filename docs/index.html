@@ -123,6 +123,7 @@
             height: 100vh;
             width: 100vw;
         }
+
         #loading .spinner-border {
             position: absolute;
             left: 0;
@@ -130,7 +131,7 @@
             top: 0;
             bottom: 0;
             margin: auto;
-            width: 5rem; 
+            width: 5rem;
             height: 5rem;
             color: gray;
         }
@@ -358,7 +359,6 @@
         .d-flex[style*="display: none"] {
             display: none !important;
         }
-
     </style>
 </head>
 
@@ -379,9 +379,10 @@
         </symbol>
 
         <symbol id="youtube" viewBox="48.863006591796875, 79.2229995727539, 202.2743682861328, 141.55401611328125">
-            <path fill="#fff" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1"/>
-            <path fill="red" d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z"/>
-          
+            <path fill="#fff" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
+            <path fill="red"
+                d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
+
         </symbol>
 
         <symbol id="cthiebaud" viewBox="0 0 382.07 377.86">
@@ -497,6 +498,8 @@
         <div id="logoRight" class="fullscreen siegel" style="display:none;"></div>
         <div id="logoLeft" class="fullscreen siegel" style="display:none;"></div>
     </div>
+    <div id="credits" class="container" style="opacity: 0">
+    </div>
 
     <footer style="display: none !important; z-index: 1000;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-between">
         <div class="flex-grow-1" style="margin-top: auto;">
@@ -515,8 +518,7 @@
         </div>
     </div>
 
-    <main id="gridContainer" class="container-fluid my-center flex-shrink-0"
-        style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
+    <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
             </div>
@@ -559,8 +561,19 @@
         if (logo === "true") {
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').show().css({ animation: "fly-from-left ease 4s forwards" })
-            $('div.fullscreen.siegel#logoRight').show().css({ animation: "fly-from-right ease 4s forwards" })
+            // $('div.fullscreen.siegel#logoLeft').show().css({ animation: "fly-from-left ease 4s forwards" })
+            // $('div.fullscreen.siegel#logoRight').show().css({ animation: "fly-from-right ease 4s forwards" })
+            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
+                console.log('end of animation left')
+                $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
+                    console.log('end of animation right')
+                    /*
+                    $('div#credits').show().animate({ opacity: 1 }, 1000, undefined, () => {
+                        console.log('end of animation credits')
+                    })
+                    */
+                })
+            })
             $('footer.footer').show()
         } else {
             $('header.header').hide()
