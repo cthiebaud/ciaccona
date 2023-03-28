@@ -3,11 +3,4 @@ https://csvjson.com/csv2json
 https://onlinepngtools.com/create-transparent-png
 https://realfavicongenerator.net/
 
-
-^(\d),
-0$1,
-
-^(\d\d),
-0$1,
-
 \s+"#": "*\d+"*,\n\s+"Label": ".*",\n\s+"Interval": ".*",\n\s+"Total": ".*",\n

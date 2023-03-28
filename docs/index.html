@@ -56,7 +56,7 @@
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
-        // get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+        // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
         let videoId = params.yt; // "some_value"
         const logo = params.logo; // "some_value"
         if (logo === "true") {
@@ -89,13 +89,13 @@
         window.addEventListener('load', (event) => {
             $('#loading').hide()
             resizeSVGs(
-                document.querySelectorAll('#grid object'),
+                document.querySelectorAll('object'),
                 (o) => {
                     if (!videoId) {
                         $(o).parent().css({ visibility: "visible" })
-                    } // else, will be set to visible when video player is itself visible
+                    }
                 }, () => {
-                    // console.log("SVGs resized!")
+                    console.log("SVGs resized!")
                 })
         });
     </script>
@@ -121,8 +121,8 @@
             left: 0;
             bottom: 0;
             right: 0;
-            height: calc(var(--vh, 1vh) * 100);
-            width: calc(var(--vw, 1vh) * 100);
+            height: 100vh;
+            width: 100vw;
         }
 
         #loading .spinner-border {
@@ -131,7 +131,6 @@
             right: 0;
             top: 0;
             bottom: 0;
-            right: 0;
             margin: auto;
             width: 5rem;
             height: 5rem;
@@ -173,7 +172,12 @@
             cursor: pointer;
         }
 
+        .grid-brick.playing {
+            border-radius: 0 !important;
+        }
+
         .grid-brick:not(.playing) {
+            border-radius: 0 !important;
             border-color: transparent !important;
         }
 
@@ -196,7 +200,7 @@
             display: none !important;
         }
 
-        .grid-brick.Δ {
+        .grid-brick.Δ2 {
             background-color: rgba(128, 128, 128, .3);
         }
 
@@ -209,6 +213,7 @@
         .score {
             position: relative;
             height: 5rem;
+            cursor: pointer;
             overflow: hidden;
             border-radius: 0 3rem 3rem 0;
         }
@@ -230,11 +235,13 @@
 
         div.siegel#logoLeft {
             background-image: url('svg/Bach_Seal_full_left_120x120.svg');
+            /* transform: scale(-.8, .8); */
             left: -111vw;
         }
 
         div.siegel#logoRight {
             background-image: url('svg/Bach_Seal_full_right_120x120.svg');
+            /* transform: scale(-.8, .8); */
             left: +111vw;
         }
 
@@ -273,7 +280,7 @@
             color: #121212;
         }
 
-        span.Δ {
+        .Δ {
             font-family: 'Cinzel', serif;
             font-size: smaller;
             float: left;
@@ -291,7 +298,6 @@
             right: 0;
             top: 0;
             bottom: 0;
-            right: 0;
             padding: 0;
             opacity: 1;
         }
@@ -374,15 +380,8 @@
         </symbol>
 
         <symbol id="youtube" viewBox="48.863006591796875, 79.2229995727539, 202.2743682861328, 141.55401611328125">
-            <path fill="white" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
+            <path fill="#fff" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
             <path fill="red"
-                d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
-
-        </symbol>
-
-        <symbol id="youtubeBlack" viewBox="48.863006591796875, 79.2229995727539, 202.2743682861328, 141.55401611328125">
-            <path fill="white" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
-            <path fill="black"
                 d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
 
         </symbol>
@@ -390,9 +389,6 @@
         <symbol id="cthiebaud" viewBox="0 0 382.07 377.86">
             <path
                 d="M93.832 377.709c-21.112-1.858-38.24-9.37-53.95-23.664-5.08-4.622-9.224-9.262-14.454-16.181C11.66 319.647 3.735 299.304.79 274.614c-.785-6.585-.79-6.7-.789-18.75.003-12.034.008-12.178.811-19.25 3.088-27.162 11.52-49.436 26.027-68.75 4.202-5.594 6.978-8.741 11.89-13.479 17.442-16.823 39.576-26.865 65.854-29.875 5.85-.67 10.164-.894 17.25-.894 9.42 0 16.454.707 24.524 2.466 2.82.615 3.248.657 3.133.31-.073-.222-.808-2.372-1.633-4.778-4.187-12.221-6.55-23.3-7.536-35.332-.432-5.27-.18-15.74.485-20.223 1.447-9.744 4.553-18.708 9.293-26.824 11.336-19.405 29.848-32.269 53.36-37.077C212.406.328 215.935.014 227.708 0c8.056-.01 11.212.083 14.75.434 23.78 2.357 41.102 9.522 53.015 21.929 10.091 10.51 15.863 23.818 18.161 41.875.522 4.103.544 5.271.632 33.812l.09 29.563h54.976v17.75h-55.028l.111 78.437c.072 55.82.184 79.52.389 82.188 1.086 14.195 2.866 22.98 6.152 30.37 2.643 5.944 6.677 10.315 11.136 12.067 2.737 1.075 4.1 1.263 8.153 1.125 11.535-.395 21.91-5.793 32.487-16.905l2.265-2.38 3.533 2.987c1.942 1.642 3.539 3.049 3.547 3.126.01.077-.962 1.315-2.157 2.75-16.583 19.923-33.949 32.172-52.226 36.84-4.974 1.27-10.298 1.895-16.134 1.895-16.34 0-27.51-5.106-34.278-15.67-4.183-6.53-7.249-19.946-8.558-37.455-.732-9.795-.872-26.123-.877-102.848v-76.598l-10.187.129c-13.124.166-16.41-.11-19.085-1.604-1.753-.979-2.074-2.279-1.236-4.993l.492-1.592 3.696-2.62c6.637-4.706 12.791-10.024 21.383-18.478l4.937-4.859v-10.644c0-16.29-.983-24.346-4.16-34.143-7.28-22.439-24.682-33.892-51.464-33.87-7.978.007-13.147.6-19.66 2.26-5.943 1.513-11.928 4.159-16.818 7.434-10.838 7.257-16.968 16.986-18.902 30.002-.625 4.201-.673 12.004-.105 16.998 1.433 12.613 5.504 26.432 12.315 41.8 1.289 3.228 1.01 3.115 3.833 4.632 11.49 6.172 20.256 13.867 24.914 21.869 2.144 3.682 3.66 7.467 4.592 11.455.745 3.19.8 3.74.815 8.17.016 4.73.012 4.76-.801 7.14-2.36 6.902-9.84 13.83-16.933 15.684-2.525.66-8.054.96-10.442.568-5.494-.903-10.021-3.568-14.239-8.38-2.43-2.773-4.1-5.546-5.127-8.512-.871-2.514-.981-3.274-1.309-9.048-.481-8.47-2.143-14.385-5.534-19.702-1.52-2.382-5.872-6.794-8.225-8.336-4.532-2.97-10.56-5.08-17.75-6.212-2.343-.368-4.284-.448-10.5-.43-7.485.023-7.703.038-11.875.825-18.364 3.466-32.456 14.023-43.75 32.775-8.038 13.347-12.957 28.758-14.804 46.378-.687 6.548-.612 22.714.134 29.326 2.29 20.27 8.313 37.366 18.691 53.049 4.014 6.065 7.612 10.522 12.222 15.138 11.714 11.732 24.718 18.367 40.907 20.874 4.318.668 14.628.946 18.775.505 24.96-2.652 47.668-18.625 68.178-47.955 1.274-1.821 2.374-3.312 2.444-3.312.113 0 7.341 4.198 7.53 4.374.043.04-1.181 2.587-2.72 5.661-12.237 24.456-26.382 43.31-42.746 56.98-12.74 10.64-27.745 18.024-43.11 21.215-7.002 1.453-10.677 1.812-19.376 1.892-4.33.04-8.38.027-9-.027z" />
-        </symbol>
-        <symbol id="github" viewBox="0 0 98 96">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#24292f"/>
         </symbol>
 
     </svg>
@@ -418,7 +414,6 @@
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=dyAcRqpjbqU'">&nbsp; <div>Lisa Jacobs</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=NCTDf8dNT5s'">&nbsp; <div>Sigiswald Kuijken</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=1HSJufg7I1I'">&nbsp; <div>Rachel Podger</div></a></li>
-            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KWcGsRKbe-U'">&nbsp; <div>Virginie Robilliard</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=59KFAY_qf-Q'">&nbsp; <div>Rachell Ellen Wong</div></a></li>
             <li>
                 <hr class="dropdown-divider">
@@ -470,13 +465,6 @@
     <header style="display: none !important; z-index: 1000;" class="header fixed-top p-3 d-flex flex-wrap justify-content-between align-items-center">
         <ul class="nav col-md-4 flex-fill justify-content-end list-unstyled d-flex">
             <li class="ms-3">
-                <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
-                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="#github"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="ms-3">
                 <a class="text-muted" target="twitter" href="https://twitter.com/cthiebaud">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#twitter"></use>
@@ -499,8 +487,8 @@
             </li>
             <li class="ms-3">
                 <a class="text-muted" target="youtube" href="https://www.youtube.com/channel/UCxt1pFJkKS3LlhmSsHCrZkg">
-                    <svg width="34.286" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="#youtubeBlack"></use>
+                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
+                        <use xlink:href="#youtube"></use>
                     </svg>
                 </a>
             </li>
@@ -513,11 +501,6 @@
     </div>
     <div id="credits" class="container" style="opacity: 0">
     </div>
-    <div id="loading" class="fullscreen">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
 
     <footer style="display: none !important; z-index: 1000;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-between">
         <div class="flex-grow-1" style="margin-top: auto;">
@@ -529,6 +512,12 @@
                 </svg>
             </a></div>
     </footer>
+
+    <div id="loading" class="fullscreen">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 
     <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
@@ -551,28 +540,22 @@
     <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
-    <!-- violin -->
     <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
-    <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
+    <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
     <script src="timings/IsabelleFaust-r67BASAgP5Q.js"></script>
     <script src="timings/MidoriGotō-KgSKvOAJMb8.js"></script>
-    <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
-    <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
-    <script src="timings/SigiswaldKuijken-NCTDf8dNT5s.js"></script>
-    <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
-    <script src="timings/VirginieRobilliard-KWcGsRKbe-U.js"></script>
-    <script src="timings/RachellEllenWong-59KFAY_qf-Q.js"></script>
-    <!-- guitar -->
-    <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
-    <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
-    <script src="timings/AndreaDeVitis-oxWq93mlAyc.js"></script>
-    <!-- harpsichord -->
-    <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
-    <!-- harp -->
-    <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
-    <!-- marimba -->
     <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
-    <!-- moi -->
+    <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
+    <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
+    <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
+    <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
+    <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
+    <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
+    <script src="timings/AndreaDeVitis-oxWq93mlAyc.js"></script>
+    <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
+    <script src="timings/SigiswaldKuijken-NCTDf8dNT5s.js"></script>
+    <script src="timings/RachellEllenWong-59KFAY_qf-Q.js"></script>
+
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
@@ -609,9 +592,9 @@
             let videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
             videoTimings = eval(videoIdNoHyphenNoStartingNumber)
         }
-        // console.log(videoId, videoTimings)
+        console.log(videoId, videoTimings)
         if (videoTimings) {
-            const initializeBarObject = (bar) => {
+            const createBarM = (bar) => {
                 if (!bar.m) {
                     bar.m = new moment(bar["Time Recorded"])
                 }
@@ -624,14 +607,18 @@
                 }
                 return bar
             }
-            videoTimings.ciacconaStart = initializeBarObject({ m: videoTimings.start })
+            videoTimings.ciacconaStart = createBarM({ m: videoTimings.start })
             for (let bar of videoTimings.bars) {
-                initializeBarObject(bar)
+                createBarM(bar)
             }
-            // console.log(fm(videoTimings.start), fm(videoTimings.ciacconaStart.m), fm(videoTimings.bars[0].m))
+            console.log(
+                fm(videoTimings.start),
+                fm(videoTimings.ciacconaStart.m),
+                fm(videoTimings.bars[0].m))
         }
         let previousPlayOnBar = Cookies.get('previousPlayOnBar');
         if (!previousPlayOnBar) previousPlayOnBar = 0
+
 
         const variationsBars = [
         ]
@@ -647,33 +634,15 @@
         const variation2bar = (variation) => {
             return variationsBars[variation]
         }
-        // https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
-        function binaryRangeSearch(value, list, getValue) {
-            if (typeof getValue === 'undefined') getValue = (x) => list[x]
-
-            let low = 0;                  // left endpoint 
-            let high = list.length - 1;   // right endpoint 
-            let mid
-            let minValue, maxValue
-
-            while (low <= high) {
-                mid = Math.floor((low + high) / 2);
-                minValue = getValue(mid)
-                maxValue = mid < list.length - 1 ? getValue(mid + 1) : Number.MAX_VALUE
-
-                if (value < minValue) {
-                    high = mid - 1;
-                } else if (maxValue <= value) {
-                    low = mid + 1;
-                } else {
-                    console.log('bar', value, 'is in variation', mid)
-                    return mid;
-                }
-            }
-            return 0 // something is wrong, return first array element
-        }
         const bar2variation = (bar) => {
-            return binaryRangeSearch(bar, variationsBars)
+            let previousVar = 0
+            for (let variation = 0; variation < variationsBars.length; variation++) {
+                if (bar < variationsBars[variation]) {
+                    return previousVar
+                }
+                previousVar = variation;
+            }
+            return previousVar
         }
 
         if (!videoId) {
@@ -703,20 +672,17 @@
                     $(`.grid-brick#gb${variation}`).addClass("playing");
 
                     const startBarOfVariation = variation2bar(variation)
-                    let scroll = false
-                    if (previousPlayOnBar != startBarOfVariation) {
+                    if (previousPlayOnBar != startBarOfVariation || forceScroll) {
                         previousPlayOnBar = startBarOfVariation
                         Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
-                        scroll = true
-                    }
-                    if (scroll || forceScroll) {
-                        console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
+                        console.log(`${source} event, ask variation`, variation, 'to scroll into view')
+
                         $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
                     }
                 }
                 for (let bar of videoTimings.bars) {
                     const d = bar.duration.asSeconds()
-                    if (currentTime < d) {
+                    if (d > currentTime) {
                         found(barFound)
                         done = true
                         break
@@ -727,6 +693,8 @@
                 if (!done) {
                     found(barFound)
                 }
+
+                // console.log("Plyr timeupdate", event.detail.plyr.currentTime);
             }
 
             //
@@ -737,32 +705,37 @@
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
-                    if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
+                    if (!previousPlayOnBar) previousPlayOnBar = 0
+                    const variation = bar2variation(previousPlayOnBar)
+                    $("#grid").isotope('layout').one('arrangeComplete', function () {
+                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                    });
                     let bar = videoTimings.bars[previousPlayOnBar]
                     if (Cookies.get('playing') == 'true') {
                         console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
                         plyer.play();
                     }
-                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
+                    console.log("Dear plyr, as you are ready, can you seek at variation <", variation, "> bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
                     plyer.currentTime = bar.duration.asSeconds()
                 }, 1000)
 
             });
             plyer.on('timeupdate', (event) => {
                 const currentTime = event.detail.plyr.currentTime
+
                 feedbackOnCurrentTime(currentTime, 'timeupdate')
             });
             plyer.on('playing', (event) => {
                 console.log("Plyr playing event");
                 Cookies.set('playing', 'true', { expires: 2 })
                 const currentTime = event.detail.plyr.currentTime
-                feedbackOnCurrentTime(currentTime, 'playing', true)
+                feedbackOnCurrentTime(currentTime, 'timeupdate', true)
             });
-            plyer.on('seeking', (event) => {
+            plyer.on('seeking', (event) => { 
                 const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
                 const d = moment.duration(seekTime * 1000)
                 console.log('Plyr seeking event at', seekTime, fd(d))
-                feedbackOnCurrentTime(seekTime, 'seeking')
+                feedbackOnCurrentTime(seekTime, 'seeked')
             });
             plyer.on('seeked', (event) => {
                 const currentTime = event.detail.plyr.currentTime
@@ -922,19 +895,13 @@
 
         let $gridById = $("#grid")
 
-        var $isotope = $gridById.isotope({
+        $gridById.isotope({
             layoutMode: 'packery',
             itemSelector: ".grid-brick",
             packery: {
                 gutter: 0,
             }
         });
-        $isotope.on('arrangeComplete', function (event, filteredItems) {
-            const variation = bar2variation(previousPlayOnBar)
-            console.log(`[isotope], ask variation`, variation, 'to scroll into view')
-            $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
-        });
-
 
         const $bricksTemporaryContainer = $("<span>");
         const templateForTheme =
@@ -972,7 +939,7 @@
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick" style="border-color: #${c.borderColor}">
+<div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick" style="border-color: #${c.borderColor}">
     <div class="brick font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; ">
 
@@ -1019,11 +986,11 @@
     </div>
 </div>
 `
-        $bricksTemporaryContainer.append($(oblivion))
+        $bricksTemporaryContainer.append($(oblivion));
 
-        const $bricks = $bricksTemporaryContainer.children()
+        const $bricks = $bricksTemporaryContainer.children();
 
-        $gridById.empty().append($bricks).isotope('appended', $bricks) // .isotope('layout')
+        $gridById.empty().append($bricks).isotope('appended', $bricks);
 
         $(".brick").click(function (e) {
             e.stopPropagation();
@@ -1047,8 +1014,7 @@
                         }
                     } else {
                         let bar = videoTimings.bars[d.bar]
-                        console.log('bar', d.bar, 'is @', bar["Time Recorded"])
-                        console.log("seeking (on click)", d.bar, fd(bar.duration))
+                        console.log("seeking (on click)", d.bar, fd(bar.duration) /*, bar["Time Recorded"] */)
                         plyer.currentTime = bar.duration.asSeconds()
                         if (!isPlaying) {
                             console.log('dear plyr, can you please restart playing?')
