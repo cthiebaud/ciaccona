@@ -697,6 +697,10 @@
             });
 
             const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
+
+                const d = moment.duration(currentTime * 1000)
+                console.log(`Plyr ${source} event at ${currentTime} | ${fd(d)}`)
+
                 let i = 0
                 let barFound = 0
                 let done = false
@@ -755,26 +759,19 @@
 
             });
             plyer.on('timeupdate', (event) => {
-                const currentTime = event.detail.plyr.currentTime
-                feedbackOnCurrentTime(currentTime, 'timeupdate')
+                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
             });
             plyer.on('playing', (event) => {
                 console.log("Plyr playing event");
                 Cookies.set('playing', 'true', { expires: 2 })
-                const currentTime = event.detail.plyr.currentTime
-                feedbackOnCurrentTime(currentTime, 'playing', true)
+                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
             });
             plyer.on('seeking', (event) => {
                 const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
-                const d = moment.duration(seekTime * 1000)
-                console.log('Plyr seeking event at', seekTime, fd(d))
                 feedbackOnCurrentTime(seekTime, 'seeking')
             });
             plyer.on('seeked', (event) => {
-                const currentTime = event.detail.plyr.currentTime
-                const d = moment.duration(currentTime * 1000)
-                console.log('Plyr seeked event at', currentTime, fd(d))
-                feedbackOnCurrentTime(currentTime, 'seeked')
+                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
             });
             plyer.on('pause', (event) => {
                 console.log("Plyr pause event");
