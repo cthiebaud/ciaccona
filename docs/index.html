@@ -767,21 +767,22 @@
                         plyer.play();
                     }
                     console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
-                    playerTrulyReady = true
                     plyer.currentTime = bar.duration.asSeconds()
+                    playerTrulyReady = true
                 }, 1000)
 
             });
             plyer.on('timeupdate', (event) => {
                 if (!playerTrulyReady) return
-                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
                 scrollIntoView = true
+                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
             });
             plyer.on('playing', (event) => {
                 if (!playerTrulyReady) return
                 console.log("Plyr playing event");
                 Cookies.set('playing', 'true', { expires: 2 })
                 console.log("Cookies.set('playing', 'true'")
+                scrollIntoView = true
                 feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
             });
             plyer.on('seeking', (event) => {
