@@ -51,21 +51,22 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <!-- early scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
+
     <script>
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
         // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-        let ytID = params.yt; // "some_value"
+        let videoId = params.yt; // "some_value"
         const logo = params.logo; // "some_value"
         if (logo === "true") {
-            ytID = undefined
+            videoId = undefined
         }
     </script>
 
     <script src="/resizeSVGs.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
     <script>
         // <!-- CSS variable for dimensions -->
         const afterResizeWindow = () => {
@@ -90,11 +91,11 @@
             resizeSVGs(
                 document.querySelectorAll('object'),
                 (o) => {
-                    if (!ytID) {
+                    if (!videoId) {
                         $(o).parent().css({ visibility: "visible" })
                     }
                 }, () => {
-                    console.log("all SVGs resized!")
+                    console.log("SVGs resized!")
                 })
         });
     </script>
@@ -558,6 +559,12 @@
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
+        const fm = (m) => m.format('h:mm:ss')
+        const fd = (d) => {
+            const m = moment(d.asMilliseconds())
+            return m.format('mm:ss')
+        }
+
         if (logo === "true") {
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
@@ -579,31 +586,35 @@
             $('div.fullscreen.siegel#logoRight').hide()
             $('footer.footer').hide()
         }
-        let all = undefined
-        if (ytID) {
-            let one = ytID.replace('-', '_')
-            let two = one.replace(/^(\d.*)/i, '_$1')
-            all = eval(two)
+        let videoTimings = undefined
+        if (videoId) {
+            let videoIdNoHyphen = videoId.replace('-', '_')
+            let videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
+            videoTimings = eval(videoIdNoHyphenNoStartingNumber)
         }
-        console.log(ytID, all)
-        if (all) {
-            const createBarDuration = (bar) => {
+        console.log(videoId, videoTimings)
+        if (videoTimings) {
+            const createBarM = (bar) => {
                 if (!bar.m) {
                     bar.m = new moment(bar["Time Recorded"])
                 }
-                bar.duration = moment.duration(bar.m.diff(all.start))
-                if (all.offset) {
-                    bar.duration.add(all.offset)
+                bar.duration = moment.duration(bar.m.diff(videoTimings.start))
+                if (videoTimings.offset) {
+                    bar.duration.add(videoTimings.offset)
                 }
-                if (all.adjust) {
-                    bar.duration.subtract(all.adjust)
+                if (videoTimings.adjust) {
+                    bar.duration.subtract(videoTimings.adjust)
                 }
                 return bar
             }
-            all.ciacconaStart = createBarDuration({ m: all.start })
-            for (let bar of all.bars) {
-                createBarDuration(bar)
+            videoTimings.ciacconaStart = createBarM({ m: videoTimings.start })
+            for (let bar of videoTimings.bars) {
+                createBarM(bar)
             }
+            console.log(
+                fm(videoTimings.start),
+                fm(videoTimings.ciacconaStart.m),
+                fm(videoTimings.bars[0].m))
         }
         let previousPlayOnBar = Cookies.get('previousPlayOnBar');
         if (!previousPlayOnBar) previousPlayOnBar = 0
@@ -634,7 +645,7 @@
             return previousVar
         }
 
-        if (!ytID) {
+        if (!videoId) {
             $('#gridContainerCol').css({ visibility: 'visible' })
             $('.score').css({ visibility: "visible" })
         } else {
@@ -642,7 +653,7 @@
             $('#gridContainerCol').css({ visibility: 'hidden' })
 
             const $blah2 = $(
-                `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${ytID}">`
+                `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
             );
 
             $("#playerWrapper").append($blah2);
@@ -669,7 +680,7 @@
                         $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
                     }
                 }
-                for (let bar of all.bars) {
+                for (let bar of videoTimings.bars) {
                     const d = bar.duration.asSeconds()
                     if (d > currentTime) {
                         found(barFound)
@@ -699,12 +710,12 @@
                     $("#grid").isotope('layout').one('arrangeComplete', function () {
                         $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
                     });
-                    let bar = all.bars[previousPlayOnBar]
+                    let bar = videoTimings.bars[previousPlayOnBar]
                     if (Cookies.get('playing') == 'true') {
-                        console.log('Dear plyr, as you where playing last time that we saw each other, can you start playing again ?')
+                        console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
                         plyer.play();
                     }
-                    console.log("Dear plyr, as you are ready, can you seek at variation <", variation, "> bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ') ?')
+                    console.log("Dear plyr, as you are ready, can you seek at variation <", variation, "> bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
                     plyer.currentTime = bar.duration.asSeconds()
                 }, 1000)
 
@@ -720,10 +731,17 @@
                 const currentTime = event.detail.plyr.currentTime
                 feedbackOnCurrentTime(currentTime, 'timeupdate', true)
             });
-            plyer.on('seeking', (event) => {
+            plyer.on('seeking', (event) => { 
+                const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
+                const d = moment.duration(seekTime * 1000)
+                console.log('Plyr seeking event at', seekTime, fd(d))
+                feedbackOnCurrentTime(seekTime, 'seeked')
+            });
+            plyer.on('seeked', (event) => {
                 const currentTime = event.detail.plyr.currentTime
-                console.log('Plyr seeking event at', currentTime)
-                feedbackOnCurrentTime(currentTime, 'seeking')
+                const d = moment.duration(currentTime * 1000)
+                console.log('Plyr seeked event at', currentTime, fd(d))
+                feedbackOnCurrentTime(currentTime, 'seeked')
             });
             plyer.on('pause', (event) => {
                 console.log("Plyr pause event");
@@ -867,7 +885,7 @@
             }
             s.borderColor = tinycolor(s.p_rgb).lighten(30).toString("hex6").slice(1)
             // some transparency to show video behind
-            if (ytID) {
+            if (videoId) {
                 s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
                 s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
                 s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
@@ -976,7 +994,7 @@
 
         $(".brick").click(function (e) {
             e.stopPropagation();
-            if (!ytID) {
+            if (!videoId) {
                 $('.dropdown-toggle').dropdown('toggle');
             } else {
 
@@ -995,8 +1013,8 @@
                             plyer.play()
                         }
                     } else {
-                        let bar = all.bars[d.bar]
-                        console.log("seeking (on click)", bar["Time Recorded"])
+                        let bar = videoTimings.bars[d.bar]
+                        console.log("seeking (on click)", d.bar, fd(bar.duration) /*, bar["Time Recorded"] */)
                         plyer.currentTime = bar.duration.asSeconds()
                         if (!isPlaying) {
                             console.log('dear plyr, can you please restart playing?')
