@@ -738,17 +738,13 @@
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
-                    if (!previousPlayOnBar) previousPlayOnBar = 0
-                    const variation = bar2variation(previousPlayOnBar)
-                    $("#grid").isotope('layout').one('arrangeComplete', function () {
-                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
-                    });
+                    if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
                     let bar = videoTimings.bars[previousPlayOnBar]
                     if (Cookies.get('playing') == 'true') {
                         console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
                         plyer.play();
                     }
-                    console.log("Dear plyr, as you are ready, can you seek at variation <", variation, "> bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
+                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
                     plyer.currentTime = bar.duration.asSeconds()
                 }, 1000)
 
@@ -1018,11 +1014,11 @@
     </div>
 </div>
 `
-        $bricksTemporaryContainer.append($(oblivion));
+        $bricksTemporaryContainer.append($(oblivion))
 
-        const $bricks = $bricksTemporaryContainer.children();
+        const $bricks = $bricksTemporaryContainer.children()
 
-        $gridById.empty().append($bricks).isotope('appended', $bricks);
+        $gridById.empty().append($bricks).isotope('appended', $bricks) // .isotope('layout')
 
         $(".brick").click(function (e) {
             e.stopPropagation();
