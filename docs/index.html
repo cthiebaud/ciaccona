@@ -585,6 +585,9 @@
             return m.format('mm:ss')
         }
 
+        let playerTrulyReady = false
+        let scrollIntoView = false
+
         if (logo === "true") {
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
@@ -703,10 +706,10 @@
             });
 
             const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
-
+                /*
                 const d = moment.duration(currentTime * 1000)
                 console.log(`Plyr ${source} event at ${currentTime} | ${fd(d)}`)
-
+                */
                 let i = 0
                 let barFound = 0
                 let done = false
@@ -722,9 +725,11 @@
                         Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
                         scroll = true
                     }
-                    if (scroll || forceScroll) {
-                        console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
-                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                    if (scrollIntoView) {
+                        if (scroll || forceScroll) {
+                            console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
+                            $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                        }
                     }
                 }
                 for (let bar of videoTimings.bars) {
@@ -745,48 +750,61 @@
             //
             plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
+                // youtube annoying "feature" (no sound before play/pause)
+                plyer.play();
+                plyer.pause();
                 setTimeout(() => {
-                    // youtube annoying "feature" (no sound before play/pause)
-                    plyer.play();
-                    plyer.pause(); 
                     $('#gridContainerCol').css({ visibility: 'visible' })
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
                     if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
                     let bar = videoTimings.bars[previousPlayOnBar]
+                    let qwe = Cookies.get('playing')
+                    console.log('playing cookie', qwe)
                     if (Cookies.get('playing') == 'true') {
                         console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
                         plyer.play();
                     }
                     console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
+                    playerTrulyReady = true
                     plyer.currentTime = bar.duration.asSeconds()
                 }, 1000)
 
             });
             plyer.on('timeupdate', (event) => {
+                if (!playerTrulyReady) return
                 feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
+                scrollIntoView = true
             });
             plyer.on('playing', (event) => {
+                if (!playerTrulyReady) return
                 console.log("Plyr playing event");
                 Cookies.set('playing', 'true', { expires: 2 })
+                console.log("Cookies.set('playing', 'true'")
                 feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
             });
             plyer.on('seeking', (event) => {
+                if (!playerTrulyReady) return
                 const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
                 feedbackOnCurrentTime(seekTime, 'seeking')
             });
             plyer.on('seeked', (event) => {
+                if (!playerTrulyReady) return
                 feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
             });
             plyer.on('pause', (event) => {
+                if (!playerTrulyReady) return
                 console.log("Plyr pause event");
                 $(".grid-brick").removeClass("playing")
                 Cookies.set('playing', 'false', { expires: 2 })
+                console.log("Cookies.set('playing', 'false'")
             });
             plyer.on('ended', (event) => {
+                if (!playerTrulyReady) return
                 console.log("Plyr ended event");
                 Cookies.set('playing', 'false', { expires: 2 })
+                console.log("Cookies.set('playing', 'false'")
                 Cookies.set('previousPlayOnBar', 0, { expires: 2 })
             });
         }
@@ -1052,6 +1070,7 @@
                         let bar = videoTimings.bars[d.bar]
                         console.log('bar', d.bar, 'is @', bar["Time Recorded"])
                         console.log("seeking (on click)", d.bar, fd(bar.duration))
+                        scrollIntoView = false
                         plyer.currentTime = bar.duration.asSeconds()
                         if (!isPlaying) {
                             console.log('dear plyr, can you please restart playing?')
