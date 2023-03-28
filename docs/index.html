@@ -616,6 +616,12 @@
         if (videoTimings) {
             const initializeBarObject = (bar) => {
                 if (!bar.m) {
+                    /*
+                    const qwe = bar["Time Recorded"]
+                    if (!qwe) {
+                        throw new Error('no Time !')
+                    } 
+                    */
                     bar.m = new moment(bar["Time Recorded"])
                 }
                 bar.duration = moment.duration(bar.m.diff(videoTimings.start))
