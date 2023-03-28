@@ -87,7 +87,7 @@
 
         // <!-- resize each SVG to its bounding box -->
         window.addEventListener('load', (event) => {
-            $('#loading').hide()
+            
             resizeSVGs(
                 document.querySelectorAll('#grid object'),
                 (o) => {
@@ -95,7 +95,9 @@
                         $(o).parent().css({ visibility: "visible" })
                     } // else, will be set to visible when video player is itself visible
                 }, () => {
-                    // console.log("SVGs resized!")
+                    if (!videoId) {
+                        $('#loading').hide()
+                    }
                 })
         });
     </script>
@@ -751,12 +753,15 @@
             plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
                 // youtube annoying "feature" (no sound before play/pause)
+                /*
                 plyer.play();
                 plyer.pause();
+                */
                 setTimeout(() => {
                     $('#gridContainerCol').css({ visibility: 'visible' })
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
+                    $('#loading').hide()
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
                     if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
                     let bar = videoTimings.bars[previousPlayOnBar]
