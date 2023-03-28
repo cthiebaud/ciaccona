@@ -736,6 +736,9 @@
             plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
                 setTimeout(() => {
+                    // youtube annoying "feature" (no sound before play/pause)
+                    plyer.play();
+                    plyer.pause(); 
                     $('#gridContainerCol').css({ visibility: 'visible' })
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
