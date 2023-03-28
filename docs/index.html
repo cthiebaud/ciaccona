@@ -196,7 +196,7 @@
             display: none !important;
         }
 
-        .grid-brick.Δ2 {
+        .grid-brick.Δ {
             background-color: rgba(128, 128, 128, .3);
         }
 
@@ -971,7 +971,7 @@
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick" style="border-color: #${c.borderColor}">
+<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick" style="border-color: #${c.borderColor}">
     <div class="brick font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; ">
 
