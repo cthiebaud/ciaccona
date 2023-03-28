@@ -56,7 +56,7 @@
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
-        // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+        // get the value of "some_key" in eg "https://example.com/?some_key=some_value"
         let videoId = params.yt; // "some_value"
         const logo = params.logo; // "some_value"
         if (logo === "true") {
@@ -89,13 +89,13 @@
         window.addEventListener('load', (event) => {
             $('#loading').hide()
             resizeSVGs(
-                document.querySelectorAll('object'),
+                document.querySelectorAll('#grid object'),
                 (o) => {
                     if (!videoId) {
                         $(o).parent().css({ visibility: "visible" })
-                    }
+                    } // else, will be set to visible when video player is itself visible
                 }, () => {
-                    console.log("SVGs resized!")
+                    // console.log("SVGs resized!")
                 })
         });
     </script>
@@ -121,8 +121,8 @@
             left: 0;
             bottom: 0;
             right: 0;
-            height: 100vh;
-            width: 100vw;
+            height: calc(var(--vh, 1vh) * 100);
+            width: calc(var(--vw, 1vh) * 100);
         }
 
         #loading .spinner-border {
@@ -131,6 +131,7 @@
             right: 0;
             top: 0;
             bottom: 0;
+            right: 0;
             margin: auto;
             width: 5rem;
             height: 5rem;
@@ -172,12 +173,7 @@
             cursor: pointer;
         }
 
-        .grid-brick.playing {
-            border-radius: 0 !important;
-        }
-
         .grid-brick:not(.playing) {
-            border-radius: 0 !important;
             border-color: transparent !important;
         }
 
@@ -200,7 +196,7 @@
             display: none !important;
         }
 
-        .grid-brick.Δ2 {
+        .grid-brick.Δ {
             background-color: rgba(128, 128, 128, .3);
         }
 
@@ -213,7 +209,6 @@
         .score {
             position: relative;
             height: 5rem;
-            cursor: pointer;
             overflow: hidden;
             border-radius: 0 3rem 3rem 0;
         }
@@ -235,13 +230,11 @@
 
         div.siegel#logoLeft {
             background-image: url('svg/Bach_Seal_full_left_120x120.svg');
-            /* transform: scale(-.8, .8); */
             left: -111vw;
         }
 
         div.siegel#logoRight {
             background-image: url('svg/Bach_Seal_full_right_120x120.svg');
-            /* transform: scale(-.8, .8); */
             left: +111vw;
         }
 
@@ -280,7 +273,7 @@
             color: #121212;
         }
 
-        .Δ {
+        span.Δ {
             font-family: 'Cinzel', serif;
             font-size: smaller;
             float: left;
@@ -298,6 +291,7 @@
             right: 0;
             top: 0;
             bottom: 0;
+            right: 0;
             padding: 0;
             opacity: 1;
         }
@@ -380,8 +374,15 @@
         </symbol>
 
         <symbol id="youtube" viewBox="48.863006591796875, 79.2229995727539, 202.2743682861328, 141.55401611328125">
-            <path fill="#fff" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
+            <path fill="white" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
             <path fill="red"
+                d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
+
+        </symbol>
+
+        <symbol id="youtubeBlack" viewBox="48.863006591796875, 79.2229995727539, 202.2743682861328, 141.55401611328125">
+            <path fill="white" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
+            <path fill="black"
                 d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
 
         </symbol>
@@ -487,8 +488,8 @@
             </li>
             <li class="ms-3">
                 <a class="text-muted" target="youtube" href="https://www.youtube.com/channel/UCxt1pFJkKS3LlhmSsHCrZkg">
-                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="#youtube"></use>
+                    <svg width="34.286" height="24" preserveAspectRatio="xMidYMid meet">
+                        <use xlink:href="#youtubeBlack"></use>
                     </svg>
                 </a>
             </li>
@@ -501,6 +502,11 @@
     </div>
     <div id="credits" class="container" style="opacity: 0">
     </div>
+    <div id="loading" class="fullscreen">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 
     <footer style="display: none !important; z-index: 1000;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-between">
         <div class="flex-grow-1" style="margin-top: auto;">
@@ -512,12 +518,6 @@
                 </svg>
             </a></div>
     </footer>
-
-    <div id="loading" class="fullscreen">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
 
     <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
@@ -540,22 +540,27 @@
     <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
+    <!-- violin -->
     <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
-    <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
+    <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
     <script src="timings/IsabelleFaust-r67BASAgP5Q.js"></script>
     <script src="timings/MidoriGotō-KgSKvOAJMb8.js"></script>
-    <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
-    <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
-    <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
+    <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
     <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
-    <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
-    <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
-    <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
-    <script src="timings/AndreaDeVitis-oxWq93mlAyc.js"></script>
-    <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
     <script src="timings/SigiswaldKuijken-NCTDf8dNT5s.js"></script>
+    <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
     <script src="timings/RachellEllenWong-59KFAY_qf-Q.js"></script>
-
+    <!-- guitar -->
+    <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
+    <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
+    <script src="timings/AndreaDeVitis-oxWq93mlAyc.js"></script>
+    <!-- harpsichord -->
+    <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
+    <!-- harp -->
+    <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
+    <!-- marimba -->
+    <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
+    <!-- moi -->
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
@@ -592,9 +597,9 @@
             let videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
             videoTimings = eval(videoIdNoHyphenNoStartingNumber)
         }
-        console.log(videoId, videoTimings)
+        // console.log(videoId, videoTimings)
         if (videoTimings) {
-            const createBarM = (bar) => {
+            const initializeBarObject = (bar) => {
                 if (!bar.m) {
                     bar.m = new moment(bar["Time Recorded"])
                 }
@@ -607,18 +612,14 @@
                 }
                 return bar
             }
-            videoTimings.ciacconaStart = createBarM({ m: videoTimings.start })
+            videoTimings.ciacconaStart = initializeBarObject({ m: videoTimings.start })
             for (let bar of videoTimings.bars) {
-                createBarM(bar)
+                initializeBarObject(bar)
             }
-            console.log(
-                fm(videoTimings.start),
-                fm(videoTimings.ciacconaStart.m),
-                fm(videoTimings.bars[0].m))
+            // console.log(fm(videoTimings.start), fm(videoTimings.ciacconaStart.m), fm(videoTimings.bars[0].m))
         }
         let previousPlayOnBar = Cookies.get('previousPlayOnBar');
         if (!previousPlayOnBar) previousPlayOnBar = 0
-
 
         const variationsBars = [
         ]
@@ -634,6 +635,7 @@
         const variation2bar = (variation) => {
             return variationsBars[variation]
         }
+
         const bar2variation = (bar) => {
             let previousVar = 0
             for (let variation = 0; variation < variationsBars.length; variation++) {
@@ -731,7 +733,7 @@
                 const currentTime = event.detail.plyr.currentTime
                 feedbackOnCurrentTime(currentTime, 'timeupdate', true)
             });
-            plyer.on('seeking', (event) => { 
+            plyer.on('seeking', (event) => {
                 const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
                 const d = moment.duration(seekTime * 1000)
                 console.log('Plyr seeking event at', seekTime, fd(d))
@@ -939,7 +941,7 @@
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + "2 " : ''}grid-brick" style="border-color: #${c.borderColor}">
+<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick" style="border-color: #${c.borderColor}">
     <div class="brick font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; ">
 
