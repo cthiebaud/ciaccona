@@ -635,16 +635,33 @@
         const variation2bar = (variation) => {
             return variationsBars[variation]
         }
+        // https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
+        function binaryRangeSearch(value, list, getValue) {
+            if (typeof getValue === 'undefined') getValue = (x) => list[x]
 
-        const bar2variation = (bar) => {
-            let previousVar = 0
-            for (let variation = 0; variation < variationsBars.length; variation++) {
-                if (bar < variationsBars[variation]) {
-                    return previousVar
+            let low = 0;                  // left endpoint 
+            let high = list.length - 1;   // right endpoint 
+            let mid
+            let minValue, maxValue
+
+            while (low <= high) {
+                mid = Math.floor((low + high) / 2);
+                minValue = getValue(mid)
+                maxValue = mid < list.length - 1 ? getValue(mid + 1) : Number.MAX_VALUE
+
+                if (value < minValue) {
+                    high = mid - 1;
+                } else if (maxValue <= value) {
+                    low = mid + 1;
+                } else {
+                    console.log('bar', value, 'is in variation', mid)
+                    return mid;
                 }
-                previousVar = variation;
             }
-            return previousVar
+            return 0 // something is wrong, return first array element
+        }
+        const bar2variation = (bar) => {
+            return binaryRangeSearch(bar, variationsBars)
         }
 
         if (!videoId) {
@@ -674,17 +691,20 @@
                     $(`.grid-brick#gb${variation}`).addClass("playing");
 
                     const startBarOfVariation = variation2bar(variation)
-                    if (previousPlayOnBar != startBarOfVariation || forceScroll) {
+                    let scroll = false
+                    if (previousPlayOnBar != startBarOfVariation) {
                         previousPlayOnBar = startBarOfVariation
                         Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
-                        console.log(`${source} event, ask variation`, variation, 'to scroll into view')
-
+                        scroll = true
+                    }
+                    if (scroll || forceScroll) {
+                        console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
                         $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
                     }
                 }
                 for (let bar of videoTimings.bars) {
                     const d = bar.duration.asSeconds()
-                    if (d > currentTime) {
+                    if (currentTime < d) {
                         found(barFound)
                         done = true
                         break
@@ -695,8 +715,6 @@
                 if (!done) {
                     found(barFound)
                 }
-
-                // console.log("Plyr timeupdate", event.detail.plyr.currentTime);
             }
 
             //
@@ -707,37 +725,32 @@
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
-                    if (!previousPlayOnBar) previousPlayOnBar = 0
-                    const variation = bar2variation(previousPlayOnBar)
-                    $("#grid").isotope('layout').one('arrangeComplete', function () {
-                        $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
-                    });
+                    if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
                     let bar = videoTimings.bars[previousPlayOnBar]
                     if (Cookies.get('playing') == 'true') {
                         console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
                         plyer.play();
                     }
-                    console.log("Dear plyr, as you are ready, can you seek at variation <", variation, "> bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
+                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
                     plyer.currentTime = bar.duration.asSeconds()
                 }, 1000)
 
             });
             plyer.on('timeupdate', (event) => {
                 const currentTime = event.detail.plyr.currentTime
-
                 feedbackOnCurrentTime(currentTime, 'timeupdate')
             });
             plyer.on('playing', (event) => {
                 console.log("Plyr playing event");
                 Cookies.set('playing', 'true', { expires: 2 })
                 const currentTime = event.detail.plyr.currentTime
-                feedbackOnCurrentTime(currentTime, 'timeupdate', true)
+                feedbackOnCurrentTime(currentTime, 'playing', true)
             });
             plyer.on('seeking', (event) => {
                 const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
                 const d = moment.duration(seekTime * 1000)
                 console.log('Plyr seeking event at', seekTime, fd(d))
-                feedbackOnCurrentTime(seekTime, 'seeked')
+                feedbackOnCurrentTime(seekTime, 'seeking')
             });
             plyer.on('seeked', (event) => {
                 const currentTime = event.detail.plyr.currentTime
@@ -897,13 +910,19 @@
 
         let $gridById = $("#grid")
 
-        $gridById.isotope({
+        var $isotope = $gridById.isotope({
             layoutMode: 'packery',
             itemSelector: ".grid-brick",
             packery: {
                 gutter: 0,
             }
         });
+        $isotope.on('arrangeComplete', function (event, filteredItems) {
+            const variation = bar2variation(previousPlayOnBar)
+            console.log(`[isotope], ask variation`, variation, 'to scroll into view')
+            $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+        });
+
 
         const $bricksTemporaryContainer = $("<span>");
         const templateForTheme =
@@ -988,11 +1007,11 @@
     </div>
 </div>
 `
-        $bricksTemporaryContainer.append($(oblivion));
+        $bricksTemporaryContainer.append($(oblivion))
 
-        const $bricks = $bricksTemporaryContainer.children();
+        const $bricks = $bricksTemporaryContainer.children()
 
-        $gridById.empty().append($bricks).isotope('appended', $bricks);
+        $gridById.empty().append($bricks) // .isotope('appended', $bricks) // .isotope('layout')
 
         $(".brick").click(function (e) {
             e.stopPropagation();
