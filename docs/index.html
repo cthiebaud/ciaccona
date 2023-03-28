@@ -56,7 +56,7 @@
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
-        // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+        // get the value of "some_key" in eg "https://example.com/?some_key=some_value"
         let videoId = params.yt; // "some_value"
         const logo = params.logo; // "some_value"
         if (logo === "true") {
@@ -89,13 +89,13 @@
         window.addEventListener('load', (event) => {
             $('#loading').hide()
             resizeSVGs(
-                document.querySelectorAll('object'),
+                document.querySelectorAll('#grid object'),
                 (o) => {
                     if (!videoId) {
                         $(o).parent().css({ visibility: "visible" })
-                    }
+                    } // else, will be set to visible when video player is itself visible
                 }, () => {
-                    console.log("SVGs resized!")
+                    // console.log("SVGs resized!")
                 })
         });
     </script>
@@ -650,7 +650,7 @@
             $('.score').css({ visibility: "visible" })
         } else {
             $("body").css({ "background-color": "#0E0E10" });
-            $('#gridContainerCol').css({ visibility: 'hidden' })
+            $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
 
             const $blah2 = $(
                 `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
@@ -701,7 +701,7 @@
             plyer.on('ready', (event) => {
                 console.log("Plyr ready event");
                 setTimeout(() => {
-                    $('#gridContainerCol').addClass('push2right').css({ visibility: 'visible' })
+                    $('#gridContainerCol').css({ visibility: 'visible' })
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
