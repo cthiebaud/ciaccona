@@ -418,6 +418,7 @@
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=dyAcRqpjbqU'">&nbsp; <div>Lisa Jacobs</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=NCTDf8dNT5s'">&nbsp; <div>Sigiswald Kuijken</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=1HSJufg7I1I'">&nbsp; <div>Rachel Podger</div></a></li>
+            <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KWcGsRKbe-U'">&nbsp; <div>Virginie Robilliard</div></a></li>
             <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=59KFAY_qf-Q'">&nbsp; <div>Rachell Ellen Wong</div></a></li>
             <li>
                 <hr class="dropdown-divider">
@@ -559,6 +560,7 @@
     <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
     <script src="timings/SigiswaldKuijken-NCTDf8dNT5s.js"></script>
     <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
+    <script src="timings/VirginieRobilliard-KWcGsRKbe-U.js"></script>
     <script src="timings/RachellEllenWong-59KFAY_qf-Q.js"></script>
     <!-- guitar -->
     <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
@@ -1045,7 +1047,8 @@
                         }
                     } else {
                         let bar = videoTimings.bars[d.bar]
-                        console.log("seeking (on click)", d.bar, fd(bar.duration) /*, bar["Time Recorded"] */)
+                        console.log('bar', d.bar, 'is @', bar["Time Recorded"])
+                        console.log("seeking (on click)", d.bar, fd(bar.duration))
                         plyer.currentTime = bar.duration.asSeconds()
                         if (!isPlaying) {
                             console.log('dear plyr, can you please restart playing?')
