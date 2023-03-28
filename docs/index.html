@@ -1023,7 +1023,7 @@
 
         const $bricks = $bricksTemporaryContainer.children()
 
-        $gridById.empty().append($bricks) // .isotope('appended', $bricks) // .isotope('layout')
+        $gridById.empty().append($bricks).isotope('appended', $bricks) // .isotope('layout')
 
         $(".brick").click(function (e) {
             e.stopPropagation();
