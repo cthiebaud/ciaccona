@@ -169,6 +169,7 @@
             display: grid;
             font-size: 1.4rem;
             width: min(var(--vw, 1vw) * 100, 23.5rem);
+            /* width: 100%; */
             height: 6rem;
             padding: .5rem;
             border-style: dashed;
@@ -973,7 +974,7 @@
         const templateForTheme =
             `
 <div class="grid-brick">
-    <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; height: 100%;">
+    <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; background-position-y: center; height: 100%;">
         <div class="magnificient-card p-2" style="backdrop-filter: blur(1px);">
             ${'&nbsp;Ciaccona&nbsp;'}
         </div>
