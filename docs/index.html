@@ -63,16 +63,6 @@
         if (logo === "true") {
             videoId = undefined
             videoTimings = undefined
-        } else {
-            const videoIdNoHyphen = videoId.replace('-', '_')
-            const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
-            try {
-                videoTimings = eval(videoIdNoHyphenNoStartingNumber)
-            } catch (error) {
-                console.error(error, 'videoTimings = undefined');
-                videoId = undefined
-                videoTimings = undefined
-            }
         }
     </script>
 
@@ -629,6 +619,18 @@
     <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
 
     <script>
+
+        if (videoId) {
+            const videoIdNoHyphen = videoId.replace('-', '_')
+            const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
+            try {
+                videoTimings = eval(videoIdNoHyphenNoStartingNumber)
+            } catch (error) {
+                console.error(error, 'videoTimings = undefined');
+                videoId = undefined
+                videoTimings = undefined
+            }
+        }
         let fullWidthChecked = Cookies.get('fullscore')
         console.log('fullscore', fullWidthChecked)
         if (!fullWidthChecked || fullWidthChecked == 'false') {
