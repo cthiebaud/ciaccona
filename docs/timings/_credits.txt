@@ -42,7 +42,6 @@ Rachel Podger
 https://twitter.com/RachPodger
 https://www.facebook.com/rachel.podger
 
-
 9
 Rachell Ellen Wong
 https://twitter.com/rachellviolin
@@ -88,6 +87,13 @@ Genzoh Takehisa
 https://youtu.be/ze_QPWuyZLo
 https://twitter.com/genzohtakehisa
 
+Yun Park
+https://youtu.be/5ITydjLkYUk
+https://yunparkpercussion.com/
+https://www.instagram.com/playp49/
+https://www.facebook.com/yunparkpercussion
+
+
 
 
 <TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
@@ -95,8 +101,6 @@ https://twitter.com/genzohtakehisa
 <Prenom Nom> @twitter_id
 
 #<PrenomNom> #Ciaccona #Chaconne #BWV1004 #JSBach
-
-<youtube_url>
 
 https://ciaccona.cthiebaud.com/?yt=<youtube_id>
 
