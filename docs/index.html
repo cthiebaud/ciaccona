@@ -87,7 +87,7 @@
 
         // <!-- resize each SVG to its bounding box -->
         window.addEventListener('load', (event) => {
-            
+
             resizeSVGs(
                 document.querySelectorAll('#grid object'),
                 (o) => {
@@ -471,7 +471,7 @@
         </ul>
     </span>
 
-    <header style="display: none !important; z-index: 1000;" class="header fixed-top p-3 d-flex flex-wrap justify-content-between align-items-center">
+    <header style="display: none !important; z-index: 1000; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;" class="header fixed-top p-3 d-flex flex-wrap justify-content-between align-items-center">
         <ul class="nav col-md-4 flex-fill justify-content-end list-unstyled d-flex">
             <li class="ms-3">
                 <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
@@ -518,15 +518,19 @@
     <div id="credits" class="container" style="opacity: 0">
     </div>
 
-    <footer style="display: none !important; z-index: 1000;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-between">
-        <div class="flex-grow-1" style="margin-top: auto;">
-            <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
-        </div>
-        <div class="d-flex"><a class="text-muted" target="cthiebaud" href="https://cthiebaud.com/">
+    <footer style="display: none !important; z-index: 1000; background-color: #ffffff80; border-top: 1px solid #a0a0a080;" class="footer mt-auto p-2 d-flex flex-wrap justify-content-center">
+        <div class="ms-3 d-flex">
+            <a class="text-muted" target="cthiebaud" href="https://cthiebaud.com/">
                 <svg width="32" height="32" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="#cthiebaud"></use>
                 </svg>
             </a></div>
+        <div class="ms-3" style="margin-top: auto;">
+            <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
+        </div>
+        <div class="ms-3" style="margin-top: auto;">
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1</span>
+        </div>
     </footer>
 
     <div id="loading" class="fullscreen">
@@ -605,6 +609,8 @@
                 */
             })
             $('footer.footer').show()
+            $('#loading').hide()
+
         } else {
             $('header.header').hide()
             $('div.fullscreen.siegel#logoLeft').hide()
