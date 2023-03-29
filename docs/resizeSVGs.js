@@ -5,7 +5,8 @@ function getNode(n, v) {
     return n
 }
 
-async function resizeSVGs(selection, elementCallback, finalCallback) {
+async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallback) {
+
     const lesPromessesDeLeSVG = []
 
     selection.forEach((o) => {
@@ -34,9 +35,9 @@ async function resizeSVGs(selection, elementCallback, finalCallback) {
         let maxHeight = 0
         results.forEach((result) => {
             if (result.status === "fulfilled") {
-                const o = result.value.o
                 const svg = result.value.svg
-                // console.log(o, svg)
+                /* const o = result.value.o
+                // console.log(o, svg) */
                 const box = svg.getBBox()
                 maxWidth = Math.max(maxWidth, box.width)
                 maxHeight = Math.max(maxHeight, box.height)
@@ -46,18 +47,19 @@ async function resizeSVGs(selection, elementCallback, finalCallback) {
             if (result.status === "fulfilled") {
                 // https://lists.gnu.org/archive/html/bug-lilypond/2017-07/msg00010.html
                 const svg = result.value.svg
+
                 const box = svg.getBBox()
                 // où est le centre ?
                 const centerX = box.x + box.width / 2
                 const x = centerX - maxWidth / 2
                 const centerY = box.y + box.height / 2
                 const y = centerY - maxHeight / 2
-                const viewBox = [box.x + (result.value.offset ? result.value.offset: 0), y, box.width, maxHeight].join(" ")
+                const viewBox = [box.x + (withOffsetX && result.value.offset ? result.value.offset: 0), y, box.width, maxHeight].join(" ")
                 svg.setAttribute("viewBox", viewBox)
                 svg.setAttribute("preserveAspectRatio", "xMinYMid meet")
                 // console.log(viewBox)
                 svg.removeAttribute("height")
-                svg.removeAttribute("width")
+                svg.removeAttribute("width") 
                 if (elementCallback) elementCallback(result.value.o)
             } else {
                 // console.log(result.status, result.value)
@@ -68,36 +70,3 @@ async function resizeSVGs(selection, elementCallback, finalCallback) {
     Promise.allSettled(lesPromessesDeLeSVG).then(setViewBoxes)
 }
 
-function toggleAnimate(svg, action) {
-    /*
-    console.log(svg.contentDocument.children[0])
-
-    const SVG = svg.contentDocument.children[0]
-    const old = SVG.querySelector('animateTransform')
-
-    if (action.action === "start") {
-        if (old) {
-            // already started
-        } if (!old) {
-            const animateTransform = getNode(
-                "animateTransform",
-                {
-                    attributeName: "transform",
-                    attributeType: "XML",
-                    type: "xOffset",
-                    begin: "0s",
-                    dur: "30s",
-                    values: "0,0; -200,0; ",
-                    repeatCount: "indefinite"
-                }
-            )
-            SVG.appendChild(animateTransform)
-        }
-    } else if (action.action === "stop") {
-        if (!old) {
-            // nothing to remove
-        } else {
-            old.remove()
-        }
-    } */
-}

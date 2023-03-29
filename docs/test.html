@@ -65,6 +65,7 @@
             window.addEventListener('load', (event) => {
                 resizeSVGs(
                     document.querySelectorAll('object.resize'),
+                    0,
                     (o) => {
                         // o.parentNode.style.visibility = "visible"
                     },
@@ -132,10 +133,6 @@
 `
         $('body>div').append($(new_brick))
     }
-
-    $(".score").click(function (e) {
-        toggleAnimate(e.currentTarget.querySelector('object'))
-    })
 
 </script>
 

@@ -89,6 +89,7 @@
         window.addEventListener('load', (event) => {
             resizeSVGs(
                 document.querySelectorAll('#grid object'),
+                fullWidthChecked ? false : true, // with X offset to hide clef signature ?
                 (o) => {
                     if (!videoId) {
                         $(o).parent().css({ visibility: "visible" })
@@ -481,13 +482,11 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
                 <form class="px-4 py-3">
-                    <div class="">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                            <label class="form-check-label" for="dropdownCheck">
-                                Full Score
-                            </label>
-                        </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                        <label class="form-check-label align-top" for="dropdownCheck">
+                            Full Score <span style="display: none; font-size:2rem;">𝄞</span>
+                        </label>
                     </div>
                 </form>
             </ul>
