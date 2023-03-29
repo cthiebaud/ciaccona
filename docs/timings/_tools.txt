@@ -4,4 +4,10 @@ https://onlinepngtools.com/create-transparent-png
 https://realfavicongenerator.net/
 https://hexcolorpedia.com/
 
+
+^(\d),
+^(\d\d),
+
+0$1,
+
 \s+"#": "*\d+"*,\n\s+"Label": ".*",\n\s+"Interval": ".*",\n\s+"Total": ".*",\n
