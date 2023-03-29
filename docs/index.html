@@ -87,7 +87,6 @@
 
         // <!-- resize each SVG to its bounding box -->
         window.addEventListener('load', (event) => {
-
             resizeSVGs(
                 document.querySelectorAll('#grid object'),
                 (o) => {
@@ -96,8 +95,8 @@
                     } // else, will be set to visible when video player is itself visible
                 }, () => {
                     if (!videoId) {
-                        $('#loading').hide()
-                    }
+                        hideLoading()
+                    } // else, will be set to visible when video player is itself visible
                 })
         });
     </script>
@@ -137,7 +136,8 @@
             margin: auto;
             width: 5rem;
             height: 5rem;
-            color: gray;
+            color: #5b7085; /* Silver Blueberry // #36454F; /* Charcoal */
+            border-width: .5rem;
         }
 
         .container-fluid {
@@ -240,18 +240,6 @@
             left: +111vw;
         }
 
-        @keyframes fly-from-left {
-            100% {
-                transform: translateX(+111vw);
-            }
-        }
-
-        @keyframes fly-from-right {
-            100% {
-                transform: translateX(-111vw);
-            }
-        }
-
         .glowing_bubble_siegel {
             background-image: url('svg/Bachsiegel_glowing_bubble.svg');
             background-size: contain;
@@ -296,6 +284,10 @@
             right: 0;
             padding: 0;
             opacity: 1;
+        }
+
+        #playerWrapper > div > div.plyr__controls > div.plyr__controls__item.plyr__menu {
+            display: none;
         }
 
         .plyr:not(.plyr--playing) .plyr__video-embed {
@@ -533,7 +525,7 @@
         </div>
     </footer>
 
-    <div id="loading" class="fullscreen">
+    <div id="loading" class="fullscreen" style="z-index: 2000; background-color: #ffffff80;">
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
@@ -594,11 +586,17 @@
         let playerTrulyReady = false
         let scrollIntoView = false
 
+        const hideLoading = () => {
+            /*
+            */
+            $('#loading').animate({'opacity': 0}, 1000, () => {
+               $('#loading').hide()
+            })
+        }
+
         if (logo === "true") {
             $('#gridContainerCol').css({ display: 'none' })
             $('header.header').show()
-            // $('div.fullscreen.siegel#logoLeft').show().css({ animation: "fly-from-left ease 4s forwards" })
-            // $('div.fullscreen.siegel#logoRight').show().css({ animation: "fly-from-right ease 4s forwards" })
             $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000)
             $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
                 console.log('end of animation')
@@ -609,7 +607,7 @@
                 */
             })
             $('footer.footer').show()
-            $('#loading').hide()
+            hideLoading()
 
         } else {
             $('header.header').hide()
@@ -701,6 +699,7 @@
             $('.score').css({ visibility: "visible" })
         } else {
             $("body").css({ "background-color": "#0E0E10" });
+            $('#loading').css({ "background-color": "#00000080" });
             $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
 
             const $blah2 = $(
@@ -767,7 +766,7 @@
                     $('#gridContainerCol').css({ visibility: 'visible' })
                     $('.score').css({ visibility: "visible" })
                     $('.video-container').css({ visibility: "visible" })
-                    $('#loading').hide()
+                    hideLoading()
                     let previousPlayOnBar = Cookies.get('previousPlayOnBar');
                     if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
                     let bar = videoTimings.bars[previousPlayOnBar]
