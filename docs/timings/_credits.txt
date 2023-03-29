@@ -94,14 +94,12 @@ https://www.instagram.com/playp49/
 https://www.facebook.com/yunparkpercussion
 
 
-
-
 <TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
 
-<Prenom Nom> @twitter_id
+<Yun Park>
 
-#<PrenomNom> #Ciaccona #Chaconne #BWV1004 #JSBach
+#YunPark #Ciaccona #Chaconne #BWV1004 #JSBach
 
-https://ciaccona.cthiebaud.com/?yt=<youtube_id>
+https://ciaccona.cthiebaud.com/?yt=5ITydjLkYUk
 
 </TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>

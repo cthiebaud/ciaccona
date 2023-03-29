@@ -58,9 +58,21 @@
         });
         // get the value of "some_key" in eg "https://example.com/?some_key=some_value"
         let videoId = params.yt; // "some_value"
+        let videoTimings = undefined
         const logo = params.logo; // "some_value"
         if (logo === "true") {
             videoId = undefined
+            videoTimings = undefined
+        } else {
+            const videoIdNoHyphen = videoId.replace('-', '_')
+            const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
+            try {
+                videoTimings = eval(videoIdNoHyphenNoStartingNumber)
+            } catch (error) {
+                console.error(error, 'videoTimings = undefined');
+                videoId = undefined
+                videoTimings = undefined
+            }
         }
     </script>
 
@@ -560,7 +572,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.5</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.6</span>
         </div>
     </footer>
 
@@ -681,12 +693,6 @@
             $('div.fullscreen.siegel#logoLeft').hide()
             $('div.fullscreen.siegel#logoRight').hide()
             $('footer.footer').hide()
-        }
-        let videoTimings = undefined
-        if (videoId) {
-            let videoIdNoHyphen = videoId.replace('-', '_')
-            let videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
-            videoTimings = eval(videoIdNoHyphenNoStartingNumber)
         }
         // console.log(videoId, videoTimings)
         if (videoTimings) {
