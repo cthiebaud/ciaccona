@@ -96,6 +96,8 @@
                     } // else, will be set to visible when video player is itself visible
                 }, () => {
                     if (!videoId) {
+                        $('#config-menu').animate({ opacity: 1 }, 500)
+                        $('#videos-menu').animate({ opacity: 1 }, 500)
                         hideLoading()
                     } // else, will be set to visible when video player is itself visible
                 })
@@ -408,7 +410,7 @@
 
     </svg>
 
-    <div id="videos-menu" class="btn-group">
+    <div id="videos-menu" class="btn-group" style="opacity:0">
         <span class="dropdown" style="position: absolute; left: 0; width: fit-content; background: transparent; z-index: 1001; border: none; margin: .5rem;">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
                 style="background: #00000040; border: none;">
@@ -490,7 +492,7 @@
 
     </div>
 
-    <div id="config-menu" class="btn-group">
+    <div id="config-menu" class="btn-group" style="opacity:0">
         <span class="dropdown" style="position: absolute; right: 0; width: fit-content; background: transparent; z-index: 1001; border: none; margin: .5rem; ">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-bs-toggle="dropdown" aria-expanded="false"
                 style="background: #00000040; border: none; font-size: 1.3rem;">
@@ -554,8 +556,8 @@
         <div id="logoRight" class="fullscreen siegel" style="display:none;"></div>
         <div id="logoLeft" class="fullscreen siegel" style="display:none;"></div>
     </div>
-    <div id="credits" class="container" style="opacity: 0">
-    </div>
+    <!-- div id="credits" class="container" style="opacity: 0">
+    </!-->
 
     <footer style="display: none !important; z-index: 1000; background-color: #ffffff80; border-top: 1px solid #a0a0a080;"
         class="footer mt-auto p-2 d-flex flex-wrap justify-content-center">
@@ -570,7 +572,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.15</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.16</span>
         </div>
     </footer>
 
@@ -626,7 +628,7 @@
             Vslz1tDsaWw: "Christophe Thiebaud",
         }
 
-        let videoPromise
+        let videoPromise = undefined
         let artist
 
         const initVideoTimings = (videoTimings) => {
@@ -650,6 +652,22 @@
             // console.log(fm(videoTimings.start), fm(videoTimings.ciacconaStart.m), fm(videoTimings.bars[0].m))
         }
 
+        const initUI = (videoId) => {
+            $("body").css({ "background-color": "#0E0E10" });
+            $('#loading').css({ "background-color": "#00000080" });
+            $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
+
+            const $blah2 = $(
+                `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
+            );
+
+            $("#playerWrapper").append($blah2);
+
+            plyer = new Plyr("#blah2", {
+                mute: false
+            });
+        }
+
         if (videoId) {
             const videoIdNoHyphen = videoId.replace(/-/gi, '_')
             const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
@@ -664,9 +682,10 @@
                 })
                     .done(function () {
                         console.log("script loaded", url);
-                        const qwe = eval(videoIdNoHyphenNoStartingNumber)
-                        initVideoTimings(qwe)
-                        resolve(qwe)
+                        const timings = eval(videoIdNoHyphenNoStartingNumber)
+                        initVideoTimings(timings)
+                        initUI(videoId)
+                        resolve(timings)
                     })
                     .fail(function () {
                         console.log("script loading error", url);
@@ -730,13 +749,12 @@
             $('#gridContainerCol').css({ display: 'none' })
             $('#config-menu').hide()
             $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000)
-            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
+            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0 }, 2000)
+            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0 }, 2000, undefined, () => {
                 console.log('end of animation')
             })
             $('footer.footer').show()
             hideLoading()
-
         } else {
             $('header.header').hide()
             $('div.fullscreen.siegel#logoLeft').hide()
@@ -789,25 +807,11 @@
             return binaryRangeSearch(bar, variationsBars)
         }
 
-        if (!videoId) {
+        if (typeof videoPromise === 'undefined') {
             $('#gridContainerCol').css({ visibility: 'visible' })
             $('.score').css({ visibility: "visible" })
         } else {
             videoPromise.then((videoTimings) => {
-                $("body").css({ "background-color": "#0E0E10" });
-                $('#loading').css({ "background-color": "#00000080" });
-                $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
-
-                const $blah2 = $(
-                    `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
-                );
-
-                $("#playerWrapper").append($blah2);
-
-                plyer = new Plyr("#blah2", {
-                    mute: 0
-                });
-
                 const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
                     /*
                     const d = moment.duration(currentTime * 1000)
@@ -850,7 +854,7 @@
                     }
                 }
 
-                const setBrickOnClickEvent = (videoTimings) => {
+                const setBrickClickEvent = (videoTimings) => {
                     $(".brick.hasScore").off().on('click', function (e) {
                         const d = $(this).data()
                         // console.log('clicked on bar', d.bar)
@@ -901,40 +905,45 @@
                 });
                 plyer.on('ready', (event) => {
                     console.log("Plyr ready event");
-                    setBrickOnClickEvent(videoTimings)
-                    setTimeout(() => {
-                        $('.artist .name').html(artist == "Christophe Thiebaud" ? "Moi" : artist)
-                        $('.artist .url').attr({
-                            href: `https://youtu.be/${videoId}`,
-                            target: videoId
-                        })
 
-                        $('#gridContainerCol').css({ visibility: 'visible' })
-                        $('.score').css({ visibility: "visible" })
-                        $('.video-container').css({ visibility: "visible" })
-                        $("#grid").isotope({ filter: '*' })
-                        hideLoading()
+                    setBrickClickEvent(videoTimings)
 
-                        let previousPlayOnBar = getCookie('previousPlayOnBar');
-                        if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
-                        const bar = videoTimings.bars[previousPlayOnBar]
-                        const isPlaying = getCookie('playing')
-                        if (isPlaying === 'true') {
-                            console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
-                            setTimeout(() => {
-                                // youtube annoying "feature" (no sound before play/pause)
-                                // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
-                                plyer.play()
-                                plyer.pause()
-                                plyer.play()
-                            }, 1000)
-                        }
-                        console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
-                        plyer.currentTime = bar.duration.asSeconds()
+                    $('.artist .name').html(artist == "Christophe Thiebaud" ? "Moi" : artist)
+                    $('.artist .url').attr({
+                        href: `https://youtu.be/${videoId}`,
+                        target: videoId
+                    })
 
-                        finalizePlayerInitilization()
+                    $('#gridContainerCol').css({ visibility: 'visible' })
+                    $('.score').css({ visibility: "visible" })
+                    $('.video-container').css({ visibility: "visible" })
+                    $('#config-menu').animate({ opacity: 1 }, 500)
+                    $('#videos-menu').animate({ opacity: 1 }, 500)
+                    $("#grid").isotope({ filter: '*' })
+                    hideLoading()
 
-                    }, 1000)
+                    let previousPlayOnBar = getCookie('previousPlayOnBar');
+                    if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
+                    const bar = videoTimings.bars[previousPlayOnBar]
+                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
+                    plyer.currentTime = bar.duration.asSeconds()
+                    const isPlaying = getCookie('playing')
+                    if (isPlaying === 'true') {
+                        console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing? (in one second) --->")
+                        setTimeout(() => {
+                            console.log("---> one second is elapsed, trying ot play UMUTED")
+                            // youtube annoying "feature" (no sound before play/pause)
+                            // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
+                            plyer.muted = true; // Expect no need for this line.
+                            plyer.muted = false;
+                            plyer.play();
+                            plyer.pause()
+                            plyer.play()
+                        }, 1000)
+                    }
+
+                    finalizePlayerInitilization()
+
 
                 });
 
