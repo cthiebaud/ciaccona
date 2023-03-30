@@ -565,7 +565,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.7</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.8</span>
         </div>
     </footer>
 
@@ -684,6 +684,10 @@
             console.log("Cookie", cookieName, "is", value)
             return value
         }
+        const setCookie = (cookieName, cookieValue) => {
+            Cookies.set(cookieName, cookieValue, { expires: 2 })
+            console.log("Cookie", cookieName, "set to", cookieValue)
+        }
         const fm = (m) => m.format('h:mm:ss')
         const fd = (d) => {
             const m = moment(d.asMilliseconds())
@@ -701,7 +705,7 @@
 
         $("#dropdownCheck").on("click", function () {
             fullWidthChecked = !fullWidthChecked
-            Cookies.set('fullscore', fullWidthChecked ? 'true' : 'false')
+            setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
             if (fullWidthChecked) {
                 $('#gridContainerCol').addClass('fullwidth')
                 $('.grid-brick, .score').addClass('fullwidth')
@@ -822,7 +826,7 @@
                         let scroll = false
                         if (previousPlayOnBar != startBarOfVariation) {
                             previousPlayOnBar = startBarOfVariation
-                            Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
+                            setCookie('previousPlayOnBar', previousPlayOnBar)
                             scroll = true
                         }
                         if (scrollIntoView) {
@@ -874,7 +878,7 @@
                                     plyer.play()
                                 }
                                 previousPlayOnBar = d.bar
-                                Cookies.set('previousPlayOnBar', d.bar, { expires: 2 })
+                                setCookie('previousPlayOnBar', d.bar)
                             }
                         }
                     })
@@ -916,8 +920,7 @@
                 plyer.on('playing', (event) => {
                     if (!playerTrulyReady) return
                     console.log("Plyr playing event");
-                    Cookies.set('playing', 'true', { expires: 2 })
-                    console.log("Cookies.set('playing', 'true'")
+                    setCookie('playing', 'true')
                     scrollIntoView = true
                     feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
                 });
@@ -934,15 +937,13 @@
                     if (!playerTrulyReady) return
                     console.log("Plyr pause event");
                     $(".grid-brick").removeClass("playing")
-                    Cookies.set('playing', 'false', { expires: 2 })
-                    console.log("Cookies.set('playing', 'false'")
+                    setCookie('playing', 'false')
                 });
                 plyer.on('ended', (event) => {
                     if (!playerTrulyReady) return
                     console.log("Plyr ended event");
-                    Cookies.set('playing', 'false', { expires: 2 })
-                    console.log("Cookies.set('playing', 'false'")
-                    Cookies.set('previousPlayOnBar', 0, { expires: 2 })
+                    setCookie('playing', 'false')
+                    setCookie('previousPlayOnBar', 0)
                 });
             })
         }
