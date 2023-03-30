@@ -14,7 +14,6 @@ async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallbac
             let interval = setInterval(() => {
                 let SVG = o.contentDocument;
                 if (!SVG || !SVG.children || SVG.children.length == 0) {
-                    // console.log("not yet ...", o.id)
                     return
                 }
 
@@ -36,8 +35,6 @@ async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallbac
         results.forEach((result) => {
             if (result.status === "fulfilled") {
                 const svg = result.value.svg
-                /* const o = result.value.o
-                // console.log(o, svg) */
                 const box = svg.getBBox()
                 maxWidth = Math.max(maxWidth, box.width)
                 maxHeight = Math.max(maxHeight, box.height)
@@ -57,12 +54,9 @@ async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallbac
                 const viewBox = [box.x + (withOffsetX && result.value.offset ? result.value.offset: 0), y, box.width, maxHeight].join(" ")
                 svg.setAttribute("viewBox", viewBox)
                 svg.setAttribute("preserveAspectRatio", "xMinYMid meet")
-                // console.log(viewBox)
                 svg.removeAttribute("height")
                 svg.removeAttribute("width") 
                 if (elementCallback) elementCallback(result.value.o)
-            } else {
-                // console.log(result.status, result.value)
             }
         })
         if (finalCallback) finalCallback()

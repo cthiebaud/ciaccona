@@ -89,7 +89,7 @@
         window.addEventListener('load', (event) => {
             resizeSVGs(
                 document.querySelectorAll('#grid object'),
-                fullWidthChecked ? false : true, // with X offset to hide clef signature ?
+                fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
                 (o) => {
                     if (!videoId) {
                         $(o).parent().css({ visibility: "visible" })
@@ -632,12 +632,6 @@
         const initVideoTimings = (videoTimings) => {
             const initializeBarObject = (bar) => {
                 if (!bar.m) {
-                    /*
-                    const qwe = bar["Time Recorded"]
-                    if (!qwe) {
-                        throw new Error('no Time !')
-                    } 
-                    */
                     bar.m = new moment(bar["Time Recorded"])
                 }
                 bar.duration = moment.duration(bar.m.diff(videoTimings.start))
@@ -657,12 +651,11 @@
         }
 
         if (videoId) {
-            const videoIdNoHyphen = videoId.replace('-', '_')
+            const videoIdNoHyphen = videoId.replace(/-/gi, '_')
             const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
             artist = mapVideoId2ArtistName[videoIdNoHyphenNoStartingNumber]
-            const noSpaces = (n) => n.replace(' ', '')
-            const fileName = noSpaces(artist)
-            const url = `timings/${fileName}-${videoId}.js`
+            const artistNoSpace = artist.replace(/\s/gi, '')
+            const url = `timings/${artistNoSpace}-${videoId}.js`
             videoPromise = new Promise((resolve, reject) => {
                 console.log('script loading', url)
                 $.ajax({
@@ -670,17 +663,17 @@
                     dataType: "script",
                 })
                     .done(function () {
-                        console.log("success", url);
+                        console.log("script loaded", url);
                         const qwe = eval(videoIdNoHyphenNoStartingNumber)
                         initVideoTimings(qwe)
                         resolve(qwe)
                     })
                     .fail(function () {
-                        console.log("error", url);
+                        console.log("script loading error", url);
                         reject()
                     })
                     .always(function () {
-                        console.log("loading complete", url);
+                        console.log("script loading complete", url);
                     })
             })
         }
@@ -725,7 +718,6 @@
     </script>
     <script>
 
-        let playerTrulyReady = false
         let scrollIntoView = false
 
         const hideLoading = () => {
@@ -787,7 +779,7 @@
                 } else if (maxValue <= value) {
                     low = mid + 1;
                 } else {
-                    console.log('bar', value, 'is in variation', mid)
+                    // console.log('bar', value, 'is in variation', mid)
                     return mid;
                 }
             }
@@ -861,9 +853,8 @@
                 const setBrickOnClickEvent = (videoTimings) => {
                     $(".brick.hasScore").off().on('click', function (e) {
                         const d = $(this).data()
-                        console.log('clicked on bar', d.bar)
+                        // console.log('clicked on bar', d.bar)
                         if (typeof (d.bar) != "undefined") {
-                            // const state = player.getPlayerState()
                             const isPlaying = plyer.playing
                             if (previousPlayOnBar == d.bar) {
                                 // just toggle play state
@@ -891,6 +882,12 @@
                     })
                 }
 
+                plyer.on('playing', (event) => {
+                    console.log("Plyr playing event");
+                    setCookie('playing', 'true')
+                    scrollIntoView = true
+                    // feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
+                });
                 //
                 plyer.on('ready', (event) => {
                     console.log("Plyr ready event");
@@ -903,15 +900,16 @@
                     setTimeout(() => {
                         $('.artist .name').html(artist == "Christophe Thiebaud" ? "Moi" : artist)
                         $('.artist .url').attr({
-                            href:`https://youtu.be/${videoId}`,
+                            href: `https://youtu.be/${videoId}`,
                             target: videoId
                         })
-                        
+
                         $('#gridContainerCol').css({ visibility: 'visible' })
                         $('.score').css({ visibility: "visible" })
                         $('.video-container').css({ visibility: "visible" })
                         $("#grid").isotope({ filter: '*' })
                         hideLoading()
+
                         let previousPlayOnBar = getCookie('previousPlayOnBar');
                         if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
                         const bar = videoTimings.bars[previousPlayOnBar]
@@ -922,43 +920,44 @@
                         }
                         console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
                         plyer.currentTime = bar.duration.asSeconds()
-                        playerTrulyReady = true
+
+                        finalizePlayerInitilization()
+
                     }, 1000)
 
                 });
-                plyer.on('timeupdate', (event) => {
-                    if (!playerTrulyReady) return
-                    scrollIntoView = true
-                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
-                });
-                plyer.on('playing', (event) => {
-                    if (!playerTrulyReady) return
-                    console.log("Plyr playing event");
-                    setCookie('playing', 'true')
-                    scrollIntoView = true
-                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
-                });
-                plyer.on('seeking', (event) => {
-                    if (!playerTrulyReady) return
-                    const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
-                    feedbackOnCurrentTime(seekTime, 'seeking')
-                });
-                plyer.on('seeked', (event) => {
-                    if (!playerTrulyReady) return
-                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
-                });
-                plyer.on('pause', (event) => {
-                    if (!playerTrulyReady) return
-                    console.log("Plyr pause event");
-                    $(".grid-brick").removeClass("playing")
-                    setCookie('playing', 'false')
-                });
-                plyer.on('ended', (event) => {
-                    if (!playerTrulyReady) return
-                    console.log("Plyr ended event");
-                    setCookie('playing', 'false')
-                    setCookie('previousPlayOnBar', 0)
-                });
+
+                const finalizePlayerInitilization = () => {
+                    plyer.on('timeupdate', (event) => {
+                        scrollIntoView = true
+                        feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
+                    });
+                    /*
+                    plyer.on('playing', (event) => {
+                        console.log("Plyr playing event");
+                        setCookie('playing', 'true')
+                        scrollIntoView = true
+                        // feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
+                    });
+                    */
+                    plyer.on('seeking', (event) => {
+                        const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
+                        feedbackOnCurrentTime(seekTime, 'seeking')
+                    });
+                    plyer.on('seeked', (event) => {
+                        feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
+                    });
+                    plyer.on('pause', (event) => {
+                        console.log("Plyr pause event");
+                        $(".grid-brick").removeClass("playing")
+                        setCookie('playing', 'false')
+                    });
+                    plyer.on('ended', (event) => {
+                        console.log("Plyr ended event");
+                        setCookie('playing', 'false')
+                        setCookie('previousPlayOnBar', 0)
+                    });
+                }
             })
         }
     </script>
@@ -1215,7 +1214,8 @@
 
         const $bricks = $bricksTemporaryContainer.children()
 
-        $gridById.empty().append($bricks).isotope('appended', $bricks) // .isotope('layout')
+        $gridById.empty().append($bricks).isotope('appended', $bricks)
+
         if (fullWidthChecked) {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick, .score').addClass('fullwidth')
