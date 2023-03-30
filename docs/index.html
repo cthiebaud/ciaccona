@@ -58,11 +58,9 @@
         });
         // get the value of "some_key" in eg "https://example.com/?some_key=some_value"
         let videoId = params.yt; // "some_value"
-        let videoTimings = undefined
         const logo = params.logo; // "some_value"
         if (logo === "true") {
             videoId = undefined
-            videoTimings = undefined
         }
     </script>
 
@@ -457,14 +455,14 @@
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KHwsHXtVWks'"><img src="svg/harp.svg"
                             style="top: -0.5rem; position: relative;">
                         <div>Anneleen Lenaerts</div>
-                </a></li>
+                    </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=P93o202UJRs'"><img src="svg/flute.svg"
                             style="top: -0.5rem; position: relative;">
                         <div>Marta Femenía</div>
-                </a></li>
+                    </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -567,7 +565,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.6</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.7</span>
         </div>
     </footer>
 
@@ -598,114 +596,34 @@
     <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
-    <!-- violin -->
-    <script src="timings/AmandineBeyer-mg9kT7XiLoU.js"></script>
-    <script src="timings/VeronikaEberle-Ilb3no_cwnI.js"></script>
-    <script src="timings/IsabelleFaust-r67BASAgP5Q.js"></script>
-    <script src="timings/MidoriGotō-KgSKvOAJMb8.js"></script>
-    <script src="timings/HilaryHahn-ngjEVKxQCWs.js"></script>
-    <script src="timings/BellaHristova-XkfsGCIiHb4.js"></script>
-    <script src="timings/LisaJacobs-dyAcRqpjbqU.js"></script>
-    <script src="timings/SigiswaldKuijken-NCTDf8dNT5s.js"></script>
-    <script src="timings/RachelPodger-1HSJufg7I1I.js"></script>
-    <script src="timings/VirginieRobilliard-KWcGsRKbe-U.js"></script>
-    <script src="timings/RachellEllenWong-59KFAY_qf-Q.js"></script>
-    <!-- guitar -->
-    <script src="timings/PetraPoláčková-lxZqC_J0C74.js"></script>
-    <script src="timings/RaphaellaSmits-Jcy7E4uHYK8.js"></script>
-    <script src="timings/AndreaDeVitis-oxWq93mlAyc.js"></script>
-    <!-- harpsichord -->
-    <script src="timings/ChiaraMassini-SzxzLtwK-eo.js"></script>
-    <!-- no embedding :(
-        <script src="timings/GenzohTakehisa-ze_QPWuyZLo.js"></script>
-    -->
-    <!-- harp -->
-    <script src="timings/AnneleenLenaerts-KHwsHXtVWks.js"></script>
-    <!-- marimba -->
-    <script src="timings/MikaStoltzman-BYg7Di8CH9w.js"></script>
-    <script src="timings/YunPark-5ITydjLkYUk.js"></script>
-    <!-- flute -->
-    <script src="timings/MartaFemenía-P93o202UJRs.js"></script>
-    <!-- moi -->
-    <script src="timings/ChristopheThiebaud-Vslz1tDsaWw.js"></script>
-
     <script>
-
-        if (videoId) {
-            const videoIdNoHyphen = videoId.replace('-', '_')
-            const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
-            try {
-                videoTimings = eval(videoIdNoHyphenNoStartingNumber)
-            } catch (error) {
-                console.error(error, 'videoTimings = undefined');
-                videoId = undefined
-                videoTimings = undefined
-            }
-        }
-        let fullWidthChecked = Cookies.get('fullscore')
-        console.log('fullscore', fullWidthChecked)
-        if (!fullWidthChecked || fullWidthChecked == 'false') {
-            fullWidthChecked = false
-        } else {
-            fullWidthChecked = true
-            $("#dropdownCheck").attr('checked', 'checked')
-        }
-
-        $("#dropdownCheck").on("click", function () {
-            fullWidthChecked = !fullWidthChecked
-            Cookies.set('fullscore', fullWidthChecked ? 'true' : 'false')
-            if (fullWidthChecked) {
-                $('#gridContainerCol').addClass('fullwidth')
-                $('.grid-brick, .score').addClass('fullwidth')
-            } else {
-                $('#gridContainerCol').removeClass('fullwidth')
-                $('.grid-brick, .score').removeClass('fullwidth')
-            }
-            $("#grid").isotope('layout')
-        });                           
-    </script>
-    <script>
-        const fm = (m) => m.format('h:mm:ss')
-        const fd = (d) => {
-            const m = moment(d.asMilliseconds())
-            return m.format('mm:ss')
+        const mapVideoId2ArtistName = {
+            mg9kT7XiLoU: "Amandine Beyer",
+            Ilb3no_cwnI: "Veronika Eberle",
+            r67BASAgP5Q: "Isabelle Faust",
+            KgSKvOAJMb8: "Midori Gotō",
+            ngjEVKxQCWs: "Hilary Hahn",
+            XkfsGCIiHb4: "Bella Hristova",
+            dyAcRqpjbqU: "Lisa Jacobs",
+            NCTDf8dNT5s: "Sigiswald Kuijken",
+            _1HSJufg7I1I: "Rachel Podger",
+            KWcGsRKbe_U: "Virginie Robilliard",
+            _59KFAY_qf_Q: "Rachell Ellen Wong",
+            lxZqC_J0C74: "Petra Poláčková",
+            Jcy7E4uHYK8: "Raphaella Smits",
+            oxWq93mlAyc: "Andrea De Vitis",
+            SzxzLtwK_eo: "Chiara Massini",
+            ze_QPWuyZLo: "Genzoh Takehisa",
+            KHwsHXtVWks: "Anneleen Lenaerts",
+            BYg7Di8CH9w: "Mika Stoltzman",
+            _5ITydjLkYUk: "Yun Park",
+            P93o202UJRs: "Marta Femenía",
+            Vslz1tDsaWw: "Christophe Thiebaud",
         }
 
-        let playerTrulyReady = false
-        let scrollIntoView = false
+        let videoPromise
 
-        const hideLoading = () => {
-            /*
-            */
-            $('#loading').animate({ 'opacity': 0 }, 1000, () => {
-                $('#loading').hide()
-            })
-        }
-
-        if (logo === "true") {
-            $('#gridContainerCol').css({ display: 'none' })
-            $('#config-menu').hide()
-            $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000)
-            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
-                console.log('end of animation')
-                /*
-                $('div#credits').show().animate({ opacity: 1 }, 1000, undefined, () => {
-                    console.log('end of animation credits')
-                })
-                */
-            })
-            $('footer.footer').show()
-            hideLoading()
-
-        } else {
-            $('header.header').hide()
-            $('div.fullscreen.siegel#logoLeft').hide()
-            $('div.fullscreen.siegel#logoRight').hide()
-            $('footer.footer').hide()
-        }
-        // console.log(videoId, videoTimings)
-        if (videoTimings) {
+        const initVideoTimings = (videoTimings) => {
             const initializeBarObject = (bar) => {
                 if (!bar.m) {
                     /*
@@ -731,7 +649,98 @@
             }
             // console.log(fm(videoTimings.start), fm(videoTimings.ciacconaStart.m), fm(videoTimings.bars[0].m))
         }
-        let previousPlayOnBar = Cookies.get('previousPlayOnBar');
+
+        if (videoId) {
+            const videoIdNoHyphen = videoId.replace('-', '_')
+            const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
+            const withSpaces = (n) => n.replace(' ', '')
+            const fileName = withSpaces(mapVideoId2ArtistName[videoIdNoHyphenNoStartingNumber])
+            const url = `timings/${fileName}-${videoId}.js`
+            videoPromise = new Promise((resolve, reject) => {
+                console.log('script loading', url)
+                $.ajax({
+                    url: url,
+                    dataType: "script",
+                })
+                    .done(function () {
+                        console.log("success", url);
+                        const qwe = eval(videoIdNoHyphenNoStartingNumber)
+                        initVideoTimings(qwe)
+                        resolve(qwe)
+                    })
+                    .fail(function () {
+                        console.log("error", url);
+                        reject()
+                    })
+                    .always(function () {
+                        console.log("loading complete", url);
+                    })
+            })
+        }
+
+        // utilities
+        const getCookie = (cookieName) => {
+            const value = Cookies.get(cookieName)
+            console.log("Cookie", cookieName, "is", value)
+            return value
+        }
+        const fm = (m) => m.format('h:mm:ss')
+        const fd = (d) => {
+            const m = moment(d.asMilliseconds())
+            return m.format('mm:ss')
+        }
+        // end of utilities
+
+        let fullWidthChecked = getCookie('fullscore')
+        if (!fullWidthChecked || fullWidthChecked == 'false') {
+            fullWidthChecked = false
+        } else {
+            fullWidthChecked = true
+            $("#dropdownCheck").attr('checked', 'checked')
+        }
+
+        $("#dropdownCheck").on("click", function () {
+            fullWidthChecked = !fullWidthChecked
+            Cookies.set('fullscore', fullWidthChecked ? 'true' : 'false')
+            if (fullWidthChecked) {
+                $('#gridContainerCol').addClass('fullwidth')
+                $('.grid-brick, .score').addClass('fullwidth')
+            } else {
+                $('#gridContainerCol').removeClass('fullwidth')
+                $('.grid-brick, .score').removeClass('fullwidth')
+            }
+            $("#grid").isotope('layout')
+        });                           
+    </script>
+    <script>
+
+        let playerTrulyReady = false
+        let scrollIntoView = false
+
+        const hideLoading = () => {
+            $('#loading').animate({ 'opacity': 0 }, 500, () => {
+                $('#loading').hide()
+            })
+        }
+
+        if (logo === "true") {
+            $('#gridContainerCol').css({ display: 'none' })
+            $('#config-menu').hide()
+            $('header.header').show()
+            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0, opacity: 1 }, 2000)
+            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0, opacity: 1 }, 2000, undefined, () => {
+                console.log('end of animation')
+            })
+            $('footer.footer').show()
+            hideLoading()
+
+        } else {
+            $('header.header').hide()
+            $('div.fullscreen.siegel#logoLeft').hide()
+            $('div.fullscreen.siegel#logoRight').hide()
+            $('footer.footer').hide()
+        }
+        let previousPlayOnBar = getCookie('previousPlayOnBar')
         if (!previousPlayOnBar) previousPlayOnBar = 0
 
         const variationsBars = [
@@ -781,126 +790,161 @@
             $('#gridContainerCol').css({ visibility: 'visible' })
             $('.score').css({ visibility: "visible" })
         } else {
-            $("body").css({ "background-color": "#0E0E10" });
-            $('#loading').css({ "background-color": "#00000080" });
-            $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
+            videoPromise.then((videoTimings) => {
+                $("body").css({ "background-color": "#0E0E10" });
+                $('#loading').css({ "background-color": "#00000080" });
+                $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
 
-            const $blah2 = $(
-                `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
-            );
+                const $blah2 = $(
+                    `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
+                );
 
-            $("#playerWrapper").append($blah2);
+                $("#playerWrapper").append($blah2);
 
-            plyer = new Plyr("#blah2", {
-                mute: 0
-            });
+                plyer = new Plyr("#blah2", {
+                    mute: 0
+                });
 
-            const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
-                /*
-                const d = moment.duration(currentTime * 1000)
-                console.log(`Plyr ${source} event at ${currentTime} | ${fd(d)}`)
-                */
-                let i = 0
-                let barFound = 0
-                let done = false
-                const found = (bar) => {
-                    const variation = bar2variation(bar)
-                    $(".grid-brick").removeClass("playing")
-                    $(`.grid-brick#gb${variation}`).addClass("playing");
+                const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
+                    /*
+                    const d = moment.duration(currentTime * 1000)
+                    console.log(`Plyr ${source} event at ${currentTime} | ${fd(d)}`)
+                    */
+                    let i = 0
+                    let barFound = 0
+                    let done = false
+                    const found = (bar) => {
+                        const variation = bar2variation(bar)
+                        $(".grid-brick").removeClass("playing")
+                        $(`.grid-brick#gb${variation}`).addClass("playing");
 
-                    const startBarOfVariation = variation2bar(variation)
-                    let scroll = false
-                    if (previousPlayOnBar != startBarOfVariation) {
-                        previousPlayOnBar = startBarOfVariation
-                        Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
-                        scroll = true
-                    }
-                    if (scrollIntoView) {
-                        if (scroll || forceScroll) {
-                            console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
-                            $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                        const startBarOfVariation = variation2bar(variation)
+                        let scroll = false
+                        if (previousPlayOnBar != startBarOfVariation) {
+                            previousPlayOnBar = startBarOfVariation
+                            Cookies.set('previousPlayOnBar', previousPlayOnBar, { expires: 2 })
+                            scroll = true
+                        }
+                        if (scrollIntoView) {
+                            if (scroll || forceScroll) {
+                                console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
+                                $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+                            }
                         }
                     }
-                }
-                for (let bar of videoTimings.bars) {
-                    const d = bar.duration.asSeconds()
-                    if (d > currentTime) {
+                    for (let bar of videoTimings.bars) {
+                        const d = bar.duration.asSeconds()
+                        if (d > currentTime) {
+                            found(barFound)
+                            done = true
+                            break
+                        }
+                        barFound = i
+                        i++
+                    }
+                    if (!done) {
                         found(barFound)
-                        done = true
-                        break
                     }
-                    barFound = i
-                    i++
                 }
-                if (!done) {
-                    found(barFound)
+
+                const setBrickOnClickEvent = (videoTimings) => {
+                    $(".brick.hasScore").off().on('click', function (e) {
+                        const d = $(this).data()
+                        console.log('clicked on bar', d.bar)
+                        if (typeof (d.bar) != "undefined") {
+                            // const state = player.getPlayerState()
+                            const isPlaying = plyer.playing
+                            if (previousPlayOnBar == d.bar) {
+                                // just toggle play state
+                                if (isPlaying) {
+                                    console.log('dear plyr, can you please pause?')
+                                    plyer.pause();
+                                } else {
+                                    console.log('dear plyr, can you please play?')
+                                    plyer.play()
+                                }
+                            } else {
+                                let bar = videoTimings.bars[d.bar]
+                                console.log('bar', d.bar, 'is @', bar["Time Recorded"])
+                                console.log("seeking (on click)", d.bar, fd(bar.duration))
+                                scrollIntoView = false
+                                plyer.currentTime = bar.duration.asSeconds()
+                                if (!isPlaying) {
+                                    console.log('dear plyr, can you please restart playing?')
+                                    plyer.play()
+                                }
+                                previousPlayOnBar = d.bar
+                                Cookies.set('previousPlayOnBar', d.bar, { expires: 2 })
+                            }
+                        }
+                    })
                 }
-            }
 
-            //
-            plyer.on('ready', (event) => {
-                console.log("Plyr ready event");
-                // youtube annoying "feature" (no sound before play/pause)
-                /*
-                plyer.play();
-                plyer.pause();
-                */
-                setTimeout(() => {
-                    $('#gridContainerCol').css({ visibility: 'visible' })
-                    $('.score').css({ visibility: "visible" })
-                    $('.video-container').css({ visibility: "visible" })
-                    hideLoading()
-                    let previousPlayOnBar = Cookies.get('previousPlayOnBar');
-                    if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
-                    let bar = videoTimings.bars[previousPlayOnBar]
-                    let qwe = Cookies.get('playing')
-                    console.log('playing cookie', qwe)
-                    if (Cookies.get('playing') == 'true') {
-                        console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
-                        plyer.play();
-                    }
-                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
-                    plyer.currentTime = bar.duration.asSeconds()
-                    playerTrulyReady = true
-                }, 1000)
+                //
+                plyer.on('ready', (event) => {
+                    console.log("Plyr ready event");
+                    // youtube annoying "feature" (no sound before play/pause)
+                    /*
+                    plyer.play();
+                    plyer.pause();
+                    */
+                    setBrickOnClickEvent(videoTimings)
+                    setTimeout(() => {
+                        $('#gridContainerCol').css({ visibility: 'visible' })
+                        $('.score').css({ visibility: "visible" })
+                        $('.video-container').css({ visibility: "visible" })
+                        hideLoading()
+                        let previousPlayOnBar = getCookie('previousPlayOnBar');
+                        if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
+                        const bar = videoTimings.bars[previousPlayOnBar]
+                        const isPlaying = getCookie('playing')
+                        if (isPlaying === 'true') {
+                            console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
+                            plyer.play();
+                        }
+                        console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
+                        plyer.currentTime = bar.duration.asSeconds()
+                        playerTrulyReady = true
+                    }, 1000)
 
-            });
-            plyer.on('timeupdate', (event) => {
-                if (!playerTrulyReady) return
-                scrollIntoView = true
-                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
-            });
-            plyer.on('playing', (event) => {
-                if (!playerTrulyReady) return
-                console.log("Plyr playing event");
-                Cookies.set('playing', 'true', { expires: 2 })
-                console.log("Cookies.set('playing', 'true'")
-                scrollIntoView = true
-                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
-            });
-            plyer.on('seeking', (event) => {
-                if (!playerTrulyReady) return
-                const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
-                feedbackOnCurrentTime(seekTime, 'seeking')
-            });
-            plyer.on('seeked', (event) => {
-                if (!playerTrulyReady) return
-                feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
-            });
-            plyer.on('pause', (event) => {
-                if (!playerTrulyReady) return
-                console.log("Plyr pause event");
-                $(".grid-brick").removeClass("playing")
-                Cookies.set('playing', 'false', { expires: 2 })
-                console.log("Cookies.set('playing', 'false'")
-            });
-            plyer.on('ended', (event) => {
-                if (!playerTrulyReady) return
-                console.log("Plyr ended event");
-                Cookies.set('playing', 'false', { expires: 2 })
-                console.log("Cookies.set('playing', 'false'")
-                Cookies.set('previousPlayOnBar', 0, { expires: 2 })
-            });
+                });
+                plyer.on('timeupdate', (event) => {
+                    if (!playerTrulyReady) return
+                    scrollIntoView = true
+                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
+                });
+                plyer.on('playing', (event) => {
+                    if (!playerTrulyReady) return
+                    console.log("Plyr playing event");
+                    Cookies.set('playing', 'true', { expires: 2 })
+                    console.log("Cookies.set('playing', 'true'")
+                    scrollIntoView = true
+                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
+                });
+                plyer.on('seeking', (event) => {
+                    if (!playerTrulyReady) return
+                    const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
+                    feedbackOnCurrentTime(seekTime, 'seeking')
+                });
+                plyer.on('seeked', (event) => {
+                    if (!playerTrulyReady) return
+                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
+                });
+                plyer.on('pause', (event) => {
+                    if (!playerTrulyReady) return
+                    console.log("Plyr pause event");
+                    $(".grid-brick").removeClass("playing")
+                    Cookies.set('playing', 'false', { expires: 2 })
+                    console.log("Cookies.set('playing', 'false'")
+                });
+                plyer.on('ended', (event) => {
+                    if (!playerTrulyReady) return
+                    console.log("Plyr ended event");
+                    Cookies.set('playing', 'false', { expires: 2 })
+                    console.log("Cookies.set('playing', 'false'")
+                    Cookies.set('previousPlayOnBar', 0, { expires: 2 })
+                });
+            })
         }
     </script>
     <script type='module'>
@@ -1088,7 +1132,7 @@
             const templateVariations =
                 `
 <div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick" style="border-color: #${c.borderColor}">
-    <div class="brick font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
+    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; " data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 
@@ -1146,40 +1190,9 @@
         }
 
         $(".brick").click(function (e) {
+            console.log("clicked on brick")
             e.stopPropagation();
-            if (!videoId) {
-                $('.dropdown-toggle').dropdown('toggle');
-            } else {
-
-                const d = $(this).data()
-                console.log('clicked on bar', d.bar)
-                if (typeof (d.bar) != "undefined") {
-                    // const state = player.getPlayerState()
-                    const isPlaying = plyer.playing
-                    if (previousPlayOnBar == d.bar) {
-                        // just toggle play state
-                        if (isPlaying) {
-                            console.log('dear plyr, can you please pause?')
-                            plyer.pause();
-                        } else {
-                            console.log('dear plyr, can you please play?')
-                            plyer.play()
-                        }
-                    } else {
-                        let bar = videoTimings.bars[d.bar]
-                        console.log('bar', d.bar, 'is @', bar["Time Recorded"])
-                        console.log("seeking (on click)", d.bar, fd(bar.duration))
-                        scrollIntoView = false
-                        plyer.currentTime = bar.duration.asSeconds()
-                        if (!isPlaying) {
-                            console.log('dear plyr, can you please restart playing?')
-                            plyer.play()
-                        }
-                        previousPlayOnBar = d.bar
-                        Cookies.set('previousPlayOnBar', d.bar, { expires: 2 })
-                    }
-                }
-            }
+            $('.dropdown-toggle#dropdownMenuLink').dropdown('toggle');
         });
 
     </script>
