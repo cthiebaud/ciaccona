@@ -570,7 +570,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.13</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.14</span>
         </div>
     </footer>
 
@@ -923,8 +923,8 @@
                             console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing?")
                             // youtube annoying "feature" (no sound before play/pause)
                             // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
-                            player.muted = true;
-                            player.muted = false; 
+                            plyer.play();
+                            plyer.pause();
                             plyer.play();
                         }
                         console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
