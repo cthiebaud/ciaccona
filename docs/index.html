@@ -901,7 +901,7 @@
                     */
                     setBrickOnClickEvent(videoTimings)
                     setTimeout(() => {
-                        $('.artist .name').html(artist)
+                        $('.artist .name').html(artist == "Christophe Thiebaud" ? "Moi" : artist)
                         $('.artist .url').attr({
                             href:`https://youtu.be/${videoId}`,
                             target: videoId
