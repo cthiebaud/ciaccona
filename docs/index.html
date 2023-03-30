@@ -902,10 +902,8 @@
                 plyer.on('ready', (event) => {
                     console.log("Plyr ready event");
                     // youtube annoying "feature" (no sound before play/pause)
-                    /*
                     plyer.play();
                     plyer.pause();
-                    */
                     setBrickOnClickEvent(videoTimings)
                     setTimeout(() => {
                         $('.artist .name').html(artist == "Christophe Thiebaud" ? "Moi" : artist)
