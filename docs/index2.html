@@ -20,10 +20,7 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let videoId = params.yt
-        const logo = params.logo
-        if (logo === 'true') {
-            videoId = undefined
-        }
+        let logo = (params.logo === 'true' ? true : false)
     </script>
 
     <script type="module">
@@ -171,8 +168,8 @@
                 <li><a id="home" class="dropdown-item d-flex justify-content-between" href="#">
                         &nbsp;<div style="font-size:20pt; top: -0.5rem; position: relative;">🏠<!--∅--></div>
                     </a></li>
-                <li><a id="logo" class="dropdown-item d-flex justify-content-center" href="#" onclick="location = '/?logo=true'">
-                        &nbsp;<img style="top: -0.5rem; position: relative;" src="svg/BachsiegelColorWheel.svg">
+                <li><a id="logo" class="dropdown-item d-flex justify-content-between" href="#">
+                        &nbsp;<div>About&hellip;</div>
                     </a></li>
             </ul>
         </span>
@@ -257,7 +254,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">dev0.19</span>
+            <span class="font-monospace badge rounded-pill bg-primary">dev0.20</span>
         </div>
     </footer>
 
@@ -314,6 +311,28 @@
             document.getElementById('loading').style.display = 'none'
         }
 
+        function showLogo() {
+            $('header.header').show()
+            $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
+            $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000)
+            $('footer.footer').show()
+
+            $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'hidden' })
+            $('#config-menu').hide()
+        }
+
+        function hideLogo() {
+            $('header.header').hide()
+            $('div.fullscreen.siegel#logoLeft').hide()
+            $('div.fullscreen.siegel#logoRight').hide()
+            $('footer.footer').hide()
+
+            $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'visible' })
+            $('#config-menu').show()
+        }
+
+        logo ? showLogo() : hideLogo() 
+
         /* click handlers */
         {
             const url = new URL(window.location)
@@ -327,7 +346,12 @@
                 window.location = url.pathname
             })
             $('a#logo').on('click', (e) => {
-                window.location = `${url.pathname}?logo=true`
+                if (logo) {
+                    hideLogo()
+                } else {
+                    showLogo()
+                }
+                logo = !logo
             })
 
             $("#dropdownCheck").on("click", function () {
@@ -344,103 +368,85 @@
             })
         }
 
-        if (logo === "true") {
-            $('#gridContainerCol').css({ display: 'none' })
-            $('#config-menu').hide()
-            $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0 }, 2000)
-            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0 }, 2000, undefined, () => {
-                console.log('end of animation')
-            })
-            $('footer.footer').show()
 
-            hideLoading()
-
-        } else {
-
-            $('header.header').hide()
-            $('div.fullscreen.siegel#logoLeft').hide()
-            $('div.fullscreen.siegel#logoRight').hide()
-            $('footer.footer').hide()
-
-            const allPromises = [
-                windowLoaded.then((result) => {
-                    const SVGs = document.querySelectorAll('#grid object')
-                    if (SVGs.length === 0) {
-                        console.log('no SVG to resize')
-                        return this
-                    }
-                    return resizeSVGs(
-                        SVGs,
-                        fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
-                        (obj) => {
-                            // console.log('loaded', obj.id, obj.parentNode)
-                            obj.parentNode.style.visibility = 'visible'
-                            obj.parentNode.parentNode.style.visibility = 'visible'
-                        })
-                }).catch((error) => {
-                    console.log(error)
-                    return error
-                }),
-
-                createTimings(videoId).then((result) => {
-                    console.log('created timings', result)
-                    $('.artist .name').html(result.artist == "Christophe Thiebaud" ? "Moi" : result.artist)
-                    $('.artist .url').attr({
-                        href: `https://youtu.be/${result.id}`,
-                        target: result.id
+        const allPromises = [
+            windowLoaded.then((result) => {
+                const SVGs = document.querySelectorAll('#grid object')
+                if (SVGs.length === 0) {
+                    console.log('no SVG to resize')
+                    return this
+                }
+                return resizeSVGs(
+                    SVGs,
+                    fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
+                    (obj) => {
+                        // console.log('loaded', obj.id, obj.parentNode)
+                        obj.parentNode.style.visibility = 'visible'
+                        obj.parentNode.parentNode.style.visibility = 'visible'
                     })
-                    $('.artist, .artist .brick').css({ visibility: "visible" })
-                    $("#grid").isotope({ filter: '*' })
-                    return result
-                }).catch((error) => {
-                    console.log(error)
-                    return error
-                }),
+            }).catch((error) => {
+                console.log(error)
+                return error
+            }),
 
-                createColoredBadges().then((result) => {
-
-                    if (fullWidthChecked) {
-                        $('#gridContainerCol').addClass('fullwidth')
-                        $('.grid-brick, .score').addClass('fullwidth')
-                        $("#grid").isotope('layout')
-                    }
-
-                    $(".brick").click(function (e) {
-                        const hadClass = $(e.currentTarget).parent().hasClass('playing')
-                        $(".grid-brick").removeClass('playing')
-                        if (!hadClass) {
-                            $(e.currentTarget).parent().addClass('playing');
-                        }
-                    });
-
-                    $('.grid-brick, .score').scroll((event) => {
-                        const score = event.currentTarget;
-                        const obj = event.currentTarget.parentNode;
-                        // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
-                        if (score.scrollLeft <= 0) {
-                            score.style['border-radius'] = "0 3rem 3rem 0"
-                        } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {
-                            score.style['border-radius'] = "3rem 0 0 3rem"
-                        } else {
-                            score.style['border-radius'] = "3rem 3rem 3rem 3rem"
-                        }
-                    })
-
-                    return result
-                }).catch((error) => {
-                    console.log(error)
-                    return error
+            createTimings(videoId).then((result) => {
+                console.log('created timings', result)
+                $('.artist .name').html(result.artist == "Christophe Thiebaud" ? "Moi" : result.artist)
+                $('.artist .url').attr({
+                    href: `https://youtu.be/${result.id}`,
+                    target: result.id
                 })
-            ]
+                $('.artist, .artist .brick').css({ visibility: "visible" })
+                $("#grid").isotope({ filter: '*' })
+                return result
+            }).catch((error) => {
+                console.log(error)
+                return error
+            }),
 
-            Promise.allSettled(allPromises).then((result) => {
-                console.log('all promises settled!', result)
-                hideLoading()
+            createColoredBadges().then((result) => {
+
+                if (fullWidthChecked) {
+                    $('#gridContainerCol').addClass('fullwidth')
+                    $('.grid-brick, .score').addClass('fullwidth')
+                    $("#grid").isotope('layout')
+                }
+
+                $(".brick").click(function (e) {
+                    const hadClass = $(e.currentTarget).parent().hasClass('playing')
+                    $('.grid-brick.playing .score').scrollLeft(0)
+                    $('.grid-brick.playing').removeClass('playing')
+                    if (!hadClass) {
+                        $(e.currentTarget).parent().addClass('playing')
+                    }
+                });
+
+                $('.grid-brick .score').scroll((event) => {
+                    const score = event.currentTarget;
+                    const obj = event.currentTarget.parentNode;
+                    // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
+                    if (score.scrollLeft <= 0) {
+                        score.style['border-radius'] = "0 3rem 3rem 0"
+                    } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {
+                        score.style['border-radius'] = "3rem 0 0 3rem"
+                    } else {
+                        score.style['border-radius'] = "3rem 3rem 3rem 3rem"
+                    }
+                })
+
+                return result
+            }).catch((error) => {
+                console.log(error)
+                return error
             })
+        ]
+
+        Promise.allSettled(allPromises).then((result) => {
+            console.log('all promises settled!', result)
+            hideLoading()
+        })
 
 
-        }
     </script>
 
 </body>

@@ -81,9 +81,16 @@ a {
   border-radius: 0 !important;
 }
 
+.grid-brick:not(.playing) .score {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 .grid-brick.playing .score {
   border-radius: 0 !important;
   width: 100% !important;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .grid.playing object {
@@ -109,8 +116,6 @@ a {
 .score {
   position: relative;
   height: 5rem;
-  overflow-x: scroll;
-  overflow-y: hidden;
   border-radius: 0 3rem 3rem 0;
 }
 
