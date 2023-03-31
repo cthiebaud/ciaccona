@@ -222,7 +222,8 @@
         .score {
             position: relative;
             height: 5rem;
-            overflow: hidden;
+            overflow-x: scroll;
+            overflow-y: hidden;
             border-radius: 0 3rem 3rem 0;
         }
 
@@ -572,7 +573,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.18</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.19</span>
         </div>
     </footer>
 
@@ -733,7 +734,8 @@
                 $('.grid-brick, .score').removeClass('fullwidth')
             }
             $("#grid").isotope('layout')
-        });                           
+        });
+
     </script>
     <script>
 
@@ -1236,6 +1238,19 @@
             console.log("clicked on brick")
             e.stopPropagation();
             $('.dropdown-toggle#dropdownMenuLink').dropdown('toggle');
+        });
+
+        $('.grid-brick, .score').scroll((event) => {
+            const score = event.currentTarget;
+            const obj = event.currentTarget.parentNode;
+            // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
+            if (score.scrollLeft <= 0) {
+                score.style['border-radius'] = "0 3rem 3rem 0"
+            } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {
+                score.style['border-radius'] = "3rem 0 0 3rem"
+            } else {
+                score.style['border-radius'] = "3rem 3rem 3rem 3rem"
+            }
         });
 
     </script>
