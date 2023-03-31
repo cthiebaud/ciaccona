@@ -20,7 +20,6 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let videoId = params.yt
-        let logo = (params.logo === 'true' ? true : false)
     </script>
 
     <script type="module">
@@ -168,9 +167,6 @@
                 <li><a id="home" class="dropdown-item d-flex justify-content-between" href="#">
                         &nbsp;<div style="font-size:20pt; top: -0.5rem; position: relative;">🏠<!--∅--></div>
                     </a></li>
-                <li><a id="logo" class="dropdown-item d-flex justify-content-between" href="#">
-                        &nbsp;<div>About&hellip;</div>
-                    </a></li>
             </ul>
         </span>
 
@@ -190,6 +186,10 @@
                             Full Score <span style="display: none; font-size:2rem;">𝄞</span>
                         </label>
                     </div>
+                    <hr>
+                    <a id="about" class="dropdown-item d-flex justify-content-between" href="#">
+                        &nbsp;<div>About&hellip;</div>
+                    </a>
                 </form>
             </ul>
         </span>
@@ -197,7 +197,7 @@
 
     <header style="display: none !important; z-index: 1000; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top p-3 d-flex flex-wrap justify-content-between align-items-center">
-        <ul class="nav col-md-4 flex-fill justify-content-end list-unstyled d-flex">
+        <ul class="nav col-md-4 flex-fill justify-content-end list-unstyled d-flex" style="margin-right: 4rem;">
             <li class="ms-3">
                 <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
@@ -242,7 +242,7 @@
     </div>
 
     <footer style="display: none !important; z-index: 1000; background-color: #ffffff80; border-top: 1px solid #a0a0a080;"
-        class="footer mt-auto p-2 d-flex flex-wrap justify-content-center">
+        class="footer fixed-bottom mt-auto p-2 d-flex flex-wrap justify-content-center">
         <div class="ms-3 d-flex">
             <a class="text-muted" target="cthiebaud" href="https://cthiebaud.com/">
                 <svg width="32" height="32" preserveAspectRatio="xMidYMid meet">
@@ -254,7 +254,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">dev0.20</span>
+            <span class="font-monospace badge rounded-pill bg-primary">dev0.21</span>
         </div>
     </footer>
 
@@ -311,27 +311,28 @@
             document.getElementById('loading').style.display = 'none'
         }
 
-        function showLogo() {
+        function showAbout() {
+            $('a#about > div').html("&check;&nbsp;About&hellip;")
             $('header.header').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000)
             $('footer.footer').show()
 
             $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'hidden' })
-            $('#config-menu').hide()
         }
 
-        function hideLogo() {
+        function hideAbout() {
+            $('a#about > div').html("About&hellip;")
+
             $('header.header').hide()
             $('div.fullscreen.siegel#logoLeft').hide()
             $('div.fullscreen.siegel#logoRight').hide()
             $('footer.footer').hide()
 
             $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'visible' })
-            $('#config-menu').show()
         }
 
-        logo ? showLogo() : hideLogo() 
+        let about = false
 
         /* click handlers */
         {
@@ -345,13 +346,13 @@
             $('a#home').on('click', (e) => {
                 window.location = url.pathname
             })
-            $('a#logo').on('click', (e) => {
-                if (logo) {
-                    hideLogo()
+            $('a#about').on('click', (e) => {
+                if (about) {
+                    hideAbout()
                 } else {
-                    showLogo()
+                    showAbout()
                 }
-                logo = !logo
+                about = !about
             })
 
             $("#dropdownCheck").on("click", function () {
