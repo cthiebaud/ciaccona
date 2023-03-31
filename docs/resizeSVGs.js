@@ -5,7 +5,7 @@ function getNode(n, v) {
     return n
 }
 
-async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallback) {
+export default async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallback) {
 
     const lesPromessesDeLeSVG = []
 
@@ -21,11 +21,19 @@ async function resizeSVGs(selection, withOffsetX,  elementCallback, finalCallbac
 
                 const svg = SVG.children[0]
 
-                resolve({ o: o, svg: svg, offset: o.dataset.svgOffsetX ? parseInt(o.dataset.svgOffsetX) : 0 })
-            }, 10)
+                resolve({ 
+                    o: o, 
+                    svg: svg, 
+                    offset: o.dataset.svgOffsetX ? parseInt(o.dataset.svgOffsetX) : 0 
+                })
+            }, 100)
             setTimeout(() => {
                 clearInterval(interval);
-                reject({ o: o, svg: undefined })
+                reject({ 
+                    o: o, 
+                    svg: undefined,
+                    offset: 0
+                })
             }, 10000) // kill it after 10 seconds
         }))
     })
