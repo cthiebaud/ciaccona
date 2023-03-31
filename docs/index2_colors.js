@@ -244,18 +244,6 @@ export default function createColoredBadges(video_Id) {
         });
         $gridById.empty().append($bricks).isotope('appended', $bricks)
 
-        if (fullWidthChecked) {
-            $('#gridContainerCol').addClass('fullwidth')
-            $('.grid-brick, .score').addClass('fullwidth')
-            $("#grid").isotope('layout')
-        }
-
-        $(".brick").click(function (e) {
-            console.log("clicked on brick")
-            e.stopPropagation();
-            $('.dropdown-toggle#dropdownMenuLink').dropdown('toggle');
-        });
-
         resolve({ createColoredBadges: "done!" })
     })
 }

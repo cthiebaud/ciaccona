@@ -399,7 +399,34 @@
                 }),
 
                 createColoredBadges().then((result) => {
-                    console.log('created color badges', result)
+
+                    if (fullWidthChecked) {
+                        $('#gridContainerCol').addClass('fullwidth')
+                        $('.grid-brick, .score').addClass('fullwidth')
+                        $("#grid").isotope('layout')
+                    }
+
+                    $(".brick").click(function (e) {
+                        const hadClass = $(e.currentTarget).parent().hasClass('playing')
+                        $(".grid-brick").removeClass('playing')
+                        if (!hadClass) {
+                            $(e.currentTarget).parent().addClass('playing');
+                        }
+                    });
+
+                    $('.grid-brick, .score').scroll((event) => {
+                        const score = event.currentTarget;
+                        const obj = event.currentTarget.parentNode;
+                        // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
+                        if (score.scrollLeft <= 0) {
+                            score.style['border-radius'] = "0 3rem 3rem 0"
+                        } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {
+                            score.style['border-radius'] = "3rem 0 0 3rem"
+                        } else {
+                            score.style['border-radius'] = "3rem 3rem 3rem 3rem"
+                        }
+                    })
+
                     return result
                 }).catch((error) => {
                     console.log(error)
