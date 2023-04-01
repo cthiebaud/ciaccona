@@ -518,7 +518,7 @@
     </div>
 
     <header style="display: none !important; z-index: 1000; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
-        class="header fixed-top p-3 d-flex flex-wrap justify-content-between align-items-center">
+        class="header fixed-top p-3 d-flex flex-wrap justify-content-center align-items-center">
         <ul class="nav col-md-4 flex-fill justify-content-end list-unstyled d-flex">
             <li class="ms-3">
                 <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
@@ -578,7 +578,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.21</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.23</span>
         </div>
     </footer>
 
@@ -1187,7 +1187,7 @@
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick" style="border-color: #${c.borderColor}">
+<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor}">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; " data-width="${(_widths_[i].w) - 120}">
 

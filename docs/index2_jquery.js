@@ -50,9 +50,11 @@ const Ω = {
             console.log("clicked!", e, location)
             window.location = location
         })
+
         $('a#home').on('click', (e) => {
             window.location = url.pathname
         })
+
         $("#dropdownCheck").on("click", function () {
             fullWidthChecked = !fullWidthChecked
             setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
@@ -75,6 +77,7 @@ const Ω = {
         })
         $('.artist, .artist .brick').css({ visibility: "visible" })
     },
+
     beforeCreatePlayer: (videoId) => {
         const idPlayer = "blah2"
 
@@ -87,6 +90,7 @@ const Ω = {
 
         return '#' + idPlayer
     },
+
     afterCreatePlayer: () => {
         $('#playerWrapper').css({ visibility: "visible" })
         $('#gridContainerCol').css({ visibility: 'visible' })
@@ -99,7 +103,8 @@ const Ω = {
             iso.layout()
         }
 
-        $(".brick").click(function (e) {
+        $(".brick.hasScore").click(function (e) {
+            console.log("setting brick playing state")
             const hadClass = $(e.currentTarget).parent().hasClass('playing')
             $('.grid-brick.playing .score').scrollLeft(0)
             $('.grid-brick.playing').removeClass('playing')
@@ -121,8 +126,6 @@ const Ω = {
             }
         })
     }
-
-
 }
 
 

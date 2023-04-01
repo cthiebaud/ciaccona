@@ -77,13 +77,19 @@ a {
   /* width: 100%; */
   height: 6rem;
   padding: 0.4rem;
-  border-style: dashed;
-  border-width: 4px !important;
+  border-style: dashed solid;
+  border-width: 2px !important;
+}
+.brick.hasScore {
   cursor: pointer;
+}
+
+.grid-brick.playing {
 }
 
 .grid-brick:not(.playing) {
   border-color: transparent !important;
+  background-color: transparent !important;
 }
 
 .grid-brick.playing .brick {

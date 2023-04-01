@@ -7,8 +7,8 @@ import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 Promise.onPossiblyUnhandledRejection(function(error){
     throw error;
 }); */
-import { shuffleArray, getFunctionCallerName} from "/index2_utils.js"
-import { index2duration, fullscore as fullWidthChecked } from "/index2_config.js"
+import { shuffleArray, getFunctionCallerName } from "/index2_utils.js"
+import { index2duration } from "/index2_config.js"
 
 const $ = jquery
 
@@ -120,11 +120,12 @@ export default function createColoredBadges(video_Id) {
             if (tinycolor(s.p_rgb).isLight()) {
                 s.textColor = tinycolor(s.p_rgb).darken(s.brightnessChange).toString("hex6").slice(1)
                 s.stripeColor = tinycolor(s.p_rgb).darken(10).toString("hex6").slice(1)
+                s.borderColor = tinycolor(s.p_rgb).darken(20).toString("hex6").slice(1)
             } else {
                 s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
                 s.stripeColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
+                s.borderColor = tinycolor(s.p_rgb).lighten(20).toString("hex6").slice(1)
             }
-            s.borderColor = tinycolor(s.p_rgb).lighten(30).toString("hex6").slice(1)
             // some transparency to show video behind
             if (video_Id) {
                 s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
@@ -187,7 +188,7 @@ export default function createColoredBadges(video_Id) {
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick" style="border-color: #${c.borderColor}">
+<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor}; ${bg};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden;" data-width="${(_widths_[i].w) - 120}">
 
@@ -253,6 +254,6 @@ export default function createColoredBadges(video_Id) {
             console.log("isotope layout complete");
         });
 
-        resolve({ key: thisFunctionName, value: {isotope: iso }})
+        resolve({ key: thisFunctionName, value: { isotope: iso } })
     })
 }

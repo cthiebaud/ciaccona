@@ -268,7 +268,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">dev0.25</span>
+            <span class="font-monospace badge rounded-pill bg-primary">dev0.27</span>
         </div>
     </footer>
 
@@ -370,7 +370,7 @@
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId)
 
-                    return createPlayer(selectorPlyr).then((result) => {
+                    return createPlayer(selectorPlyr, result.timings).then((result) => {
                         Ω.afterCreatePlayer()
                         return result
                     }).catch((error) => {

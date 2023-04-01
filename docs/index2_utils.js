@@ -34,6 +34,30 @@ function getFunctionCallerName() {
     return (new Error()).stack.match(/at (\S+)/g)[1].slice(3);
 }
 
+// https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
+function binaryRangeSearch(value, list, getValue) {
+    if (typeof getValue === 'undefined') getValue =(i, arr) => arr[i]
+
+    let low = 0;                  // left endpoint 
+    let high = list.length - 1;   // right endpoint 
+    let mid
+    let minValue, maxValue
+
+    while (low <= high) {
+        mid = Math.floor((low + high) / 2);
+        minValue = getValue(mid, list)
+        maxValue = mid < list.length - 1 ? getValue(mid + 1, list) : Number.MAX_VALUE
+
+        if (value < minValue) {
+            high = mid - 1;
+        } else if (maxValue <= value) {
+            low = mid + 1;
+        } else {
+            return mid;
+        }
+    }
+    return 0 // something is wrong, return first array element
+}
 
 
-export { getCookie, setCookie, shuffleArray, getFunctionCallerName};
+export { getCookie, setCookie, shuffleArray, getFunctionCallerName, binaryRangeSearch };
