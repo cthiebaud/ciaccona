@@ -254,7 +254,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">dev0.21</span>
+            <span class="font-monospace badge rounded-pill bg-primary">dev0.22</span>
         </div>
     </footer>
 
@@ -275,15 +275,14 @@
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></!-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/isotope-layout@latest/dist/isotope.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/isotope-packery@latest/packery-mode.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bezier-easing@latest/dist/bezier-easing.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/isotope-layout@latest/dist/isotope.pkgd.min.js"></!-->
+    <!-- script src="https://cdn.jsdelivr.net/npm/isotope-packery@latest/packery-mode.pkgd.min.js"></!-->
+    <!-- script src="https://cdn.jsdelivr.net/npm/bezier-easing@latest/dist/bezier-easing.min.js"></!-->
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@latest/dist/js.cookie.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></!-->
+    <!-- script src="https://cdn.jsdelivr.net/npm/js-cookie@latest/dist/js.cookie.min.js"></!-->
 
     <script type="module">
         import { setCookie } from "/index2_utils.js"
@@ -291,6 +290,15 @@
         import createColoredBadges from "/index2_colors.js"
         import createTimings from "/index2_timings.js"
         import resizeSVGs from "/index2_resizeSVGs.js"
+        import createPlayer from "/index2_player.js"
+        import { Ω } from "/index2_jquery.js"
+
+        Ω.boot()
+        const about = new Ω.About()
+
+        if (videoId) {
+            document.getElementById('gridContainerCol').classList.add('push2right')
+        }
 
         const windowLoaded = new Promise((resolve) => {
             window.addEventListener('load', (event) => {
@@ -303,7 +311,8 @@
             fullWidthChecked = false
         } else {
             fullWidthChecked = true
-            $("#dropdownCheck").attr('checked', 'checked')
+            setAttribute(name, value)
+            document.getElementById('dropdownCheck').setAttribute('checked', 'checked')
         }
 
         /* loading */
@@ -311,66 +320,13 @@
             document.getElementById('loading').style.display = 'none'
         }
 
-        function showAbout() {
-            $('a#about > div').html("&check;&nbsp;About&hellip;")
-            $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
-            $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000)
-            $('footer.footer').show()
-
-            $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'hidden' })
-        }
-
-        function hideAbout() {
-            $('a#about > div').html("About&hellip;")
-
-            $('header.header').hide()
-            $('div.fullscreen.siegel#logoLeft').hide()
-            $('div.fullscreen.siegel#logoRight').hide()
-            $('footer.footer').hide()
-
-            $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'visible' })
-        }
-
-        let about = false
-
         /* click handlers */
-        {
-            const url = new URL(window.location)
+        Ω.setClickHandlers(fullWidthChecked)
 
-            $('a[data-yt]').on('click', (e) => {
-                let location = `${url.pathname}?yt=${e.currentTarget.dataset.yt}`
-                console.log("clicked!", e, location)
-                window.location = location
-            })
-            $('a#home').on('click', (e) => {
-                window.location = url.pathname
-            })
-            $('a#about').on('click', (e) => {
-                if (about) {
-                    hideAbout()
-                } else {
-                    showAbout()
-                }
-                about = !about
-            })
-
-            $("#dropdownCheck").on("click", function () {
-                fullWidthChecked = !fullWidthChecked
-                setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
-                if (fullWidthChecked) {
-                    $('#gridContainerCol').addClass('fullwidth')
-                    $('.grid-brick, .score').addClass('fullwidth')
-                } else {
-                    $('#gridContainerCol').removeClass('fullwidth')
-                    $('.grid-brick, .score').removeClass('fullwidth')
-                }
-                $("#grid").isotope('layout')
-            })
-        }
-
+        let showArtistInIsotope = false
 
         const allPromises = [
+            /* 0 */  
             windowLoaded.then((result) => {
                 const SVGs = document.querySelectorAll('#grid object')
                 if (SVGs.length === 0) {
@@ -389,51 +345,29 @@
                 console.log(error)
                 return error
             }),
-
+            /* 1 */  
             createTimings(videoId).then((result) => {
                 console.log('created timings', result)
-                $('.artist .name').html(result.artist == "Christophe Thiebaud" ? "Moi" : result.artist)
-                $('.artist .url').attr({
-                    href: `https://youtu.be/${result.id}`,
-                    target: result.id
+
+                /* artist */
+                showArtistInIsotope = true
+                Ω.setArtist(result.id, result.artist)
+
+                const selectorPlyr = Ω.beforeCreatePlayer(videoId)
+
+                return createPlayer(selectorPlyr).then(() => {
+                    Ω.afterCreatePlayer()
                 })
-                $('.artist, .artist .brick').css({ visibility: "visible" })
-                $("#grid").isotope({ filter: '*' })
-                return result
+
             }).catch((error) => {
                 console.log(error)
+                document.getElementById('gridContainerCol').classList.remove('push2right')
                 return error
             }),
-
+            /* 2 */
             createColoredBadges().then((result) => {
 
-                if (fullWidthChecked) {
-                    $('#gridContainerCol').addClass('fullwidth')
-                    $('.grid-brick, .score').addClass('fullwidth')
-                    $("#grid").isotope('layout')
-                }
-
-                $(".brick").click(function (e) {
-                    const hadClass = $(e.currentTarget).parent().hasClass('playing')
-                    $('.grid-brick.playing .score').scrollLeft(0)
-                    $('.grid-brick.playing').removeClass('playing')
-                    if (!hadClass) {
-                        $(e.currentTarget).parent().addClass('playing')
-                    }
-                });
-
-                $('.grid-brick .score').scroll((event) => {
-                    const score = event.currentTarget;
-                    const obj = event.currentTarget.parentNode;
-                    // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
-                    if (score.scrollLeft <= 0) {
-                        score.style['border-radius'] = "0 3rem 3rem 0"
-                    } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {
-                        score.style['border-radius'] = "3rem 0 0 3rem"
-                    } else {
-                        score.style['border-radius'] = "3rem 3rem 3rem 3rem"
-                    }
-                })
+                Ω.afterCreateColoredBadges(fullWidthChecked)
 
                 return result
             }).catch((error) => {
@@ -444,6 +378,9 @@
 
         Promise.allSettled(allPromises).then((result) => {
             console.log('all promises settled!', result)
+            if (showArtistInIsotope) {
+                result[2].value.isotope.arrange({filter: '*'})
+            }
             hideLoading()
         })
 

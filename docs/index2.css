@@ -16,6 +16,11 @@ body {
   width: calc(var(--vw, 1vh) * 100);
 }
 
+#loading {
+  cursor: wait;
+  z-index: 3000;
+}
+
 #loading .spinner-border {
   position: absolute;
   left: 0;
@@ -26,8 +31,7 @@ body {
   margin: auto;
   width: 5rem;
   height: 5rem;
-  color: #5b7085;
-  /* Silver Blueberry // #36454F; /* Charcoal */
+  color: #57728b; /* https://hexcolorpedia.com/color/57728B/ */
   border-width: 0.5rem;
 }
 

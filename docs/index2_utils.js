@@ -1,11 +1,13 @@
+import jsCookie from 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/+esm'
+
 function getCookie(cookieName) {
-    const value = Cookies.get(cookieName)
+    const value = jsCookie.get(cookieName)
     console.log("cookie", cookieName, "is", value)
     return value
 }
 
 function setCookie(cookieName, cookieValue) {
-    Cookies.set(cookieName, cookieValue, { expires: 2 })
+    jsCookie.set(cookieName, cookieValue, { expires: 2 })
     console.log("cookie", cookieName, "set to", cookieValue)
 }
 

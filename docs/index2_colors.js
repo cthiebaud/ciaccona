@@ -1,7 +1,13 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
+import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
+import IsotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
+/* import isotopePackery from 'https://cdn.jsdelivr.net/npm/isotope-packery@2.0.1/+esm' */
+import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 
 import { shuffleArray } from "/index2_utils.js"
 import { index2duration, fullscore as fullWidthChecked } from "/index2_config.js"
+
+const $ = jquery
 
 export default function createColoredBadges(video_Id) {
     return new Promise((resolve) => {
@@ -102,8 +108,8 @@ export default function createColoredBadges(video_Id) {
         _colors_.push(_last_color_[0])
         for (let s of _colors_) {
             // https://cubic-bezier.com/
-            let easing = BezierEasing(.5, .5, .5, .5)
-            easing = BezierEasing(0, 1, 1, .4)
+            let easing = bezierEasing(.5, .5, .5, .5)
+            easing = bezierEasing(0, 1, 1, .4)
             // const nl = normalize(s.luminance, max, min)
             s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
             s.brightnessChange = (1 - easing(s.nl)) * 100 // s.luminance *100 // 
@@ -123,17 +129,6 @@ export default function createColoredBadges(video_Id) {
                 s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
             }
         }
-
-        let $gridById = $("#grid")
-
-        $gridById.isotope({
-            layoutMode: 'packery',
-            itemSelector: ".grid-brick",
-            filter: ':not(.artist)',
-            packery: {
-                gutter: 0,
-            }
-        });
 
         const $bricksTemporaryContainer = $("<span>");
         const templateForTheme =
@@ -239,11 +234,21 @@ export default function createColoredBadges(video_Id) {
 
         const $bricks = $bricksTemporaryContainer.children()
 
+        let $gridById = $("#grid")
+        $gridById.empty().append($bricks)
+
+        const iso = new IsotopeLayout('#grid', {
+            /* layoutMode: 'packery', */
+            itemSelector: ".grid-brick",
+            filter: ':not(.artist)',
+            packery: {
+                gutter: 0,
+            }
+        });
         $gridById.on('layoutComplete', function () {
             console.log("isotope layout complete");
         });
-        $gridById.empty().append($bricks).isotope('appended', $bricks)
 
-        resolve({ createColoredBadges: "done!" })
+        resolve({ isotope: iso })
     })
 }

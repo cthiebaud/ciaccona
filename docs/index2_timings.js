@@ -1,3 +1,7 @@
+import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
+
+const $ = jquery
+
 const mapVideoId2ArtistName = {
     mg9kT7XiLoU: "Amandine Beyer",
     Ilb3no_cwnI: "Veronika Eberle",
