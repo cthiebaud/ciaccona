@@ -127,7 +127,7 @@ export default function createPlayer(selector, timings) {
             hidePlay()
         })
         _plyer.on('timeupdate', (event) => {
-            console.log("Plyr timeupdate event")
+            // console.log("Plyr timeupdate event")
             feedbackOnCurrentTime(event.detail.plyr.currentTime, timings)
         })
         _plyer.on('seeking', (event) => {

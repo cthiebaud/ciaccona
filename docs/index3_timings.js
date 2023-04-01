@@ -88,13 +88,28 @@ function initTimings(timings) {
     console.log(timings)
 }
 
-export default function createTimings(videoId) {
+function validateVideoId(videoId) {
+    if (!videoId) {
+        return false;
+    }
+
+    const videoIdNoHyphen = videoId.replace(/-/gi, '_')
+    const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
+    const artist = mapVideoId2ArtistName[videoIdNoHyphenNoStartingNumber]
+    if (!artist) {
+        return false
+    }
+
+    return true
+}
+
+function createTimings(videoId) {
     return new Promise((resolve, reject) => {
         if (!videoId) {
             // r.à.z.
             removeCookie('playing')
             removeCookie('previousPlayOnBar')
-            reject(`invalid videoId: < ${videoId} >`)            
+            reject(`invalid videoId: < ${videoId} >`)
         } else {
             const videoIdNoHyphen = videoId.replace(/-/gi, '_')
             const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
@@ -129,3 +144,5 @@ export default function createTimings(videoId) {
         }
     })
 }
+
+export { createTimings, validateVideoId }
