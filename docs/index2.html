@@ -254,7 +254,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">dev0.22</span>
+            <span class="font-monospace badge rounded-pill bg-primary">dev0.23</span>
         </div>
     </footer>
 
@@ -311,7 +311,6 @@
             fullWidthChecked = false
         } else {
             fullWidthChecked = true
-            setAttribute(name, value)
             document.getElementById('dropdownCheck').setAttribute('checked', 'checked')
         }
 
@@ -321,67 +320,83 @@
         }
 
         /* click handlers */
-        Ω.setClickHandlers(fullWidthChecked)
 
         let showArtistInIsotope = false
 
-        const allPromises = [
-            /* 0 */  
-            windowLoaded.then((result) => {
-                const SVGs = document.querySelectorAll('#grid object')
-                if (SVGs.length === 0) {
-                    console.log('no SVG to resize')
-                    return this
-                }
-                return resizeSVGs(
-                    SVGs,
-                    fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
-                    (obj) => {
-                        // console.log('loaded', obj.id, obj.parentNode)
-                        obj.parentNode.style.visibility = 'visible'
-                        obj.parentNode.parentNode.style.visibility = 'visible'
+        const allPromises = new Map([
+            /* 0 */
+            [resizeSVGs.name, windowLoaded
+                .then((result) => {
+                    const SVGs = document.querySelectorAll('#grid object')
+                    if (SVGs.length === 0) {
+                        console.log('no SVG to resize')
+                        return this
+                    }
+                    return resizeSVGs(
+                        SVGs,
+                        fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
+                        (obj) => {
+                            obj.parentNode.style.visibility = 'visible'
+                            obj.parentNode.parentNode.style.visibility = 'visible'
+                        })
+                })],
+            /* 1 */
+            [createPlayer.name, createTimings(videoId)
+                .then((result) => {
+                    /* artist */
+                    showArtistInIsotope = true
+                    Ω.setArtist(result.id, result.artist)
+
+                    const selectorPlyr = Ω.beforeCreatePlayer(videoId)
+
+                    return createPlayer(selectorPlyr).then((result) => {
+                        Ω.afterCreatePlayer()
+                        return result
+                    }).catch((error) => {
+                        throw error
                     })
-            }).catch((error) => {
-                console.log(error)
-                return error
-            }),
-            /* 1 */  
-            createTimings(videoId).then((result) => {
-                console.log('created timings', result)
 
-                /* artist */
-                showArtistInIsotope = true
-                Ω.setArtist(result.id, result.artist)
-
-                const selectorPlyr = Ω.beforeCreatePlayer(videoId)
-
-                return createPlayer(selectorPlyr).then(() => {
-                    Ω.afterCreatePlayer()
-                })
-
-            }).catch((error) => {
-                console.log(error)
-                document.getElementById('gridContainerCol').classList.remove('push2right')
-                return error
-            }),
+                }).catch((error) => {
+                    document.getElementById('gridContainerCol').classList.remove('push2right')
+                    throw error
+                })],
             /* 2 */
-            createColoredBadges().then((result) => {
+            [createColoredBadges.name, createColoredBadges()
+                .then((result) => {
 
-                Ω.afterCreateColoredBadges(fullWidthChecked)
+                    Ω.setClickHandlers(fullWidthChecked, result.value.isotope)
+                    Ω.afterCreateColoredBadges(fullWidthChecked, result.value.isotope)
 
-                return result
-            }).catch((error) => {
-                console.log(error)
-                return error
-            })
-        ]
+                    return result
+                })]
+        ])
 
-        Promise.allSettled(allPromises).then((result) => {
-            console.log('all promises settled!', result)
-            if (showArtistInIsotope) {
-                result[2].value.isotope.arrange({filter: '*'})
+        Promise.allSettled([...allPromises.values()]).then((result) => {
+
+            const map = new Map(result
+                .filter((obj) => {
+                    const add = (
+                        obj.status === 'fulfilled' &&
+                        !(typeof obj.value.key === 'undefined') &&
+                        !(typeof obj.value.value === 'undefined'))
+                    if (!add) {
+                        console.log(obj)
+                    }
+                    return add
+                })
+                .map((obj) => {
+                    return [obj.value.key, obj.value.value]
+                }));
+
+            console.log(`All promises settled, fullfilled : ${map.size} / ${result.length}`, result)
+
+            if (map.get(createColoredBadges.name)) {
+                map.get(createColoredBadges.name).isotope.arrange({ filter: showArtistInIsotope ? '*' : ':not(.artist)' })
             }
             hideLoading()
+        }).catch((error) => {
+            console.log(error)
+            return error
         })
 
 

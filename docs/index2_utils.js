@@ -28,4 +28,12 @@ function shuffleArray(array) {
     return array;
 }
 
-export { getCookie, setCookie, shuffleArray };
+// https://stackoverflow.com/a/41621478/1070215
+function getFunctionCallerName() {
+    // gets the text between whitespace for second part of stacktrace
+    return (new Error()).stack.match(/at (\S+)/g)[1].slice(3);
+}
+
+
+
+export { getCookie, setCookie, shuffleArray, getFunctionCallerName};

@@ -1,8 +1,11 @@
-export default function resizeSVGs(selection, withOffsetX, elementCallback) {
-    function setViewBoxes(results) {
-        let maxWidth = 0
-        let maxHeight = 0
+import { getFunctionCallerName } from "/index2_utils.js"
 
+export default function resizeSVGs(selection, withOffsetX, elementCallback) {
+    const thisFunctionName = getFunctionCallerName()
+    let maxWidth = 0
+    let maxHeight = 0
+
+    function setViewBoxes(results) {
         results.forEach((result) => {
             if (result.status === "fulfilled") {
                 const svg = result.value.svg
@@ -69,7 +72,7 @@ export default function resizeSVGs(selection, withOffsetX, elementCallback) {
 
         Promise.allSettled(lesPromessesDeLeSVG)
             .then(setViewBoxes)
-            .then(() => resolve(true))
+            .then(() => resolve({ key: thisFunctionName, value: { maxWidth: maxWidth, maxHeight: maxHeight } }))
             .catch((error) => reject(error))
     })
 }

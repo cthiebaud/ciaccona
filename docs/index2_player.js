@@ -1,6 +1,8 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
+import { getFunctionCallerName } from "/index2_utils.js"
 
 export default function createPlayer(selector) {
+    const thisFunctionName = getFunctionCallerName()
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
             mute: false
@@ -24,7 +26,7 @@ export default function createPlayer(selector) {
             console.log("Plyr seeked event");
         })
         _plyer.on('ready', (event) => {
-            resolve(true)
+            resolve({ key: thisFunctionName, value: _plyer })
         })
     })
 }

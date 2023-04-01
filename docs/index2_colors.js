@@ -4,12 +4,13 @@ import IsotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+es
 /* import isotopePackery from 'https://cdn.jsdelivr.net/npm/isotope-packery@2.0.1/+esm' */
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 
-import { shuffleArray } from "/index2_utils.js"
+import { shuffleArray, getFunctionCallerName} from "/index2_utils.js"
 import { index2duration, fullscore as fullWidthChecked } from "/index2_config.js"
 
 const $ = jquery
 
 export default function createColoredBadges(video_Id) {
+    const thisFunctionName = getFunctionCallerName()
     return new Promise((resolve) => {
 
         const _widths_ = [
@@ -249,6 +250,6 @@ export default function createColoredBadges(video_Id) {
             console.log("isotope layout complete");
         });
 
-        resolve({ isotope: iso })
+        resolve({ key: thisFunctionName, value: {isotope: iso }})
     })
 }

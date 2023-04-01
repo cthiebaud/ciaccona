@@ -18,9 +18,7 @@ const Ω = {
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000)
             $('footer.footer').show()
 
-            $('body').css({ backgroundColor: '#ffffff40' })
-            $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'hidden' })
-            $('#playerWrapper').css({ opacity: .25 })
+            $('#gridContainerCol, #grid, .grid.brick, .brick, .score, #playerWrapper').css({ visibility: 'hidden' })
         }
 
         this.hideAbout = () => {
@@ -31,9 +29,7 @@ const Ω = {
             $('div.fullscreen.siegel#logoRight').hide()
             $('footer.footer').hide()
 
-            $('body').css({ backgroundColor: '#0e0e10' })
-            $('#gridContainerCol, #grid, .grid.brick, .brick, .score').css({ visibility: 'visible' })
-            $('#playerWrapper').css({ opacity: 1 })
+            $('#gridContainerCol, #grid, .grid.brick, .brick, .score, #playerWrapper').css({ visibility: 'visible' })
         }
         const _this = this
         $('a#about').on('click', (e) => {
@@ -46,7 +42,7 @@ const Ω = {
         })
     },
 
-    setClickHandlers: (fullWidthChecked) => {
+    setClickHandlers: (fullWidthChecked, iso) => {
         const url = new URL(window.location)
 
         $('a[data-yt]').on('click', (e) => {
@@ -67,7 +63,7 @@ const Ω = {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick, .score').removeClass('fullwidth')
             }
-            $("#grid").isotope('layout')
+            iso.layout()
         })
     },
 
@@ -82,7 +78,6 @@ const Ω = {
     beforeCreatePlayer: (videoId) => {
         const idPlayer = "blah2"
 
-        $("body").css({ "background-color": "#0E0E10" })
         $('#loading').css({ "background-color": "#00000080" })
         $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
 
@@ -97,11 +92,11 @@ const Ω = {
         $('#gridContainerCol').css({ visibility: 'visible' })
     },
 
-    afterCreateColoredBadges: (fullWidthChecked) => {
+    afterCreateColoredBadges: (fullWidthChecked, iso) => {
         if (fullWidthChecked) {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick, .score').addClass('fullwidth')
-            $("#grid").isotope('layout')
+            iso.layout()
         }
 
         $(".brick").click(function (e) {
