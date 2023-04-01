@@ -250,7 +250,7 @@ export default function createColoredBadges(video_Id) {
             }
         })
         iso.on('arrangeComplete', function (filteredItems) {
-            console.log("isotope arrange complete", filteredItems);
+            console.log("isotope arrange complete" /*, filteredItems */);
         })
         iso.on('layoutComplete', function () {
             console.log("isotope layout complete");

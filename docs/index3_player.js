@@ -79,7 +79,7 @@ const setBrickClickEvent = (_plyer, timings) => {
 
         if (timings.previousPlayOnBar === thisBar) {
             // just toggle play state
-            if (isPlaying) {                
+            if (isPlaying) {
                 _plyer.pause()
             } else {
                 _plyer.play()
@@ -144,8 +144,10 @@ export default function createPlayer(selector, timings) {
             setBrickClickEvent(_plyer, timings)
 
             const previousBar = timings.bars[timings.previousPlayOnBar]
-            console.log("Dear plyr, as you are ready, can you seek at bar <", timings.previousPlayOnBar, "> (", previousBar["Time Recorded"], ") ?")
-            _plyer.currentTime = previousBar.duration.asSeconds()
+            if (timings.previousPlayOnBar != 0) {
+                console.log("Dear plyr, as you are ready, can you seek at bar <", timings.previousPlayOnBar, "> (", previousBar["Time Recorded"], ") ?")
+                _plyer.currentTime = previousBar.duration.asSeconds()
+            }
             const wasPlaying = getCookie('playing')
             if (wasPlaying === 'true') {
                 console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing? (in one second) --->")

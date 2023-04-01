@@ -1,3 +1,4 @@
+// https://github.com/js-cookie/js-cookie
 import jsCookie from 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/+esm'
 
 function getCookie(cookieName) {
@@ -9,6 +10,11 @@ function getCookie(cookieName) {
 function setCookie(cookieName, cookieValue) {
     jsCookie.set(cookieName, cookieValue, { expires: 2 })
     console.log("cookie", cookieName, "set to", cookieValue)
+}
+
+function removeCookie(cookieName) {
+    jsCookie.remove(cookieName)
+    console.log("cookie", cookieName, "removed")
 }
 
 // http://stackoverflow.com/questions/20789373/shuffle-array-in-ng-repeat-angular
@@ -60,4 +66,4 @@ function binaryRangeSearch(value, list, getValue) {
 }
 
 
-export { getCookie, setCookie, shuffleArray, binaryRangeSearch };
+export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch };

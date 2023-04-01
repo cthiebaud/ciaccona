@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { getCookie } from "/index3_utils.js"
+import { getCookie, removeCookie } from "/index3_utils.js"
 import { index2duration } from "/index3_config.js"
 import { binaryRangeSearch } from "/index3_utils.js"
 
@@ -91,7 +91,10 @@ function initTimings(timings) {
 export default function createTimings(videoId) {
     return new Promise((resolve, reject) => {
         if (!videoId) {
-            reject(`invalid videoId: < ${videoId} >`)
+            // r.à.z.
+            removeCookie('playing')
+            removeCookie('previousPlayOnBar')
+            reject(`invalid videoId: < ${videoId} >`)            
         } else {
             const videoIdNoHyphen = videoId.replace(/-/gi, '_')
             const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
