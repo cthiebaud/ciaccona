@@ -47,26 +47,26 @@
     <!-- video player -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.css">
     <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
     <!-- early scripts -->
 
     <script>
         const params = new Proxy(new URLSearchParams(window.location.search), {
-            get: (searchParams, prop) => searchParams.get(prop),
-        });
-        // get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-        let videoId = params.yt; // "some_value"
-        const logo = params.logo; // "some_value"
-        if (logo === "true") {
-            videoId = undefined
-        }
+            get: (searchParams, prop) => searchParams.get(prop)
+        })
+        let videoId = params.yt
+        let debug = params.debug
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
     <script type="module">
-        import resizeSVGs from "/resizeSVGs.js"
+        import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
+        import { validateVideoId } from "/js/timings.js"
+
+        if (!validateVideoId(videoId)) {
+            videoId = undefined
+        }
+
 
         // <!-- CSS variable for dimensions -->
         const afterResizeWindow = () => {
@@ -80,28 +80,10 @@
         }
         afterResizeWindow()
         window.addEventListener('resize',
-            _.debounce(() => {
+            lodash.debounce(() => {
                 afterResizeWindow()
             }, 750)
-        );
-
-        // <!-- resize each SVG to its bounding box -->
-        window.addEventListener('load', (event) => {
-            resizeSVGs(
-                document.querySelectorAll('#grid object'),
-                fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
-                (o) => {
-                    if (!videoId) {
-                        $(o).parent().css({ visibility: "visible" })
-                    } // else, will be set to visible when video player is itself visible
-                }, () => {
-                    if (!videoId) {
-                        $('#config-menu').animate({ opacity: 1 }, 500)
-                        $('#videos-menu').animate({ opacity: 1 }, 500)
-                        hideLoading()
-                    } // else, will be set to visible when video player is itself visible
-                })
-        });
+        )
     </script>
 
     <!-- google font -->
@@ -109,265 +91,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
-    <!-- -->
-    <style>
-        body {
-            /* https://css-tricks.com/the-trick-to-viewport-units-on-mobile/ */
-            /* fallback for browsers that do not support custom properties */
-            height: 100vh;
-            /* custom properties */
-            height: calc(var(--vh, 1vh) * 100);
-        }
-
-        .fullscreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            height: calc(var(--vh, 1vh) * 100);
-            width: calc(var(--vw, 1vh) * 100);
-        }
-
-        #loading {
-            cursor: wait;
-            z-index: 3000;
-        }
-
-        #loading .spinner-border {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            margin: auto;
-            width: 5rem;
-            height: 5rem;
-            color: #5b7085;
-            /* Silver Blueberry // #36454F; /* Charcoal */
-            border-width: .5rem;
-        }
-
-        .container-fluid {
-            height: calc(var(--vh, 1vh) * 100);
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        #gridContainer {
-            padding: .5rem 0;
-        }
-
-        #gridContainerCol {
-            margin: 0;
-            padding: 0;
-        }
-
-        #gridContainerCol.push2right {
-            max-width: min(var(--vw, 1vw) * 100, 23.5rem);
-            height: calc(var(--vh, 1vh) * 100 - 57px) !important;
-            overflow-y: scroll;
-            margin: 0;
-            padding: 0;
-        }
-
-        .fullwidth {
-            max-width: 100% !important;
-            width: 100% !important;
-        }
-
-        .grid-brick {
-            /* display: grid; */
-            font-size: 1.4rem;
-            width: min(var(--vw, 1vw) * 100, 23.5rem);
-            /* width: 100%; */
-            height: 6rem;
-            padding: .4rem;
-            border-style: dashed;
-            border-width: 4px !important;
-            cursor: pointer;
-        }
-
-        .grid-brick:not(.playing) {
-            border-color: transparent !important;
-        }
-
-        .grid-brick.playing .brick {
-            border-radius: 0 !important;
-        }
-
-        .grid-brick.playing .score {
-            border-radius: 0 !important;
-            width: 100% !important;
-        }
-
-        .grid.playing object {
-            border-radius: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        .grid-brick.playing .brick :not(:first-child) {
-            display: none !important;
-        }
-
-        .grid-brick.Δ {
-            background-color: rgba(128, 128, 128, .3);
-        }
-
-        .brick {
-            border-radius: 0 3rem 3rem 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .score {
-            position: relative;
-            height: 5rem;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            border-radius: 0 3rem 3rem 0;
-        }
-
-        .score object {
-            background-color: rgba(255, 255, 255, .8);
-            height: 100%;
-            background-clip: padding-box;
-            position: absolute;
-            display: block;
-        }
-
-        div.siegel {
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-color: transparent;
-        }
-
-        div.siegel#logoLeft {
-            background-image: url('svg/Bach_Seal_full_left_120x120.svg');
-            left: -111vw;
-        }
-
-        div.siegel#logoRight {
-            background-image: url('svg/Bach_Seal_full_right_120x120.svg');
-            left: +111vw;
-        }
-
-        .glowing_bubble_siegel {
-            width: 100%;
-            margin: 0 .6rem;
-            background-image: url('svg/Bachsiegel_glowing_bubble.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-color: #ddd;
-            background-position-x: center;
-            background-size: 60%;
-            background-position-y: 50%;
-            border-radius: 1rem;
-        }
-
-        .magnificient-card {
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            outline: 1px solid gray;
-            outline-offset: -2px;
-            background-clip: content-box;
-            text-align: center;
-            background-color: rgba(255, 255, 255, .5);
-            border-radius: 1rem;
-            color: #121212;
-        }
-
-        span.Δ {
-            font-family: 'Cinzel', serif;
-            font-size: smaller;
-            float: left;
-            padding-right: .3rem;
-            position: relative;
-            background-color: rgba(0, 0, 0, .25);
-            border-bottom-right-radius: 1rem;
-            color: rgba(255, 255, 255, .75);
-            padding: 0 .4rem 0 .2rem;
-        }
-
-        .video-container {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            padding: 0;
-            opacity: 1;
-        }
-
-        #playerWrapper>div>div.plyr__controls>div.plyr__controls__item.plyr__menu {
-            display: none;
-        }
-
-        .plyr:not(.plyr--playing) .plyr__video-embed {
-            filter: blur(.8rem);
-        }
-
-        /* https://stackoverflow.com/a/60192837/1070215 */
-        .plyr .plyr__video-embed {
-            position: relative;
-            overflow: hidden;
-            width: calc(var(--vw, 1vw) * 100);
-            height: calc(var(--vh, 1vh) * 100);
-            pointer-events: none;
-        }
-
-        .plyr .plyr__video-embed iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: calc(var(--vw, 1vw) * 100);
-            height: calc(var(--vh, 1vh) * 100);
-            transform: translate(-50%, -50%);
-        }
-
-        @media (min-aspect-ratio: 16/9) {
-            .plyr .plyr__video-embed iframe {
-                /* height = 100 * (9 / 16) = 56.25 */
-                height: 56.25vw;
-            }
-        }
-
-        @media (max-aspect-ratio: 16/9) {
-            .plyr .plyr__video-embed iframe {
-                /* width = 100 / (9 / 16) = 177.777777 */
-                width: calc(var(--vh, 1vh) * 177.78);
-            }
-        }
-
-        iframe {
-            display: block;
-            margin: 0 auto;
-        }
-
-        li a.dropdown-item {
-            max-height: 32px;
-        }
-
-        li a.dropdown-item img {
-            height: 40px;
-            overflow-y: visible;
-        }
-
-        li a.dropdown-item div {
-            margin-left: 1rem;
-        }
-
-        .d-flex[style*="display:none"],
-        .d-flex[style*="display: none"] {
-            display: none !important;
-        }
-    </style>
+    <!-- my styles -->
+    <link href="index.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column">
@@ -416,7 +141,7 @@
 
     </svg>
 
-    <div id="videos-menu" class="btn-group" style="opacity:0">
+    <div id="videos-menu" class="btn-group">
         <span class="dropdown" style="position: absolute; left: 0; width: fit-content; background: transparent; z-index: 1001; border: none; margin: .5rem;">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
                 style="background: #00000040; border: none;">
@@ -427,78 +152,70 @@
                 </svg>
             </a>
 
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="padding-bottom: 0;">
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=mg9kT7XiLoU'"><img src="svg/violin.svg">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="mg9kT7XiLoU"><img src="svg/violin.svg">
                         <div>Amandine Beyer</div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Ilb3no_cwnI'">&nbsp; <div>Veronika Eberle</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=r67BASAgP5Q'">&nbsp; <div>Isabelle Faust</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KgSKvOAJMb8'">&nbsp; <div>Midori Gotō</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=ngjEVKxQCWs'">&nbsp; <div>Hilary Hahn</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=XkfsGCIiHb4'">&nbsp; <div>Bella Hristova </div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=dyAcRqpjbqU'">&nbsp; <div>Lisa Jacobs</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=NCTDf8dNT5s'">&nbsp; <div>Sigiswald Kuijken</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=1HSJufg7I1I'">&nbsp; <div>Rachel Podger</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KWcGsRKbe-U'">&nbsp; <div>Virginie Robilliard</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=59KFAY_qf-Q'">&nbsp; <div>Rachell Ellen Wong</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Ilb3no_cwnI">&nbsp; <div>Veronika Eberle</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="r67BASAgP5Q">&nbsp; <div>Isabelle Faust</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KgSKvOAJMb8">&nbsp; <div>Midori Gotō</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="ngjEVKxQCWs">&nbsp; <div>Hilary Hahn</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="XkfsGCIiHb4">&nbsp; <div>Bella Hristova </div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="dyAcRqpjbqU">&nbsp; <div>Lisa Jacobs</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="NCTDf8dNT5s">&nbsp; <div>Sigiswald Kuijken</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="1HSJufg7I1I">&nbsp; <div>Rachel Podger</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KWcGsRKbe-U">&nbsp; <div>Virginie Robilliard</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="59KFAY_qf-Q">&nbsp; <div>Rachell Ellen Wong</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=lxZqC_J0C74'"><img src="svg/guitar.svg"
-                            style="top: -0.5rem; position: relative;">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="lxZqC_J0C74"><img src="svg/guitar.svg" style="top: -0.5rem; position: relative;">
                         <div>Petra Poláčková</div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Jcy7E4uHYK8'">&nbsp; <div>Raphaella Smits</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=oxWq93mlAyc'">&nbsp; <div>Andrea De Vitis</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=Vslz1tDsaWw'">&nbsp; <div>Moi</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Jcy7E4uHYK8">&nbsp; <div>Raphaella Smits</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="oxWq93mlAyc">&nbsp; <div>Andrea De Vitis</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Vslz1tDsaWw">&nbsp; <div>Moi</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=SzxzLtwK-eo'"><img src="svg/piano.svg"
-                            style="top: -0.5rem; position: relative;">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="SzxzLtwK-eo"><img src="svg/piano.svg" style="top: -0.5rem; position: relative;">
                         <div>Chiara Massini</div>
                     </a>
                 </li>
                 <!-- no embedding :(
-                    <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=ze_QPWuyZLo'">&nbsp; <div>Genzoh Takehisa</div></a></li>
+                    <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="ze_QPWuyZLo">&nbsp; <div>Genzoh Takehisa</div></a></li>
                 -->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=KHwsHXtVWks'"><img src="svg/harp.svg"
-                            style="top: -0.5rem; position: relative;">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KHwsHXtVWks"><img src="svg/harp.svg" style="top: -0.5rem; position: relative;">
                         <div>Anneleen Lenaerts</div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=P93o202UJRs'"><img src="svg/flute.svg"
-                            style="top: -0.5rem; position: relative;">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="P93o202UJRs"><img src="svg/flute.svg" style="top: -0.5rem; position: relative;">
                         <div>Marta Femenía</div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=BYg7Di8CH9w'"><img src="svg/marimba.svg"
-                            style="top: -0.66rem; position: relative;">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w"><img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
                         <div>Mika Stoltzman</div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/?yt=5ITydjLkYUk'">&nbsp; <div>Yun Park</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk">&nbsp; <div>Yun Park</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" onclick="location = '/'">
+                <li><a id="home" class="dropdown-item d-flex justify-content-between" href="#">
                         &nbsp;<div style="font-size:20pt; top: -0.5rem; position: relative;">🏠<!--∅--></div>
-                    </a></li>
-                <li style="background-color: lightgray; padding: 0.5rem 0;"><a class="dropdown-item d-flex justify-content-center" href="#" onclick="location = '/?logo=true'">
-                        &nbsp;<img style="top: -0.5rem; position: relative;" src="svg/BachsiegelColorWheel.svg">
                     </a></li>
             </ul>
         </span>
 
     </div>
 
-    <div id="config-menu" class="btn-group" style="opacity:0">
+    <div id="config-menu" class="btn-group">
         <span class="dropdown" style="position: absolute; right: 0; width: fit-content; background: transparent; z-index: 1001; border: none; margin: .5rem; ">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-bs-toggle="dropdown" aria-expanded="false"
                 style="background: #00000040; border: none; font-size: 1.3rem;">
@@ -512,6 +229,10 @@
                             Full Score <span style="display: none; font-size:2rem;">𝄞</span>
                         </label>
                     </div>
+                    <hr>
+                    <a id="about" class="dropdown-item d-flex justify-content-between" href="#">
+                        &nbsp;<div>About&hellip;</div>
+                    </a>
                 </form>
             </ul>
         </span>
@@ -519,7 +240,7 @@
 
     <header style="display: none !important; z-index: 1000; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top p-3 d-flex flex-wrap justify-content-center align-items-center">
-        <ul class="nav col-md-4 flex-fill justify-content-end list-unstyled d-flex">
+        <ul class="nav col-md-4 flex-fill justify-content-center list-unstyled d-flex">
             <li class="ms-3">
                 <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
@@ -562,11 +283,9 @@
         <div id="logoRight" class="fullscreen siegel" style="display:none;"></div>
         <div id="logoLeft" class="fullscreen siegel" style="display:none;"></div>
     </div>
-    <!-- div id="credits" class="container" style="opacity: 0">
-    </!-->
 
     <footer style="display: none !important; z-index: 1000; background-color: #ffffff80; border-top: 1px solid #a0a0a080;"
-        class="footer mt-auto p-2 d-flex flex-wrap justify-content-center">
+        class="footer fixed-bottom mt-auto p-2 d-flex flex-wrap justify-content-center">
         <div class="ms-3 d-flex">
             <a class="text-muted" target="cthiebaud" href="https://cthiebaud.com/">
                 <svg width="32" height="32" preserveAspectRatio="xMidYMid meet">
@@ -578,7 +297,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.23</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.0</span>
         </div>
     </footer>
 
@@ -588,684 +307,154 @@
         </div>
     </div>
 
-    <main id="gridContainer" class="container-fluid flex-shrink-0"
-        style="z-index: 500; position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
+    <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
             </div>
             <div id="gridContainerCol" class="col" style="visibility: hidden"> <!--  -->
-                <div id="grid">
+                <div id="grid" style="visibility: visible">
                 </div>
             </div>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/isotope-layout@latest/dist/isotope.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/isotope-packery@latest/packery-mode.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/dist/bezier-easing.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></!-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/isotope-layout@latest/dist/isotope.pkgd.min.js"></!-->
+    <!-- script src="https://cdn.jsdelivr.net/npm/isotope-packery@latest/packery-mode.pkgd.min.js"></!-->
+    <!-- script src="https://cdn.jsdelivr.net/npm/bezier-easing@latest/dist/bezier-easing.min.js"></!-->
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/plyr@latest/dist/plyr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/imagesloaded@latest/imagesloaded.pkgd.min.js"></!-->
+    <!-- script src="https://cdn.jsdelivr.net/npm/js-cookie@latest/dist/js.cookie.min.js"></!-->
 
-    <script>
-        let plyer
+    <script type="module">
+        import { setCookie } from "/js/utils.js"
+        import { fullscore } from "/js/config.js"
+        import createColoredBadges from "/js/colors.js"
+        import { createTimings } from "/js/timings.js"
+        import resizeSVGs from "/js/resizeSVGs.js"
+        import createPlayer from "/js/player.js"
+        import { Ω } from "/js/jquery.js"
 
-        const mapVideoId2ArtistName = {
-            mg9kT7XiLoU: "Amandine Beyer",
-            Ilb3no_cwnI: "Veronika Eberle",
-            r67BASAgP5Q: "Isabelle Faust",
-            KgSKvOAJMb8: "Midori Gotō",
-            ngjEVKxQCWs: "Hilary Hahn",
-            XkfsGCIiHb4: "Bella Hristova",
-            dyAcRqpjbqU: "Lisa Jacobs",
-            NCTDf8dNT5s: "Sigiswald Kuijken",
-            _1HSJufg7I1I: "Rachel Podger",
-            KWcGsRKbe_U: "Virginie Robilliard",
-            _59KFAY_qf_Q: "Rachell Ellen Wong",
-            lxZqC_J0C74: "Petra Poláčková",
-            Jcy7E4uHYK8: "Raphaella Smits",
-            oxWq93mlAyc: "Andrea De Vitis",
-            SzxzLtwK_eo: "Chiara Massini",
-            ze_QPWuyZLo: "Genzoh Takehisa",
-            KHwsHXtVWks: "Anneleen Lenaerts",
-            BYg7Di8CH9w: "Mika Stoltzman",
-            _5ITydjLkYUk: "Yun Park",
-            P93o202UJRs: "Marta Femenía",
-            Vslz1tDsaWw: "Christophe Thiebaud",
-        }
-
-        let videoPromise = undefined
-        let artist
-
-        const initVideoTimings = (videoTimings) => {
-            const initializeBarObject = (bar) => {
-                if (!bar.m) {
-                    bar.m = new moment(bar["Time Recorded"])
-                }
-                bar.duration = moment.duration(bar.m.diff(videoTimings.start))
-                if (videoTimings.offset) {
-                    bar.duration.add(videoTimings.offset)
-                }
-                if (videoTimings.adjust) {
-                    bar.duration.subtract(videoTimings.adjust)
-                }
-                return bar
-            }
-            videoTimings.ciacconaStart = initializeBarObject({ m: videoTimings.start })
-            for (let bar of videoTimings.bars) {
-                initializeBarObject(bar)
-            }
-            // console.log(fm(videoTimings.start), fm(videoTimings.ciacconaStart.m), fm(videoTimings.bars[0].m))
-        }
-
-        const initUI = (videoId) => {
-            $("body").css({ "background-color": "#0E0E10" });
-            $('#loading').css({ "background-color": "#00000080" });
-            $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
-
-            const $blah2 = $(
-                `<div id="blah2" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`
-            );
-
-            $("#playerWrapper").append($blah2);
-
-            plyer = new Plyr("#blah2", {
-                mute: false
-            });
-        }
+        /* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
+        Promise.onPossiblyUnhandledRejection(function (error) {
+            throw error;
+        }); */
+        Ω.boot()
+        const about = new Ω.About()
 
         if (videoId) {
-            const videoIdNoHyphen = videoId.replace(/-/gi, '_')
-            const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
-            artist = mapVideoId2ArtistName[videoIdNoHyphenNoStartingNumber]
-            const artistNoSpace = artist.replace(/\s/gi, '')
-            const url = `timings/${artistNoSpace}-${videoId}.js`
-            videoPromise = new Promise((resolve, reject) => {
-                console.log('script loading', url)
-                $.ajax({
-                    url: url,
-                    dataType: "script",
-                })
-                    .done(function () {
-                        console.log("script loaded", url);
-                        const timings = eval(videoIdNoHyphenNoStartingNumber)
-                        initVideoTimings(timings)
-                        initUI(videoId)
-                        resolve(timings)
-                    })
-                    .fail(function () {
-                        console.log("script loading error", url);
-                        reject()
-                    })
-                    .always(function () {
-                        console.log("script loading complete", url);
-                    })
+            document.getElementById('gridContainerCol').classList.add('push2right')
+        }
+
+        const windowLoaded = new Promise((resolve) => {
+            window.addEventListener('load', (event) => {
+                resolve(event)
             })
-        }
+        })
 
-        // utilities
-        const getCookie = (cookieName) => {
-            const value = Cookies.get(cookieName)
-            console.log("Cookie", cookieName, "is", value)
-            return value
-        }
-        const setCookie = (cookieName, cookieValue) => {
-            Cookies.set(cookieName, cookieValue, { expires: 2 })
-            console.log("Cookie", cookieName, "set to", cookieValue)
-        }
-        const fm = (m) => m.format('h:mm:ss')
-        const fd = (d) => {
-            const m = moment(d.asMilliseconds())
-            return m.format('mm:ss')
-        }
-        // end of utilities
-
-        let fullWidthChecked = getCookie('fullscore')
+        let fullWidthChecked = fullscore
         if (!fullWidthChecked || fullWidthChecked == 'false') {
             fullWidthChecked = false
         } else {
             fullWidthChecked = true
-            $("#dropdownCheck").attr('checked', 'checked')
+            document.getElementById('dropdownCheck').setAttribute('checked', 'checked')
         }
 
-        $("#dropdownCheck").on("click", function () {
-            fullWidthChecked = !fullWidthChecked
-            setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
-            if (fullWidthChecked) {
-                $('#gridContainerCol').addClass('fullwidth')
-                $('.grid-brick, .score').addClass('fullwidth')
-            } else {
-                $('#gridContainerCol').removeClass('fullwidth')
-                $('.grid-brick, .score').removeClass('fullwidth')
-            }
-            $("#grid").isotope('layout')
-        });
-
-    </script>
-    <script>
-
-        let scrollIntoView = false
-
+        /* loading */
         const hideLoading = () => {
-            $('#loading').animate({ 'opacity': 0 }, 500, () => {
-                $('#loading').hide()
-            })
+            document.getElementById('loading').style.display = 'none'
         }
 
-        if (logo === "true") {
-            $('#gridContainerCol').css({ display: 'none' })
-            $('#config-menu').hide()
-            $('header.header').show()
-            $('div.fullscreen.siegel#logoLeft').show().animate({ left: 0 }, 2000)
-            $('div.fullscreen.siegel#logoRight').show().animate({ left: 0 }, 2000, undefined, () => {
-                console.log('end of animation')
+        /* click handlers */
+
+        let showArtistInIsotope = false
+
+        const allPromises = new Map()
+
+        allPromises.set(
+            resizeSVGs.name,
+            windowLoaded.then((result) => {
+                const SVGs = document.querySelectorAll('#grid object')
+                if (SVGs.length === 0) {
+                    console.log('no SVG to resize')
+                    return this
+                }
+                return resizeSVGs(
+                    SVGs,
+                    fullWidthChecked ? false : true, // true: honor X offset to hide clef signature, false: no offset
+                    (obj) => {
+                        obj.parentNode.style.visibility = 'visible'
+                        obj.parentNode.parentNode.style.visibility = 'visible'
+                    })
+            }))
+        if (videoId) {
+            allPromises.set(
+                createPlayer.name,
+                createTimings(videoId).then((result) => {
+                    /* artist */
+                    showArtistInIsotope = true
+                    Ω.setArtist(result.id, result.artist)
+
+                    const selectorPlyr = Ω.beforeCreatePlayer(videoId)
+
+                    return createPlayer(selectorPlyr, result.timings).then((result) => {
+                        Ω.afterCreatePlayer()
+                        return result
+                    }).catch((error) => {
+                        console.log(error);
+                        throw error
+                    })
+
+                }).catch((error) => {
+                    console.log(error);
+                    document.getElementById('gridContainerCol').classList.remove('push2right')
+                    throw error
+                }))
+        }
+        allPromises.set(
+            createColoredBadges.name,
+            createColoredBadges(videoId).then((result) => {
+
+                Ω.setClickHandlers(fullWidthChecked, result.value.isotope)
+                Ω.afterCreateColoredBadges(fullWidthChecked, result.value.isotope)
+
+                return result
             })
-            $('footer.footer').show()
+        )
+
+        Promise.allSettled([...allPromises.values()]).then((result) => {
+
+            const map = new Map(result
+                .filter((obj) => {
+                    const add = (
+                        obj.status === 'fulfilled' &&
+                        !(typeof obj.value.key === 'undefined') &&
+                        !(typeof obj.value.value === 'undefined'))
+                    if (!add) {
+                        console.log(obj)
+                    }
+                    return add
+                })
+                .map((obj) => {
+                    return [obj.value.key, obj.value.value]
+                }));
+
+            console.log(`All promises settled, fullfilled : ${map.size} / ${result.length}`, result)
+
+            if (map.get(createColoredBadges.name)) {
+                map.get(createColoredBadges.name).isotope.arrange({ filter: showArtistInIsotope ? '*' : ':not(.artist)' })
+            }
             hideLoading()
-        } else {
-            $('header.header').hide()
-            $('div.fullscreen.siegel#logoLeft').hide()
-            $('div.fullscreen.siegel#logoRight').hide()
-            $('footer.footer').hide()
-        }
-        let previousPlayOnBar = getCookie('previousPlayOnBar')
-        if (!previousPlayOnBar) previousPlayOnBar = 0
+        }).catch((error) => {
+            console.log(error);
+            console.log(error)
+            return error
+        })
 
-        const variationsBars = [
-        ]
-        const index2duration = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
-        {
-            let bar = 0
-            for (let i = 0; i < 34; i++) {
-                const duration = index2duration(i)
-                variationsBars.push(bar)
-                bar = bar + duration
-            }
-        }
-        const variation2bar = (variation) => {
-            return variationsBars[variation]
-        }
-        // https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
-        function binaryRangeSearch(value, list, getValue) {
-            if (typeof getValue === 'undefined') getValue = (x) => list[x]
-
-            let low = 0;                  // left endpoint 
-            let high = list.length - 1;   // right endpoint 
-            let mid
-            let minValue, maxValue
-
-            while (low <= high) {
-                mid = Math.floor((low + high) / 2);
-                minValue = getValue(mid)
-                maxValue = mid < list.length - 1 ? getValue(mid + 1) : Number.MAX_VALUE
-
-                if (value < minValue) {
-                    high = mid - 1;
-                } else if (maxValue <= value) {
-                    low = mid + 1;
-                } else {
-                    // console.log('bar', value, 'is in variation', mid)
-                    return mid;
-                }
-            }
-            return 0 // something is wrong, return first array element
-        }
-        const bar2variation = (bar) => {
-            return binaryRangeSearch(bar, variationsBars)
-        }
-
-        if (typeof videoPromise === 'undefined') {
-            $('#gridContainerCol').css({ visibility: 'visible' })
-            $('.score').css({ visibility: "visible" })
-        } else {
-            videoPromise.then((videoTimings) => {
-                const feedbackOnCurrentTime = (currentTime, source, forceScroll) => {
-                    /*
-                    const d = moment.duration(currentTime * 1000)
-                    console.log(`Plyr ${source} event at ${currentTime} | ${fd(d)}`)
-                    */
-                    let i = 0
-                    let barFound = 0
-                    let done = false
-                    const found = (bar) => {
-                        const variation = bar2variation(bar)
-                        $(".grid-brick").removeClass("playing")
-                        $(`.grid-brick#gb${variation}`).addClass("playing");
-
-                        const startBarOfVariation = variation2bar(variation)
-                        let scroll = false
-                        if (previousPlayOnBar != startBarOfVariation) {
-                            previousPlayOnBar = startBarOfVariation
-                            setCookie('previousPlayOnBar', previousPlayOnBar)
-                            scroll = true
-                        }
-                        if (scrollIntoView) {
-                            if (scroll || forceScroll) {
-                                console.log(`[${source}], ${forceScroll ? "force" : "ask"} variation`, variation, 'to scroll into view')
-                                $(`.grid-brick#gb${variation}`)[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
-                            }
-                        }
-                    }
-                    for (let bar of videoTimings.bars) {
-                        const d = bar.duration.asSeconds()
-                        if (d > currentTime) {
-                            found(barFound)
-                            done = true
-                            break
-                        }
-                        barFound = i
-                        i++
-                    }
-                    if (!done) {
-                        found(barFound)
-                    }
-                }
-
-                const setBrickClickEvent = (videoTimings) => {
-                    $(".brick.hasScore").off().on('click', function (e) {
-                        const d = $(this).data()
-                        // console.log('clicked on bar', d.bar)
-                        if (typeof (d.bar) != "undefined") {
-                            const isPlaying = plyer.playing
-                            if (previousPlayOnBar == d.bar) {
-                                // just toggle play state
-                                if (isPlaying) {
-                                    console.log('dear plyr, can you please pause?')
-                                    plyer.pause();
-                                } else {
-                                    console.log('dear plyr, can you please play?')
-                                    plyer.play()
-                                }
-                            } else {
-                                let bar = videoTimings.bars[d.bar]
-                                console.log('bar', d.bar, 'is @', bar["Time Recorded"])
-                                console.log("seeking (on click)", d.bar, fd(bar.duration))
-                                scrollIntoView = false
-                                plyer.currentTime = bar.duration.asSeconds()
-                                if (!isPlaying) {
-                                    console.log('dear plyr, can you please restart playing?')
-                                    plyer.play()
-                                }
-                                previousPlayOnBar = d.bar
-                                setCookie('previousPlayOnBar', d.bar)
-                            }
-                        }
-                    })
-                }
-
-                plyer.on('playing', (event) => {
-                    console.log("Plyr playing event");
-                    setCookie('playing', 'true')
-                    scrollIntoView = true
-                    feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
-                });
-                //
-                plyer.on('pause', (event) => {
-                    console.log("Plyr pause event");
-                    $(".grid-brick").removeClass("playing")
-                    setCookie('playing', 'false')
-                });
-                plyer.on('ended', (event) => {
-                    console.log("Plyr ended event");
-                    setCookie('playing', 'false')
-                    setCookie('previousPlayOnBar', 0)
-                });
-
-
-                plyer.on('ready', (event) => {
-                    console.log("Plyr ready event");
-
-                    $('.artist .name').html(artist == "Christophe Thiebaud" ? "Moi" : artist)
-                    $('.artist .url').attr({
-                        href: `https://youtu.be/${videoId}`,
-                        target: videoId
-                    })
-
-                    $('#gridContainerCol').css({ visibility: 'visible' })
-                    $('.score').css({ visibility: "visible" })
-                    $('.video-container').css({ visibility: "visible" })
-                    $('#config-menu').animate({ opacity: 1 }, 500)
-                    $('#videos-menu').animate({ opacity: 1 }, 500)
-                    $("#grid").isotope({ filter: '*' })
-
-                    setTimeout(() => {
-
-                        setBrickClickEvent(videoTimings)
-
-                        hideLoading()
-
-                        let previousPlayOnBar = getCookie('previousPlayOnBar');
-                        if (!previousPlayOnBar || previousPlayOnBar == "undefined") previousPlayOnBar = 0
-                        const bar = videoTimings.bars[previousPlayOnBar]
-                        console.log("Dear plyr, as you are ready, can you seek at bar <", previousPlayOnBar, "> (", bar["Time Recorded"], ") ?")
-                        plyer.currentTime = bar.duration.asSeconds()
-                        const isPlaying = getCookie('playing')
-                        if (isPlaying === 'true') {
-                            console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing? (in one second) --->")
-                            console.log("---> one second is elapsed, trying ot play UMUTED")
-                            // youtube annoying "feature" (no sound before play/pause)
-                            // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
-                            plyer.muted = true; // Expect no need for this line.
-                            plyer.muted = false;
-                            plyer.play();
-                            plyer.pause()
-                            plyer.play()
-                        }
-
-                        finalizePlayerInitilization()
-
-                    }, 2000)
-
-                });
-
-                const finalizePlayerInitilization = () => {
-                    plyer.on('timeupdate', (event) => {
-                        scrollIntoView = true
-                        feedbackOnCurrentTime(event.detail.plyr.currentTime, 'timeupdate')
-                    });
-                    /*
-                    plyer.on('playing', (event) => {
-                        console.log("Plyr playing event");
-                        setCookie('playing', 'true')
-                        scrollIntoView = true
-                        // feedbackOnCurrentTime(event.detail.plyr.currentTime, 'playing', true)
-                    });
-                    */
-                    plyer.on('seeking', (event) => {
-                        const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
-                        feedbackOnCurrentTime(seekTime, 'seeking')
-                    });
-                    plyer.on('seeked', (event) => {
-                        feedbackOnCurrentTime(event.detail.plyr.currentTime, 'seeked')
-                    });
-                }
-            })
-        }
-    </script>
-    <script type='module'>
-        import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
-
-        // http://stackoverflow.com/questions/20789373/shuffle-array-in-ng-repeat-angular
-        // -> Fisher–Yates shuffle algorithm
-        function shuffleArray(array) {
-            let m = array.length,
-                t, i;
-            // While there remain elements to shuffle
-            while (m) {
-                // Pick a remaining element…
-                i = Math.floor(Math.random() * m--);
-                // And swap it with the current element.
-                t = array[m];
-                array[m] = array[i];
-                array[i] = t;
-            }
-            return array;
-        }
-
-        const _widths_ = [
-            { w: 270 },
-            { w: 278 },
-            { w: 288 },
-            { w: 277 },
-            { w: 285 },
-            { w: 311 },
-            { w: 306 },
-            { w: 284 },
-            { w: 328 },
-            { w: 316 },
-            { w: 378 },
-            { w: 280 },
-            { w: 250 },
-            { w: 253 },
-            { w: 247 },
-            { w: 353 },
-            { w: 319 },
-            { w: 288 },
-            { w: 285 },
-            { w: 314 },
-            { w: 310 },
-            { w: 305 },
-            { w: 310 },
-            { w: 248 },
-            { w: 257 },
-            { w: 264 },
-            { w: 260 },
-            { w: 282 },
-            { w: 314 },
-            { w: 330 },
-            { w: 325 },
-            { w: 343 },
-            { w: 252 },
-            { w: 188 },
-            { w: 170 }
-        ]
-
-        let _first_color_ = [
-            { rgb: "f3f3f2", p_rgb: "f2f1f0", sim: 97, pantone: "P 179-1 C", name: "Bleached Silk" }
-        ]
-
-        let _other_colors_ = [
-            { rgb: "6a8d88", p_rgb: "6c8a82", sim: 98, pantone: "625 U", name: "Aspen Hush" },
-            { rgb: "112222", p_rgb: "1b2f34", sim: 95, pantone: "5463 CP", name: "Black Feather" },
-            { rgb: "222244", p_rgb: "252849", sim: 98, pantone: "282 CP", name: "Black Market" },
-            { rgb: "2242c7", p_rgb: "24509a", sim: 91, pantone: "286 CP", name: "Blue Blue" },
-            { rgb: "2a96d5", p_rgb: "1f95cd", sim: 98, pantone: "7508 UP", name: "Boyzone" },
-            { rgb: "a3c1ad", p_rgb: "a6c2ad", sim: 99, pantone: "P 134-11 U", name: "Cambridge Blue" },
-            { rgb: "f5a2a1", p_rgb: "f6a1a0", sim: 100, pantone: "15-1621 TPX", name: "Candy Heart Pink" },
-            { rgb: "697f8e", p_rgb: "6a7f8e", sim: 100, pantone: "692 UP", name: "Cascade Tour" },
-            { rgb: "3c1414", p_rgb: "4e2b1f", sim: 92, pantone: "7596 CP", name: "Dark Sienna" },
-            { rgb: "355859", p_rgb: "335959", sim: 99, pantone: "19-5413 TCX", name: "Depth Charge" },
-            { rgb: "3a445d", p_rgb: "3b4559", sim: 98, pantone: "2379 C", name: "Diplomatic" },
-            { rgb: "ffd8bb", p_rgb: "ffd4b2", sim: 98, pantone: "13-1026 TPX", name: "Durazno Palido" },
-            { rgb: "0abab5", p_rgb: "00baae", sim: 97, pantone: "3262 U", name: "Jade Gravel" },
-            { rgb: "f7a233", p_rgb: "f9a12e", sim: 99, pantone: "15-1058 TPG", name: "Lightning Yellow" },
-            { rgb: "b66a3c", p_rgb: "ba6a3b", sim: 99, pantone: "P 31-7 C", name: "Mincemeat" },
-            { rgb: "6fea3e", p_rgb: "87e878", sim: 94, pantone: "902 U", name: "Miyazaki Verdant" },
-            { rgb: "ec8430", p_rgb: "f38b3c", sim: 98, pantone: "144 U", name: "Navel" },
-            { rgb: "a328b3", p_rgb: "9b26b6", sim: 98, pantone: "2592 C", name: "Pink Spyro" },
-            { rgb: "fcffff", p_rgb: "c7dbf4", sim: 87, pantone: "2707 U", name: "Polar Bear In A Blizzard" },
-            { rgb: "881166", p_rgb: "890c58", sim: 96, pantone: "228 C", name: "Possessed Purple" },
-            { rgb: "11875d", p_rgb: "13955e", sim: 95, pantone: "P 145-8 U", name: "Primal Green" },
-            { rgb: "8a3319", p_rgb: "8a391b", sim: 98, pantone: "7526 C", name: "Red Rust" },
-            { rgb: "0c1793", p_rgb: "10069f", sim: 97, pantone: "Blue 072 C", name: "Royal" },
-            { rgb: "e84998", p_rgb: "e44c9a", sim: 99, pantone: "Rhodamine Red U", name: "Schiaparelli Pink" },
-            { rgb: "ffe670", p_rgb: "ffe671", sim: 100, pantone: "924 C", name: "Shandy" },
-            { rgb: "7777ff", p_rgb: "6490e8", sim: 90, pantone: "2727 U", name: "Stargate Shimmer" },
-            { rgb: "0c0c1f", p_rgb: "131e29", sim: 91, pantone: "7547 C", name: "Tristesse" },
-            { rgb: "b12d35", p_rgb: "b42937", sim: 99, pantone: "P 58-8 C", name: "Unmatched Beauty" },
-            { rgb: "e34244", p_rgb: "e73c3e", sim: 99, pantone: "2034 C", name: "Vermilion Cinnabar" },
-            { rgb: "e3ac72", p_rgb: "e2a770", sim: 98, pantone: "721 CP", name: "Viva Gold" },
-            { rgb: "4b57db", p_rgb: "275ea3", sim: 89, pantone: "10261 C", name: "Warm Blue" },
-            { rgb: "bfd6d9", p_rgb: "bcd5d6", sim: 99, pantone: "5523 U", name: "Wind Speed" },
-        ];
-
-        let _last_color_ = [
-            { rgb: "000000", p_rgb: "232222", sim: 92, pantone: "Neutral Black C", name: "Bleached Silk" }
-        ]
-
-        let _colors_ = _first_color_.concat(_other_colors_)
-
-        for (let s of _colors_) {
-            s.luminance = tinycolor(s.p_rgb).getLuminance();
-        }
-        _colors_ = _colors_.sort((a, b) => b.luminance - a.luminance)
-        const max = _colors_[0].luminance
-        const min = _colors_[_colors_.length - 1].luminance
-        const normalize = (val, max, min) => (val - min) / (max - min)
-        _colors_ = _first_color_.concat(shuffleArray(_other_colors_))
-        let k = 0
-        const transparency = .667
-        _colors_.push(_last_color_[0])
-        for (let s of _colors_) {
-            // https://cubic-bezier.com/
-            let easing = BezierEasing(.5, .5, .5, .5)
-            easing = BezierEasing(0, 1, 1, .4)
-            // const nl = normalize(s.luminance, max, min)
-            s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
-            s.brightnessChange = (1 - easing(s.nl)) * 100 // s.luminance *100 // 
-            if (tinycolor(s.p_rgb).isLight()) {
-                s.textColor = tinycolor(s.p_rgb).darken(s.brightnessChange).toString("hex6").slice(1)
-                s.stripeColor = tinycolor(s.p_rgb).darken(10).toString("hex6").slice(1)
-            } else {
-                s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
-                s.stripeColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
-            }
-            s.borderColor = tinycolor(s.p_rgb).lighten(30).toString("hex6").slice(1)
-            // some transparency to show video behind
-            if (videoId) {
-                s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
-                s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
-                s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
-                s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
-            }
-        }
-
-        let $gridById = $("#grid")
-
-        $gridById.isotope({
-            layoutMode: 'packery',
-            itemSelector: ".grid-brick",
-            filter: ':not(.artist)',
-            packery: {
-                gutter: 0,
-            }
-        });
-
-        const $bricksTemporaryContainer = $("<span>");
-        const templateForTheme =
-            `
-<div class="grid-brick">
-    <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; background-position-y: center; height: 100%;">
-        <div class="magnificient-card p-2" style="backdrop-filter: blur(1px);">
-            ${'&nbsp;Ciaccona&nbsp;'}
-        </div>
-    </div>
-</div>`
-        $bricksTemporaryContainer.append($(templateForTheme));
-
-        const templateForArtist =
-            `
-<div class="grid-brick artist">
-    <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
-        <div class="p-2" >
-            <a class="url text-muted p-2" href="#" style="background-color: #505050c0; border-radius: .5rem;">
-                <span class="name" style="color: #d0d0d0">?</span>
-                &nbsp;
-                <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
-                    <use xlink:href="#external-link"></use>
-                </svg>
-            </a>
-        </div>
-    </div>
-</div>`
-        $bricksTemporaryContainer.append($(templateForArtist));
-
-        let i = 0;
-        let barFrom = 0
-        _colors_.forEach(function (c) {
-            const tonality = (17 <= i && i < 27) ? "Δ" : "";
-            const duration = index2duration(i)
-            const warning = duration != 8 ? `(${duration})` : "";
-            const barTo = barFrom + duration
-            const bg = true ? // !tonality ?
-                `background-color: #${c.p_rgb};`
-                :
-                `background-image: linear-gradient(135deg, 
-                #${c.stripeColor} 10%, 
-                #${c.p_rgb} 10%, 
-                #${c.p_rgb} 50%, 
-                #${c.stripeColor} 50%, 
-                #${c.stripeColor} 60%, 
-                #${c.p_rgb} 60%, 
-                #${c.p_rgb} 100%); 
-                background-size: 16.97px 16.97px;`
-
-            const svgOffsetX = (i == 0 || i == 17 || i == 27 || i == 33 ? "0" : "6.5")
-
-            const templateVariations =
-                `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor}">
-    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
-        <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden; " data-width="${(_widths_[i].w) - 120}">
-
-            <object id="o${i}" 
-                    data="scores/bwv-1004_5_for_PNGs-${i + 1}.svg" 
-                    type="image/svg+xml"
-                    style="pointer-events: none;" 
-                    data-svg-offset-x = ${svgOffsetX}> 
-            </object>
-
-            <span class="Δ" style="${bg}">
-                ${tonality}
-            </span>
-        </div>
-        <div class="flex-grow-1"></div>
-        <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
-            ${warning}
-        </div>
-        <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
-            ${barFrom + 1}<br\>${barTo}
-        </div>
-        <div class="fw-bold text-center" style="${i == _colors_.length - 1 ? "display:none;" : ""}margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
-            ${i == 0 ? "" : i}
-        </div>
-    </div>
-</div>
-`
-            $bricksTemporaryContainer.append($(templateVariations));
-
-            // bumpers
-            barFrom = barFrom += duration
-            i++
-        });
-
-        const oblivion =
-            `
-<div class="grid-brick">
-    <div class="brick d-flex align-items-center justify-content-center" style="border-radius: 0; background-color: black">
-        <div class="glowing_bubble_siegel">
-            <div class="magnificient-card p-2" style="backdrop-filter: blur(.2px);">
-                ${'&nbsp;BWV&nbsp;1004&nbsp;'}
-            </div>
-        </div>    
-    </div>
-</div>
-`
-        $bricksTemporaryContainer.append($(oblivion))
-
-        const $bricks = $bricksTemporaryContainer.children()
-
-        $gridById.empty().append($bricks).isotope('appended', $bricks)
-
-        if (fullWidthChecked) {
-            $('#gridContainerCol').addClass('fullwidth')
-            $('.grid-brick, .score').addClass('fullwidth')
-            $("#grid").isotope('layout')
-        }
-
-        $(".brick").click(function (e) {
-            console.log("clicked on brick")
-            e.stopPropagation();
-            $('.dropdown-toggle#dropdownMenuLink').dropdown('toggle');
-        });
-
-        $('.grid-brick, .score').scroll((event) => {
-            const score = event.currentTarget;
-            const obj = event.currentTarget.parentNode;
-            // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
-            if (score.scrollLeft <= 0) {
-                score.style['border-radius'] = "0 3rem 3rem 0"
-            } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {
-                score.style['border-radius'] = "3rem 0 0 3rem"
-            } else {
-                score.style['border-radius'] = "3rem 3rem 3rem 3rem"
-            }
-        });
 
     </script>
+
 </body>
 
 </html>

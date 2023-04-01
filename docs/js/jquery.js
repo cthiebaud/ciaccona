@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { setCookie } from "/index3_utils.js"
+import { setCookie } from "/js/utils.js"
 
 const $ = jquery
 

@@ -1,7 +1,7 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { getCookie, removeCookie } from "/index3_utils.js"
-import { index2duration } from "/index3_config.js"
-import { binaryRangeSearch } from "/index3_utils.js"
+import { getCookie, removeCookie } from "/js/utils.js"
+import { index2duration } from "/js/config.js"
+import { binaryRangeSearch } from "/js/utils.js"
 
 /* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
 Promise.onPossiblyUnhandledRejection(function(error){
