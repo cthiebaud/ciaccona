@@ -47,7 +47,6 @@ const Ω = {
 
         $('a[data-yt]').on('click', (e) => {
             let location = `${url.pathname}?yt=${e.currentTarget.dataset.yt}`
-            console.log("clicked!", e, location)
             window.location = location
         })
 
@@ -104,7 +103,6 @@ const Ω = {
         }
 
         $(".brick.hasScore").click(function (e) {
-            console.log("setting brick playing state")
             const hadClass = $(e.currentTarget).parent().hasClass('playing')
             $('.grid-brick.playing .score').scrollLeft(0)
             $('.grid-brick.playing').removeClass('playing')
@@ -116,7 +114,6 @@ const Ω = {
         $('.grid-brick .score').scroll((event) => {
             const score = event.currentTarget;
             const obj = event.currentTarget.parentNode;
-            // console.log(score.clientWidth, obj.clientWidth, score.scrollLeft)
             if (score.scrollLeft <= 0) {
                 score.style['border-radius'] = "0 3rem 3rem 0"
             } else if (obj.clientWidth <= score.scrollLeft + score.clientWidth) {

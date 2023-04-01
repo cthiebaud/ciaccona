@@ -79,25 +79,6 @@ function initTimings(timings) {
         })
     }
 
-    timings.time2barBourrin = function (time) {
-        let i = 0
-        let previousBar = 0
-
-        let other = timings.time2bar2(time);
-
-        for (let bar of timings.bars) {
-            const barDuration = bar.duration.asSeconds()
-            if (time < barDuration) {
-                console.log(other, previousBar)
-                if (other != previousBar) throw Error('ouille!')
-                return previousBar
-            }
-            previousBar = i
-            i++
-        }
-        return previousBar
-    }
-
     timings.ciacconaStart = initializeBarObject({ m: timings.start })
 
     timings.previousPlayOnBar = getCookie('previousPlayOnBar')

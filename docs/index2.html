@@ -20,24 +20,27 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let videoId = params.yt
+        let debug = params.debug
     </script>
 
     <script type="module">
         import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
 
-        if (typeof console !== "undefined") {
-            if (typeof console.log !== 'undefined') {
-                console.olog = console.log;
-            } else {
-                console.olog = function () { };
+        if (debug === 'true') {
+            if (typeof console !== "undefined") {
+                if (typeof console.log !== 'undefined') {
+                    console.olog = console.log;
+                } else {
+                    console.olog = function () { };
+                }
             }
-        }
 
-        console.log = function (...message) {
-            console.olog(...message);
-            mylog.innerHTML = message.join(" ")
-        };
-        console.error = console.debug = console.info = console.log
+            console.log = function (...message) {
+                console.olog(...message);
+                mylog.innerHTML = message.join(" ")
+            };
+            console.error = console.debug = console.info = console.log
+        }
 
         // <!-- CSS variable for dimensions -->
         const afterResizeWindow = () => {
@@ -171,10 +174,10 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w'"><img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w"><img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
                         <div>Mika Stoltzman</div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk'">&nbsp; <div>Yun Park</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk">&nbsp; <div>Yun Park</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -268,7 +271,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">dev0.29</span>
+            <span class="font-monospace badge rounded-pill bg-primary">dev0.30</span>
         </div>
     </footer>
 

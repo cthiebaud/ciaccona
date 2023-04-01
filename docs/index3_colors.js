@@ -149,7 +149,7 @@ export default function createColoredBadges(video_Id) {
 
         const templateForArtist =
             `
-<div class="grid-brick artist">
+<div id="gb-artist" class="grid-brick artist">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
         <div class="p-2" >
             <a class="url text-muted p-2" href="#" style="background-color: #505050c0; border-radius: .5rem;">
@@ -243,16 +243,18 @@ export default function createColoredBadges(video_Id) {
         $gridById.empty().append($bricks)
 
         const iso = new IsotopeLayout('#grid', {
-            /* layoutMode: 'packery', */
             itemSelector: ".grid-brick",
             filter: ':not(.artist)',
             packery: {
                 gutter: 0,
             }
-        });
-        $gridById.on('layoutComplete', function () {
+        })
+        iso.on('arrangeComplete', function (filteredItems) {
+            console.log("isotope arrange complete", filteredItems);
+        })
+        iso.on('layoutComplete', function () {
             console.log("isotope layout complete");
-        });
+        })
 
         resolve({ key: thisFunctionName, value: { isotope: iso } })
     })
