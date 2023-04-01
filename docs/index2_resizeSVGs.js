@@ -1,5 +1,10 @@
 import { getFunctionCallerName } from "/index2_utils.js"
 
+/* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+}); */
+
 export default function resizeSVGs(selection, withOffsetX, elementCallback) {
     const thisFunctionName = getFunctionCallerName()
     let maxWidth = 0
@@ -43,6 +48,7 @@ export default function resizeSVGs(selection, withOffsetX, elementCallback) {
         // https://stackoverflow.com/questions/66373768/why-for-of-waits-for-promise-to-resolve-and-foreach-doesnt
         for (const obj of selection) {
             lesPromessesDeLeSVG.push(new Promise((resolve, reject) => {
+                let timeout
                 let interval = setInterval(() => {
                     let SVG = obj.contentDocument;
                     if (!SVG || !SVG.children || SVG.children.length == 0) {
@@ -50,6 +56,7 @@ export default function resizeSVGs(selection, withOffsetX, elementCallback) {
                     }
 
                     clearInterval(interval);
+                    clearTimeout(timeout)
 
                     const svg = SVG.children[0]
 
@@ -59,7 +66,7 @@ export default function resizeSVGs(selection, withOffsetX, elementCallback) {
                         offset: obj.dataset.svgOffsetX ? parseInt(obj.dataset.svgOffsetX) : 0
                     })
                 }, 100)
-                setTimeout(() => {
+                timeout = setTimeout(() => {
                     clearInterval(interval);
                     reject({
                         obj: obj,

@@ -1,6 +1,10 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import { getFunctionCallerName } from "/index2_utils.js"
 
+/* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+}); */
 export default function createPlayer(selector) {
     const thisFunctionName = getFunctionCallerName()
     return new Promise((resolve, reject) => {

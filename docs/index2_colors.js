@@ -1,9 +1,12 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import IsotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-/* import isotopePackery from 'https://cdn.jsdelivr.net/npm/isotope-packery@2.0.1/+esm' */
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 
+/* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+}); */
 import { shuffleArray, getFunctionCallerName} from "/index2_utils.js"
 import { index2duration, fullscore as fullWidthChecked } from "/index2_config.js"
 
