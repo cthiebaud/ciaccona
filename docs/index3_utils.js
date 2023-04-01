@@ -60,4 +60,4 @@ function binaryRangeSearch(value, list, getValue) {
 }
 
 
-export { getCookie, setCookie, shuffleArray, getFunctionCallerName, binaryRangeSearch };
+export { getCookie, setCookie, shuffleArray, binaryRangeSearch };

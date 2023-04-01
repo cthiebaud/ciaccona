@@ -1,12 +1,10 @@
-import { getFunctionCallerName } from "/index2_utils.js"
-
 /* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
 Promise.onPossiblyUnhandledRejection(function(error){
     throw error;
 }); */
 
 export default function resizeSVGs(selection, withOffsetX, elementCallback) {
-    const thisFunctionName = getFunctionCallerName()
+    const thisFunctionName = "resizeSVGs"
     let maxWidth = 0
     let maxHeight = 0
 

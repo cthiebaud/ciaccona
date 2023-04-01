@@ -7,13 +7,13 @@ import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 Promise.onPossiblyUnhandledRejection(function(error){
     throw error;
 }); */
-import { shuffleArray, getFunctionCallerName } from "/index2_utils.js"
-import { index2duration } from "/index2_config.js"
+import { shuffleArray } from "/index3_utils.js"
+import { index2duration } from "/index3_config.js"
 
 const $ = jquery
 
 export default function createColoredBadges(video_Id) {
-    const thisFunctionName = getFunctionCallerName()
+    const thisFunctionName = "createColoredBadges"
     return new Promise((resolve) => {
 
         const _widths_ = [

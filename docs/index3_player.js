@@ -1,6 +1,6 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { getFunctionCallerName, setCookie } from "/index2_utils.js"
+import { setCookie } from "/index3_utils.js"
 
 /* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
 Promise.onPossiblyUnhandledRejection(function(error){
@@ -86,7 +86,7 @@ const setBrickClickEvent = (_plyer, timings) => {
 }
 
 export default function createPlayer(selector, timings) {
-    const thisFunctionName = getFunctionCallerName()
+    const thisFunctionName = "createPlayer"
 
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
