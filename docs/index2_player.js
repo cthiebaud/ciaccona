@@ -9,23 +9,36 @@ Promise.onPossiblyUnhandledRejection(function(error){
 
 
 const feedbackOnCurrentTime = (currentTime, timings, noSave) => {
+    const doSave = typeof noSave === 'undefined' || noSave === false
     const barIndex = timings.time2bar(currentTime)
     const variation = timings.bars[barIndex].variation
     const startBarOfVariation = timings.codec.variation2bar(variation)
     if (timings.previousPlayOnBar != startBarOfVariation) {
         timings.previousPlayOnBar = startBarOfVariation
-        setCookie('previousPlayOnBar', timings.previousPlayOnBar)
+        if (doSave) {
+            setCookie('previousPlayOnBar', timings.previousPlayOnBar)
+        } 
+        if (true) { // avoid horrible flicker
+            let selector = `.grid-brick#gb${variation}`
+            if (variation === 0) {
+                selector = '.grid-brick#gb-ciaccona'
+            } else if (33 <= variation) {
+                selector = '.grid-brick#gb-bwv1004'
+            }
+            console.log(selector, 'to scroll into view', selector)
+            document.querySelector(selector).scrollIntoView({block: "nearest"})
+        }
 
         jquery('.grid-brick.playing .score').scrollLeft(0)
         jquery(".grid-brick.playing").removeClass("playing")
         jquery(`.grid-brick#gb${variation}`).addClass("playing");
         /*
-        if (typeof noSave === 'undefined' || noSave === false) {
-        } else {
+
+        { behavior: "smooth", block: "nearest", inline: "nearest" }
             jquery(".grid-brick.seeking").removeClass("seeking")
             jquery(".grid-brick.seeking").removeClass("seeking")
             jquery(`.grid-brick#gb${bar.variation}`).addClass("seeking");
-        }*/
+        */
     }
 }
 
@@ -104,7 +117,7 @@ export default function createPlayer(selector, timings) {
         _plyer.on('seeking', (event) => {
             console.log("Plyr seeking event");
             const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100);
-            // feedbackOnCurrentTime(seekTime, timings, true /* no save*/)
+            feedbackOnCurrentTime(seekTime, timings, true /* no save*/)
         })
         _plyer.on('seeked', (event) => {
             console.log("Plyr seeked event");
