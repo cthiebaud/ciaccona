@@ -129,6 +129,11 @@
             width: calc(var(--vw, 1vh) * 100);
         }
 
+        #loading {
+            cursor: wait;
+            z-index: 3000;
+        }
+
         #loading .spinner-border {
             position: absolute;
             left: 0;
@@ -573,7 +578,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.20</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.21</span>
         </div>
     </footer>
 
@@ -583,7 +588,8 @@
         </div>
     </div>
 
-    <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 999;position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
+    <main id="gridContainer" class="container-fluid flex-shrink-0"
+        style="z-index: 500; position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
             </div>
@@ -605,6 +611,8 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
     <script>
+        let plyer
+
         const mapVideoId2ArtistName = {
             mg9kT7XiLoU: "Amandine Beyer",
             Ilb3no_cwnI: "Veronika Eberle",
