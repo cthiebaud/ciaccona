@@ -5,7 +5,7 @@ const $ = jquery
 
 const Ω = {
     boot: () => {
-        console.log('jquery is here', $)
+        console.log('jquery is here')
         return true
     },
 

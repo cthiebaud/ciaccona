@@ -21,7 +21,7 @@ body {
   z-index: 3000;
 }
 
-#loading .spinner-border {
+#loading .spinner-border, #mylog {
   position: absolute;
   left: 0;
   right: 0;
@@ -33,6 +33,11 @@ body {
   height: 5rem;
   color: #57728b; /* https://hexcolorpedia.com/color/57728B/ */
   border-width: 0.5rem;
+}
+
+#mylog {
+  text-align: center;
+  padding-top: 6rem;
 }
 
 .container-fluid {
