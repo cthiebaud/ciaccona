@@ -159,7 +159,7 @@ export default function createColoredBadges(video_Id) {
                     <use xlink:href="#external-link"></use>
                 </svg>
             </a>
-            <a class="share text-muted" href="https://www.facebook.com/dialog/share?app_id=176898451849553&display=popup&href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer">
+            <a class="share text-muted" target=_facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com/?yt=Ilb3no_cwnI">
                 <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="#share"></use>
                 </svg>
