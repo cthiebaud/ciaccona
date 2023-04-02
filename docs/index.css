@@ -185,6 +185,20 @@ div.siegel#logoRight {
   color: #121212;
 }
 
+div#gb-artist > div > div  {
+  background-color: #505050c0; 
+  border-radius: .5rem;  
+}
+div#gb-artist > div > div > * {
+  margin: 0;
+}
+div#gb-artist > div > div > *:first-child {
+  padding: 0;
+}
+div#gb-artist > div > div > *:not(:first-child) {
+  padding: 0 0 0 .5rem;
+}
+
 span.Δ {
   font-family: "Cinzel", serif;
   font-size: smaller;

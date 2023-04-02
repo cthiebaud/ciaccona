@@ -153,11 +153,15 @@ export default function createColoredBadges(video_Id) {
 <div id="gb-artist" class="grid-brick artist">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
         <div class="p-2" >
-            <a class="url text-muted p-2" href="#" style="background-color: #505050c0; border-radius: .5rem;">
-                <span class="name" style="color: #d0d0d0">?</span>
-                &nbsp;
+            <span class="name" style="color: #d0d0d0">?</span>
+            <a class="url text-muted" href="#">
                 <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="#external-link"></use>
+                </svg>
+            </a>
+            <a class="share text-muted" href="https://www.facebook.com/dialog/share?app_id=176898451849553&display=popup&href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer">
+                <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
+                    <use xlink:href="#share"></use>
                 </svg>
             </a>
         </div>
