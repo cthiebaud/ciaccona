@@ -17,41 +17,41 @@ export default function createColoredBadges(video_Id) {
     return new Promise((resolve) => {
 
         const _widths_ = [
-            { w: 270 },
-            { w: 278 },
-            { w: 288 },
-            { w: 277 },
-            { w: 285 },
-            { w: 311 },
-            { w: 306 },
-            { w: 284 },
-            { w: 328 },
-            { w: 316 },
-            { w: 378 },
-            { w: 280 },
-            { w: 250 },
-            { w: 253 },
-            { w: 247 },
-            { w: 353 },
-            { w: 319 },
-            { w: 288 },
-            { w: 285 },
-            { w: 314 },
-            { w: 310 },
-            { w: 305 },
-            { w: 310 },
-            { w: 248 },
-            { w: 257 },
-            { w: 264 },
-            { w: 260 },
-            { w: 282 },
-            { w: 314 },
-            { w: 330 },
-            { w: 325 },
-            { w: 343 },
-            { w: 252 },
-            { w: 188 },
-            { w: 170 }
+            { w: 268 }, // 00
+            { w: 282 }, // 01
+            { w: 290 }, // 02
+            { w: 285 }, // 03
+            { w: 293 }, // 04
+            { w: 320 }, // 05
+            { w: 320 }, // 06
+            { w: 287 }, // 07
+            { w: 277 }, // 08
+            { w: 326 }, // 09
+            { w: 407 }, // 10
+            { w: 280 }, // 11
+            { w: 250 }, // 12
+            { w: 253 }, // 13
+            { w: 250 }, // 14
+            { w: 370 }, // 15
+            { w: 325 }, // 16
+            { w: 288 }, // 17
+            { w: 290 }, // 18
+            { w: 322 }, // 19
+            { w: 322 }, // 20
+            { w: 319 }, // 21
+            { w: 320 }, // 22
+            { w: 248 }, // 23
+            { w: 257 }, // 24
+            { w: 264 }, // 25
+            { w: 260 }, // 26
+            { w: 282 }, // 27
+            { w: 324 }, // 29
+            { w: 346 }, // 30
+            { w: 307 }, // 31
+            { w: 356 }, // 32
+            { w: 255 }, // 33
+            { w: 300 }, // 34 (max possible)
+            { w: 0 }  // 35 ?
         ]
 
         let _first_color_ = [
@@ -108,7 +108,7 @@ export default function createColoredBadges(video_Id) {
         const normalize = (val, max, min) => (val - min) / (max - min)
         _colors_ = _first_color_.concat(shuffleArray(_other_colors_))
         let k = 0
-        const transparency = .667
+        const transparency = .600
         _colors_.push(_last_color_[0])
         for (let s of _colors_) {
             // https://cubic-bezier.com/
@@ -128,10 +128,11 @@ export default function createColoredBadges(video_Id) {
             }
             // some transparency to show video behind
             if (video_Id) {
+                s.p_rgb_original = new tinycolor(s.p_rgb).toRgbString()
                 s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
                 s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
                 s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
-                s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
+                // s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
             }
         }
 
@@ -172,7 +173,7 @@ export default function createColoredBadges(video_Id) {
             const warning = duration != 8 ? `(${duration})` : "";
             const barTo = barFrom + duration
             const bg = true ? // !tonality ?
-                `background-color: #${c.p_rgb};`
+                `background-color: #${c.p_rgb}`
                 :
                 `background-image: linear-gradient(135deg, 
         #${c.stripeColor} 10%, 
@@ -188,7 +189,7 @@ export default function createColoredBadges(video_Id) {
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor}; ${bg};">
+<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="background-color: ${c.p_rgb_original}; border-color: #${c.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden;" data-width="${(_widths_[i].w) - 120}">
 

@@ -58,7 +58,7 @@ a {
 }
 
 #gridContainerCol.push2right {
-  max-width: min(var(--vw, 1vw) * 100, 23.5rem);
+  max-width: min(var(--vw, 1vw) * 100, 23rem);
   height: calc(var(--vh, 1vh) * 100 - 57px) !important;
   overflow-y: scroll;
   margin: 0;
@@ -73,7 +73,7 @@ a {
 .grid-brick {
   /* display: grid; */
   font-size: 1.4rem;
-  width: min(var(--vw, 1vw) * 100, 23.5rem);
+  width: min(var(--vw, 1vw) * 100, 23rem);
   /* width: 100%; */
   height: 6rem;
   padding: 0.4rem;
@@ -103,6 +103,7 @@ a {
 
 .grid-brick.playing .score {
   border-radius: 0 !important;
+  background-color: #ffffffe0 !important;
   width: 100% !important;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -135,7 +136,7 @@ a {
 }
 
 .score object {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.75);
   height: 100%;
   background-clip: padding-box;
   position: absolute;
