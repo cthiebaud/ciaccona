@@ -15,7 +15,9 @@ const Ω = {
             $('a#about > div').html("&check;&nbsp;About&hellip;")
             $('header.header').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
-            $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000)
+            $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
+                console.log('end of animation')
+            })
             $('footer.footer').show()
 
             $('#gridContainerCol, #grid, .grid.brick, .brick, .score, #playerWrapper').css({ visibility: 'hidden' })

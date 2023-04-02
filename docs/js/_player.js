@@ -87,7 +87,7 @@ const setBrickClickEvent = (_plyer, timings) => {
         } else {
             // get bar data from timings
             let startBar = timings.bars[thisBar]
-            // console.log('we are on bar ', thisBar, 'variation', thisBar.variation, 'variation starts at bar', startBar.index)
+            console.log('we are on bar ', thisBar, timings.bars[thisBar]["Time Recorded"], 'variation', timings.bars[thisBar].variation, 'starts at bar', startBar.index)
 
             // seek to the duration
             _plyer.currentTime = startBar.duration.asMilliseconds() / 1000

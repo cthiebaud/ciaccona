@@ -30,6 +30,7 @@ const mapVideoId2ArtistName = {
     BYg7Di8CH9w: "Mika Stoltzman",
     _5ITydjLkYUk: "Yun Park",
     P93o202UJRs: "Marta Femenía",
+    X5_F_w_rX4k: "Von Hansen",
     Vslz1tDsaWw: "Christophe Thiebaud",
 }
 

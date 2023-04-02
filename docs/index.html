@@ -21,15 +21,17 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <script>
 
+    </script>
     <!-- Facebook Meta Tags -->
     <meta property="fb:app_id" content="176898451849553">
-    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content="ciaccona.cthiebaud.com" />
     <meta property="og:url" content="https://ciaccona.cthiebaud.com/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Ciaccona">
-    <meta property="og:description" content="La Tribune des Critiques de Disques de la Ciaccona ou Chaconne de la 2ème Partita BWV 1004 de JS Bach">
+    <meta property="og:description" content="La Tribune des Critiques de Disques de la Ciaccona (ou Chaconne) de la 2ème Partita BWV 1004 de JS Bach">
     <meta property="og:image" content="https://ciaccona.cthiebaud.com/logo3.jpg" />
     <meta property="og:image:url" content="https://ciaccona.cthiebaud.com/logo3.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -66,6 +68,7 @@
         import { removeCookie } from "/js/_utils.js"
 
         if (!validateVideoId(videoId)) {
+            console.log('youtube video handle', videoId, 'is invalid')
             videoId = undefined
         }
         if (typeof videoId === 'undefined') {
@@ -220,6 +223,7 @@
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w"><img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
                         <div>Mika Stoltzman</div>
                     </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="X5-F_w-rX4k">&nbsp; <div>Von Hansen</div></a></li>
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk">&nbsp; <div>Yun Park</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
@@ -317,7 +321,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.6</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.7</span>
         </div>
     </footer>
 
