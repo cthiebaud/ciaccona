@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { getCookie, removeCookie } from "/js/utils.js"
+import { getCookie } from "/js/utils.js"
 import { index2duration } from "/js/config.js"
 import { binaryRangeSearch } from "/js/utils.js"
 
@@ -82,7 +82,10 @@ function initTimings(timings) {
     timings.ciacconaStart = initializeBarObject({ m: timings.start })
 
     timings.previousPlayOnBar = getCookie('previousPlayOnBar')
-    if (!timings.previousPlayOnBar) timings.previousPlayOnBar = 0
+    if (!timings.previousPlayOnBar) {timings.previousPlayOnBar = 0
+    } else {
+        timings.previousPlayOnBar = parseInt(timings.previousPlayOnBar)
+    }
 
     timings.bars.forEach((bar, index) => initializeBarObject(bar, index))
     console.log(timings)
@@ -106,9 +109,6 @@ function validateVideoId(videoId) {
 function createTimings(videoId) {
     return new Promise((resolve, reject) => {
         if (!videoId) {
-            // r.à.z.
-            removeCookie('playing')
-            removeCookie('previousPlayOnBar')
             reject(`invalid videoId: < ${videoId} >`)
         } else {
             const videoIdNoHyphen = videoId.replace(/-/gi, '_')

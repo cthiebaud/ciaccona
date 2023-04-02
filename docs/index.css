@@ -21,7 +21,7 @@ body {
   z-index: 3000;
 }
 
-#loading .spinner-border, #mylog {
+#loading .spinner-border, #loading-text {
   position: absolute;
   left: 0;
   right: 0;
@@ -35,7 +35,7 @@ body {
   border-width: 0.5rem;
 }
 
-#mylog {
+#loading-text {
   text-align: center;
   padding-top: 6rem;
 }

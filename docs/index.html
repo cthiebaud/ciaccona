@@ -62,11 +62,16 @@
     <script type="module">
         import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
         import { validateVideoId } from "/js/timings.js"
+        import { removeCookie } from "/js/utils.js"
 
         if (!validateVideoId(videoId)) {
             videoId = undefined
         }
-
+        if (typeof videoId === 'undefined') {
+            // r.à.z.
+            removeCookie('playing')
+            removeCookie('previousPlayOnBar')
+        }
 
         // <!-- CSS variable for dimensions -->
         const afterResizeWindow = () => {
@@ -297,13 +302,16 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.0</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.1</span>
         </div>
     </footer>
 
     <div id="loading" class="fullscreen" style="z-index: 2000; background-color: #ffffff80;">
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
+        </div>
+        <div id="loading-text" style="width: 100%; font-size:larger; color:black;">
+            &nbsp;
         </div>
     </div>
 
@@ -365,12 +373,21 @@
         const hideLoading = () => {
             document.getElementById('loading').style.display = 'none'
         }
+        const setLoadingText = (...message) => {
+            document.getElementById('loading-text').innerHTML = message.join(" ")
+        }
 
         /* click handlers */
 
         let showArtistInIsotope = false
 
         const allPromises = new Map()
+
+        if (videoId) {
+            setLoadingText("fetching score and video")
+        } else {
+            setLoadingText("fetching score")
+        }
 
         allPromises.set(
             resizeSVGs.name,
@@ -424,6 +441,8 @@
         )
 
         Promise.allSettled([...allPromises.values()]).then((result) => {
+
+            setLoadingText("&nbsp;")
 
             const map = new Map(result
                 .filter((obj) => {
