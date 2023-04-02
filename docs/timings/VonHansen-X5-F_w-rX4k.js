@@ -425,8 +425,8 @@ const X5_F_w_rX4k = {
     },
     {      "Time Recorded": "2023-04-02T12:33:42.309Z"
     },
-    {      "Time Recorded": "2023-04-02T12:33:45.976Z"
-    },
+    /*{      "Time Recorded": "2023-04-02T12:33:45.976Z"
+    },*/
     {      "Time Recorded": "2023-04-02T12:33:50.836Z"
     },
     {      "Time Recorded": "2023-04-02T12:33:54.752Z"
@@ -507,8 +507,8 @@ const X5_F_w_rX4k = {
     },
     {      "Time Recorded": "2023-04-02T12:35:53.440Z"
     },
-    {      "Time Recorded": "2023-04-02T12:35:58.189Z"
-    },
+    /*{      "Time Recorded": "2023-04-02T12:35:58.189Z"
+    },*/
     {      "Time Recorded": "2023-04-02T12:36:02.353Z"
     },
     {      "Time Recorded": "2023-04-02T12:36:05.658Z"
