@@ -31,6 +31,7 @@ const mapVideoId2ArtistName = {
     _5ITydjLkYUk: "Yun Park",
     P93o202UJRs: "Marta Femenía",
     X5_F_w_rX4k: "Von Hansen",
+    maDgVXxV1b0: "Florentin Ginot",
     Vslz1tDsaWw: "Christophe Thiebaud",
 }
 
@@ -69,6 +70,12 @@ function initTimings(timings) {
         if (typeof index !== 'undefined') {
             bar.index = index
             bar.variation = timings.codec.bar2variation(index)
+            
+            if (timings.pub) {
+                if (timings.pub.fromVariation <= bar.variation ) {
+                    bar.duration.subtract(timings.pub.duration)
+                }
+            }
         }
 
         return bar
@@ -83,7 +90,8 @@ function initTimings(timings) {
     timings.ciacconaStart = initializeBarObject({ m: timings.start })
 
     timings.previousPlayOnBar = getCookie('previousPlayOnBar')
-    if (!timings.previousPlayOnBar) {timings.previousPlayOnBar = 0
+    if (!timings.previousPlayOnBar) {
+        timings.previousPlayOnBar = 0
     } else {
         timings.previousPlayOnBar = parseInt(timings.previousPlayOnBar)
     }
