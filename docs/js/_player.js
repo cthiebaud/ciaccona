@@ -146,23 +146,30 @@ export default function createPlayer(selector, timings) {
             const previousBar = timings.bars[timings.previousPlayOnBar]
             console.log("Dear plyr, as you are ready, can you seek at bar <", previousBar.index, "> (", previousBar["Time Recorded"], ") ?")
             _plyer.currentTime = previousBar.duration.asSeconds()
+            scrolltoVariation(previousBar.variation, { block: "center" })
+
+            /* NO AUTOPLAY - TOO BUGGY
             const wasPlaying = getCookie('playing')
             if (wasPlaying === 'true') {
-                console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing? (in one second) --->")
                 setTimeout(() => {
-                    scrolltoVariation(previousBar.variation, { block: "center" })
-                    jquery(`.grid-brick#gb${previousBar.variation}`).addClass('playing')
-                    console.log("---> one second is elapsed, trying to play UMUTED")
-                    // youtube annoying "feature" (no sound before play/pause)
-                    // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
-                    _plyer.muted = true
-                    _plyer.muted = false
-                    _plyer.play()
-                    _plyer.pause()
-                    _plyer.play()
+                    try {
+                        console.log("---> one second is elapsed, trying to play UMUTED")
+                        console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing? (in one second) --->")
+                        // youtube annoying "feature" (no sound before play/pause)
+                        // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
+                        _plyer.muted = true
+                        _plyer.muted = false
+                        _plyer.play()
+                        _plyer.pause()
+                        _plyer.play()
+                        jquery(`.grid-brick#gb${previousBar.variation}`).addClass('playing')
+                    } catch (error) {
+                        console.error(error)
+                    } 
                     console.log('previousBar.variation', previousBar.variation)
                 }, 1000)
             }
+            */
 
             resolve({
                 key: thisFunctionName,
