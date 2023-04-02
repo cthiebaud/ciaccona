@@ -7,8 +7,8 @@ import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 Promise.onPossiblyUnhandledRejection(function(error){
     throw error;
 }); */
-import { shuffleArray } from "/js/utils.js"
-import { index2duration } from "/js/config.js"
+import { shuffleArray } from "/js/_utils.js"
+import { index2duration } from "/js/_config.js"
 
 const $ = jquery
 

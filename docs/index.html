@@ -61,8 +61,8 @@
 
     <script type="module">
         import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-        import { validateVideoId } from "/js/timings.js"
-        import { removeCookie } from "/js/utils.js"
+        import { validateVideoId } from "/js/_timings.js"
+        import { removeCookie } from "/js/_utils.js"
 
         if (!validateVideoId(videoId)) {
             videoId = undefined
@@ -302,7 +302,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.1</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.2</span>
         </div>
     </footer>
 
@@ -336,13 +336,13 @@
     <!-- script src="https://cdn.jsdelivr.net/npm/js-cookie@latest/dist/js.cookie.min.js"></!-->
 
     <script type="module">
-        import { setCookie } from "/js/utils.js"
-        import { fullscore } from "/js/config.js"
-        import createColoredBadges from "/js/colors.js"
-        import { createTimings } from "/js/timings.js"
-        import resizeSVGs from "/js/resizeSVGs.js"
-        import createPlayer from "/js/player.js"
-        import { Ω } from "/js/jquery.js"
+        import { setCookie } from "/js/_utils.js"
+        import { fullscore } from "/js/_config.js"
+        import createColoredBadges from "/js/_colors.js"
+        import { createTimings } from "/js/_timings.js"
+        import resizeSVGs from "/js/_resizeSVGs.js"
+        import createPlayer from "/js/_player.js"
+        import { Ω } from "/js/_jquery.js"
 
         /* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
         Promise.onPossiblyUnhandledRejection(function (error) {
