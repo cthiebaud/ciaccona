@@ -114,18 +114,6 @@ https://youtu.be/ze_QPWuyZLo
 http://www.genzoh.jp/en/index.html
 https://twitter.com/genzohtakehisa
 
-<TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
-
-Genzoh Takehisa @genzohtakehisa
-
-#GenzohTakehisa #Ciaccona #Chaconne #BWV1004 #JSBach
-
-Listen to JS Bach's Chaconne performed by Genzoh Takehisa, collated with 21 other artists:
-https://ciaccona.cthiebaud.com/?yt=ze_QPWuyZLo
-
-</TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
-
-
 18 
 Yun Park
 https://youtu.be/5ITydjLkYUk
@@ -157,11 +145,26 @@ https://www.instagram.com/vonhansenmusic/
 https://www.facebook.com/vonhansenmusic
 
 21 
-@FlorentinGinot
+Florentin Ginot
 https://youtu.be/maDgVXxV1b0
 https://twitter.com/FlorentinGinot
 https://florentinginot.com/bio/
 https://www.facebook.com/florentin.ginot
 https://www.youtube.com/channel/UCjN_iAaUkoTBdMLey8Rv2GA
 
+22
+Veronique De Raedemaeker
+https://youtu.be/AbZxSocrvvs
+twitter † 
+https://veroniquederaedemaeker.com/
 
+<TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
+
+Veronique De Raedemaeker
+
+#VeroniqueDeRaedemaeker #Ciaccona #Chaconne #BWV1004 #JSBach
+
+Listen to JS Bach's Chaconne performed by Veronique De Raedemaeker, collated with 22 other artists:
+https://ciaccona.cthiebaud.com/?yt=AbZxSocrvvs
+
+</TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
