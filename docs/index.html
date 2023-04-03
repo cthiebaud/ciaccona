@@ -329,7 +329,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.11</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.12</span>
         </div>
     </footer>
 
@@ -437,7 +437,7 @@
                 createTimings(videoId).then((result) => {
                     /* artist */
                     showArtistInIsotope = true
-                    Ω.setArtist(result.id, result.artist)
+                    Ω.setArtist(result.videoID, result.artist)
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId)
 
