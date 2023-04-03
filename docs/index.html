@@ -59,6 +59,10 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let videoId = params.yt
+        // hack waiting for Genzoh Takehisa to make his video embeddable
+        if (videoId == "ze_QPWuyZLo") {
+            videoId = "JETARLGbUJo"
+        }
         let debug = params.debug
     </script>
 
@@ -104,7 +108,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index.css?=v0.1.13" rel="stylesheet">
+    <link href="index.css?=v0.1.14" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column">
