@@ -1,4 +1,3 @@
-1
 Amandine Beyer
 https://youtu.be/mg9kT7XiLoU
 https://www.amandinebeyer.com/en/home.html
@@ -6,26 +5,22 @@ https://twitter.com/Amandine_Beyer
 https://www.facebook.com/amandinebeyerofficial/
 https://www.instagram.com/amandinebeyer/
 
-2
 Veronika Eberle
 https://youtu.be/Ilb3no_cwnI
 https://twitter.com/veronika_eberle
 https://www.facebook.com/veronika.eberle.3
 https://www.instagram.com/veronikaeberle/
 
-3
 Isabelle Faust
 https://youtu.be/r67BASAgP5Q
 https://www.impresariat-simmenauer.de/en/artist/isabelle-faust/
 NO twitter BUT ... https://twitter.com/Stradivari_1704
 
-4
 Midori Gotō
 https://youtu.be/KgSKvOAJMb8
 https://www.midori-violin.com/
 twitter † 
 
-5
 Bella Hristova
 https://youtu.be/XkfsGCIiHb4
 https://www.bellahristova.com/
@@ -33,60 +28,51 @@ twitter † https://twitter.com/BellaHristova
 https://www.facebook.com/bellahristova
 https://www.instagram.com/bellahristovaviolin/
 
-6
 Lisa Jacobs
 https://youtu.be/dyAcRqpjbqU
 https://lisajacobs.nl/
 https://twitter.com/lisajacobs85
 
-7
 Sigiswald Kuijken
 https://youtu.be/NCTDf8dNT5s
 twitter † 
 https://www.facebook.com/groups/173280932708110/
 https://www.youtube.com/user/Lapetitebande
 
-8
 Rachel Podger
 https://youtu.be/1HSJufg7I1I
 https://www.rachelpodger.com/
 https://twitter.com/RachPodger
 https://www.facebook.com/rachel.podger
 
-9
 Rachell Ellen Wong
 https://youtu.be/59KFAY_qf-Q
 https://www.rachellwong.com/
 https://twitter.com/rachellviolin
 
-10
 Petra Poláčková
 https://youtu.be/lxZqC_J0C74
 http://www.petrapolackova.com/en/
 twitter † 
 https://www.facebook.com/petra.polackova.75
 
-11
 Andrea De Vitis
 https://youtu.be/oxWq93mlAyc
 http://www.andreadevitis.com/
 https://twitter.com/itsDeVitis
 https://www.facebook.com/andrea.devitis.classical.guitarist
 
-12
 Chiara Massini
 https://youtu.be/SzxzLtwK-eo
 http://www.chiaramassini.com/
 https://twitter.com/Chiara2110
 
-13
 Anneleen Lenaerts
 https://youtu.be/KHwsHXtVWks
 https://www.anneleenlenaerts.com/
 https://twitter.com/AnnelLenaerts
 https://www.facebook.com/anneleenlenaertsharp
 
-14
 Mika Stoltzman
 https://youtu.be/BYg7Di8CH9w
 https://youtu.be/MLX0Px_UtwI
@@ -98,23 +84,19 @@ https://twitter.com/MikaStoltzman
 https://www.facebook.com/mika.stoltzman
 https://www.youtube.com/user/mikarimba2011
 
-15 
 Virginie Robilliard
 https://youtu.be/KWcGsRKbe-U
 https://virginierobilliard.com/accueil
 twitter † 
 https://www.facebook.com/profile.php?id=100032546152135
 
-16
 Moi 
 
-17 
 Genzoh Takehisa 
 https://youtu.be/ze_QPWuyZLo
 http://www.genzoh.jp/en/index.html
 https://twitter.com/genzohtakehisa
 
-18 
 Yun Park
 https://youtu.be/5ITydjLkYUk
 https://yunparkpercussion.com/
@@ -122,21 +104,17 @@ twitter †
 https://www.instagram.com/playp49/
 https://www.facebook.com/yunparkpercussion
 
-18
 Hilary Hahn 
 https://youtu.be/ngjEVKxQCWs
 https://twitter.com/violincase
 https://www.youtube.com/channel/UCI9pm8WplvpIN8uKpoxcXaQ
 
-
-19
 Marta Femenía
 https://youtu.be/P93o202UJRs
 twitter † 
 http://www.martafemenia.com/
 https://www.instagram.com/marta.femenia/
 
-20
 Von Hansen
 https://youtu.be/X5-F_w-rX4k
 twitter † 
@@ -144,7 +122,6 @@ https://vonhansenmusic.com/
 https://www.instagram.com/vonhansenmusic/
 https://www.facebook.com/vonhansenmusic
 
-21 
 Florentin Ginot
 https://youtu.be/maDgVXxV1b0
 https://twitter.com/FlorentinGinot
@@ -152,11 +129,12 @@ https://florentinginot.com/bio/
 https://www.facebook.com/florentin.ginot
 https://www.youtube.com/channel/UCjN_iAaUkoTBdMLey8Rv2GA
 
-22
 Veronique De Raedemaeker
 https://youtu.be/AbZxSocrvvs
 twitter † 
 https://veroniquederaedemaeker.com/
+
+
 
 <TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE_TEMPLATE>
 
