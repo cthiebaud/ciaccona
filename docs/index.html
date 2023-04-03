@@ -93,6 +93,9 @@
                 afterResizeWindow()
             }, 750)
         )
+        const version = "v0.1.13"
+        document.getElementById('version').innerHTML = version
+
     </script>
 
     <!-- google font -->
@@ -101,7 +104,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index.css?=time()" rel="stylesheet">
+    <link href="index.css?=v0.1.13" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column">
@@ -330,7 +333,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.13</span>
+            <span id="version" class="font-monospace badge rounded-pill bg-primary"></span>
         </div>
     </footer>
 
@@ -406,8 +409,6 @@
             document.getElementById('loading-text').innerHTML = message.join(" ")
         }
 
-        let showArtistInIsotope = false
-
         const allPromises = new Map()
 
         if (videoId) {
@@ -436,9 +437,8 @@
             allPromises.set(
                 createPlayer.name,
                 createTimings(videoId).then((result) => {
-                    /* artist */
-                    showArtistInIsotope = true
-                    Ω.setArtist(result.videoID, result.artist)
+
+                    Ω.setArtist(result.videoID, result.artist, result.trueURL)
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId)
 
@@ -496,7 +496,7 @@
                         map.get(createPlayer.name).closeInitializationCallback()
                     }
                 })
-                iso.arrange({ filter: showArtistInIsotope ? '*' : ':not(.artist)' })
+                iso.arrange({ filter: map.get(createPlayer.name) ? '*' : ':not(.artist)' })
             }
             hideLoading()
         }).catch((error) => {

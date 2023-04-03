@@ -70,10 +70,10 @@ const Ω = {
         })
     },
 
-    setArtist: (id, artist) => {
+    setArtist: (id, artist, trueURL) => {
         $('.artist .name').html(artist === "Christophe Thiebaud" ? "Moi" : artist)
         $('.artist .url').attr({
-            href: `https://youtu.be/${id}`,
+            href: trueURL ? trueURL : `https://youtu.be/${id}`,
             target: id
         })
         $('.artist, .artist .brick').css({ visibility: "visible" })

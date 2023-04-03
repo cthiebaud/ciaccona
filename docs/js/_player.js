@@ -97,7 +97,6 @@ const setBrickClickEvent = (_plyer, timings) => {
         // DOM element has bar index in data
         const thisBar = parseInt(this.dataset.bar)
 
-
         if (timings.previousPlayOnBar === thisBar) {
             // just toggle play state
             if (isPlaying) {
@@ -131,21 +130,19 @@ export default function createPlayer(selector, timings) {
             debug: true,
         })
 
-        _plyer.on('volumechange', (event) => {
-            console.log("Plyr volumechange event", event.detail.plyr.media.volume)
-        })
-
-        _plyer.on('canplay', (event) => {
-            console.log("Plyr canplay event", event)
-        })
-
-        _plyer.on('canplaythrough', (event) => {
-            console.log("Plyr canplaythrough event", event)
-        })
-
-        let firstTimeUpdate = true
-        function INIT() {
+        function INIT_EVENT_HANDLERS() {
             /*
+            _plyer.on('volumechange', (event) => {
+                console.log("Plyr volumechange event", event.detail.plyr.media.volume)
+            })
+
+            _plyer.on('canplay', (event) => {
+                console.log("Plyr canplay event", event)
+            })
+
+            _plyer.on('canplaythrough', (event) => {
+                console.log("Plyr canplaythrough event", event)
+            })
             _plyer.on('statechange', (event) => {
                 console.log("Plyr statechange event")
             })
@@ -156,7 +153,7 @@ export default function createPlayer(selector, timings) {
                 console.log("Plyr progress event", event.detail.plyr.buffered)
             })
             */
-            
+
             _plyer.on('pause', (event) => {
                 console.log("Plyr pause event")
                 setCookie('playing', 'false')
@@ -187,6 +184,7 @@ export default function createPlayer(selector, timings) {
                 console.log("Plyr seeking event", event)
 
                 if (event.detail.plyr.elements.inputs.seek.value == 0) {
+                    console.log("never do nothing when not seeking somthing else than 0")
                     return
                 }
 
@@ -205,12 +203,16 @@ export default function createPlayer(selector, timings) {
             setBrickClickEvent(_plyer, timings)
 
             function closeInitializationCallback() {
-                INIT()
+
+                INIT_EVENT_HANDLERS()
+
+                let theStartingBar = timings.bars[0]
                 if (timings.previousPlayOnBar) {
-                    const previousBar = timings.bars[timings.previousPlayOnBar]
-                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousBar.index, "> (", previousBar["Time Recorded"], ") ?")
-                    _plyer.currentTime = previousBar.duration.asSeconds()
+                    theStartingBar = timings.bars[timings.previousPlayOnBar]
                 }
+
+                console.log("Dear plyr, as you are ready, can you seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], ") ?")
+                _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
             }
 
             resolve({
