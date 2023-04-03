@@ -127,7 +127,7 @@ export default function createPlayer(selector, timings) {
 
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
-            debug: true,
+            /* debug: true, */
         })
 
         function INIT_EVENT_HANDLERS() {
@@ -181,10 +181,10 @@ export default function createPlayer(selector, timings) {
                 }
             })
             _plyer.on('seeking', (event) => {
-                console.log("Plyr seeking event", event)
+                console.log("Plyr seeking event")
 
                 if (event.detail.plyr.elements.inputs.seek.value == 0) {
-                    console.log("never do nothing when not seeking somthing else than 0")
+                    console.log("never do nothing when not seeking something else than 0. Comprenne qui pourra.")
                     return
                 }
 

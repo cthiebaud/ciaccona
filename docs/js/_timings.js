@@ -26,6 +26,7 @@ const mapVideoId2ArtistName = {
     P93o202UJRs: "Marta Femenía",
     X5_F_w_rX4k: "Von Hansen",
     maDgVXxV1b0: "Florentin Ginot",
+    AbZxSocrvvs: "Veronique De Raedemaeker",
     Vslz1tDsaWw: "Christophe Thiebaud",
 }
 
