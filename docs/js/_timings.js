@@ -19,7 +19,7 @@ const mapVideoId2ArtistName = {
     Jcy7E4uHYK8: "Raphaella Smits",
     oxWq93mlAyc: "Andrea De Vitis",
     SzxzLtwK_eo: "Chiara Massini",
-    ze_QPWuyZLo: "Genzoh Takehisa",
+    JETARLGbUJo : "Genzoh Takehisa", /* original: ze_QPWuyZLo */
     KHwsHXtVWks: "Anneleen Lenaerts",
     BYg7Di8CH9w: "Mika Stoltzman",
     _5ITydjLkYUk: "Yun Park",
@@ -89,7 +89,7 @@ class Timings {
         }
         bar.index = index
         bar.variation = this.#codec.bar2variation(index)
-        bar.variationStartsAtBarIndex = this.#codec.variation2bar(bar.variation)
+        bar.variationStartBarIndex = this.#codec.variation2bar(bar.variation)
         if (this.freezedBecauseOFPub && 
             this.freezedBecauseOFPub.fromVariation && 
             this.freezedBecauseOFPub.from &&
@@ -138,10 +138,9 @@ class Timings {
         }
 
         this.previousPlayOnBar = getCookie('previousPlayOnBar')
-        if (!this.previousPlayOnBar) {
-            this.previousPlayOnBar = 0
-        } else {
-            this.previousPlayOnBar = parseInt(this.previousPlayOnBar)
+        if (typeof this.previousPlayOnBar !== 'undefined') {
+            this.previousPlayOnBar = Number(this.previousPlayOnBar)
+            if (this.previousPlayOnBar === NaN) this.previousPlayOnBar = undefined
         }
 
         this.bars.forEach((bar, index) => this.#initializeBarObject(bar, index))

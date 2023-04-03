@@ -1,77 +1,86 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { getCookie, setCookie } from "/js/_utils.js"
+import { setCookie } from "/js/_utils.js"
 
-/* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
-Promise.onPossiblyUnhandledRejection(function(error){
-    throw error;
-}); */
-function scrolltoVariation(variation, options) {
-    let selector = `.grid-brick#gb${variation}`
+function selectAndScrollToVariation(source, variation, options) {
+    const selector = `.grid-brick#gb${variation}`
+    let scrollToSelector = selector
     if (variation === 0) {
-        selector = '.grid-brick#gb-ciaccona'
+        scrollToSelector = '.grid-brick#gb-ciaccona'
     } else if (33 <= variation) {
-        selector = '.grid-brick#gb-bwv1004'
+        scrollToSelector = '.grid-brick#gb-bwv1004'
     }
-    // console.log(selector, 'to scroll into view', selector)
-    document.querySelector(selector).scrollIntoView(options ? options : { block: "nearest" })
+
+    jquery('.grid-brick').removeClass('selected')
+    document.querySelector(selector).classList.add('selected')
+
+    const scrollToElement = document.querySelector(scrollToSelector)
+    console.log(source, selector, 'to scroll into view', options)
+    scrollToElement.scrollIntoView(options)
 }
 
 function showPlay(currentTime, timings) {
     const barIndex = timings.time2bar(currentTime)
     const variation = timings.bars[barIndex].variation
     console.log('showing play of variation', variation)
-    jquery('.grid-brick.playing .score').scrollLeft(0)
-    jquery('.grid-brick.playing').removeClass('playing')
-    jquery(`.grid-brick#gb${variation}`).addClass('playing')
-}
-function hidePlay() {
-    console.log('hidding play')
-    jquery('.grid-brick.playing .score').scrollLeft(0)
-    jquery('.grid-brick.playing').removeClass('playing')
+    jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
+    jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+    jquery(`.grid-brick#gb${variation}`).addClass('gbPlaying').addClass('selected')
 }
 
-const feedbackOnCurrentTime = (currentTime, timings, noSave) => {
+function hidePlay() {
+    console.log('hidding play')
+    jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
+    jquery('.grid-brick.gbPlaying').removeClass('gbPlaying')
+}
+
+const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, scrollToVariation, scrollOptions) => {
+
     const doSave = typeof noSave === 'undefined' || noSave === false
+
     const barIndex = timings.time2bar(currentTime)
     const variation = timings.bars[barIndex].variation
-    const startBarIndexOfVariation = timings.bars[barIndex].variationStartsAtBarIndex
-    if (timings.previousPlayOnBar != startBarIndexOfVariation) {
-        timings.previousPlayOnBar = startBarIndexOfVariation
+    const variationStartBarIndex = timings.bars[barIndex].variationStartBarIndex
+
+    // changement de variation 
+    if (timings.previousPlayOnBar != variationStartBarIndex) {
+        timings.previousPlayOnBar = variationStartBarIndex
         if (doSave) {
             setCookie('previousPlayOnBar', timings.previousPlayOnBar)
         }
-        scrolltoVariation(variation)
     }
-    
+
     if (true) {
-        const oldBrickplaying = jquery(".grid-brick.playing")
+
+        const doSwap = (alt, neu) => {
+            if (typeof neu === 'undefined') return false
+            if (alt == neu) return false
+            return true
+        }
+        const oldBrickplaying = jquery(".grid-brick.gbPlaying")
         const newBrick = jquery(`.grid-brick#gb${variation}`)
-        const avoidSwap = (
-            !oldBrickplaying ||
-            oldBrickplaying.length === 0 ||
-            !oldBrickplaying[0].id ||
-            !newBrick || 
-            !newBrick.length === 0 ||
-            !newBrick[0].id ||
-            oldBrickplaying[0].id === newBrick[0].id 
-        )
-        console.log('swap from', oldBrickplaying.attr('id'), 'to', newBrick.attr('id'), '?', avoidSwap ? "no!" : "yes!")
-        if (!avoidSwap) {
+        const altID = oldBrickplaying.attr('id')
+        const neuID = newBrick.attr('id')
+        const doIt = doSwap(altID, neuID)
+        if (typeof altID === 'undefined' && neuID === 'gb0') {
+            console.log("quel est le con qui m'envoie ça ?", altID, neuID)
+        }
+        // console.log(source, 'SWAP from', altID, 'to', neuID, '?', doIt ? "yes!" : "no!")
+        if (doIt) {
             // swap
             oldBrickplaying.find('.score').scrollLeft(0)
-            oldBrickplaying.removeClass('playing')
-            newBrick.addClass('playing')
+            if (isPlaying) {
+                jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+                newBrick.addClass('gbPlaying').addClass('selected')
+            } else {
+                jquery('.grid-brick').removeClass('selected')
+                newBrick.addClass('selected')
+            }
+            if (scrollToVariation) {
+                selectAndScrollToVariation(source, variation, scrollOptions)
+            }
         }
     }
-
-    /*
-
-    { behavior: "smooth", block: "nearest", inline: "nearest" }
-        jquery(".grid-brick.seeking").removeClass("seeking")
-        jquery(".grid-brick.seeking").removeClass("seeking")
-        jquery(`.grid-brick#gb${bar.variation}`).addClass("seeking")
-    */
 }
 
 const setBrickClickEvent = (_plyer, timings) => {
@@ -79,12 +88,15 @@ const setBrickClickEvent = (_plyer, timings) => {
     function handleBrickClick(event) {
         event.stopImmediatePropagation()
 
-        _plyer.muted = false
+        setTimeout(() => {
+            _plyer.muted = false
+        }, 200)
 
         const isPlaying = _plyer.playing
 
         // DOM element has bar index in data
         const thisBar = parseInt(this.dataset.bar)
+
 
         if (timings.previousPlayOnBar === thisBar) {
             // just toggle play state
@@ -96,7 +108,7 @@ const setBrickClickEvent = (_plyer, timings) => {
         } else {
             // get bar data from timings
             let startBar = timings.bars[thisBar]
-            console.log('we are on bar ', thisBar, timings.bars[thisBar]["Time Recorded"], 'variation', timings.bars[thisBar].variation, 'starts at bar', startBar.index)
+            console.log(`CLICKED on bar ${thisBar} [${timings.bars[thisBar]["Time Recorded"]}], variation ${timings.bars[thisBar].variation}, variation starts at bar ${startBar.index}`)
 
             // seek to the duration
             _plyer.currentTime = startBar.duration.asMilliseconds() / 1000
@@ -116,72 +128,97 @@ export default function createPlayer(selector, timings) {
 
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
+            debug: true,
         })
-        _plyer.on('playing', (event) => {
-            console.log("Plyr playing event")
-            setCookie('playing', 'true')
-            showPlay(event.detail.plyr.currentTime, timings)
+
+        _plyer.on('volumechange', (event) => {
+            console.log("Plyr volumechange event", event.detail.plyr.media.volume)
         })
-        _plyer.on('pause', (event) => {
-            console.log("Plyr pause event")
-            setCookie('playing', 'false')
-            hidePlay()
+
+        _plyer.on('canplay', (event) => {
+            console.log("Plyr canplay event", event)
         })
-        _plyer.on('ended', (event) => {
-            console.log("Plyr ended event")
-            setCookie('playing', 'false')
-            timings.previousPlayOnBar = 0
-            setCookie('previousPlayOnBar', 0)
-            hidePlay()
+
+        _plyer.on('canplaythrough', (event) => {
+            console.log("Plyr canplaythrough event", event)
         })
-        _plyer.on('timeupdate', (event) => {
-            // console.log("Plyr timeupdate event")
-            feedbackOnCurrentTime(event.detail.plyr.currentTime, timings)
-        })
-        _plyer.on('seeking', (event) => {
-            console.log("Plyr seeking event")
-            const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100)
-            feedbackOnCurrentTime(seekTime, timings, true /* no save*/)
-        })
-        _plyer.on('seeked', (event) => {
-            console.log("Plyr seeked event")
-            feedbackOnCurrentTime(event.detail.plyr.currentTime, timings)
-        })
+
+        let firstTimeUpdate = true
+        function INIT() {
+            /*
+            _plyer.on('statechange', (event) => {
+                console.log("Plyr statechange event")
+            })
+            _plyer.on('waiting', (event) => {
+                console.log("Plyr waiting event")
+            })
+            _plyer.on('progress', (event) => {
+                console.log("Plyr progress event", event.detail.plyr.buffered)
+            })
+            */
+            
+            _plyer.on('pause', (event) => {
+                console.log("Plyr pause event")
+                setCookie('playing', 'false')
+                hidePlay()
+            })
+            _plyer.on('ended', (event) => {
+                console.log("Plyr ended event")
+                setCookie('playing', 'false')
+                timings.previousPlayOnBar = 0
+                setCookie('previousPlayOnBar', 0)
+                hidePlay()
+            })
+            _plyer.on('playing', (event) => {
+                console.log("Plyr playing event")
+                setCookie('playing', 'true')
+                showPlay(event.detail.plyr.currentTime, timings)
+                feedbackOnCurrentTime('playing', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "nearest" })
+            })
+            _plyer.on('timeupdate', (event) => {
+                if (!_plyer.playing) {
+                    // console.log("Plyr timeupdate event: do nothing when not playing")
+                } else {
+                    // console.log("Plyr timeupdate event while plying")
+                    feedbackOnCurrentTime('timeupdate', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "nearest" })
+                }
+            })
+            _plyer.on('seeking', (event) => {
+                console.log("Plyr seeking event", event)
+
+                if (event.detail.plyr.elements.inputs.seek.value == 0) {
+                    return
+                }
+
+                const seekTime = event.detail.plyr.media.duration * (event.detail.plyr.elements.inputs.seek.value / 100)
+                feedbackOnCurrentTime('seeking', seekTime, timings, true /* do not save variation */, _plyer.playing, true, { behavior: "instant", block: "center" })
+            })
+            _plyer.on('seeked', (event) => {
+                console.log("Plyr seeked event")
+                feedbackOnCurrentTime('seeked', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "center" })
+            })
+        }
+
         _plyer.on('ready', (event) => {
             console.log("Plyr ready event")
+
             setBrickClickEvent(_plyer, timings)
 
-            const previousBar = timings.bars[timings.previousPlayOnBar]
-            console.log("Dear plyr, as you are ready, can you seek at bar <", previousBar.index, "> (", previousBar["Time Recorded"], ") ?")
-            _plyer.currentTime = previousBar.duration.asSeconds()
-            scrolltoVariation(previousBar.variation, { block: "center" })
-
-            /* NO AUTOPLAY - TOO BUGGY
-            const wasPlaying = getCookie('playing')
-            if (wasPlaying === 'true') {
-                setTimeout(() => {
-                    try {
-                        console.log("---> one second is elapsed, trying to play UMUTED")
-                        console.log("Dear plyr, last time we met, you where playing, weren't you? May I politely ask you to resume playing? (in one second) --->")
-                        // youtube annoying "feature" (no sound before play/pause)
-                        // https://github.com/sampotts/plyr/issues/1527#issuecomment-519398492
-                        _plyer.muted = true
-                        _plyer.muted = false
-                        _plyer.play()
-                        _plyer.pause()
-                        _plyer.play()
-                        jquery(`.grid-brick#gb${previousBar.variation}`).addClass('playing')
-                    } catch (error) {
-                        console.error(error)
-                    } 
-                    console.log('previousBar.variation', previousBar.variation)
-                }, 1000)
+            function closeInitializationCallback() {
+                INIT()
+                if (timings.previousPlayOnBar) {
+                    const previousBar = timings.bars[timings.previousPlayOnBar]
+                    console.log("Dear plyr, as you are ready, can you seek at bar <", previousBar.index, "> (", previousBar["Time Recorded"], ") ?")
+                    _plyer.currentTime = previousBar.duration.asSeconds()
+                }
             }
-            */
 
             resolve({
                 key: thisFunctionName,
-                value: _plyer
+                value: {
+                    player: _plyer,
+                    closeInitializationCallback: closeInitializationCallback
+                }
             })
         })
     })

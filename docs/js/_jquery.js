@@ -105,11 +105,11 @@ const Ω = {
         }
 
         $(".brick.hasScore").click(function (e) {
-            const hadClass = $(e.currentTarget).parent().hasClass('playing')
-            $('.grid-brick.playing .score').scrollLeft(0)
-            $('.grid-brick.playing').removeClass('playing')
+            const hadClass = $(e.currentTarget).parent().hasClass('selected')
+            $('.grid-brick.selected .score').scrollLeft(0)
+            $('.grid-brick.selected').removeClass('selected')
             if (!hadClass) {
-                $(e.currentTarget).parent().addClass('playing')
+                $(e.currentTarget).parent().addClass('selected')
             }
         });
 

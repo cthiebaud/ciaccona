@@ -1,6 +1,7 @@
-const ze_QPWuyZLo = {
+/* const ze_QPWuyZLo = { */
+const JETARLGbUJo = { 
   offset:{ minutes: 1, seconds: 43 },
-  /* adjust: { seconds: 0, milliseconds: 0 }, */
+  adjust: { seconds: 0, milliseconds: 200 },
   start: "2023-03-29T12:41:21.079Z",
   bars: [
     /*{      "Time Recorded": "2023-03-29T12:41:21.079Z"
@@ -253,8 +254,8 @@ const ze_QPWuyZLo = {
     },
     {      "Time Recorded": "2023-03-29T12:46:43.751Z"
     },
-    {      "Time Recorded": "2023-03-29T12:46:46.223Z"
-    },
+    /*{      "Time Recorded": "2023-03-29T12:46:46.223Z"
+    },*/
     {      "Time Recorded": "2023-03-29T12:46:48.519Z"
     },
     {      "Time Recorded": "2023-03-29T12:46:52.524Z"
@@ -359,8 +360,8 @@ const ze_QPWuyZLo = {
     },
     {      "Time Recorded": "2023-03-29T12:49:18.471Z"
     },
-    {      "Time Recorded": "2023-03-29T12:49:20.316Z"
-    },
+    /*{      "Time Recorded": "2023-03-29T12:49:20.316Z"
+    },*/
     {      "Time Recorded": "2023-03-29T12:49:21.843Z"
     },
     {      "Time Recorded": "2023-03-29T12:49:27.176Z"
@@ -425,7 +426,7 @@ const ze_QPWuyZLo = {
     },
     {      "Time Recorded": "2023-03-29T12:50:59.371Z"
     },
-    {      "Time Recorded": "2023-03-29T12:51:04.297Z"
+    {      "Time Recorded": "2023-03-29T12:51:04.900Z"
     },
     {      "Time Recorded": "2023-03-29T12:51:12.084Z"
     },
@@ -521,9 +522,9 @@ const ze_QPWuyZLo = {
     },
     {      "Time Recorded": "2023-03-29T12:53:18.094Z"
     },
-    {      "Time Recorded": "2023-03-29T12:53:23.090Z"
-    },
-    {      "Time Recorded": "2023-03-29T12:53:36.680Z"
+    /*{      "Time Recorded": "2023-03-29T12:53:23.090Z"
+    },*/
+    {      "Time Recorded": "2023-03-29T12:53:36.480Z"
     },
     {      "Time Recorded": "2023-03-29T12:53:45.436Z"
     },

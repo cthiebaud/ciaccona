@@ -70,69 +70,41 @@ a {
   width: 100% !important;
 }
 
+/* + + + + + + + + +  */
+
 .grid-brick {
-  /* display: grid; */
   font-size: 1.4rem;
   width: min(var(--vw, 1vw) * 100, 23rem);
-  /* width: 100%; */
   height: 6rem;
   padding: 0.4rem;
   border-style: dashed solid;
   border-width: 2px !important;
 }
-.brick.hasScore {
+
+.grid-brick .brick {
   cursor: pointer;
-}
-
-.grid-brick.playing {
-}
-
-.grid-brick:not(.playing) {
-  border-color: transparent !important;
-  background-color: transparent !important;
-}
-
-.grid-brick.playing .brick {
-  border-radius: 0 !important;
-}
-
-.grid-brick:not(.playing) .score {
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.grid-brick.playing .score {
-  border-radius: 0 !important;
-  background-color: #ffffffe0 !important;
-  width: 100% !important;
-  overflow-x: scroll;
-  overflow-y: hidden;
-}
-
-.grid.playing object {
-  border-radius: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.grid-brick.playing .brick :not(:first-child) {
-  display: none !important;
-}
-
-.grid-brick.Δ {
-  background-color: rgba(128, 128, 128, 0.3);
-}
-
-.brick {
   border-radius: 0 3rem 3rem 0;
   width: 100%;
   height: 100%;
 }
 
-.score {
+.grid-brick.selected .brick {
+  border-radius: 0 !important;
+}
+
+.grid-brick .brick .score {
   position: relative;
   height: 5rem;
   border-radius: 0 3rem 3rem 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.grid-brick.hasScore.selected .score {
+  border-radius: 0 !important;
+  background-color: #ffffffe0 !important;
+  width: 100% !important;
+  overflow-x: scroll;
 }
 
 .score object {
@@ -142,6 +114,34 @@ a {
   position: absolute;
   display: block;
 }
+
+.grid.gbPlaying object {
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.grid-brick:not(.selected) {
+  border-color: transparent !important;
+}
+
+.grid-brick.hasScore.selected .brick :not(:first-child) {
+  display: none !important;
+}
+
+.grid-brick.hasScore.selected {
+  background-color: #ffffffe0 !important;
+}
+
+.grid-brick:not(.gbPlaying) {
+  border-color: transparent !important;
+}
+
+.grid-brick.Δ {
+  background-color: rgba(128, 128, 128, 0.3);
+}
+
+/* + + + + + + + + +  */
 
 div.siegel {
   background-size: contain;
@@ -157,7 +157,7 @@ div.siegel#logoLeft {
 
 div.siegel#logoRight {
   background-image: url("svg/Bach_Seal_full_right_120x120.svg");
-  left: +111vw;
+  left: + 111vw;
 }
 
 .glowing_bubble_siegel {

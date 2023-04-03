@@ -190,9 +190,9 @@
                     <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="maDgVXxV1b0">
-                    <span style="font-size:12px; top: -0.55rem; left:-.6rem; position: relative;">*big*</span>
-                    <img style="top: -0.55rem; left:-1rem; position: relative;" src="svg/violin.svg">
-                    <div>Florentin Ginot</div>
+                        <span style="font-size:12px; top: -0.55rem; left:-.6rem; position: relative;">*big*</span>
+                        <img style="top: -0.55rem; left:-1rem; position: relative;" src="svg/violin.svg">
+                        <div>Florentin Ginot</div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
@@ -206,13 +206,14 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="SzxzLtwK-eo"><img id="keyboard" style="top: -0.2rem; position: relative;"src="svg/keyboard.svg">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="SzxzLtwK-eo"><img id="keyboard" style="top: -0.2rem; position: relative;"
+                            src="svg/keyboard.svg">
                         <div>Chiara Massini</div>
                     </a>
                 </li>
                 <!-- no embedding :(
-                    <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="ze_QPWuyZLo">&nbsp; <div>Genzoh Takehisa</div></a></li>
                 -->
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="JETARLGbUJo">&nbsp; <div>Genzoh Takehisa</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -329,7 +330,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.12</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.13</span>
         </div>
     </footer>
 
@@ -488,7 +489,14 @@
             console.log(`All promises settled, fullfilled : ${map.size} / ${result.length}`, result)
 
             if (map.get(createColoredBadges.name)) {
-                map.get(createColoredBadges.name).isotope.arrange({ filter: showArtistInIsotope ? '*' : ':not(.artist)' })
+                const iso = map.get(createColoredBadges.name).isotope
+                console.log("change istope filter to show artist name")
+                iso.on('arrangeComplete', function (filteredItems) {
+                    if (map.get(createPlayer.name)) {
+                        map.get(createPlayer.name).closeInitializationCallback()
+                    }
+                })
+                iso.arrange({ filter: showArtistInIsotope ? '*' : ':not(.artist)' })
             }
             hideLoading()
         }).catch((error) => {

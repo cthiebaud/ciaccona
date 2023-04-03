@@ -193,7 +193,7 @@ export default function createColoredBadges(video_Id) {
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="background-color: ${c.p_rgb_original}; border-color: #${c.borderColor};">
+<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor};"> <!-- background-color: ${c.p_rgb_original}; -->
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden;" data-width="${(_widths_[i].w) - 120}">
 
@@ -253,9 +253,6 @@ export default function createColoredBadges(video_Id) {
             packery: {
                 gutter: 0,
             }
-        })
-        iso.on('arrangeComplete', function (filteredItems) {
-            console.log("isotope arrange complete" /*, filteredItems */);
         })
         iso.on('layoutComplete', function () {
             console.log("isotope layout complete");
