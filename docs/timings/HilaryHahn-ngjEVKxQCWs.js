@@ -1,7 +1,7 @@
 const ngjEVKxQCWs = {
-  /* offset: moment.duration({ seconds: 0, minutes: 0 }),
-  adjust : moment.duration({seconds: 0}), */
-  start: moment("2023-03-29T21:04:27.905Z"),
+  /* offset:{ minutes: 0, seconds: 0 },
+  adjust: { seconds: 0, milliseconds: 0 }, */
+  start: "2023-03-29T21:04:27.905Z",
   bars: [
     /*{      "Time Recorded": "2023-03-29T21:04:27.905Z"
     },*/

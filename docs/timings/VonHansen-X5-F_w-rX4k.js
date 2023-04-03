@@ -1,7 +1,7 @@
 const X5_F_w_rX4k = {
-  /* offset: moment.duration({ seconds: 0, minutes: 0 }),*/
-  adjust : moment.duration({seconds: 0.4}), 
-  start: moment("2023-04-02T12:21:40.260Z"),
+  /* offset:{ minutes: 0, seconds: 0 },*/
+  adjust: { seconds: 0, milliseconds: 400 }, 
+  start: "2023-04-02T12:21:40.260Z",
   bars: [
     /*{      "Time Recorded": "2023-04-02T12:21:40.260Z"
     },*/

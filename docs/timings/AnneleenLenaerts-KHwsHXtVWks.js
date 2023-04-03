@@ -1,7 +1,7 @@
 let KHwsHXtVWks = {
-  /* offset : moment.duration({seconds: 0, minutes: 0}),
-  adjust : moment.duration({seconds: 0}), */
-  start: moment("2023-03-21T15:44:01.937Z"),
+  /* offset:{ minutes: 0, seconds: 0 },
+  adjust: { seconds: 0, milliseconds: 0 }, */
+  start: "2023-03-21T15:44:01.937Z",
   bars: [
     {
         "Time Recorded": "2023-03-21T15:44:01.937Z"

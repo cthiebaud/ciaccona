@@ -8,7 +8,7 @@ Promise.onPossiblyUnhandledRejection(function(error){
     throw error;
 }); */
 import { shuffleArray } from "/js/_utils.js"
-import { index2duration } from "/js/_config.js"
+import { index2duration } from "/js/_timings.js"
 
 const $ = jquery
 

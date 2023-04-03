@@ -1,9 +1,11 @@
 const maDgVXxV1b0 = {
-  /* offset: moment.duration({ seconds: 0, minutes: 0 }),*/
-  adjust : moment.duration({seconds: 0.3}), 
-  start: moment("2023-04-02T14:20:19.144Z"),
-  pub: {
+  /* offset:{ minutes: 0, seconds: 0 },*/
+  adjust: { seconds: 0, milliseconds: 300 }, 
+  start: "2023-04-02T14:20:19.144Z",
+  freezedBecauseOFPub: {
     fromVariation: 28,
+    from: "2023-04-02T14:32:36.500Z",
+    to : "2023-04-02T14:32:38.913Z",
     duration: moment("2023-04-02T14:32:38.913Z").diff("2023-04-02T14:32:36.500Z"),
   },
   bars: [

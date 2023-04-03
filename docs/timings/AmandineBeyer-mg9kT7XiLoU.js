@@ -1,7 +1,7 @@
 const mg9kT7XiLoU = {
-  offset: moment.duration({ seconds: 36, minutes: 14 }),
-  /* adjust : moment.duration({seconds: 0}), */
-  start: moment("2023-03-20T10:03:46.945Z"),
+  offset:{ minutes: 14, seconds: 36 },
+  /* adjust: { seconds: 0, milliseconds: 0 }, */
+  start: "2023-03-20T10:03:46.945Z",
   bars: [
     {
       "Time Recorded": "2023-03-20T10:03:52.161Z"

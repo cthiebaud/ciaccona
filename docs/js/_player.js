@@ -35,24 +35,33 @@ const feedbackOnCurrentTime = (currentTime, timings, noSave) => {
     const doSave = typeof noSave === 'undefined' || noSave === false
     const barIndex = timings.time2bar(currentTime)
     const variation = timings.bars[barIndex].variation
-    const startBarOfVariation = timings.codec.variation2bar(variation)
-    if (timings.previousPlayOnBar != startBarOfVariation) {
-        timings.previousPlayOnBar = startBarOfVariation
+    const startBarIndexOfVariation = timings.bars[barIndex].variationStartsAtBarIndex
+    if (timings.previousPlayOnBar != startBarIndexOfVariation) {
+        timings.previousPlayOnBar = startBarIndexOfVariation
         if (doSave) {
             setCookie('previousPlayOnBar', timings.previousPlayOnBar)
         }
         scrolltoVariation(variation)
     }
-    {
+    
+    if (true) {
         const oldBrickplaying = jquery(".grid-brick.playing")
-        const newBrickplaying = jquery(`.grid-brick#gb${variation}`)
-        if (oldBrickplaying.attr('id') === newBrickplaying.attr('id')) {
-            // do nothing
-        } else {
+        const newBrick = jquery(`.grid-brick#gb${variation}`)
+        const avoidSwap = (
+            !oldBrickplaying ||
+            oldBrickplaying.length === 0 ||
+            !oldBrickplaying[0].id ||
+            !newBrick || 
+            !newBrick.length === 0 ||
+            !newBrick[0].id ||
+            oldBrickplaying[0].id === newBrick[0].id 
+        )
+        console.log('swap from', oldBrickplaying.attr('id'), 'to', newBrick.attr('id'), '?', avoidSwap ? "no!" : "yes!")
+        if (!avoidSwap) {
             // swap
             oldBrickplaying.find('.score').scrollLeft(0)
             oldBrickplaying.removeClass('playing')
-            newBrickplaying.addClass('playing')
+            newBrick.addClass('playing')
         }
     }
 
@@ -70,7 +79,7 @@ const setBrickClickEvent = (_plyer, timings) => {
     function handleBrickClick(event) {
         event.stopImmediatePropagation()
 
-        // console.log("clicked on brick")
+        _plyer.muted = false
 
         const isPlaying = _plyer.playing
 
@@ -107,7 +116,6 @@ export default function createPlayer(selector, timings) {
 
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
-            mute: false
         })
         _plyer.on('playing', (event) => {
             console.log("Plyr playing event")

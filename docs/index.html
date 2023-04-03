@@ -329,7 +329,7 @@
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
-            <span class="font-monospace badge rounded-pill bg-primary">v0.1.10</span>
+            <span class="font-monospace badge rounded-pill bg-primary">v0.1.11</span>
         </div>
     </footer>
 
@@ -363,7 +363,6 @@
     <!-- script src="https://cdn.jsdelivr.net/npm/js-cookie@latest/dist/js.cookie.min.js"></!-->
 
     <script type="module">
-        import { setCookie } from "/js/_utils.js"
         import { fullscore } from "/js/_config.js"
         import createColoredBadges from "/js/_colors.js?=2"
         import { createTimings } from "/js/_timings.js"
@@ -406,8 +405,6 @@
             document.getElementById('loading-text').innerHTML = message.join(" ")
         }
 
-        /* click handlers */
-
         let showArtistInIsotope = false
 
         const allPromises = new Map()
@@ -444,7 +441,7 @@
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId)
 
-                    return createPlayer(selectorPlyr, result.timings).then((result) => {
+                    return createPlayer(selectorPlyr, result).then((result) => {
                         Ω.afterCreatePlayer()
                         return result
                     }).catch((error) => {
@@ -495,7 +492,6 @@
             }
             hideLoading()
         }).catch((error) => {
-            console.log(error);
             console.log(error)
             return error
         })

@@ -1,7 +1,7 @@
 const Ilb3no_cwnI = {
-  offset: moment.duration({seconds: 40.5, minutes: 14}),
-  /* adjust : moment.duration({seconds: 0}), */
-  start : moment("2023-03-20T08:38:23.094Z"),
+  offset: {seconds: 40.5, minutes: 14},
+  /* adjust: { seconds: 0, milliseconds: 0 }, */
+  start: "2023-03-20T08:38:23.094Z",
   bars : [
     {
       "Time Recorded original": "2023-03-20T08:38:26.466Z",

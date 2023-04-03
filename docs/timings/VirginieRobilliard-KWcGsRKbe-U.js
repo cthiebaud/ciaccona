@@ -1,7 +1,7 @@
 const KWcGsRKbe_U = {
-  offset: moment.duration({ seconds: 15, minutes: 18 }),
-  /* adjust : moment.duration({seconds: 0}), */
-  start: moment("2023-03-28T15:48:31.916Z"),
+  offset:{ minutes: 18, seconds: 15 },
+  /* adjust: { seconds: 0, milliseconds: 0 }, */
+  start: "2023-03-28T15:48:31.916Z",
   bars: [
     /*{      "Time Recorded": "2023-03-28T15:48:31.916Z"
     },*/

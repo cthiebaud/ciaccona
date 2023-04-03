@@ -1,7 +1,7 @@
 const ze_QPWuyZLo = {
-  offset: moment.duration({ seconds: 43, minutes: 1 }),
-  /* adjust : moment.duration({seconds: 0}), */
-  start: moment("2023-03-29T12:41:21.079Z"),
+  offset:{ minutes: 1, seconds: 43 },
+  /* adjust: { seconds: 0, milliseconds: 0 }, */
+  start: "2023-03-29T12:41:21.079Z",
   bars: [
     /*{      "Time Recorded": "2023-03-29T12:41:21.079Z"
     },*/

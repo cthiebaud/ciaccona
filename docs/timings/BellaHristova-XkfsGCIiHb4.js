@@ -1,7 +1,7 @@
 const XkfsGCIiHb4 = {
-  /* offset : moment.duration({seconds: 0, minutes: 0}), */
-  adjust: moment.duration({ seconds: 1 }),
-  start: moment("2023-03-20T09:30:50.302Z"),
+  /* offset:{ minutes: 0, seconds: 0 }, */
+  adjust: { seconds: 1, milliseconds: 0 },
+  start: "2023-03-20T09:30:50.302Z",
   bars: [
     {
       "Time Recorded": "2023-03-20T09:30:52.036Z"
