@@ -4,6 +4,7 @@ import { getCookie, setCookie, removeCookie } from "/js/_utils.js"
 import { binaryRangeSearch } from "/js/_utils.js"
 
 const mapVideoId2ArtistName = {
+    /* Baker */  bKIPJqqH__Q: "Martin Baker",
     /* Beyer */  mg9kT7XiLoU: "Amandine Beyer",
     /* De Raedemaeker */  AbZxSocrvvs: "Veronique De Raedemaeker",
     /* De Vitis */  oxWq93mlAyc: "Andrea De Vitis",
