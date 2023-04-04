@@ -139,7 +139,6 @@ export default function createPlayer(selector, timings) {
 
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
-            /* debug: true, */
         })
 
         function INIT_EVENT_HANDLERS() {
