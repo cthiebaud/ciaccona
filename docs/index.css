@@ -7,7 +7,7 @@ body {
   background-color: black;
 }
 
-body.no-vid, 
+body.no-vid,
 body.about {
   background-color: transparent !important;
 }
@@ -26,7 +26,8 @@ body.about {
   cursor: wait;
 }
 
-#loading .spinner-border, #loading-text {
+#loading .spinner-border,
+#loading-text {
   position: absolute;
   left: 0;
   right: 0;
@@ -146,6 +147,18 @@ a {
   background-color: rgba(128, 128, 128, 0.3);
 }
 
+.grid-brick#gb33 {
+  background-color: transparent !important;
+}
+.grid-brick#gb33 .brick {
+  background-color: #232222;
+  background-image: url(/svg/Johann_Sebastian_Bach_signature.svg);
+  background-size: 240px 38px;
+  background-position-y: center;
+  background-position-x: right;
+  background-repeat: no-repeat;
+}
+
 /* + + + + + + + + +  */
 
 div.siegel {
@@ -162,7 +175,7 @@ div.siegel#logoLeft {
 
 div.siegel#logoRight {
   background-image: url("svg/Bach_Seal_full_right_120x120.svg");
-  left: + 111vw;
+  left: +111vw;
 }
 
 .glowing_bubble_siegel {
@@ -190,9 +203,9 @@ div.siegel#logoRight {
   color: #121212;
 }
 
-div#gb-artist > div > div  {
-  background-color: #505050c0; 
-  border-radius: .5rem;  
+div#gb-artist > div > div {
+  background-color: #505050c0;
+  border-radius: 0.5rem;
 }
 div#gb-artist > div > div > * {
   margin: 0;
@@ -201,7 +214,7 @@ div#gb-artist > div > div > *:first-child {
   padding: 0;
 }
 div#gb-artist > div > div > *:not(:first-child) {
-  padding: 0 0 0 .5rem;
+  padding: 0 0 0 0.5rem;
 }
 
 span.Δ {
@@ -278,7 +291,6 @@ iframe {
 li a.dropdown-item {
   max-height: 30px;
 }
-
 
 li a.dropdown-item img {
   height: 40px;

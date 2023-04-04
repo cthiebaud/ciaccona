@@ -20,11 +20,16 @@ const Ω = {
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
 
-                $("code#prism").load('/screenshots/_credits.yaml', function (response, status, xhr) {
+                $("code#artists").load('/screenshots/_credits.yaml', function (response, status, xhr) {
                     if (status == "success") {
                         Prism.highlightElement(this)
-                        $('#credits').show()
                     }
+                    $("code#thanks").load('/thanks.yaml', function (response, status, xhr) {
+                        if (status == "success") {
+                            Prism.highlightElement(this)
+                            $('#credits').show()
+                        }
+                    })
                 })
             })
             $('footer.footer').show()
