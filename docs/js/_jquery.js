@@ -13,10 +13,17 @@ const Ω = {
         this.about = false;
         this.showAbout = () => {
             $('a#about > div').html("&check;&nbsp;About&hellip;")
+
             $('header.header').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
-                console.log('end of animation')
+
+                $("code#prism").load('/screenshots/_credits.yaml', function (response, status, xhr) {
+                    if (status == "success") {
+                        Prism.highlightElement(this)
+                        $('#credits').show()
+                    }
+                })
             })
             $('footer.footer').show()
 
