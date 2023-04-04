@@ -141,7 +141,7 @@ export default function createColoredBadges(video_Id) {
             `
 <div id="gb-ciaccona" class="grid-brick">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover;      background-position-y: center; height: 100%;">
-        <div class="magnificient-card p-2" style="backdrop-filter: blur(1px);">
+        <div class="magnificent-card p-2" style="backdrop-filter: blur(1px);">
             &nbsp;Ciaccona&nbsp;
         </div>
     </div>
@@ -233,7 +233,7 @@ export default function createColoredBadges(video_Id) {
 <div id="gb-bwv1004" class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="border-radius: 0; background-color: black">
         <div class="glowing_bubble_siegel">
-            <div class="magnificient-card p-2" style="backdrop-filter: blur(.2px);">
+            <div class="magnificent-card p-2" style="backdrop-filter: blur(.2px);">
                 &nbsp;BWV&nbsp;1004&nbsp;
             </div>
         </div>    

@@ -36,7 +36,7 @@ function hidePlay() {
 
 const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, scrollToVariation, scrollOptions) => {
 
-    const doSave = typeof noSave === 'undefined' || noSave === false
+    const doSave = noSave == null || noSave === false
 
     const barIndex = timings.time2bar(currentTime)
     const variation = timings.bars[barIndex].variation
@@ -53,7 +53,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     if (true) {
 
         const doSwap = (alt, neu) => {
-            if (typeof neu === 'undefined') return false
+            if (neu == null) return false
             if (alt == neu) return false
             return true
         }
@@ -62,7 +62,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
         const altID = oldBrickplaying.attr('id')
         const neuID = newBrick.attr('id')
         const doIt = doSwap(altID, neuID)
-        if (typeof altID === 'undefined' && neuID === 'gb0') {
+        if (altID == null && neuID === 'gb0') {
             console.log("quel est le con qui m'envoie ça ?", altID, neuID)
         }
         // console.log(source, 'SWAP from', altID, 'to', neuID, '?', doIt ? "yes!" : "no!")
@@ -184,7 +184,7 @@ export default function createPlayer(selector, timings) {
                 console.log("Plyr seeking event")
 
                 if (event.detail.plyr.elements.inputs.seek.value == 0) {
-                    console.log("never do nothing when not seeking something else than 0. Comprenne qui pourra.")
+                    console.log("never do nothing when not seeking something else than 0 - comprenne qui pourra")
                     return
                 }
 
@@ -211,7 +211,7 @@ export default function createPlayer(selector, timings) {
                     theStartingBar = timings.bars[timings.previousPlayOnBar]
                 }
 
-                console.log("Dear plyr, as you are ready, can you seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], ") ?")
+                console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
                 _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
             }
 

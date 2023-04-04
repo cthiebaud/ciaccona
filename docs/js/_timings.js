@@ -4,43 +4,44 @@ import { getCookie } from "/js/_utils.js"
 import { binaryRangeSearch } from "/js/_utils.js"
 
 const mapVideoId2ArtistName = {
-    mg9kT7XiLoU: "Amandine Beyer",
-    Ilb3no_cwnI: "Veronika Eberle",
-    r67BASAgP5Q: "Isabelle Faust",
-    KgSKvOAJMb8: "Midori Gotō",
-    ngjEVKxQCWs: "Hilary Hahn",
-    XkfsGCIiHb4: "Bella Hristova",
-    dyAcRqpjbqU: "Lisa Jacobs",
-    NCTDf8dNT5s: "Sigiswald Kuijken",
-    _1HSJufg7I1I: "Rachel Podger",
-    KWcGsRKbe_U: "Virginie Robilliard",
-    _59KFAY_qf_Q: "Rachell Ellen Wong",
-    lxZqC_J0C74: "Petra Poláčková",
-    Jcy7E4uHYK8: "Raphaella Smits",
-    oxWq93mlAyc: "Andrea De Vitis",
-    SzxzLtwK_eo: "Chiara Massini",
-    JETARLGbUJo : "Genzoh Takehisa", /* original: ze_QPWuyZLo */
-    KHwsHXtVWks: "Anneleen Lenaerts",
-    BYg7Di8CH9w: "Mika Stoltzman",
-    _5ITydjLkYUk: "Yun Park",
-    P93o202UJRs: "Marta Femenía",
-    X5_F_w_rX4k: "Von Hansen",
-    maDgVXxV1b0: "Florentin Ginot",
-    AbZxSocrvvs: "Veronique De Raedemaeker",
-    Vslz1tDsaWw: "Christophe Thiebaud",
+    /* Beyer */  mg9kT7XiLoU: "Amandine Beyer",
+    /* De Raedemaeker */  AbZxSocrvvs: "Veronique De Raedemaeker",
+    /* De Vitis */  oxWq93mlAyc: "Andrea De Vitis",
+    /* Eberle */  Ilb3no_cwnI: "Veronika Eberle",
+    /* Faust */  r67BASAgP5Q: "Isabelle Faust",
+    /* Femenía */  P93o202UJRs: "Marta Femenía",
+    /* Ginot */  maDgVXxV1b0: "Florentin Ginot",
+    /* Gotō */  KgSKvOAJMb8: "Midori Gotō",
+    /* Hahn */  ngjEVKxQCWs: "Hilary Hahn",
+    /* Hansen */  X5_F_w_rX4k: "Von Hansen",
+    /* Hristova */  XkfsGCIiHb4: "Bella Hristova",
+    /* Jacobs */  dyAcRqpjbqU: "Lisa Jacobs",
+    /* Kuijken */  NCTDf8dNT5s: "Sigiswald Kuijken",
+    /* Lenaerts */  KHwsHXtVWks: "Anneleen Lenaerts",
+    /* Massini */  SzxzLtwK_eo: "Chiara Massini",
+    /* Park */  _5ITydjLkYUk: "Yun Park",
+    /* Podger */  _1HSJufg7I1I: "Rachel Podger",
+    /* Poláčková */  lxZqC_J0C74: "Petra Poláčková",
+    /* Robilliard */  KWcGsRKbe_U: "Virginie Robilliard",
+    /* Smits */  Jcy7E4uHYK8: "Raphaella Smits",
+    /* Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
+    /* Takehisa */  JETARLGbUJo: "Genzoh Takehisa",  /* original: ze_QPWuyZLo */
+    /* Thiebaud */  Vslz1tDsaWw: "Christophe Thiebaud",
+    /* Wong */  _59KFAY_qf_Q: "Rachell_Ellen Wong",
 }
 
-const index2duration = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
+const variationsCount = 1 + 32 + 1
+const variationIndex2BarCount = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
 
 function validateVideoIdAndGetInterestingData(videoId) {
-    if (!videoId) {
+    if (videoId == null) {
         return undefined;
     }
 
     const videoIdNoHyphen = videoId.replace(/-/gi, '_')
     const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
     const artist = mapVideoId2ArtistName[videoIdNoHyphenNoStartingNumber]
-    if (!artist) {
+    if (artist == null) {
         return undefined
     }
 
@@ -54,18 +55,18 @@ function validateVideoIdAndGetInterestingData(videoId) {
 }
 
 class Codec {
-    #variationsBars = []
+    #variationsStartBars = []
     constructor() {
-        for (let i = 0, bar = 0; i < 34; i++) {
-            const duration = index2duration(i)
-            this.#variationsBars.push(bar)
+        for (let v = 0, bar = 0; v < variationsCount; v++) {
+            const duration = variationIndex2BarCount(v)
+            this.#variationsStartBars.push(bar)
             bar = bar + duration
         }
-        this.variation2bar = (variation) => {
-            return this.#variationsBars[variation]
+        this.variation2bar = (v) => {
+            return this.#variationsStartBars[v]
         }
-        this.bar2variation = (bar) => {
-            return binaryRangeSearch(bar, this.#variationsBars)
+        this.bar2variation = (b) => {
+            return binaryRangeSearch(b, this.#variationsStartBars)
         }
     }
 }
@@ -74,11 +75,11 @@ class Timings {
 
     #codec = new Codec()
 
-    #initializeBarObject = (bar, index) => {
-        if (typeof bar === 'undefined' || typeof index === 'undefined') {
-            throw new Error(bar, typeof bar, index, typeof index)
+    #initializeBarObject = (bar, barIndex) => {
+        if (bar == null || barIndex == null) {
+            throw new Error(bar, typeof bar, barIndex, typeof barIndex)
         }
-        if (typeof bar.m === 'undefined') {
+        if (bar.m == null) {
             bar.m = moment(bar["Time Recorded"])
         }
         bar.duration = moment.duration(bar.m.diff(this.start))
@@ -88,11 +89,11 @@ class Timings {
         if (this.adjust) {
             bar.duration.subtract(this.adjust)
         }
-        bar.index = index
-        bar.variation = this.#codec.bar2variation(index)
+        bar.index = barIndex
+        bar.variation = this.#codec.bar2variation(bar.index)
         bar.variationStartBarIndex = this.#codec.variation2bar(bar.variation)
-        if (this.freezedBecauseOFPub && 
-            this.freezedBecauseOFPub.fromVariation && 
+        if (this.freezedBecauseOFPub &&
+            this.freezedBecauseOFPub.fromVariation &&
             this.freezedBecauseOFPub.from &&
             this.freezedBecauseOFPub.to) {
             if (this.freezedBecauseOFPub.fromVariation <= bar.variation) {
@@ -103,13 +104,13 @@ class Timings {
         return bar
     }
 
-    #isDefinedAndNotAMoment = (o) => {
-        if (typeof o === 'undefined') return false
+    #isDefinedNotNullAndNotAMoment = (o) => {
+        if (o == null) return false
         return !(o instanceof moment)
     }
 
-    #isDefinedAndNotADuration = (o) => {
-        if (typeof o === 'undefined') return false
+    #isDefinedNotNullAndNotADuration = (o) => {
+        if (o == null) return false
         if (!(o instanceof moment)) return false
         return o.isDuration()
     }
@@ -118,13 +119,13 @@ class Timings {
         lodash.merge(this, interestingData)
         lodash.merge(this, data)
 
-        if (this.#isDefinedAndNotADuration(this.offset)) {
+        if (this.#isDefinedNotNullAndNotADuration(this.offset)) {
             this.offset = moment.duration(this.offset)
         }
-        if (this.#isDefinedAndNotADuration(this.adjust)) {
+        if (this.#isDefinedNotNullAndNotADuration(this.adjust)) {
             this.adjust = moment.duration(this.adjust)
         }
-        if (this.#isDefinedAndNotAMoment(this.start)) {
+        if (this.#isDefinedNotNullAndNotAMoment(this.start)) {
             this.start = moment(this.start)
         }
 
@@ -139,7 +140,7 @@ class Timings {
         }
 
         this.previousPlayOnBar = getCookie('previousPlayOnBar')
-        if (typeof this.previousPlayOnBar !== 'undefined') {
+        if (this.previousPlayOnBar != null) {
             this.previousPlayOnBar = Number(this.previousPlayOnBar)
             if (this.previousPlayOnBar === NaN) this.previousPlayOnBar = undefined
         }
@@ -174,7 +175,7 @@ function createTimings(videoId) {
 }
 
 export {
-    index2duration,
+    variationIndex2BarCount as index2duration,
     createTimings,
     validateVideoIdAndGetInterestingData as validateVideoId
 }

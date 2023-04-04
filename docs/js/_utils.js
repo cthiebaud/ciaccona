@@ -41,18 +41,18 @@ function getFunctionCallerName() {
 }
 
 // https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
-function binaryRangeSearch(value, list, getValue) {
-    if (typeof getValue === 'undefined') getValue =(i, arr) => arr[i]
+function binaryRangeSearch(value, array, getValue) {
+    if (getValue == null) getValue = (ind, arr) => arr[ind]
 
-    let low = 0;                  // left endpoint 
-    let high = list.length - 1;   // right endpoint 
+    let low = 0;
+    let high = array.length - 1;
     let mid
     let minValue, maxValue
 
     while (low <= high) {
         mid = Math.floor((low + high) / 2);
-        minValue = getValue(mid, list)
-        maxValue = mid < list.length - 1 ? getValue(mid + 1, list) : Number.MAX_VALUE
+        minValue = getValue(mid, array)
+        maxValue = mid < array.length - 1 ? getValue(mid + 1, array) : Number.MAX_VALUE
 
         if (value < minValue) {
             high = mid - 1;
@@ -62,7 +62,7 @@ function binaryRangeSearch(value, list, getValue) {
             return mid;
         }
     }
-    return 0 // something is wrong, return first array element
+    return 0 // something went wrong, return index of first element in array 
 }
 
 
