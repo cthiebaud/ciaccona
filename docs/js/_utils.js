@@ -42,7 +42,13 @@ function getFunctionCallerName() {
 
 // https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
 function binaryRangeSearch(value, array, getValue) {
+    if (value == null) return undefined
+    if (array == null || !array.length) return undefined
     if (getValue == null) getValue = (ind, arr) => arr[ind]
+
+    if (value < getValue(0, array)) {
+        return -1
+    }
 
     let low = 0;
     let high = array.length - 1;
@@ -62,7 +68,7 @@ function binaryRangeSearch(value, array, getValue) {
             return mid;
         }
     }
-    return 0 // something went wrong, return index of first element in array 
+    return undefined
 }
 
 

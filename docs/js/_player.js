@@ -1,6 +1,6 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { setCookie } from "/js/_utils.js"
+import { setCookie, removeCookie } from "/js/_utils.js"
 
 function selectAndScrollToVariation(source, variation, options) {
     const selector = `.grid-brick#gb${variation}`
@@ -21,6 +21,12 @@ function selectAndScrollToVariation(source, variation, options) {
 
 function showPlay(currentTime, timings) {
     const barIndex = timings.time2bar(currentTime)
+    if (barIndex == null || barIndex === -1) {
+        console.log('no variation here', currentTime)
+        jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
+        jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+        return
+    }
     const variation = timings.bars[barIndex].variation
     console.log('showing play of variation', variation)
     jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
@@ -39,15 +45,21 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     const doSave = noSave == null || noSave === false
 
     const barIndex = timings.time2bar(currentTime)
+    if (barIndex == null || barIndex === -1) {
+        console.log('no variation here', currentTime)
+        jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
+        jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+        if (doSave) {
+            timings.setStartBarOfLastSelectedVariation(undefined)
+        }
+        return
+    }
     const variation = timings.bars[barIndex].variation
-    const variationStartBarIndex = timings.bars[barIndex].variationStartBarIndex
+    const startBarOfThisVariation = timings.bars[barIndex].variationStartBarIndex
 
     // changement de variation 
-    if (timings.previousPlayOnBar != variationStartBarIndex) {
-        timings.previousPlayOnBar = variationStartBarIndex
-        if (doSave) {
-            setCookie('previousPlayOnBar', timings.previousPlayOnBar)
-        }
+    if (timings.getStartBarOfLastSelectedVariation() != startBarOfThisVariation) {
+        timings.setStartBarOfLastSelectedVariation(startBarOfThisVariation)
     }
 
     if (true) {
@@ -97,7 +109,7 @@ const setBrickClickEvent = (_plyer, timings) => {
         // DOM element has bar index in data
         const thisBar = parseInt(this.dataset.bar)
 
-        if (timings.previousPlayOnBar === thisBar) {
+        if (timings.getStartBarOfLastSelectedVariation() === thisBar) {
             // just toggle play state
             if (isPlaying) {
                 _plyer.pause()
@@ -161,9 +173,8 @@ export default function createPlayer(selector, timings) {
             })
             _plyer.on('ended', (event) => {
                 console.log("Plyr ended event")
-                setCookie('playing', 'false')
-                timings.previousPlayOnBar = 0
-                setCookie('previousPlayOnBar', 0)
+                removeCookie('playing')
+                timings.setStartBarOfLastSelectedVariation(0)
                 hidePlay()
             })
             _plyer.on('playing', (event) => {
@@ -207,12 +218,13 @@ export default function createPlayer(selector, timings) {
                 INIT_EVENT_HANDLERS()
 
                 let theStartingBar = timings.bars[0]
-                if (timings.previousPlayOnBar) {
-                    theStartingBar = timings.bars[timings.previousPlayOnBar]
+                let theLastStartingBarIndex = timings.getStartBarOfLastSelectedVariation()
+                if (theLastStartingBarIndex != null) {
+                    theStartingBar = timings.bars[theLastStartingBarIndex]
                 }
-
                 console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
                 _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
+
             }
 
             resolve({

@@ -1,6 +1,6 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-import { getCookie } from "/js/_utils.js"
+import { getCookie, setCookie, removeCookie } from "/js/_utils.js"
 import { binaryRangeSearch } from "/js/_utils.js"
 
 const mapVideoId2ArtistName = {
@@ -74,6 +74,33 @@ class Codec {
 class Timings {
 
     #codec = new Codec()
+    #startBarOfLastSelectedVariation = undefined
+
+    loadStartBarOfLastSelectedVariation() {
+        const cook = getCookie('startBarOfLastSelectedVariation')
+        if (cook != null) {
+            const cookAsANumber = Number(cook)
+            if (Number.isNaN(cookAsANumber)) {
+                this.#startBarOfLastSelectedVariation = undefined
+            } else {
+                this.#startBarOfLastSelectedVariation = cookAsANumber
+            }
+        }
+    }
+    getStartBarOfLastSelectedVariation() {
+        return this.#startBarOfLastSelectedVariation
+    }
+    setStartBarOfLastSelectedVariation(sbolsv) {
+        if (this.#startBarOfLastSelectedVariation != sbolsv) {
+            this.#startBarOfLastSelectedVariation = sbolsv
+            if (this.#startBarOfLastSelectedVariation == null) {
+                removeCookie('startBarOfLastSelectedVariation')
+            } else {
+                setCookie('startBarOfLastSelectedVariation', this.#startBarOfLastSelectedVariation)
+            }
+        }
+    }
+
 
     #initializeBarObject = (bar, barIndex) => {
         if (bar == null || barIndex == null) {
@@ -139,11 +166,7 @@ class Timings {
             })
         }
 
-        this.previousPlayOnBar = getCookie('previousPlayOnBar')
-        if (this.previousPlayOnBar != null) {
-            this.previousPlayOnBar = Number(this.previousPlayOnBar)
-            if (this.previousPlayOnBar === NaN) this.previousPlayOnBar = undefined
-        }
+        this.loadStartBarOfLastSelectedVariation()
 
         this.bars.forEach((bar, index) => this.#initializeBarObject(bar, index))
     }
