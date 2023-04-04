@@ -2,6 +2,39 @@ import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import { setCookie, removeCookie } from "/js/_utils.js"
 
+function scrollScore(selector, timings, variation, currentTime) {
+    if (variation === 33) return -1
+    const sco = document.querySelector(selector)
+    if (sco == null) return -1
+    const obj = sco.firstElementChild
+    if (obj == null) return -1
+
+    const scoWidth = sco.getBoundingClientRect().width
+    const objWidth = obj.getBoundingClientRect().width
+    if (objWidth <= scoWidth)
+        return -1
+    const maxScroll = objWidth
+
+    const curr = timings.codec.variation2bar(variation)
+    const next = timings.codec.variation2bar(variation + 1)
+    const thisStartBar = timings.bars[curr]
+    const nextStartBar = timings.bars[next]
+    const thisStartTime = thisStartBar.duration.asMilliseconds() / 1000
+    const nextStartTime = nextStartBar.duration.asMilliseconds() / 1000
+    const ellapsed = currentTime - thisStartTime
+    const maximum = nextStartTime - thisStartTime
+    // règle de trois : 
+    /* 
+    scrollLeft / maxScroll = ellapsed / maximum
+    */
+    const scrollLeft = Math.floor(((ellapsed * maxScroll) / maximum) - (scoWidth / 2))
+    if (scrollLeft < 0 || objWidth - scoWidth <= scrollLeft) return -1
+
+    sco.scrollLeft = scrollLeft
+    
+    return scrollLeft
+}
+
 function selectAndScrollToVariation(source, variation, options) {
     const selector = `.grid-brick#gb${variation}`
     let scrollToSelector = selector
@@ -34,9 +67,9 @@ function showPlay(currentTime, timings) {
     jquery(`.grid-brick#gb${variation}`).addClass('gbPlaying').addClass('selected')
 }
 
-function hidePlay() {
+function hidePlay(cause) {
     console.log('hidding play')
-    jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
+    if (cause !== 'pause') jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
     jquery('.grid-brick.gbPlaying').removeClass('gbPlaying')
 }
 
@@ -62,6 +95,11 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
         timings.setStartBarOfLastSelectedVariation(startBarOfThisVariation)
     }
 
+    if (isPlaying) {
+        const selector = `#gb${variation} > div > div.score`
+        const scrollLeft = scrollScore(selector, timings, variation, currentTime)
+
+    }
     if (true) {
 
         const doSwap = (alt, neu) => {
@@ -168,7 +206,7 @@ export default function createPlayer(selector, timings) {
             _plyer.on('pause', (event) => {
                 console.log("Plyr pause event")
                 setCookie('playing', 'false')
-                hidePlay()
+                hidePlay('pause')
             })
             _plyer.on('ended', (event) => {
                 console.log("Plyr ended event")
@@ -183,6 +221,7 @@ export default function createPlayer(selector, timings) {
                 feedbackOnCurrentTime('playing', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "nearest" })
             })
             _plyer.on('timeupdate', (event) => {
+                // console.log("Plyr timeupdate event")
                 if (!_plyer.playing) {
                     // console.log("Plyr timeupdate event: do nothing when not playing")
                 } else {

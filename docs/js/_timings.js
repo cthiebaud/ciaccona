@@ -74,7 +74,7 @@ class Codec {
 
 class Timings {
 
-    #codec = new Codec()
+    codec = new Codec()
     #startBarOfLastSelectedVariation = undefined
 
     loadStartBarOfLastSelectedVariation() {
@@ -118,8 +118,8 @@ class Timings {
             bar.duration.subtract(this.adjust)
         }
         bar.index = barIndex
-        bar.variation = this.#codec.bar2variation(bar.index)
-        bar.variationStartBarIndex = this.#codec.variation2bar(bar.variation)
+        bar.variation = this.codec.bar2variation(bar.index)
+        bar.variationStartBarIndex = this.codec.variation2bar(bar.variation)
         if (this.freezedBecauseOFPub &&
             this.freezedBecauseOFPub.fromVariation &&
             this.freezedBecauseOFPub.from &&
