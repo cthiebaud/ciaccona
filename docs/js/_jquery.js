@@ -14,6 +14,8 @@ const Ω = {
         this.showAbout = () => {
             $('a#about > div').html("&check;&nbsp;About&hellip;")
 
+            $('body').addClass('about')
+
             $('header.header').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
@@ -32,6 +34,8 @@ const Ω = {
 
         this.hideAbout = () => {
             $('a#about > div').html("About&hellip;")
+
+            $('body').removeClass('about')
 
             $('header.header').hide()
             $('div.fullscreen.siegel#logoLeft').hide()
