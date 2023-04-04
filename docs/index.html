@@ -264,9 +264,9 @@
     </div>
 
     <div id="config-menu" class="btn-group" style="display:none;">
-        <span class="dropdown" style="position: absolute; right: 0; width: fit-content; background: transparent; z-index: 1001; border: none; margin: .5rem; ">
+        <span class="dropdown" style="position: absolute; right: 0; width: fit-content; background: transparent; z-index: 1001; border: none; margin: .5rem .5rem .5rem 0; ">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-bs-toggle="dropdown" aria-expanded="false"
-                style="background: #00000040; border: none; font-size: 1.3rem;">
+                style="background: #00000040; border: none; font-size: 1.3rem; padding-left:.2rem;">
                 <svg width="32" height="22">
                     <use xlink:href="#cog"></use>
                 </svg>
@@ -333,8 +333,8 @@
     <div id="logos" style="position:absolute; width: 100vw;">
         <div id="logoRight" class="fullscreen siegel" style="display:none;"></div>
         <div id="logoLeft" class="fullscreen siegel" style="display:none;"></div>
-        <pre id="credits" class="container autolinker language-yaml line-numbers" style="display:none; z-index:5000; position: relative; top: 100vh; margin: auto; width: 640px;"
-        ><code id="prism" class="autolinker language-yaml line-numbers"></code></pre>
+        <pre id="credits" class="container autolinker language-yaml" style="display:none; z-index:5000; position: relative; top: 100vh; margin: auto; width: calc(min(640px, 100vw)) ;"
+        ><code id="prism" class="autolinker language-yaml"></code></pre>
     </div>
 
     <footer style="display: none !important; z-index: 1000; background-color: #ffffff80; border-top: 1px solid #a0a0a080;"
@@ -358,7 +358,7 @@
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
-        <div id="signature" class="magnificent-card" style="position: relative; top: calc(50% + 50px); margin: auto; width: fit-content; background-color: #BF9E80;">
+        <div id="signature" class="magnificent-card" style="position: relative; top: calc(50% + 50px); margin: auto; width: fit-content; background-color: white;">
             <svg>
                 <use xlink:href="#Bach"></use>
             </svg>

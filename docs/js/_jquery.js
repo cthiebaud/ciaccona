@@ -36,6 +36,7 @@ const Ω = {
             $('header.header').hide()
             $('div.fullscreen.siegel#logoLeft').hide()
             $('div.fullscreen.siegel#logoRight').hide()
+            $('#credits').hide()
             $('footer.footer').hide()
 
             $('#gridContainerCol, #grid, .grid.brick, .brick, .score, #playerWrapper').css({ visibility: 'visible' })
