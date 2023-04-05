@@ -20,6 +20,7 @@ const mapVideoId2ArtistName = {
     /* Kuijken */  NCTDf8dNT5s: "Sigiswald Kuijken",
     /* Lenaerts */  KHwsHXtVWks: "Anneleen Lenaerts",
     /* Massini */  SzxzLtwK_eo: "Chiara Massini",
+    /* Milstein */ Szu_ui_fnzs: "Nathan Milstein",
     /* Park */  _5ITydjLkYUk: "Yun Park",
     /* Podger */  _1HSJufg7I1I: "Rachel Podger",
     /* Poláčková */  lxZqC_J0C74: "Petra Poláčková",
