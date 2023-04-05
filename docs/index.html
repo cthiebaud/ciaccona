@@ -69,7 +69,7 @@
     <script src="prism.js"></script>
 
     <script>
-        const ver = "v0.3.6"
+        const ver = "v0.3.7"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -201,79 +201,122 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="mg9kT7XiLoU"><img src="svg/violin.svg">
-                        <div>Amandine Beyer</div>
+                <li><a id="home" class="dropdown-item d-flex justify-content-between" href="#" data-yt="">
+                        <div style="width: 100%; position: relative; top: -.5rem; text-align:right;">
+                            <span class="c">&#10004;</span>
+                            <span style="font-size:20pt;">🏠</span>
+                        </div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Ilb3no_cwnI">&nbsp; <div>Veronika Eberle</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="r67BASAgP5Q">&nbsp; <div>Isabelle Faust</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="WZ0wkyRBlqo">&nbsp; <div>Julia Fischer</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KgSKvOAJMb8">&nbsp; <div>Midori Gotō</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="ngjEVKxQCWs">&nbsp; <div>Hilary Hahn</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="XkfsGCIiHb4">&nbsp; <div>Bella Hristova </div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="dyAcRqpjbqU">&nbsp; <div>Lisa Jacobs</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="NCTDf8dNT5s">&nbsp; <div>Sigiswald Kuijken</div></a></li>
-                <!-- "This video contains content from nikitaventures music, who has blocked it from display on this website or application"
-                    <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Szu-ui-fnzs">&nbsp; <div>Nathan Milstein</div></a></li>
-                -->
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="1HSJufg7I1I">&nbsp; <div>Rachel Podger</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="AbZxSocrvvs">&nbsp; <div>Veronique De Raedemaeker</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KWcGsRKbe-U">&nbsp; <div>Virginie Robilliard</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="mTTT5_oX69Q">&nbsp; <div>Christian Tetzlaff</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="59KFAY_qf-Q">&nbsp; <div>Rachell Ellen Wong</div></a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item d-flex" href="#" data-yt="mg9kT7XiLoU">
+                        <img src="svg/violin.svg">
+                        <div class="flex-grow-1" style="text-align: right;"><span class="c"></span>Amandine Beyer</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Ilb3no_cwnI">
+                        <div><span class="c">&check;</span>Veronika Eberle</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="r67BASAgP5Q">
+                        <div><span class="c">&check;</span>Isabelle Faust</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="WZ0wkyRBlqo">
+                        <div><span class="c">&check;</span>Julia Fischer</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KgSKvOAJMb8">
+                        <div><span class="c">&check;</span>Midori Gotō</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="ngjEVKxQCWs">
+                        <div><span class="c">&check;</span>Hilary Hahn</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="XkfsGCIiHb4">
+                        <div><span class="c">&check;</span>Bella Hristova </div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="dyAcRqpjbqU">
+                        <div><span class="c">&check;</span>Lisa Jacobs</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="NCTDf8dNT5s">
+                        <div><span class="c">&check;</span>Sigiswald Kuijken</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="1HSJufg7I1I">
+                        <div><span class="c">&check;</span>Rachel Podger</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="AbZxSocrvvs">
+                        <div><span class="c">&check;</span>Veronique De Raedemaeker</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KWcGsRKbe-U">
+                        <div><span class="c">&check;</span>Virginie Robilliard</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="mTTT5_oX69Q">
+                        <div><span class="c">&check;</span>Christian Tetzlaff</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="59KFAY_qf-Q">
+                        <div><span class="c">&check;</span>Rachell Ellen Wong</div>
+                    </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="maDgVXxV1b0">
-                        <span style="font-size:12px; top: -0.55rem; left:-.6rem; position: relative;">*big*</span>
-                        <img style="top: -0.55rem; left:-1rem; position: relative;" src="svg/violin.svg">
-                        <div>Florentin Ginot</div>
+                        <span style="font-size:10px; font-weight: bold; top: -0.55rem; left:-.6rem; position: relative; background-color: transparent">*big*</span>
+                        <img style="top: -0.55rem; left:-1.6rem; position: relative;" src="svg/violin.svg">
+                        <div><span class="c">&check;</span>Florentin Ginot</div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="lxZqC_J0C74"><img src="svg/guitar.svg" style="top: -0.5rem; position: relative;">
-                        <div>Petra Poláčková</div>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="lxZqC_J0C74">
+                        <img src="svg/guitar.svg" style="top: -0.5rem; position: relative;">
+                        <div><span class="c">&check;</span>Petra Poláčková</div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Jcy7E4uHYK8">&nbsp; <div>Raphaella Smits</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="oxWq93mlAyc">&nbsp; <div>Andrea De Vitis</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Vslz1tDsaWw">&nbsp; <div>Moi</div></a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Jcy7E4uHYK8">
+                        <div><span class="c">&check;</span>Raphaella Smits</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="oxWq93mlAyc">
+                        <div><span class="c">&check;</span>Andrea De Vitis</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Vslz1tDsaWw">
+                        <div><span class="c">&check;</span>Moi</div>
+                    </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="bKIPJqqH--Q"><img id="keyboard" style="top: -0.2rem; position: relative;"
-                            src="svg/keyboard.svg">
-                        <div>Martin Baker</div>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="bKIPJqqH--Q">
+                        <img id="keyboard" style="top: -0.2rem; position: relative;" src="svg/keyboard.svg">
+                        <div><span class="c">&check;</span>Martin Baker</div>
                     </a>
                 </li>
-                <!-- no embedding :(
-                -->
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="SzxzLtwK-eo">&nbsp; <div>Chiara Massini</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="JETARLGbUJo">&nbsp; <div>Genzoh Takehisa</div></a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KHwsHXtVWks"><img src="svg/harp.svg" style="top: -0.5rem; position: relative;">
-                        <div>Anneleen Lenaerts</div>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="SzxzLtwK-eo">
+                        <div><span class="c">&check;</span>Chiara Massini</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="JETARLGbUJo">
+                        <div><span class="c">&check;</span>Genzoh Takehisa</div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="P93o202UJRs"><img src="svg/flute.svg" style="top: -0.5rem; position: relative;">
-                        <div>Marta Femenía</div>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KHwsHXtVWks">
+                        <img src="svg/harp.svg" style="top: -0.5rem; position: relative;">
+                        <div><span class="c">&check;</span>Anneleen Lenaerts</div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w"><img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
-                        <div>Mika Stoltzman</div>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="P93o202UJRs">
+                        <img src="svg/flute.svg" style="top: -0.5rem; position: relative;">
+                        <div><span class="c">&check;</span>Marta Femenía</div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="X5-F_w-rX4k">&nbsp; <div>Von Hansen</div></a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk">&nbsp; <div>Yun Park</div></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a id="home" class="dropdown-item d-flex justify-content-between" href="#">
-                        &nbsp;<div style="font-size:20pt; top: -0.5rem; position: relative;">🏠<!--∅--></div>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w">
+                        <img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
+                        <div><span class="c">&check;</span>Mika Stoltzman</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="X5-F_w-rX4k">
+                        <div><span class="c">&check;</span>Von Hansen</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk">
+                        <div><span class="c">&check;</span>Yun Park</div>
                     </a></li>
             </ul>
         </span>
@@ -419,9 +462,12 @@
         Ω.boot()
         const about = new Ω.About()
 
+        document.querySelectorAll(' #videos-menu span.c').forEach((e) => e.innerHTML = "")
         if (videoId) {
+            document.querySelector(` #videos-menu a[data-yt="${videoId}"] span.c`).innerHTML = "&#10004;&nbsp;"
             document.getElementById('gridContainerCol').classList.add('push2right')
         } else {
+            document.querySelector(' #videos-menu a[data-yt=""] span.c').innerHTML = "&#10004;&nbsp;"
             document.getElementById('body').style['background-color'] = 'transparent'
         }
 

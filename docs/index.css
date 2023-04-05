@@ -295,7 +295,6 @@ li a.dropdown-item {
 li a.dropdown-item img {
   height: 40px;
   overflow-y: visible;
-  float: left;
 }
 
 li a.dropdown-item img#keyboard {
@@ -305,6 +304,11 @@ li a.dropdown-item img#keyboard {
 
 li a.dropdown-item div {
   margin-left: 1rem;
+}
+
+li a.dropdown-item div:last-child {
+  text-align: right;
+  width:100%;
 }
 
 .d-flex[style*="display:none"],
