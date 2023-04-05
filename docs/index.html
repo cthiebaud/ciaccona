@@ -69,7 +69,7 @@
     <script src="prism.js"></script>
 
     <script>
-        const ver = "v0.3.4"
+        const ver = "v0.3.5"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -77,12 +77,6 @@
         // hack waiting for Genzoh Takehisa to make his video embeddable
         if (videoId === "ze_QPWuyZLo") {
             videoId = "JETARLGbUJo"
-        }
-        if (videoId === "mg9kT7XiLoU") {
-            document.querySelector('head > meta[name="twitter:image"]').content = 
-            document.querySelector('head > meta[property="og:image:url"]').content = 
-            document.querySelector('head > meta[property="og:image"]').content = 'https://ciaccona.cthiebaud.com/screenshots/@Amandine_Beyer.jpg'
-            
         }
     </script>
 
@@ -125,7 +119,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index.css?=v0.3.4" rel="stylesheet">
+    <link href="index.css?=v0.3.5" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
