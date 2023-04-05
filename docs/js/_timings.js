@@ -27,6 +27,7 @@ const mapVideoId2ArtistName = {
     /* Smits */  Jcy7E4uHYK8: "Raphaella Smits",
     /* Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
     /* Takehisa */  JETARLGbUJo: "Genzoh Takehisa",  /* original: ze_QPWuyZLo */
+    /* Tetzlaff */  mTTT5_oX69Q: "Christian Tetzlaff",
     /* Thiebaud */  Vslz1tDsaWw: "Christophe Thiebaud",
     /* Wong */  _59KFAY_qf_Q: "Rachell_Ellen Wong",
 }

@@ -84,7 +84,7 @@ a {
   height: 6rem;
   padding: 0.4rem;
   border-style: dashed solid;
-  border-width: 2px !important;
+  border-width: 2.5px !important;
 }
 
 .grid-brick .brick {
@@ -108,7 +108,7 @@ a {
 
 .grid-brick.hasScore.selected .score {
   border-radius: 0 !important;
-  background-color: #ffffffe0 !important;
+  background-color: #ffffffc0 !important; 
   width: 100% !important;
   overflow-x: scroll;
 }
