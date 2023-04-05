@@ -11,6 +11,7 @@ const mapVideoId2ArtistName = {
     /* Eberle */  Ilb3no_cwnI: "Veronika Eberle",
     /* Faust */  r67BASAgP5Q: "Isabelle Faust",
     /* Femenía */  P93o202UJRs: "Marta Femenía",
+    /* Fischer */ WZ0wkyRBlqo: "Julia Fischer",
     /* Ginot */  maDgVXxV1b0: "Florentin Ginot",
     /* Gotō */  KgSKvOAJMb8: "Midori Gotō",
     /* Hahn */  ngjEVKxQCWs: "Hilary Hahn",

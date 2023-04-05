@@ -251,7 +251,7 @@ export default function createPlayer(selector, timings) {
 
             setBrickClickEvent(_plyer, timings)
 
-            function closeInitializationCallback() {
+            function closeInitializationCallback( closecloseCallback ) {
 
                 INIT_EVENT_HANDLERS()
 
@@ -262,6 +262,8 @@ export default function createPlayer(selector, timings) {
                 }
                 console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
                 _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
+
+                if (closecloseCallback) closecloseCallback()
 
             }
 
