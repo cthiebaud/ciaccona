@@ -172,7 +172,7 @@ const setBrickClickEvent = (_plyer, timings) => {
     document.querySelectorAll(".brick.hasScore").forEach((b) => b.addEventListener('click', handleBrickClick, true))
 }
 
-export default function createPlayer(selector, timings) {
+export default function createPlayer(selector, timings, ignore_all_events) {
     const thisFunctionName = "createPlayer"
 
     return new Promise((resolve, reject) => {
@@ -253,16 +253,17 @@ export default function createPlayer(selector, timings) {
 
             function closeInitializationCallback(closecloseCallback) {
 
-                INIT_EVENT_HANDLERS()
+                if (!ignore_all_events) {
+                    INIT_EVENT_HANDLERS()
 
-                let theStartingBar = timings.bars[0]
-                let theLastStartingBarIndex = timings.getStartBarOfLastSelectedVariation()
-                if (theLastStartingBarIndex != null) {
-                    theStartingBar = timings.bars[theLastStartingBarIndex]
+                    let theStartingBar = timings.bars[0]
+                    let theLastStartingBarIndex = timings.getStartBarOfLastSelectedVariation()
+                    if (theLastStartingBarIndex != null) {
+                        theStartingBar = timings.bars[theLastStartingBarIndex]
+                    }
+                    console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
+                    _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
                 }
-                console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
-                _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
-
                 if (closecloseCallback) closecloseCallback()
 
             }

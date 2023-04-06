@@ -73,6 +73,7 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let videoId = params.yt ?? undefined
+        let no_plyr_event = params.no_plyr_event ?? undefined
         // hack waiting for Genzoh Takehisa to make his video embeddable
         if (videoId === "ze_QPWuyZLo") {
             videoId = "JETARLGbUJo"
@@ -272,6 +273,9 @@
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="lxZqC_J0C74">
                         <img src="svg/guitar.svg" style="top: -0.5rem; position: relative;">
                         <div><span class="c">&check;</span>Petra Poláčková</div>
+                    </a></li>
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Kxn0ySsHDRA">
+                        <div><span class="c">&check;</span>Miguel Rincón</div>
                     </a></li>
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Jcy7E4uHYK8">
                         <div><span class="c">&check;</span>Raphaella Smits</div>
@@ -545,7 +549,7 @@
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId) // big buffer of everything that needs to be done before creating the player
 
-                    return createPlayer(selectorPlyr, result).then((result) => {
+                    return createPlayer(selectorPlyr, result, no_plyr_event).then((result) => {
                         Ω.afterCreatePlayer() // big buffer of everything that needs to be done AFTER player is ready
                         return result
                     }).catch((error) => {

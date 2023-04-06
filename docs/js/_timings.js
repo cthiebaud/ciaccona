@@ -25,6 +25,7 @@ const mapVideoId2ArtistName = {
     /* Park */  _5ITydjLkYUk: "Yun Park",
     /* Podger */  _1HSJufg7I1I: "Rachel Podger",
     /* Poláčková */  lxZqC_J0C74: "Petra Poláčková",
+    /* Rincón */ Kxn0ySsHDRA: "Miguel Rincón",
     /* Robilliard */  KWcGsRKbe_U: "Virginie Robilliard",
     /* Smits */  Jcy7E4uHYK8: "Raphaella Smits",
     /* Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
