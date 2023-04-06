@@ -1,12 +1,10 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
+/*
 import IsotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
+import isotopeFitColumns from 'https://cdn.jsdelivr.net/npm/isotope-fit-columns@1.1.4/+esm'
+*/
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-
-/* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
-Promise.onPossiblyUnhandledRejection(function(error){
-    throw error;
-}); */
 import { shuffleArray } from "/js/_utils.js"
 import { index2duration } from "/js/_timings.js"
 
@@ -139,7 +137,7 @@ export default function createColoredBadges(video_Id) {
         const $bricksTemporaryContainer = $("<span>");
         const templateForTheme =
             `
-<div id="gb-ciaccona" class="grid-brick">
+<div id="gb-ciaccona" data-sort="-1" class="grid-brick">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover;      background-position-y: center; height: 100%;">
         <div class="magnificent-card p-2" style="backdrop-filter: blur(1px);">
             &nbsp;Ciaccona&nbsp;
@@ -150,7 +148,7 @@ export default function createColoredBadges(video_Id) {
 
         const templateForArtist =
             `
-<div id="gb-artist" class="grid-brick artist">
+<div id="gb-artist" data-sort="-2" class="grid-brick artist">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
         <div class="p-2" >
             <span class="name" style="color: #d0d0d0">?</span>
@@ -169,6 +167,7 @@ export default function createColoredBadges(video_Id) {
 </div>`
         $bricksTemporaryContainer.append($(templateForArtist));
 
+        const twoZeroPad = (num) => String(num).padStart(2, '0')
         let i = 0;
         let barFrom = 0
         _colors_.forEach(function (c) {
@@ -193,7 +192,7 @@ export default function createColoredBadges(video_Id) {
 
             const templateVariations =
                 `
-<div id="gb${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor};"> <!-- background-color: ${c.p_rgb_original}; -->
+<div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor};"> <!-- background-color: ${c.p_rgb_original}; -->
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden;" data-width="${(_widths_[i].w) - 120}">
 
@@ -208,12 +207,14 @@ export default function createColoredBadges(video_Id) {
                 ${tonality}
             </span>
         </div>
-        <div class="flex-grow-1"></div>
-        <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
-            ${warning}
-        </div>
-        <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
-            ${barFrom + 1}<br\>${barTo}
+        <!-- div class="flex-grow-1"></!-->
+        
+        <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
+            <div class="pt-1">${barFrom + 1}</div>
+            <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
+                ${warning}
+            </div>
+            <div class="pb-1">${barTo}</div>
         </div>
         <div class="fw-bold text-center" style="${i == _colors_.length - 1 ? "display:none;" : ""}margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
             ${i == 0 ? "" : i}
@@ -230,7 +231,7 @@ export default function createColoredBadges(video_Id) {
 
         const oblivion =
             `
-<div id="gb-bwv1004" class="grid-brick">
+<div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center" style="border-radius: 0; background-color: black">
         <div class="glowing_bubble_siegel">
             <div class="magnificent-card p-2" style="backdrop-filter: blur(.2px);">
@@ -245,19 +246,9 @@ export default function createColoredBadges(video_Id) {
         const $bricks = $bricksTemporaryContainer.children()
 
         let $gridById = $("#grid")
-        $gridById.empty().append($bricks)
+        $gridById.children('.grid-brick').remove()
+        $gridById.append($bricks)
 
-        const iso = new IsotopeLayout('#grid', {
-            itemSelector: ".grid-brick",
-            filter: ':not(.artist)',
-            packery: {
-                gutter: 0,
-            }
-        })
-        iso.on('layoutComplete', function () {
-            console.log("isotope layout complete");
-        })
-
-        resolve({ key: thisFunctionName, value: { isotope: iso } })
+        resolve({ key: thisFunctionName, value: { iso: undefined} })
     })
 }
