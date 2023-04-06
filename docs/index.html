@@ -464,9 +464,11 @@
 
         document.querySelectorAll(' #videos-menu span.c').forEach((e) => e.innerHTML = "")
         if (videoId) {
+            document.querySelector(` #videos-menu a[data-yt="${videoId}"]`).classList.add('disabled')
             document.querySelector(` #videos-menu a[data-yt="${videoId}"] span.c`).innerHTML = "&#10004;&nbsp;"
             document.getElementById('gridContainerCol').classList.add('push2right')
         } else {
+            document.querySelector(` #videos-menu a[data-yt=""]`).classList.add('disabled')
             document.querySelector(' #videos-menu a[data-yt=""] span.c').innerHTML = "&#10004;&nbsp;"
             document.getElementById('body').style['background-color'] = 'transparent'
         }
@@ -520,6 +522,7 @@
                 createTimings(videoId).then((result) => {
 
                     Ω.setArtist(result.videoID, result.artist, result.trueURL)
+                    document.querySelector('head title').innerHTML = `Ciaccona by ${result.artist}`
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId)
 
