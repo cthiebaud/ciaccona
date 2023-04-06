@@ -51,7 +51,7 @@ function validateVideoIdAndGetInterestingData(videoId) {
     }
     const artistNoSpace = artist.replace(/\s/gi, '')
     const artistNoSpaceLowerCase = artistNoSpace.toLowerCase()
-    const artistNoSpaceLowerCaseNoDiacritics = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
+    const artistNoSpaceLowerCaseNoDiacritics = artistNoSpaceLowerCase.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
 
     return {
         videoID: videoId,
