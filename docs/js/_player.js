@@ -31,7 +31,7 @@ function scrollScore(selector, timings, variation, currentTime) {
     if (scrollLeft < 0 || objWidth - scoWidth <= scrollLeft) return -1
 
     sco.scrollLeft = scrollLeft
-    
+
     return scrollLeft
 }
 
@@ -45,11 +45,11 @@ function selectAndScrollToVariation(source, variation, options) {
     }
 
     jquery('.grid-brick').removeClass('selected')
-    document.querySelector(selector).classList.add('selected')
+    document.querySelector(selector)?.classList.add('selected')
 
     const scrollToElement = document.querySelector(scrollToSelector)
     console.log(source, selector, 'to scroll into view', options)
-    scrollToElement.scrollIntoView(options)
+    scrollToElement?.scrollIntoView(options)
 }
 
 function showPlay(currentTime, timings) {
@@ -251,7 +251,7 @@ export default function createPlayer(selector, timings) {
 
             setBrickClickEvent(_plyer, timings)
 
-            function closeInitializationCallback( closecloseCallback ) {
+            function closeInitializationCallback(closecloseCallback) {
 
                 INIT_EVENT_HANDLERS()
 

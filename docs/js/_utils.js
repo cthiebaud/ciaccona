@@ -34,12 +34,6 @@ function shuffleArray(array) {
     return array;
 }
 
-// https://stackoverflow.com/a/41621478/1070215
-function getFunctionCallerName() {
-    // gets the text between whitespace for second part of stacktrace
-    return (new Error()).stack.match(/at (\S+)/g)[1].slice(3);
-}
-
 // https://code.tutsplus.com/the-binary-search-algorithm-in-javascript--cms-30003t
 function binaryRangeSearch(value, array, getValue) {
     if (value == null) return undefined

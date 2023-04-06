@@ -243,12 +243,12 @@ export default function createColoredBadges(video_Id) {
 `
         $bricksTemporaryContainer.append($(oblivion))
 
-        const $bricks = $bricksTemporaryContainer.children()
+        const $bricks = $bricksTemporaryContainer.children().detach()
 
         let $gridById = $("#grid")
         $gridById.children('.grid-brick').remove()
         $gridById.append($bricks)
 
-        resolve({ key: thisFunctionName, value: { iso: undefined} })
+        resolve({ key: thisFunctionName, value: { iso: undefined } })
     })
 }
