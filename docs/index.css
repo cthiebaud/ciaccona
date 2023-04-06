@@ -5,6 +5,7 @@ body {
   /* custom properties */
   height: calc(var(--vh, 1vh) * 100);
   background-color: black;
+  overscroll-behavior: none;
 }
 
 body.no-vid,
