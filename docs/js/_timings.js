@@ -32,7 +32,7 @@ const mapVideoId2ArtistName = {
     /* Takehisa */  JETARLGbUJo: "Genzoh Takehisa",  /* original: ze_QPWuyZLo */
     /* Tetzlaff */  mTTT5_oX69Q: "Christian Tetzlaff",
     /* Thiebaud */  Vslz1tDsaWw: "Christophe Thiebaud",
-    /* Wong */  _59KFAY_qf_Q: "Rachell_Ellen Wong",
+    /* Wong */  _59KFAY_qf_Q: "Rachell Ellen Wong",
 }
 
 const variationsCount = 1 + 32 + 1
@@ -42,6 +42,14 @@ function validateVideoIdAndGetInterestingData(videoId) {
     if (videoId == null) {
         return undefined;
     }
+    /*
+    for (const a in mapVideoId2ArtistName) {
+        const artistNoSpace = mapVideoId2ArtistName[a].replace(/\s/gi, '')
+        const artistNoSpaceLowerCase = artistNoSpace.toLowerCase()
+        const artistNoSpaceLowerCaseNoDiacritics = artistNoSpaceLowerCase.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
+            
+        console.log(artistNoSpaceLowerCaseNoDiacritics)
+    } */
 
     const videoIdNoHyphen = videoId.replace(/-/gi, '_')
     const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
@@ -207,6 +215,7 @@ function createTimings(videoId) {
 }
 
 export {
+    mapVideoId2ArtistName, 
     variationIndex2BarCount as index2duration,
     createTimings,
     validateVideoIdAndGetInterestingData as validateVideoId
