@@ -49,13 +49,17 @@ function validateVideoIdAndGetInterestingData(videoId) {
     if (artist == null) {
         return undefined
     }
+    const artistNoSpace = artist.replace(/\s/gi, '')
+    const artistNoSpaceLowerCase = artistNoSpace.toLowerCase()
+    const artistNoSpaceLowerCaseNoDiacritics = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
 
     return {
         videoID: videoId,
         videoIdNoHyphenNoStartingNumber: videoIdNoHyphenNoStartingNumber,
         artist: artist,
-        url: `timings/${artist.replace(/\s/gi, '')}-${videoId}.js`,
+        url: `timings/${artistNoSpace}-${videoId}.js`,
         yt: `https://youtu.be/${videoId}`,
+        social: `/video/${artistNoSpaceLowerCaseNoDiacritics}.html`,
     }
 }
 

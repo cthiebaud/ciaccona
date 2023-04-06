@@ -544,7 +544,7 @@
                 createTimings(videoId).then((result) => {
 
                     // we have more info bout the artist
-                    Ω.setArtist(result.videoID, result.artist, result.trueURL)
+                    Ω.setArtist(result)
                     document.querySelector('head title').innerHTML = `Ciaccona by ${result.artist}`
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId) // big buffer of everything that needs to be done before creating the player

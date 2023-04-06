@@ -87,11 +87,15 @@ const Ω = {
         })
     },
 
-    setArtist: (id, artist, trueURL) => {
-        $('.artist .name').html(artist === "Christophe Thiebaud" ? "Moi" : artist)
+    setArtist: (qwe) => {
+        $('.artist .name').html(qwe.artist === "Christophe Thiebaud" ? "Moi" : qwe.artist)
         $('.artist .url').attr({
-            href: trueURL ? trueURL : `https://youtu.be/${id}`,
-            target: id
+            href: qwe.trueURL ? qwe.trueURL : `https://youtu.be/${qwe.videoID}`,
+            target: qwe.id
+        })
+        const social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com${qwe.social}`
+        $('.artist a#social').attr({
+            href: social
         })
         $('.artist, .artist .brick').css({ visibility: "visible" })
     },
