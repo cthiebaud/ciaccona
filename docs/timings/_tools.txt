@@ -18,3 +18,6 @@ const XXXXXXXX = {
 0$1,
 
 \s+"#": "*\d+"*,\n\s+"Label": ".*",\n\s+"Interval": ".*",\n\s+"Total": ".*",\n
+
+
+for file in _*; do mv $file $(echo $file | sed -e 's/^.//'); done
