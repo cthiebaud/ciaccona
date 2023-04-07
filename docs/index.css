@@ -299,6 +299,7 @@ iframe {
 
 li a.dropdown-item {
   max-height: 30px;
+  padding-right: 0.3rem;
 }
 
 li a.dropdown-item img {
@@ -328,4 +329,12 @@ li a.dropdown-item div:last-child {
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
   background: transparent !important;
+}
+
+span.d {
+  color: #6c757d!important;
+  font-family: var(--bs-font-monospace)!important;
+  text-align: right;
+  font-size: 10px;
+  margin-left: .3rem;
 }

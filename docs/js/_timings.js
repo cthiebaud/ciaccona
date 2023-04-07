@@ -118,7 +118,6 @@ class Timings {
         }
     }
 
-
     #initializeBarObject = (bar, barIndex) => {
         if (bar == null || barIndex == null) {
             throw new Error(bar, typeof bar, barIndex, typeof barIndex)
@@ -186,6 +185,17 @@ class Timings {
         this.loadStartBarOfLastSelectedVariation()
 
         this.bars.forEach((bar, index) => this.#initializeBarObject(bar, index))
+
+        // get duration of first variation 
+        console.log('var 0', this.bars[0].m.format())
+        const lastvarbar = this.codec.variation2bar(33)
+        console.log('var 0', this.bars[0].m.format(), 'last var bar', lastvarbar, this.bars[lastvarbar].m.format())
+        // from 0 to 256 bar :
+        const from0to256 = this.bars[lastvarbar].m.diff(this.bars[0].m)
+        const lastD = 3*(from0to256/256)
+        const duration = moment.duration(from0to256 + lastD)
+        this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
+        console.log(this.lengthAsAString)
     }
 }
 
