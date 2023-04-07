@@ -3,6 +3,7 @@ https://csvjson.com/csv2json
 https://onlinepngtools.com/create-transparent-png
 https://realfavicongenerator.net/
 https://hexcolorpedia.com/
+https://www.onlinemictest.com/tuners/pitch-detector/
 
 const XXXXXXXX = {
     offset: { minutes: 0, seconds: 0 },

@@ -4,35 +4,38 @@ import { getCookie, setCookie, removeCookie } from "/js/_utils.js"
 import { binaryRangeSearch } from "/js/_utils.js"
 
 const mapVideoId2ArtistName = {
-    /* Baker */  bKIPJqqH__Q: "Martin Baker",
-    /* Beyer */  mg9kT7XiLoU: "Amandine Beyer",
-    /* De Raedemaeker */  AbZxSocrvvs: "Veronique De Raedemaeker",
-    /* De Vitis */  oxWq93mlAyc: "Andrea De Vitis",
-    /* Eberle */  Ilb3no_cwnI: "Veronika Eberle",
-    /* Faust */  r67BASAgP5Q: "Isabelle Faust",
-    /* Femenía */  P93o202UJRs: "Marta Femenía",
-    /* Fischer */ WZ0wkyRBlqo: "Julia Fischer",
-    /* Ginot */  maDgVXxV1b0: "Florentin Ginot",
-    /* Gotō */  KgSKvOAJMb8: "Midori Gotō",
-    /* Hahn */  ngjEVKxQCWs: "Hilary Hahn",
-    /* Hansen */  X5_F_w_rX4k: "Von Hansen",
-    /* Hristova */  XkfsGCIiHb4: "Bella Hristova",
-    /* Jacobs */  dyAcRqpjbqU: "Lisa Jacobs",
-    /* Kuijken */  NCTDf8dNT5s: "Sigiswald Kuijken",
-    /* Lenaerts */  KHwsHXtVWks: "Anneleen Lenaerts",
-    /* Massini */  SzxzLtwK_eo: "Chiara Massini",
-    /* Milstein */ Szu_ui_fnzs: "Nathan Milstein",
-    /* Park */  _5ITydjLkYUk: "Yun Park",
-    /* Podger */  _1HSJufg7I1I: "Rachel Podger",
-    /* Poláčková */  lxZqC_J0C74: "Petra Poláčková",
-    /* Rincón */ Kxn0ySsHDRA: "Miguel Rincón",
-    /* Robilliard */  KWcGsRKbe_U: "Virginie Robilliard",
-    /* Smits */  Jcy7E4uHYK8: "Raphaella Smits",
-    /* Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
-    /* Takehisa */  JETARLGbUJo: "Genzoh Takehisa",  /* original: ze_QPWuyZLo */
-    /* Tetzlaff */  mTTT5_oX69Q: "Christian Tetzlaff",
-    /* Thiebaud */  Vslz1tDsaWw: "Christophe Thiebaud",
-    /* Wong */  _59KFAY_qf_Q: "Rachell Ellen Wong",
+    /* 274.4  Wong */  _59KFAY_qf_Q: "Rachell Ellen Wong",
+    /* 274.7  Beyer d4 */  mg9kT7XiLoU: "Amandine Beyer",
+    /* 276.4  Smits 138.2 */  Jcy7E4uHYK8: "Raphaella Smits",
+    /* 277.2  Podger */  _1HSJufg7I1I: "Rachel Podger",
+    /* 278.0  Rincón 139.0 */ Kxn0ySsHDRA: "Miguel Rincón",
+    /* 281.4  Kuijken */  NCTDf8dNT5s: "Sigiswald Kuijken",
+    /* 286.8  Poláčková 71.7 */  lxZqC_J0C74: "Petra Poláčková",
+    /* 291.9  Tetzlaff */  mTTT5_oX69Q: "Christian Tetzlaff",
+    /* 292.8  Faust */  r67BASAgP5Q: "Isabelle Faust",
+    /* 293.0  Hahn */  ngjEVKxQCWs: "Hilary Hahn",
+    /* 293.3  Jacobs */  dyAcRqpjbqU: "Lisa Jacobs",
+    /* 293.8  Baker d3 146.9 */  bKIPJqqH__Q: "Martin Baker",
+    /* 294.4  De Vitis 73.6 */  oxWq93mlAyc: "Andrea De Vitis",
+    /* 294.4  Eberle */  Ilb3no_cwnI: "Veronika Eberle",
+    /* 294.4  Thiebaud 147.2 */  Vslz1tDsaWw: "Christophe Thiebaud",
+    /* 294.5  Hristova */  XkfsGCIiHb4: "Bella Hristova",
+    /* 294.8  Hansen 147.4 */  X5_F_w_rX4k: "Von Hansen",
+    /* 295.8  Femenía 590 */  P93o202UJRs: "Marta Femenía",
+    /* 295.3  Gotō */  KgSKvOAJMb8: "Midori Gotō",
+    /* 295.8  Fischer */ WZ0wkyRBlqo: "Julia Fischer",
+    /* 296.4  Park 148.2 */  _5ITydjLkYUk: "Yun Park",
+    /* 296.6  De Raedemaeker */  AbZxSocrvvs: "Veronique De Raedemaeker",
+    /* 296.8  Lenaerts 74.2 */  KHwsHXtVWks: "Anneleen Lenaerts",
+    /* 297.4  Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
+    /* 298.0  Robilliard */  KWcGsRKbe_U: "Virginie Robilliard",
+
+    /* 92.8  Takehisa G */  JETARLGbUJo: "Genzoh Takehisa",
+    /* 93.3  Massini G */  SzxzLtwK_eo: "Chiara Massini",
+    /* 98.4  Ginot G */  maDgVXxV1b0: "Florentin Ginot",
+
+    /* 98.4  Wasser G */  YzP6mkPVzm0: "Moran Wasser",
+
 }
 
 const variationsCount = 1 + 32 + 1
@@ -186,16 +189,18 @@ class Timings {
 
         this.bars.forEach((bar, index) => this.#initializeBarObject(bar, index))
 
-        // get duration of first variation 
-        console.log('var 0', this.bars[0].m.format())
-        const lastvarbar = this.codec.variation2bar(33)
-        console.log('var 0', this.bars[0].m.format(), 'last var bar', lastvarbar, this.bars[lastvarbar].m.format())
-        // from 0 to 256 bar :
-        const from0to256 = this.bars[lastvarbar].m.diff(this.bars[0].m)
-        const lastD = 3*(from0to256/256)
-        const duration = moment.duration(from0to256 + lastD)
-        this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
-        console.log(this.lengthAsAString)
+        if (256 <= this.bars.length) {
+            // get duration of first variation 
+            console.log('var 0', this.bars[0].m.format())
+            const lastvarbar = this.codec.variation2bar(33)
+            console.log('var 0', this.bars[0].m.format(), 'last var bar', lastvarbar, this.bars[lastvarbar].m.format())
+            // from 0 to 256 bar :
+            const from0to256 = this.bars[lastvarbar].m.diff(this.bars[0].m)
+            const lastD = 3 * (from0to256 / 256)
+            const duration = moment.duration(from0to256 + lastD)
+            this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
+            console.log(this.lengthAsAString)
+        }
     }
 }
 
@@ -225,7 +230,7 @@ function createTimings(videoId) {
 }
 
 export {
-    mapVideoId2ArtistName, 
+    mapVideoId2ArtistName,
     variationIndex2BarCount as index2duration,
     createTimings,
     validateVideoIdAndGetInterestingData as validateVideoId
