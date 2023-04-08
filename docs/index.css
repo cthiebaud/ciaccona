@@ -6,6 +6,12 @@ body {
   height: calc(var(--vh, 1vh) * 100);
   background-color: black;
   overscroll-behavior: none;
+  /*
+  background-image: url(svg/BachsiegelColorWheel.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent;
+  */
 }
 
 body.no-vid,
@@ -332,9 +338,9 @@ pre[class*="language-"] {
 }
 
 span.d {
-  color: #6c757d!important;
-  font-family: var(--bs-font-monospace)!important;
+  color: #6c757d !important;
+  font-family: var(--bs-font-monospace) !important;
   text-align: right;
   font-size: 10px;
-  margin-left: .3rem;
+  margin-left: 0.3rem;
 }
