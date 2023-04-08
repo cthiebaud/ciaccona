@@ -137,8 +137,9 @@ export default function createColoredBadges(video_Id) {
         const $bricksTemporaryContainer = $("<span>");
         const templateForTheme =
             `
-<div id="gb-ciaccona" data-sort="-1" class="grid-brick">
-    <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover;      background-position-y: center; height: 100%;">
+<div id="gb-ciaccona" data-sort="-1" class="grid-brick" >
+    <div class="d-flex brick align-items-center justify-content-center mb-3" >
+        <!-- style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; background-position-y: center; height: 100%;" -->
         <div class="magnificent-card p-2" style="backdrop-filter: blur(1px);">
             &nbsp;Ciaccona&nbsp;
         </div>
@@ -232,12 +233,11 @@ export default function createColoredBadges(video_Id) {
         const oblivion =
             `
 <div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
-    <div class="brick d-flex align-items-center justify-content-center" style="border-radius: 0; background-color: black">
-        <div class="glowing_bubble_siegel">
-            <div class="magnificent-card p-2" style="backdrop-filter: blur(.2px);">
-                &nbsp;BWV&nbsp;1004&nbsp;
-            </div>
-        </div>    
+    <!-- style="background-image: url(svg/facsimile.jpg);" -->
+    <div class="brick d-flex align-items-center justify-content-center">
+        <div class="magnificent-card p-2">
+            &nbsp;BWV&nbsp;1004&nbsp;
+        </div>
     </div>
 </div>
 `
