@@ -37,6 +37,8 @@ const mapVideoId2ArtistName = {
     /* ???  Wasser */  YzP6mkPVzm0: "Moran Wasser",
     /* ???  Ferschtman */  _17uCirXzs8Q: "Liza Ferschtman",
     /* ???  Osetinskaya */  AKMNFzKRTuc: "Polina Osetinskaya",
+    /* ???  Busch */  _ii7aPCQgHE: "Adolf Busch",
+    
 
 
 }
@@ -193,6 +195,7 @@ class Timings {
         this.bars.forEach((bar, index) => this.#initializeBarObject(bar, index))
 
         /*
+        */
         if (256 <= this.bars.length) {
             // get duration of first variation 
             console.log('var 0', this.bars[0].m.format())
@@ -205,7 +208,6 @@ class Timings {
             this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
             console.log(this.lengthAsAString)
         }
-        */
     }
 }
 
