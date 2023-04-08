@@ -4,6 +4,9 @@ https://onlinepngtools.com/create-transparent-png
 https://realfavicongenerator.net/
 https://hexcolorpedia.com/
 https://www.onlinemictest.com/tuners/pitch-detector/
+https://cards-dev.twitter.com/validator
+https://developers.facebook.com/tools/debug/
+https://www.linkedin.com/post-inspector/inspect
 
 const XXXXXXXX = {
     offset: { minutes: 0, seconds: 0 },
@@ -12,13 +15,11 @@ const XXXXXXXX = {
     bars: []
 }
 
-
 ^(\d),
 ^(\d\d),
 
 0$1,
 
 \s+"#": "*\d+"*,\n\s+"Label": ".*",\n\s+"Interval": ".*",\n\s+"Total": ".*",\n
-
 
 for file in _*; do mv $file $(echo $file | sed -e 's/^.//'); done
