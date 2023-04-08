@@ -221,7 +221,7 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                 feedbackOnCurrentTime('playing', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "nearest" })
             })
             _plyer.on('timeupdate', (event) => {
-                // console.log("Plyr timeupdate event")
+                // console.log("Plyr timeupdate event", event.detail.plyr.currentTime)
                 if (!_plyer.playing) {
                     // console.log("Plyr timeupdate event: do nothing when not playing")
                 } else {
@@ -263,6 +263,10 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                     }
                     console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
                     _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
+                } else {
+                    _plyer.on('timeupdate', (event) => {
+                        console.log("Plyr timeupdate event", event.detail.plyr.currentTime)
+                    })
                 }
                 if (closecloseCallback) closecloseCallback()
 

@@ -38,6 +38,7 @@ const mapVideoId2ArtistName = {
     /* ???  Ferschtman */  _17uCirXzs8Q: "Liza Ferschtman",
     /* ???  Osetinskaya */  AKMNFzKRTuc: "Polina Osetinskaya",
     /* ???  Busch */  _ii7aPCQgHE: "Adolf Busch",
+    /* ???  Leontchik */  BVBgKOLkYu8: "Michael Leontchik",
     
 
 
