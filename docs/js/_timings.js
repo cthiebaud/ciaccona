@@ -36,6 +36,7 @@ const mapVideoId2ArtistName = {
 
     /* ???  Wasser */  YzP6mkPVzm0: "Moran Wasser",
     /* ???  Ferschtman */  _17uCirXzs8Q: "Liza Ferschtman",
+    /* ???  Osetinskaya */  AKMNFzKRTuc: "Polina Osetinskaya",
 
 
 }
@@ -203,7 +204,8 @@ class Timings {
             const duration = moment.duration(from0to256 + lastD)
             this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
             console.log(this.lengthAsAString)
-        }*/
+        }
+        */
     }
 }
 
