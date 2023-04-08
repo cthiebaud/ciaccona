@@ -5,7 +5,7 @@ import { binaryRangeSearch } from "/js/_utils.js"
 
 const mapVideoId2ArtistName = {
     /* 274.4  Wong */  _59KFAY_qf_Q: "Rachell Ellen Wong",
-    /* 274.7  Beyer d4 */  mg9kT7XiLoU: "Amandine Beyer",
+    /* 274.7  Beyer _6m0d3WtdJ3Q  */ mg9kT7XiLoU: "Amandine Beyer",
     /* 276.4  Smits 138.2 */  Jcy7E4uHYK8: "Raphaella Smits",
     /* 277.2  Podger */  _1HSJufg7I1I: "Rachel Podger",
     /* 278.0  Rincón 139.0 */ Kxn0ySsHDRA: "Miguel Rincón",
@@ -15,7 +15,7 @@ const mapVideoId2ArtistName = {
     /* 292.8  Faust */  r67BASAgP5Q: "Isabelle Faust",
     /* 293.0  Hahn */  ngjEVKxQCWs: "Hilary Hahn",
     /* 293.3  Jacobs */  dyAcRqpjbqU: "Lisa Jacobs",
-    /* 293.8  Baker d3 146.9 */  bKIPJqqH__Q: "Martin Baker",
+    /* 293.8  Baker 146.9 */  bKIPJqqH__Q: "Martin Baker",
     /* 294.4  De Vitis 73.6 */  oxWq93mlAyc: "Andrea De Vitis",
     /* 294.4  Eberle */  Ilb3no_cwnI: "Veronika Eberle",
     /* 294.4  Thiebaud 147.2 */  Vslz1tDsaWw: "Christophe Thiebaud",
@@ -34,7 +34,9 @@ const mapVideoId2ArtistName = {
     /* 93.3  Massini G */  SzxzLtwK_eo: "Chiara Massini",
     /* 98.4  Ginot G */  maDgVXxV1b0: "Florentin Ginot",
 
-    /* 98.4  Wasser G */  YzP6mkPVzm0: "Moran Wasser",
+    /* ???  Wasser */  YzP6mkPVzm0: "Moran Wasser",
+    /* ???  Ferschtman */  _17uCirXzs8Q: "Liza Ferschtman",
+
 
 }
 
@@ -189,6 +191,7 @@ class Timings {
 
         this.bars.forEach((bar, index) => this.#initializeBarObject(bar, index))
 
+        /*
         if (256 <= this.bars.length) {
             // get duration of first variation 
             console.log('var 0', this.bars[0].m.format())
@@ -200,7 +203,7 @@ class Timings {
             const duration = moment.duration(from0to256 + lastD)
             this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
             console.log(this.lengthAsAString)
-        }
+        }*/
     }
 }
 
@@ -211,6 +214,8 @@ function createTimings(videoId) {
             reject(`no artist associated with videoId: < ${videoId} >`)
             return
         }
+
+        console.log('# artists', Object.keys(mapVideoId2ArtistName).length)
 
         console.log('script loading', interestingData.url)
         jquery.ajax({
