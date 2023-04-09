@@ -23,7 +23,7 @@ const Ω = {
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
 
-                $("code#artists").load('/screenshots/_credits.yaml', function (response, status, xhr) {
+                $("code#artists").load('/_artists.yaml', function (response, status, xhr) {
                     /*
                     const qwe = jsYaml.load(response)
                     // console.log(qwe)
