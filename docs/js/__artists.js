@@ -2,6 +2,7 @@ import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
 
+const meterDay = moment('Apr 8, 2023')
 class Artist {
     constructor(a) {
         lodash.merge(this, a)
@@ -20,6 +21,11 @@ class Artist {
         const videoIdNoHyphen = videoId.replace(/-/gi, '_')
         const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
         vid.javascriptizedId = videoIdNoHyphenNoStartingNumber
+
+        const started = moment(vid.published)
+        const diff = meterDay.diff(started)
+        const durationInMonths = moment.duration(diff).asMonths()
+        vid.viewPerMonth =  Math.floor(vid.views / durationInMonths)
     }
 }
 
@@ -31,8 +37,8 @@ class Artists {
     dump = () => {
 
         this.artists.forEach((a) => {
-            // console.log(`'${a['▶'].id}', `)
-            console.log(a.fullnameNoSpaceLowercaseNoDiacritics)
+            console.log(`'${a['▶'].id}', `)
+            // console.log(a.fullnameNoSpaceLowercaseNoDiacritics)
         })
     }
     addArtist = (a) => {
@@ -86,7 +92,7 @@ function loadArtists() {
             console.log("script loading error", urlArtistsYAML, jqXHR, textStatus, error);
             reject(error)
         }).always(function () {
-            artists.dump()
+            // artists.dump()
         })
     })
 }
