@@ -68,56 +68,51 @@
     <script src="prism.js"></script>
 
     <script>
-        const validVideoIds = [
-            
-            'Vslz1tDsaWw', /* moi */
-
-            '_ii7aPCQgHE',
-            '17uCirXzs8Q',
-            '1HSJufg7I1I',
-            '59KFAY_qf-Q',
-            '5ITydjLkYUk',
-            'AbZxSocrvvs',
-            'AKMNFzKRTuc',
-            'bKIPJqqH--Q',
-            'BVBgKOLkYu8',
-            'BYg7Di8CH9w',
-            'dyAcRqpjbqU',
-            'Ilb3no_cwnI',
-            'Jcy7E4uHYK8',
-            'KgSKvOAJMb8',
-            'KHwsHXtVWks',
-            'KWcGsRKbe-U',
-            'Kxn0ySsHDRA',
-            'lxZqC_J0C74',
-            'maDgVXxV1b0',
-            'mg9kT7XiLoU',
-            'mTTT5_oX69Q',
-            'NCTDf8dNT5s',
-            'ngjEVKxQCWs',
-            'oxWq93mlAyc',
-            'P93o202UJRs',
-            'r67BASAgP5Q',
-            'SzxzLtwK-eo',
-            'WZ0wkyRBlqo',
-            'X5-F_w-rX4k',
-            'XkfsGCIiHb4',
-            'YzP6mkPVzm0',
-            /* 'ze_QPWuyZLo', */ 'JETARLGbUJo', 
+        const validFullamesNoSpaceLowercaseNoDiacritics = [
+            'amandinebeyer',
+            'adolfbusch',
+            'andreadevitis',
+            'anneleenlenaerts',
+            'bellahristova',
+            'chiaramassini',
+            'christiantetzlaff',
+            'florentinginot',
+            'genzohtakehisa',
+            'hilaryhahn',
+            'isabellefaust',
+            'juliafischer',
+            'lisajacobs',
+            'lizaferschtman',
+            'martafemenia',
+            'martinbaker',
+            'michaelleontchik',
+            'midorigoto',
+            'miguelrincon',
+            'mikastoltzman',
+            'moranwasser',
+            'polinaosetinskaya',
+            'petrapolackova',
+            'rachelpodger',
+            'rachellellenwong',
+            'raphaellasmits',
+            'sigiswaldkuijken',
+            'veronikaeberle',
+            'veroniquederaedemaeker',
+            'virginierobilliard',
+            'vonhansen',
+            'yunpark',
+            'christophethiebaud',
         ]
-        const ver = "v0.5.1"
+        const ver = "v0.6.0"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
-        let videoId = params.yt ?? undefined
+        let fullameNoSpaceLowercaseNoDiacritics = params.a ?? undefined
         let no_plyr_event = params.no_plyr_event ?? undefined
-        // hack waiting for Genzoh Takehisa to make his video embeddable
-        if (videoId === "ze_QPWuyZLo") {
-            videoId = "JETARLGbUJo"
-        }
-        if (!validVideoIds.includes(videoId)) {
-            console.log('youtube video handle', videoId, 'is invalid')
-            videoId = undefined
+
+        if (!validFullamesNoSpaceLowercaseNoDiacritics.includes(fullameNoSpaceLowercaseNoDiacritics)) {
+            console.log('name ', fullameNoSpaceLowercaseNoDiacritics, 'is invalid')
+            fullameNoSpaceLowercaseNoDiacritics = undefined
         }
     </script>
 
@@ -125,7 +120,7 @@
         // import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
         import { removeCookie } from "/js/_utils.js"
 
-        if (videoId == null) { // using ==, undefined and null are equal
+        if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
             removeCookie('playing')
             removeCookie('startBarOfLastSelectedVariation')
@@ -166,7 +161,7 @@
 
 <body id="body" class="d-flex flex-column">
     <script>
-        if (videoId == null) {
+        if (fullameNoSpaceLowercaseNoDiacritics == null) {
             document.getElementById('body').classList.add('no-vid')
         }
     </script>
@@ -246,7 +241,7 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a id="home" class="dropdown-item d-flex justify-content-between" href="#" data-yt="">
+                <li><a id="home" class="dropdown-item d-flex justify-content-between" href="/" data-name-no-space-lowercase-no-diacritics="">
                         <div style="width: 100%; position: relative; top: -.5rem; text-align:right;">
                             <span class="c">&#10004;</span>
                             <span style="font-size:20pt;">🏠</span>
@@ -256,59 +251,59 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex" href="#" data-yt="mg9kT7XiLoU"><!-- 6m0d3WtdJ3Q -->
+                <li><a class="dropdown-item d-flex" href="#" data-name-no-space-lowercase-no-diacritics="amandinebeyer"><!-- 6m0d3WtdJ3Q -->
                         <img src="svg/violin.svg">
                         <div class="flex-grow-1" style="text-align: right;"><span class="c"></span>Amandine Beyer<span class="d">12′51″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="_ii7aPCQgHE">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="adolfbusch">
                         <div><span class="c">&check;</span>Adolf Busch<span class="d">13′48″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Ilb3no_cwnI">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="veronikaeberle">
                         <div><span class="c">&check;</span>Veronika Eberle<span class="d">13′41″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="r67BASAgP5Q">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="isabellefaust">
                         <div><span class="c">&check;</span>Isabelle Faust<span class="d">12′28″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="17uCirXzs8Q">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="lizaferschtman">
                         <div><span class="c">&check;</span>Liza Ferschtman<span class="d">13′29″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="WZ0wkyRBlqo">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="juliafischer">
                         <div><span class="c">&check;</span>Julia Fischer<span class="d">15′41″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KgSKvOAJMb8">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="midorigoto">
                         <div><span class="c">&check;</span>Midori Gotō<span class="d">13′47″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="ngjEVKxQCWs">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="hilaryhahn">
                         <div><span class="c">&check;</span>Hilary Hahn<span class="d">17′50″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="XkfsGCIiHb4">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="bellahristova">
                         <div><span class="c">&check;</span>Bella Hristova<span class="d">13′46″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="dyAcRqpjbqU">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="lisajacobs">
                         <div><span class="c">&check;</span>Lisa Jacobs<span class="d">14′58″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="NCTDf8dNT5s">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="sigiswaldkuijken">
                         <div><span class="c">&check;</span>Sigiswald Kuijken<span class="d">11′39″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="1HSJufg7I1I">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="rachelpodger">
                         <div><span class="c">&check;</span>Rachel Podger<span class="d">13′29″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="AbZxSocrvvs">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="veroniquederaedemaeker">
                         <div><span class="c">&check;</span>Veronique De Raedemaeker<span class="d">15′46″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KWcGsRKbe-U">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="virginierobilliard">
                         <div><span class="c">&check;</span>Virginie Robilliard<span class="d">13′45″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="mTTT5_oX69Q">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="christiantetzlaff">
                         <div><span class="c">&check;</span>Christian Tetzlaff<span class="d">14′07″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="59KFAY_qf-Q">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="rachellellenwong">
                         <div><span class="c">&check;</span>Rachell Ellen Wong<span class="d">14′05″</span></div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="maDgVXxV1b0">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="florentinginot">
                         <span style="font-size:10px; font-weight: bold; top: -0.55rem; left:-.6rem; position: relative; background-color: transparent">*big*</span>
                         <img style="top: -0.55rem; left:-1.6rem; position: relative;" src="svg/violin.svg">
                         <div><span class="c">&check;</span>Florentin Ginot<span class="d">14′49″</span></div>
@@ -316,74 +311,74 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="lxZqC_J0C74">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="petrapolackova">
                         <img src="svg/guitar.svg" style="top: -0.5rem; position: relative;">
                         <div><span class="c">&check;</span>Petra Poláčková<span class="d">13′28″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Kxn0ySsHDRA">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="miguelrincon">
                         <div><span class="c">&check;</span>Miguel Rincón<span class="d">10′48″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Jcy7E4uHYK8">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="raphaellasmits">
                         <div><span class="c">&check;</span>Raphaella Smits<span class="d">14′21″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="oxWq93mlAyc">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="andreadevitis">
                         <div><span class="c">&check;</span>Andrea De Vitis<span class="d">14′10″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="YzP6mkPVzm0">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="moranwasser">
                         <div><span class="c">&check;</span>Moran Wasser<span class="d">12′17″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="Vslz1tDsaWw">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="christophethiebaud">
                         <div><span class="c">&check;</span>Moi<span class="d">14′42″</span></div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="bKIPJqqH--Q">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="martinbaker">
                         <img id="keyboard" style="top: -0.2rem; position: relative;" src="svg/keyboard.svg">
                         <div><span class="c">&check;</span>Martin Baker<span class="d">18′18″</span></div>
                     </a>
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="SzxzLtwK-eo">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="chiaramassini">
                         <div><span class="c">&check;</span>Chiara Massini<span class="d">12′31″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="AKMNFzKRTuc">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="polinaosetinskaya">
                         <div><span class="c">&check;</span>Polina Osetinskaya<span class="d">15′00″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="JETARLGbUJo">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="genzohtakehisa">
                         <div><span class="c">&check;</span>Genzoh Takehisa<span class="d">12′22″</span></div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="KHwsHXtVWks">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="anneleenlenaerts">
                         <img src="svg/harp.svg" style="top: -0.5rem; position: relative;">
                         <div><span class="c">&check;</span>Anneleen Lenaerts<span class="d">14′16″</span></div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BVBgKOLkYu8">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="michaelleontchik">
                         <img src="svg/Cimbalom_small_001.jpg" style="top: -0.5rem; position: relative;">
                         <div><span class="c">&check;</span>Michael Leontchik<span class="d">13′43″</span></div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="P93o202UJRs">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="martafemenia">
                         <img src="svg/flute.svg" style="top: -0.5rem; position: relative;">
                         <div><span class="c">&check;</span>Marta Femenía<span class="d">15′36″</span></div>
                     </a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="BYg7Di8CH9w">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="mikastoltzman">
                         <img src="svg/marimba.svg" style="top: -0.66rem; position: relative;">
                         <div><span class="c">&check;</span>Mika Stoltzman<span class="d">16′48″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="X5-F_w-rX4k">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="vonhansen">
                         <div><span class="c">&check;</span>Von Hansen<span class="d">14′47″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-yt="5ITydjLkYUk">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="yunpark">
                         <div><span class="c">&check;</span>Yun Park<span class="d">12′31″</span></div>
                     </a></li>
             </ul>
@@ -542,15 +537,15 @@
 
         // tidyfication of menu items
         document.querySelectorAll('#videos-menu span.c').forEach((e) => e.innerHTML = "")
-        if (videoId) {
-            const menuItem = document.querySelector(`#videos-menu a[data-yt="${videoId}"]`)
+        if (fullameNoSpaceLowercaseNoDiacritics) {
+            const menuItem = document.querySelector(`#videos-menu a[data-name-no-space-lowercase-no-diacritics="${fullameNoSpaceLowercaseNoDiacritics}"]`)
             if (menuItem) {
                 menuItem.classList.add('disabled')
                 menuItem.querySelector(`span.c`).innerHTML = "&#10004;&nbsp;"
             }
             document.getElementById('gridContainerCol').classList.add('push2right')
         } else {
-            const menuItem = document.querySelector(`#videos-menu a[data-yt=""]`)
+            const menuItem = document.querySelector(`#videos-menu a[data-name-no-space-lowercase-no-diacritics=""]`)
             if (menuItem)
                 menuItem.querySelector('span.c').innerHTML = "&#10004;&nbsp;"
             document.getElementById('body').style['background-color'] = 'transparent'
@@ -604,20 +599,20 @@
             }))
 
         // 2. promises fires when video player is ready
-        if (videoId) {
+        if (fullameNoSpaceLowercaseNoDiacritics) {
             allPromises.set(
                 createPlayer.name,
-                createTimings(videoId).then((result) => {
+                createTimings(fullameNoSpaceLowercaseNoDiacritics).then((artist) => {
 
                     // we have more info bout the artist
-                    Ω.showArtist(result)
-                    document.querySelector('head title').innerHTML = `Ciaccona by ${result.fullname}`
+                    Ω.showArtist(artist)
+                    document.querySelector('head title').innerHTML = `Ciaccona by ${artist.fullname}`
 
-                    const selectorPlyr = Ω.beforeCreatePlayer(videoId) // big buffer of everything that needs to be done before creating the player
+                    const selectorPlyr = Ω.beforeCreatePlayer(artist['▶'].id) // big buffer of everything that needs to be done before creating the player
 
-                    return createPlayer(selectorPlyr, result, no_plyr_event).then((result) => {
+                    return createPlayer(selectorPlyr, artist, no_plyr_event).then((result) => {
                         Ω.afterCreatePlayer() // big buffer of everything that needs to be done AFTER player is ready
-                        return result
+                        return artist
                     }).catch((error) => {
                         console.log(error);
                         throw error
@@ -633,7 +628,7 @@
         // 3. create and flood color bricks into isotope
         allPromises.set(
             createColoredBadges.name,
-            createColoredBadges(videoId).then((result) => {
+            createColoredBadges(fullameNoSpaceLowercaseNoDiacritics).then((result) => {
 
                 const theIsotope = new isotopeLayout('#grid', {
                     itemSelector: ".grid-brick",

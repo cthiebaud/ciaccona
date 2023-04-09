@@ -10,7 +10,7 @@ import { index2duration } from "/js/_timings.js"
 
 const $ = jquery
 
-export default function createColoredBadges(video_Id) {
+export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
     const thisFunctionName = "createColoredBadges"
     return new Promise((resolve) => {
 
@@ -125,7 +125,7 @@ export default function createColoredBadges(video_Id) {
                 s.borderColor = tinycolor(s.p_rgb).lighten(20).toString("hex6").slice(1)
             }
             // some transparency to show video behind
-            if (video_Id) {
+            if (fullameNoSpaceLowercaseNoDiacritics) {
                 s.p_rgb_original = new tinycolor(s.p_rgb).toRgbString()
                 s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
                 s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)

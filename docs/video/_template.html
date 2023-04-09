@@ -51,7 +51,7 @@
     <meta name="twitter:description" content="{{{description}}}">
     <meta name="twitter:image" content="{{image}}">
     <scr{{!}}ipt>
-        window.location.href = `/?yt={{videoID}}`
+        window.location.href = "/?a={{key}}"
     </scr{{!}}ipt>
 </head>
 </html>
@@ -108,7 +108,7 @@
             let i = 1
             // Object.keys(artists).forEach((key) => {
                 artists.artists.forEach((artist) => {
-                const key = artist.fullnameNoSpaceLowerCaseNoDiacritics
+                const key = artist.fullnameNoSpaceLowercaseNoDiacritics
                 const results = template({
                     key: key,
                     artist: artist.fullname,
@@ -121,12 +121,12 @@
 
                 // console.log('pushed', key)
                 /*
-                */
                 setTimeout(() => {
                     var blob = new Blob([results], { type: "text/plain;charset=utf-8" });
                     saveAs(blob, `_${key}.html`);
                     console.log('saved', key)
                 }, 300 * i++)
+                */
                 // throw BreakException;
             })
         })

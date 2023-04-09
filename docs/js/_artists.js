@@ -8,10 +8,9 @@ class Artist {
 
         this.fullname = `${a.firstname} ${a.lastname}`
         this.fullnameNoSpace = this.fullname.replace(/\s/gi, '')
-        const fullnameNoSpaceLowerCase = this.fullnameNoSpace.toLowerCase()
-        this.fullnameNoSpaceLowerCaseNoDiacritics = fullnameNoSpaceLowerCase.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
+        this.fullnameNoSpaceLowercaseNoDiacritics = this.fullnameNoSpace.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
 
-        this.social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com/video/${this.fullnameNoSpaceLowerCaseNoDiacritics}.html`
+        this.social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com/video/${this.fullnameNoSpaceLowercaseNoDiacritics}.html`
 
         const vid = this['▶']
         const videoId = vid.id
@@ -28,16 +27,18 @@ class Artists {
     artists = []
     #mapVideoId2Artist = new Map()
     #mapJavascriptizedVideoId2Artist = new Map()
+    #mapNameNoSpaceLowercaseNoDiacritics2Artist = new Map()
     dump = () => {
 
         this.artists.forEach((a) => {
             // console.log(`'${a['▶'].id}', `)
-            console.log(a)
+            console.log(a.fullnameNoSpaceLowercaseNoDiacritics)
         })
     }
     addArtist = (a) => {
         this.#mapVideoId2Artist.set(a['▶'].id, a)
         this.#mapJavascriptizedVideoId2Artist.set(a['▶'].javascriptizedId, a)
+        this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.set(a.fullnameNoSpaceLowercaseNoDiacritics, a)
         this.artists.push(a)
     }
     validateVideoIdThenGetArtist = (videoId) => {
@@ -56,7 +57,10 @@ class Artists {
         return this.#mapVideoId2Artist.get(id)
     }
     getArtistFromJavascriptizedVideoId = (javascriptizedId) => {
-        return this.mapVideoImapJavascriptizedVideoId2Artist2Artist.get(javascriptizedId)
+        return this.#mapJavascriptizedVideoId2Artist.get(javascriptizedId)
+    }
+    getArtistFromNameNoSpaceLowercaseNoDiacritics = (nameNoSpaceLowercaseNoDiacritics) => {
+        return this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.get(nameNoSpaceLowercaseNoDiacritics)
     }
     size = () => this.artists.length
 }

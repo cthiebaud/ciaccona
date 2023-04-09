@@ -108,8 +108,8 @@ const Ω = {
     setClickHandlers: (fullWidthChecked, iso) => {
         const url = new URL(window.location)
 
-        $('a[data-yt]').on('click', (e) => {
-            let location = `${url.pathname}?yt=${e.currentTarget.dataset.yt}`
+        $('a[data-name-no-space-lowercase-no-diacritics]').on('click', (e) => {
+            let location = `${url.pathname}video/${e.currentTarget.dataset.nameNoSpaceLowercaseNoDiacritics}.html`
             window.location = location
         })
 

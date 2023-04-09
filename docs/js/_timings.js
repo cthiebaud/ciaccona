@@ -139,13 +139,13 @@ class Timings {
     }
 }
 
-function createTimings(videoId) {
+function createTimings(fullameNoSpaceLowercaseNoDiacritics) {
     return new Promise((resolve, reject) => {
         loadArtists().then((artists) => {
 
-            let artistObject = artists.getArtistFromVideoId(videoId)
+            let artistObject = artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(fullameNoSpaceLowercaseNoDiacritics)
             if (!artistObject) {
-                reject(`no artist associated with videoId: < ${videoId} >`)
+                reject(`no artist associated with : < ${fullameNoSpaceLowercaseNoDiacritics} >`)
                 return
             }
 
