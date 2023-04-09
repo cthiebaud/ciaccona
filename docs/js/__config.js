@@ -1,10 +1,17 @@
 import { getCookie } from "/js/__utils.js"
 
 let fullscore = getCookie('fullscore')
-if (fullscore === 'true') {
-    fullscore = true
-} else {
+if (!fullscore || fullscore === 'false') {
     fullscore = false
+} else {
+    fullscore = true
 }
 
-export { fullscore }
+let showHelpAtStart = getCookie('showHelpAtStart')
+if (!showHelpAtStart || showHelpAtStart === 'true') {
+    showHelpAtStart = true
+} else {
+    showHelpAtStart = false
+}
+
+export { fullscore, showHelpAtStart }

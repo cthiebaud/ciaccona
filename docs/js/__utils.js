@@ -7,8 +7,8 @@ function getCookie(cookieName) {
     return value
 }
 
-function setCookie(cookieName, cookieValue) {
-    jsCookie.set(cookieName, cookieValue, { expires: 2 })
+function setCookie(cookieName, cookieValue, expires) {
+    jsCookie.set(cookieName, cookieValue, { expires: expires ? expires : 2 })
     console.log("cookie", cookieName, "set to", cookieValue)
 }
 

@@ -105,7 +105,7 @@ const Ω = {
         })
     },
 
-    setClickHandlers: (fullWidthChecked, iso) => {
+    setClickHandlers: (fullWidthChecked, showHelpAtStartChecked, iso) => {
         const url = new URL(window.location)
 
         $('a[data-name-no-space-lowercase-no-diacritics]').on('click', (e) => {
@@ -117,7 +117,7 @@ const Ω = {
             window.location = url.pathname
         })
 
-        $("#dropdownCheck").on("click", function () {
+        $("#fullWidthChecked").on("click", function () {
             fullWidthChecked = !fullWidthChecked
             setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
             if (fullWidthChecked) {
@@ -128,6 +128,10 @@ const Ω = {
                 $('.grid-brick, .score').removeClass('fullwidth')
             }
             iso.layout()
+        })
+        $("#helpAtStartCheck").on("click", function () {
+            showHelpAtStartChecked = !showHelpAtStartChecked
+            setCookie('showHelpAtStart', showHelpAtStartChecked ? 'true' : 'false', 30) // one month
         })
     },
 
