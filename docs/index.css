@@ -260,6 +260,9 @@ span.Δ {
 
 #playerWrapper
   > div
+  > button.plyr__control--overlaid,
+  #playerWrapper
+  > div
   > div.plyr__controls
   > div.plyr__controls__item.plyr__menu {
   display: none;
