@@ -1,6 +1,6 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { setCookie, removeCookie } from "/js/_utils.js"
+import { setCookie, removeCookie } from "/js/__utils.js"
 
 function scrollScore(selector, timings, variation, currentTime) {
     if (variation === 33) return -1

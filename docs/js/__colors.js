@@ -5,8 +5,8 @@ import IsotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+es
 import isotopeFitColumns from 'https://cdn.jsdelivr.net/npm/isotope-fit-columns@1.1.4/+esm'
 */
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import { shuffleArray } from "/js/_utils.js"
-import { index2duration } from "/js/_timings.js"
+import { shuffleArray } from "/js/__utils.js"
+import { index2duration } from "/js/__timings.js"
 
 const $ = jquery
 

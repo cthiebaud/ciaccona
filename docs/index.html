@@ -103,7 +103,7 @@
             'yunpark',
             'christophethiebaud',
         ]
-        const ver = "v0.6.0"
+        const ver = "v0.6.1"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -118,7 +118,7 @@
 
     <script type="module">
         // import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-        import { removeCookie } from "/js/_utils.js"
+        import { removeCookie } from "/js/__utils.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -156,7 +156,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index.css" rel="stylesheet">
+    <link href="index.css?=v0.6.1" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -524,12 +524,12 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import { fullscore } from "/js/_config.js"
-        import createColoredBadges from "/js/_colors.js"
-        import { createTimings } from "/js/_timings.js"
-        import resizeSVGs from "/js/_resizeSVGs.js"
-        import createPlayer from "/js/_player.js"
-        import { Ω } from "/js/_jquery.js"
+        import { fullscore } from "/js/__config.js"
+        import createColoredBadges from "/js/__colors.js"
+        import { createTimings } from "/js/__timings.js"
+        import resizeSVGs from "/js/__resizeSVGs.js"
+        import createPlayer from "/js/__player.js"
+        import { Ω } from "/js/__jquery.js"
 
         // useless, but nice
         Ω.boot()
