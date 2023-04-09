@@ -103,7 +103,7 @@
             'yunpark',
             'christophethiebaud',
         ]
-        const ver = "v0.6.1"
+        const ver = "v0.6.2"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -156,7 +156,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index.css?=v0.6.1" rel="stylesheet">
+    <link href="index.css?=v0.6.2" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -612,7 +612,7 @@
 
                     return createPlayer(selectorPlyr, artist, no_plyr_event).then((result) => {
                         Ω.afterCreatePlayer() // big buffer of everything that needs to be done AFTER player is ready
-                        return artist
+                        return result
                     }).catch((error) => {
                         console.log(error);
                         throw error
