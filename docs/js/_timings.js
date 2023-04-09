@@ -2,84 +2,11 @@ import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
 import { getCookie, setCookie, removeCookie } from "/js/_utils.js"
 import { binaryRangeSearch } from "/js/_utils.js"
+import { loadArtists } from "/js/_artists.js"
 
-const mapVideoId2ArtistName = {
-    /* 274.4  Wong */  _59KFAY_qf_Q: "Rachell Ellen Wong",
-    /* 274.7  Beyer _6m0d3WtdJ3Q  */ mg9kT7XiLoU: "Amandine Beyer",
-    /* 276.4  Smits 138.2 */  Jcy7E4uHYK8: "Raphaella Smits",
-    /* 277.2  Podger */  _1HSJufg7I1I: "Rachel Podger",
-    /* 278.0  Rincón 139.0 */ Kxn0ySsHDRA: "Miguel Rincón",
-    /* 281.4  Kuijken */  NCTDf8dNT5s: "Sigiswald Kuijken",
-    /* 286.8  Poláčková 71.7 */  lxZqC_J0C74: "Petra Poláčková",
-    /* 291.9  Tetzlaff */  mTTT5_oX69Q: "Christian Tetzlaff",
-    /* 292.8  Faust */  r67BASAgP5Q: "Isabelle Faust",
-    /* 293.0  Hahn */  ngjEVKxQCWs: "Hilary Hahn",
-    /* 293.3  Jacobs */  dyAcRqpjbqU: "Lisa Jacobs",
-    /* 293.8  Baker 146.9 */  bKIPJqqH__Q: "Martin Baker",
-    /* 294.4  De Vitis 73.6 */  oxWq93mlAyc: "Andrea De Vitis",
-    /* 294.4  Eberle */  Ilb3no_cwnI: "Veronika Eberle",
-    /* 294.4  Thiebaud 147.2 */  Vslz1tDsaWw: "Christophe Thiebaud",
-    /* 294.5  Hristova */  XkfsGCIiHb4: "Bella Hristova",
-    /* 294.8  Hansen 147.4 */  X5_F_w_rX4k: "Von Hansen",
-    /* 295.8  Femenía 590 */  P93o202UJRs: "Marta Femenía",
-    /* 295.3  Gotō */  KgSKvOAJMb8: "Midori Gotō",
-    /* 295.8  Fischer */ WZ0wkyRBlqo: "Julia Fischer",
-    /* 296.4  Park 148.2 */  _5ITydjLkYUk: "Yun Park",
-    /* 296.6  De Raedemaeker */  AbZxSocrvvs: "Veronique De Raedemaeker",
-    /* 296.8  Lenaerts 74.2 */  KHwsHXtVWks: "Anneleen Lenaerts",
-    /* 297.4  Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
-    /* 298.0  Robilliard */  KWcGsRKbe_U: "Virginie Robilliard",
-
-    /* 92.8  Takehisa G */  JETARLGbUJo: "Genzoh Takehisa",
-    /* 93.3  Massini G */  SzxzLtwK_eo: "Chiara Massini",
-    /* 98.4  Ginot G */  maDgVXxV1b0: "Florentin Ginot",
-
-    /* ???  Wasser */  YzP6mkPVzm0: "Moran Wasser",
-    /* ???  Ferschtman */  _17uCirXzs8Q: "Liza Ferschtman",
-    /* ???  Osetinskaya */  AKMNFzKRTuc: "Polina Osetinskaya",
-    /* ???  Busch */  _ii7aPCQgHE: "Adolf Busch",
-    /* ???  Leontchik */  BVBgKOLkYu8: "Michael Leontchik",
-    
-
-
-}
 
 const variationsCount = 1 + 32 + 1
 const variationIndex2BarCount = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
-
-function validateVideoIdAndGetInterestingData(videoId) {
-    if (videoId == null) {
-        return undefined;
-    }
-    /*
-    for (const a in mapVideoId2ArtistName) {
-        const artistNoSpace = mapVideoId2ArtistName[a].replace(/\s/gi, '')
-        const artistNoSpaceLowerCase = artistNoSpace.toLowerCase()
-        const artistNoSpaceLowerCaseNoDiacritics = artistNoSpaceLowerCase.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
-            
-        console.log(artistNoSpaceLowerCaseNoDiacritics)
-    } */
-
-    const videoIdNoHyphen = videoId.replace(/-/gi, '_')
-    const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
-    const artist = mapVideoId2ArtistName[videoIdNoHyphenNoStartingNumber]
-    if (artist == null) {
-        return undefined
-    }
-    const artistNoSpace = artist.replace(/\s/gi, '')
-    const artistNoSpaceLowerCase = artistNoSpace.toLowerCase()
-    const artistNoSpaceLowerCaseNoDiacritics = artistNoSpaceLowerCase.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
-
-    return {
-        videoID: videoId,
-        videoIdNoHyphenNoStartingNumber: videoIdNoHyphenNoStartingNumber,
-        artist: artist,
-        url: `timings/${artistNoSpace}-${videoId}.js`,
-        yt: `https://youtu.be/${videoId}`,
-        social: `/video/${artistNoSpaceLowerCaseNoDiacritics}.html`,
-    }
-}
-
 class Codec {
     #variationsStartBars = []
     constructor() {
@@ -214,34 +141,37 @@ class Timings {
 
 function createTimings(videoId) {
     return new Promise((resolve, reject) => {
-        let interestingData = validateVideoIdAndGetInterestingData(videoId)
-        if (!interestingData) {
-            reject(`no artist associated with videoId: < ${videoId} >`)
-            return
-        }
+        loadArtists().then((artists) => {
 
-        console.log('# artists', Object.keys(mapVideoId2ArtistName).length)
+            let artistObject = artists.getArtistFromVideoId(videoId)
+            if (!artistObject) {
+                reject(`no artist associated with videoId: < ${videoId} >`)
+                return
+            }
 
-        console.log('script loading', interestingData.url)
-        jquery.ajax({
-            url: interestingData.url,
-            dataType: "script",
-        }).done(function () {
-            console.log("script loaded", interestingData.url);
-            const data = eval(interestingData.videoIdNoHyphenNoStartingNumber)
-            const timings = new Timings(interestingData, data)
-            resolve(timings)
-        }).fail(function (jqXHR, textStatus, error) {
-            console.log("script loading error", url, jqXHR, textStatus, error);
+            const timingsURL = artistObject['▶'].timingsUrl
+            const javascriptizedId = artistObject['▶'].javascriptizedId
+            console.log('script loading', timingsURL)
+            jquery.ajax({
+                url: timingsURL,
+                dataType: "script",
+            }).done(function () {
+                console.log("script loaded", timingsURL);
+                const data = eval(javascriptizedId)
+                const timings = new Timings(artistObject, data)
+                resolve(timings)
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log("script loading error", timingsURL, jqXHR, textStatus, error);
+                reject(error)
+            })
+        }).catch((error) => {
+            console.log('loadArtists error', error)
             reject(error)
         })
-
     })
 }
 
 export {
-    mapVideoId2ArtistName,
     variationIndex2BarCount as index2duration,
-    createTimings,
-    validateVideoIdAndGetInterestingData as validateVideoId
+    createTimings
 }

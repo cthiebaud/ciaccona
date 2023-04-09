@@ -1,8 +1,3 @@
-/* import Promise from 'https://cdn.jsdelivr.net/npm/bluebird@3.7.2/+esm'
-Promise.onPossiblyUnhandledRejection(function(error){
-    throw error;
-}); */
-
 export default function resizeSVGs(selection, withOffsetX, elementCallback) {
     const thisFunctionName = "resizeSVGs"
     let maxWidth = 0

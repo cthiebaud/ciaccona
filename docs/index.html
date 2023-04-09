@@ -68,7 +68,44 @@
     <script src="prism.js"></script>
 
     <script>
-        const ver = "v0.4.12"
+        const validVideoIds = [
+            
+            'Vslz1tDsaWw', /* moi */
+
+            '_ii7aPCQgHE',
+            '17uCirXzs8Q',
+            '1HSJufg7I1I',
+            '59KFAY_qf-Q',
+            '5ITydjLkYUk',
+            'AbZxSocrvvs',
+            'AKMNFzKRTuc',
+            'bKIPJqqH--Q',
+            'BVBgKOLkYu8',
+            'BYg7Di8CH9w',
+            'dyAcRqpjbqU',
+            'Ilb3no_cwnI',
+            'Jcy7E4uHYK8',
+            'KgSKvOAJMb8',
+            'KHwsHXtVWks',
+            'KWcGsRKbe-U',
+            'Kxn0ySsHDRA',
+            'lxZqC_J0C74',
+            'maDgVXxV1b0',
+            'mg9kT7XiLoU',
+            'mTTT5_oX69Q',
+            'NCTDf8dNT5s',
+            'ngjEVKxQCWs',
+            'oxWq93mlAyc',
+            'P93o202UJRs',
+            'r67BASAgP5Q',
+            'SzxzLtwK-eo',
+            'WZ0wkyRBlqo',
+            'X5-F_w-rX4k',
+            'XkfsGCIiHb4',
+            'YzP6mkPVzm0',
+            /* 'ze_QPWuyZLo', */ 'JETARLGbUJo', 
+        ]
+        const ver = "v0.5.0"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -78,17 +115,16 @@
         if (videoId === "ze_QPWuyZLo") {
             videoId = "JETARLGbUJo"
         }
+        if (!validVideoIds.includes(videoId)) {
+            console.log('youtube video handle', videoId, 'is invalid')
+            videoId = undefined
+        }
     </script>
 
     <script type="module">
         // import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-        import { validateVideoId } from "/js/_timings.js"
         import { removeCookie } from "/js/_utils.js"
 
-        if (!validateVideoId(videoId)) {
-            console.log('youtube video handle', videoId, 'is invalid')
-            videoId = undefined
-        }
         if (videoId == null) { // using ==, undefined and null are equal
             // r.à.z.
             removeCookie('playing')
@@ -574,8 +610,8 @@
                 createTimings(videoId).then((result) => {
 
                     // we have more info bout the artist
-                    Ω.setArtist(result)
-                    document.querySelector('head title').innerHTML = `Ciaccona by ${result.artist}`
+                    Ω.showArtist(result)
+                    document.querySelector('head title').innerHTML = `Ciaccona by ${result.fullname}`
 
                     const selectorPlyr = Ω.beforeCreatePlayer(videoId) // big buffer of everything that needs to be done before creating the player
 

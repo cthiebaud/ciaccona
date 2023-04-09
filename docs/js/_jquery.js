@@ -131,15 +131,14 @@ const Ω = {
         })
     },
 
-    setArtist: (qwe) => {
-        $('.artist .name').html(qwe.artist === "Christophe Thiebaud" ? "Moi" : qwe.artist)
+    showArtist: (artist) => {
+        $('.artist .name').html(artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname)
         $('.artist .url').attr({
-            href: qwe.trueURL ? qwe.trueURL : `https://youtu.be/${qwe.videoID}`,
-            target: qwe.id
+            href: `https://youtu.be/${artist['▶'].trueId ? artist['▶'].trueId : artist['▶'].id}`,
+            target: artist['▶'].id
         })
-        const social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com${qwe.social}`
         $('.artist a#social').attr({
-            href: social
+            href: artist.social
         })
         $('.artist, .artist .brick').css({ visibility: "visible" })
     },

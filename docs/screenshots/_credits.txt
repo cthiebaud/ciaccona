@@ -1,3 +1,42 @@
+const mapJavascriptizedVideoId2ArtistName = {
+    /* 274.4  Wong */  _59KFAY_qf_Q: "Rachell Ellen Wong",
+    /* 274.7  Beyer _6m0d3WtdJ3Q  */ mg9kT7XiLoU: "Amandine Beyer",
+    /* 276.4  Smits 138.2 */  Jcy7E4uHYK8: "Raphaella Smits",
+    /* 277.2  Podger */  _1HSJufg7I1I: "Rachel Podger",
+    /* 278.0  Rincón 139.0 */ Kxn0ySsHDRA: "Miguel Rincón",
+    /* 281.4  Kuijken */  NCTDf8dNT5s: "Sigiswald Kuijken",
+    /* 286.8  Poláčková 71.7 */  lxZqC_J0C74: "Petra Poláčková",
+    /* 291.9  Tetzlaff */  mTTT5_oX69Q: "Christian Tetzlaff",
+    /* 292.8  Faust */  r67BASAgP5Q: "Isabelle Faust",
+    /* 293.0  Hahn */  ngjEVKxQCWs: "Hilary Hahn",
+    /* 293.3  Jacobs */  dyAcRqpjbqU: "Lisa Jacobs",
+    /* 293.8  Baker 146.9 */  bKIPJqqH__Q: "Martin Baker",
+    /* 294.4  De Vitis 73.6 */  oxWq93mlAyc: "Andrea De Vitis",
+    /* 294.4  Eberle */  Ilb3no_cwnI: "Veronika Eberle",
+    /* 294.4  Thiebaud 147.2 */  Vslz1tDsaWw: "Christophe Thiebaud",
+    /* 294.5  Hristova */  XkfsGCIiHb4: "Bella Hristova",
+    /* 294.8  Hansen 147.4 */  X5_F_w_rX4k: "Von Hansen",
+    /* 295.8  Femenía 590 */  P93o202UJRs: "Marta Femenía",
+    /* 295.3  Gotō */  KgSKvOAJMb8: "Midori Gotō",
+    /* 295.8  Fischer */ WZ0wkyRBlqo: "Julia Fischer",
+    /* 296.4  Park 148.2 */  _5ITydjLkYUk: "Yun Park",
+    /* 296.6  De Raedemaeker */  AbZxSocrvvs: "Veronique De Raedemaeker",
+    /* 296.8  Lenaerts 74.2 */  KHwsHXtVWks: "Anneleen Lenaerts",
+    /* 297.4  Stoltzman */  BYg7Di8CH9w: "Mika Stoltzman",
+    /* 298.0  Robilliard */  KWcGsRKbe_U: "Virginie Robilliard",
+
+    /* 92.8  Takehisa G */  JETARLGbUJo: "Genzoh Takehisa",
+    /* 93.3  Massini G */  SzxzLtwK_eo: "Chiara Massini",
+    /* 98.4  Ginot G */  maDgVXxV1b0: "Florentin Ginot",
+
+    /* ???  Wasser */  YzP6mkPVzm0: "Moran Wasser",
+    /* ???  Ferschtman */  _17uCirXzs8Q: "Liza Ferschtman",
+    /* ???  Osetinskaya */  AKMNFzKRTuc: "Polina Osetinskaya",
+    /* ???  Busch */  _ii7aPCQgHE: "Adolf Busch",
+    /* ???  Leontchik */  BVBgKOLkYu8: "Michael Leontchik",
+}
+
+
 Michael Leontchik
 MichaelLeontchik
 michaelleontchik
