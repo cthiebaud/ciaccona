@@ -1,5 +1,8 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import { setCookie } from "/js/_utils.js"
+/*
+import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
+*/
 
 const $ = jquery
 
@@ -21,6 +24,47 @@ const Ω = {
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
 
                 $("code#artists").load('/screenshots/_credits.yaml', function (response, status, xhr) {
+                    /*
+                    const qwe = jsYaml.load(response)
+                    // console.log(qwe)
+                    const today = moment('Apr 8, 2023')
+                    const res = []
+                    const oneMonth = moment.duration(1, 'months')
+                    Object.keys(qwe).forEach((k) => {
+
+                        const firstVid = qwe[k]['▶'][0]
+                        const yt = firstVid.url
+                        const views = firstVid.views
+                        const started = moment(firstVid.started)
+                        const diff = today.diff(started)
+                        const durationInMonths = moment.duration(diff).asMonths()
+                        // console.log(k, asd, durationInMonths)
+                        // console.log(k, yt, )
+
+                        // console.log(k, yt, views, Math.floor(duration.asMonths()), Math.floor(views / Math.floor(duration.asMonths())))
+                        res.push({
+                            artist: k,
+                            video: yt,
+                            views: views,
+                            started: started,
+                            viewPerMonth: Math.floor(views / durationInMonths)
+                        })
+                    })
+                    res.sort((a, b) => {
+                        return b.viewPerMonth - a.viewPerMonth;
+                        // return a.started.diff(b.started)
+                    })
+                    const ff = new Intl.NumberFormat('fr-FR')
+
+                    const s = `${"artist".padEnd(26)} | video since | ${"total views".padStart(11)} | ${"per month".padStart(10)}`
+                    console.log(s)
+                    console.log("---------------------------+-------------+-------------+-----------")
+                    res.forEach((r) => {
+                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewPerMonth).padStart(10)}`
+                        console.log(s)
+                    })
+                    */
+                    
                     if (status == "success") {
                         Prism.highlightElement(this)
                     }
