@@ -65,7 +65,7 @@
     {{#if twitter}}@{{twitter}}{{else}}#{{fullnameNoSpace}}{{/if}}
 -->
 
-    <script id="twitter-template" type="text/x-handlebars-template">
+<script id="twitter-template" type="text/x-handlebars-template">
 Listen to {{fullname}}{{#if twitter}} ({{twitter}}){{/if}} performing the #Ciaccona from #JSBach's partita in D minor for solo violin #BWV1004, collated with 32+ other performers:
 
 #Chaconne #Bach {{hashtag}}
@@ -73,6 +73,14 @@ Listen to {{fullname}}{{#if twitter}} ({{twitter}}){{/if}} performing the #Ciacc
 https://ciaccona.cthiebaud.com/video/{{filename}}
 
 -------------
+</script>
+
+<script id="youtube-template" type="text/x-handlebars-template">
+For your information, this video is embedded into my so-called ciaccona.cthiebaud.com application, which collates together 32 + 1 performances of Johann Sebastian Bach's Ciaccona from the Partita in D minor for solo violin BWV1004 :
+
+https://ciaccona.cthiebaud.com/video/{{filename}} 
+
+. . . . 
 </script>
 
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
@@ -83,7 +91,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
 
         loadArtists().then((artists) => {
 
-            const source = document.getElementById("twitter-template").innerHTML;
+            const source = document.getElementById("youtube-template").innerHTML;
             const template = Handlebars.compile(source);
             const BreakException = {};
             const count = artists.size() - 1
