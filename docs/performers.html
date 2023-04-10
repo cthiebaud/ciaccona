@@ -79,7 +79,7 @@
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
 <!-- th scope="row">{{@index}}</!-->
-<td>{{fullname}}</td>
+<td>{{hideMe fullname}}</td>
 <td><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
 <td class="text-end">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td>({{humanize v.durationMoment}})</td>
@@ -103,11 +103,14 @@
         Handlebars.registerHelper('dateFormat', function (object, formatting) {
             return object.format(formatting)
         })
-        Handlebars.registerHelper('humanize', function (object, qwe) {
+        Handlebars.registerHelper('humanize', function (object) {
             return object.humanize()
         })
-        Handlebars.registerHelper('numberFormat', function (object, qwe) {
+        Handlebars.registerHelper('numberFormat', function (object) {
             return ff.format(object)
+        })
+        Handlebars.registerHelper('hideMe', function (object) {
+            return object === "Christophe Thiebaud" ? "Moi" : object
         })
 
         const source = document.getElementById("artist-template").innerHTML;
