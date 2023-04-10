@@ -24,47 +24,6 @@ const Ω = {
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
 
                 $("code#artists").load('/_artists.yaml', function (response, status, xhr) {
-                    /*
-                    const qwe = jsYaml.load(response)
-                    // console.log(qwe)
-                    const today = moment('Apr 8, 2023')
-                    const res = []
-                    const oneMonth = moment.duration(1, 'months')
-                    Object.keys(qwe).forEach((k) => {
-
-                        const firstVid = qwe[k]['▶'][0]
-                        const yt = firstVid.url
-                        const views = firstVid.views
-                        const started = moment(firstVid.started)
-                        const diff = today.diff(started)
-                        const durationInMonths = moment.duration(diff).asMonths()
-                        // console.log(k, asd, durationInMonths)
-                        // console.log(k, yt, )
-
-                        // console.log(k, yt, views, Math.floor(duration.asMonths()), Math.floor(views / Math.floor(duration.asMonths())))
-                        res.push({
-                            artist: k,
-                            video: yt,
-                            views: views,
-                            started: started,
-                            viewsPerMonth: Math.floor(views / durationInMonths)
-                        })
-                    })
-                    res.sort((a, b) => {
-                        return b.viewsPerMonth - a.viewsPerMonth;
-                        // return a.started.diff(b.started)
-                    })
-                    const ff = new Intl.NumberFormat('fr-FR')
-
-                    const s = `${"artist".padEnd(26)} | video since | ${"total views".padStart(11)} | ${"per month".padStart(10)}`
-                    console.log(s)
-                    console.log("---------------------------+-------------+-------------+-----------")
-                    res.forEach((r) => {
-                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewsPerMonth).padStart(10)}`
-                        console.log(s)
-                    })
-                    */
-                    
                     if (status == "success") {
                         Prism.highlightElement(this)
                     }
@@ -127,7 +86,7 @@ const Ω = {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick, .score').removeClass('fullwidth')
             }
-            iso.layout()
+            if (iso) iso.layout()
         })
         $("#helpAtStartCheck").on("click", function () {
             showHelpAtStartChecked = !showHelpAtStartChecked
@@ -169,7 +128,7 @@ const Ω = {
         if (fullWidthChecked) {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick, .score').addClass('fullwidth')
-            iso.layout()
+            if (iso) iso.layout()
         }
 
         $(".brick.hasScore").click(function (e) {

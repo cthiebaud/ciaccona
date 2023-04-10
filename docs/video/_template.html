@@ -76,7 +76,7 @@
             // Object.keys(artists).forEach((key) => {
             const sorted = artists.artists/* .sort((a, b) => b['▶'].viewsPerMonth - a['▶'].viewsPerMonth) */
             sorted.forEach((artist) => {
-                console.log(artist.fullname, artist['▶'].viewsPerMonth, artist['▶'].url)
+                console.log(artist.fullname, artist['▶'].viewsPerMonth, artist['▶'].youtubeUrl)
                 const key = artist.fullnameNoSpaceLowercaseNoDiacritics
                 const results = template({
                     key: key,
@@ -103,3 +103,47 @@
 </head>
 
 </html>
+<!-- 
+<script>
+    /*
+    const qwe = jsYaml.load(artistsAsYAMLText)
+    // console.log(qwe)
+    const today = moment('Apr 8, 2023')
+    const res = []
+    const oneMonth = moment.duration(1, 'months')
+    Object.keys(qwe).forEach((k) => {
+
+        const firstVid = qwe[k]['▶'][0]
+        const yt = firstVid.youtubeUrl
+        const views = firstVid.views
+        const started = moment(firstVid.started)
+        const diff = today.diff(started)
+        const durationInMonths = moment.duration(diff).asMonths()
+        // console.log(k, asd, durationInMonths)
+        // console.log(k, yt, )
+
+        // console.log(k, yt, views, Math.floor(duration.asMonths()), Math.floor(views / Math.floor(duration.asMonths())))
+        res.push({
+            artist: k,
+            video: yt,
+            views: views,
+            started: started,
+            viewsPerMonth: Math.floor(views / durationInMonths)
+        })
+    })
+    res.sort((a, b) => {
+        return b.viewsPerMonth - a.viewsPerMonth;
+        // return a.started.diff(b.started)
+    })
+    const ff = new Intl.NumberFormat('fr-FR')
+
+    const s = `${"artist".padEnd(26)} | video since | ${"total views".padStart(11)} | ${"per month".padStart(10)}`
+    console.log(s)
+    console.log("---------------------------+-------------+-------------+-----------")
+    res.forEach((r) => {
+        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewsPerMonth).padStart(10)}`
+        console.log(s)
+    })
+    */
+</script>
+-->

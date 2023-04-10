@@ -2,11 +2,8 @@ import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
 
-const meterDay = moment('2023-04-08T00:00:00Z')
-/*
-moment.defaultFormat = moment.defaultFormatUtc
-console.log(meterDay.format())
-*/
+const theDayWhenIReadTheVideoMeters = moment('2023-04-08T00:00:00Z')
+
 class Artist {
     constructor(a) {
         lodash.merge(this, a)
@@ -18,17 +15,16 @@ class Artist {
         this.social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com/video/${this.fullnameNoSpaceLowercaseNoDiacritics}.html`
 
         const vid = this['▶']
-        const videoId = vid.id
-        vid.url = `https://youtu.be/${videoId}`
-        vid.timingsUrl = `timings/${this.fullnameNoSpace}-${videoId}.js`
+        vid.youtubeUrl = `https://youtu.be/${vid.id}`
+        vid.timingsUrl = `timings/${this.fullnameNoSpace}-${vid.id}.js`
 
-        const videoIdNoHyphen = videoId.replace(/-/gi, '_')
+        const videoIdNoHyphen = vid.id.replace(/-/gi, '_')
         const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
         vid.javascriptizedId = videoIdNoHyphenNoStartingNumber
 
         if (false) { // calc viewsPerMonth ?
             const started = moment(vid.published)
-            const diff = meterDay.diff(started)
+            const diff = theDayWhenIReadTheVideoMeters.diff(started)
             const durationInMonths = moment.duration(diff).asMonths()
             vid.viewsPerMonth = Math.floor(vid.views / durationInMonths)
         }
@@ -37,39 +33,15 @@ class Artist {
 
 class Artists {
     artists = []
-    #mapVideoId2Artist = new Map()
-    #mapJavascriptizedVideoId2Artist = new Map()
     #mapNameNoSpaceLowercaseNoDiacritics2Artist = new Map()
     dump = () => {
-
         this.artists.forEach((a) => {
-            console.log(`'${a['▶'].id}', `)
-            // console.log(a.fullnameNoSpaceLowercaseNoDiacritics)
+            console.log(a)
         })
     }
     addArtist = (a) => {
-        this.#mapVideoId2Artist.set(a['▶'].id, a)
-        this.#mapJavascriptizedVideoId2Artist.set(a['▶'].javascriptizedId, a)
         this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.set(a.fullnameNoSpaceLowercaseNoDiacritics, a)
         this.artists.push(a)
-    }
-    validateVideoIdThenGetArtist = (videoId) => {
-        if (videoId == null) {
-            return undefined;
-        }
-
-        const artist = artists.getArtistFromVideoId(videoId)
-        if (artist == null) {
-            return undefined
-        }
-
-        return artist
-    }
-    getArtistFromVideoId = (id) => {
-        return this.#mapVideoId2Artist.get(id)
-    }
-    getArtistFromJavascriptizedVideoId = (javascriptizedId) => {
-        return this.#mapJavascriptizedVideoId2Artist.get(javascriptizedId)
     }
     getArtistFromNameNoSpaceLowercaseNoDiacritics = (nameNoSpaceLowercaseNoDiacritics) => {
         return this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.get(nameNoSpaceLowercaseNoDiacritics)
@@ -104,46 +76,3 @@ function loadArtists() {
 }
 
 export { loadArtists }
-
-/*
-                    const qwe = jsYaml.load(artistsAsYAMLText)
-                    // console.log(qwe)
-                    const today = moment('Apr 8, 2023')
-                    const res = []
-                    const oneMonth = moment.duration(1, 'months')
-                    Object.keys(qwe).forEach((k) => {
-
-                        const firstVid = qwe[k]['▶'][0]
-                        const yt = firstVid.url
-                        const views = firstVid.views
-                        const started = moment(firstVid.started)
-                        const diff = today.diff(started)
-                        const durationInMonths = moment.duration(diff).asMonths()
-                        // console.log(k, asd, durationInMonths)
-                        // console.log(k, yt, )
-
-                        // console.log(k, yt, views, Math.floor(duration.asMonths()), Math.floor(views / Math.floor(duration.asMonths())))
-                        res.push({
-                            artist: k,
-                            video: yt,
-                            views: views,
-                            started: started,
-                            viewsPerMonth: Math.floor(views / durationInMonths)
-                        })
-                    })
-                    res.sort((a, b) => {
-                        return b.viewsPerMonth - a.viewsPerMonth;
-                        // return a.started.diff(b.started)
-                    })
-                    const ff = new Intl.NumberFormat('fr-FR')
-
-                    const s = `${"artist".padEnd(26)} | video since | ${"total views".padStart(11)} | ${"per month".padStart(10)}`
-                    console.log(s)
-                    console.log("---------------------------+-------------+-------------+-----------")
-                    res.forEach((r) => {
-                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewsPerMonth).padStart(10)}`
-                        console.log(s)
-                    })
-
-    }
-    */
