@@ -37,27 +37,45 @@
     <!-- moment -->
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
 
-    <script>
-        const params = new Proxy(new URLSearchParams(window.location.search), {
-            get: (searchParams, prop) => searchParams.get(prop)
-        })
-    </script>
+    <style>
+        table.table-fit {
+            width: auto !important;
+            table-layout: auto !important;
+            margin: auto;
+        }
 
-    <script type="module">
-    </script>
+        table.table-fit thead th,
+        table.table-fit tfoot th {
+            width: auto !important;
+        }
+
+        table.table-fit tbody td,
+        table.table-fit tfoot td {
+            width: auto !important;
+        }
+
+        tbody>tr>td:nth-child(3),
+        tbody>tr>td:nth-child(4) {
+            white-space: nowrap;
+        }
+        thead>tr>th:nth-child(5),
+        thead>tr>th:nth-child(6) {
+            white-space: nowrap;
+        }
+    </style>
 
 </head>
 
 <body id="body" class="d-flex flex-column">
     <main id="perfContainer" class="container-fluid">
-        <header>
+        <header class="fixed-top p-2" style="background-color: #f0f0f0; height: 5.5rem">
             <button id="go-back" type="button" class="btn btn-light" style="float:right"><img src="svg/go-back-arrow-svgrepo-com.svg" style="width:32px;height:auto;"></button>
             <h1>Performers</h1>
             <p>Meters were read on 8 April 2023</p>
         </header>
-        <div id="perfContainerRow" class="row">
+        <div id="perfContainerRow" class="row" style="margin-top: 5.5rem;">
             <div id="perfContainerCol" class="col">
-                <table id="theTable" class="table table-responsive table-striped table-hover table-sm ">
+                <table id="theTable" class="table table-fit table-responsive table-striped table-hover table-sm ">
                     <thead>
                         <tr>
                             <!-- th scope="col">#</!-->
@@ -66,7 +84,7 @@
                             <th scope="col" class="text-end">Published</th>
                             <th scope="col"></th>
                             <th scope="col" class="text-end">Total Views</th>
-                            <th scope="col" class="text-end">View per Month</th>
+                            <th scope="col" class="text-end">Views per Month</th>
                         </tr>
                     </thead>
                     <tbody id="theBody">
