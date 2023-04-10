@@ -12,7 +12,8 @@ class Artist {
         this.fullnameNoSpace = this.fullname.replace(/\s/gi, '')
         this.fullnameNoSpaceLowercaseNoDiacritics = this.fullnameNoSpace.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") // https://stackoverflow.com/a/37511463/1070215
 
-        this.social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com/video/${this.fullnameNoSpaceLowercaseNoDiacritics}.html`
+        this.thisUrl = `/video/${this.fullnameNoSpaceLowercaseNoDiacritics}.html`
+        this.social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com${this.thisUrl}`
 
         const vid = this['▶']
         vid.youtubeUrl = `https://youtu.be/${vid.id}`

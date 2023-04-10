@@ -80,7 +80,7 @@
                         <tr>
                             <!-- th scope="col">#</!-->
                             <th scope="col">Performer</th>
-                            <th scope="col">Video</th>
+                            <th scope="col">Youtube</th>
                             <th scope="col" class="text-end">Published</th>
                             <th scope="col"></th>
                             <th scope="col" class="text-end">Total Views</th>
@@ -97,7 +97,7 @@
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
 <!-- th scope="row">{{@index}}</!-->
-<td>{{hideMe fullname}}</td>
+<td><a href={{thisUrl}}>{{hideMe fullname}}</a></td>
 <td><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
 <td class="text-end">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td>({{humanize v.durationMoment}})</td>
