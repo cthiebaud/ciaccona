@@ -22,12 +22,13 @@ class Artist {
         const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
         vid.javascriptizedId = videoIdNoHyphenNoStartingNumber
 
-        if (false) { // calc viewsPerMonth ?
-            const started = moment(vid.published)
-            const diff = theDayWhenIReadTheVideoMeters.diff(started)
-            const durationInMonths = moment.duration(diff).asMonths()
-            vid.viewsPerMonth = Math.floor(vid.views / durationInMonths)
+        if (true) { // calc viewsPerMonth ?
+            vid.publishedMoment = moment(vid.published)
+            vid.duration = theDayWhenIReadTheVideoMeters.diff(vid.publishedMoment)
+            vid.durationMoment = moment.duration(vid.duration )
+            vid.viewsPerMonth = Math.floor(vid.views / vid.durationMoment.asMonths())
         }
+        this.v = vid
     }
 }
 
@@ -47,6 +48,7 @@ class Artists {
         return this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.get(nameNoSpaceLowercaseNoDiacritics)
     }
     size = () => this.artists.length
+    sort = (f) => this.artists.sort(f)
 }
 
 function loadArtists() {
