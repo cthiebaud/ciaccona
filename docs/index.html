@@ -103,7 +103,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.7"
+        const ver = "v0.6.8"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -118,7 +118,7 @@
 
     <script type="module">
         // import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-        import { removeCookie } from "/js/__utils.js"
+        import { removeCookie } from "/js/_utils2.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -521,12 +521,12 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import { fullscore, showHelpAtStart } from "/js/__config.js"
-        import createColoredBadges from "/js/__colors.js"
-        import { createTimings } from "/js/__timings.js"
-        import resizeSVGs from "/js/__resizeSVGs.js"
-        import createPlayer from "/js/__player.js"
-        import { Ω } from "/js/__jquery.js"
+        import { fullscore, showHelpAtStart } from "/js/_config2.js"
+        import createColoredBadges from "/js/_colors2.js"
+        import { createTimings } from "/js/_timings2.js"
+        import resizeSVGs from "/js/_resizeSVGs2.js"
+        import createPlayer from "/js/_player2.js"
+        import { Ω } from "/js/_jquery2.js"
 
         // useless, but nice
         Ω.boot()

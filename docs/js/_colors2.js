@@ -1,8 +1,8 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import { shuffleArray } from "/js/__utils.js"
-import { index2duration } from "/js/__timings.js"
+import { shuffleArray } from "/js/_utils2.js"
+import { index2duration } from "/js/_timings2.js"
 
 const $ = jquery
 

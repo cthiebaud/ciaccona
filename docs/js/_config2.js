@@ -1,4 +1,4 @@
-import { getCookie } from "/js/__utils.js"
+import { getCookie } from "/js/_utils2.js"
 
 let fullscore = getCookie('fullscore')
 if (!fullscore || fullscore === 'false') {
