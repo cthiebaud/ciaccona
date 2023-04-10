@@ -27,7 +27,7 @@ const Ω = {
                     if (status == "success") {
                         Prism.highlightElement(this)
                     }
-                    $("code#thanks").load('/thanks.yaml', function (response, status, xhr) {
+                    $("code#thanks").load('/_thanks.yaml', function (response, status, xhr) {
                         if (status == "success") {
                             Prism.highlightElement(this)
                             $('#credits').show()
