@@ -50,8 +50,11 @@
 
 <body id="body" class="d-flex flex-column">
     <main id="perfContainer" class="container-fluid">
-        <h1>Performers</h1>
-        <p>Meters were read on 8 April 2023</p>
+        <header>
+            <button id="go-back" type="button" class="btn btn-light" style="float:right"><img src="svg/go-back-arrow-svgrepo-com.svg" style="width:32px;height:auto;"></button>
+            <h1>Performers</h1>
+            <p>Meters were read on 8 April 2023</p>
+        </header>
         <div id="perfContainerRow" class="row">
             <div id="perfContainerCol" class="col">
                 <table id="theTable" class="table table-responsive table-striped table-hover table-sm ">
@@ -90,6 +93,10 @@
 
     <script async type="module">
         import { loadArtists } from "/js/_artists2.js"
+
+        document.getElementById("go-back").addEventListener("click", () => {
+            history.back();
+        });
 
         const ff = new Intl.NumberFormat('en-US')
 
