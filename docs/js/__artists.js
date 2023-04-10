@@ -2,7 +2,11 @@ import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
 
-const meterDay = moment('Apr 8, 2023')
+const meterDay = moment('2023-04-08T00:00:00Z')
+/*
+moment.defaultFormat = moment.defaultFormatUtc
+console.log(meterDay.format())
+*/
 class Artist {
     constructor(a) {
         lodash.merge(this, a)
@@ -22,10 +26,12 @@ class Artist {
         const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
         vid.javascriptizedId = videoIdNoHyphenNoStartingNumber
 
-        const started = moment(vid.published)
-        const diff = meterDay.diff(started)
-        const durationInMonths = moment.duration(diff).asMonths()
-        vid.viewPerMonth =  Math.floor(vid.views / durationInMonths)
+        if (false) { // calc viewsPerMonth ?
+            const started = moment(vid.published)
+            const diff = meterDay.diff(started)
+            const durationInMonths = moment.duration(diff).asMonths()
+            vid.viewsPerMonth = Math.floor(vid.views / durationInMonths)
+        }
     }
 }
 
@@ -122,11 +128,11 @@ export { loadArtists }
                             video: yt,
                             views: views,
                             started: started,
-                            viewPerMonth: Math.floor(views / durationInMonths)
+                            viewsPerMonth: Math.floor(views / durationInMonths)
                         })
                     })
                     res.sort((a, b) => {
-                        return b.viewPerMonth - a.viewPerMonth;
+                        return b.viewsPerMonth - a.viewsPerMonth;
                         // return a.started.diff(b.started)
                     })
                     const ff = new Intl.NumberFormat('fr-FR')
@@ -135,7 +141,7 @@ export { loadArtists }
                     console.log(s)
                     console.log("---------------------------+-------------+-------------+-----------")
                     res.forEach((r) => {
-                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewPerMonth).padStart(10)}`
+                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewsPerMonth).padStart(10)}`
                         console.log(s)
                     })
 

@@ -173,8 +173,6 @@ const setBrickClickEvent = (_plyer, timings) => {
 }
 
 export default function createPlayer(selector, timings, ignore_all_events) {
-    const thisFunctionName = "createPlayer"
-
     return new Promise((resolve, reject) => {
         let _plyer = new plyr(selector, {
         })
@@ -269,14 +267,17 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                     })
                 }
                 if (closecloseCallback) closecloseCallback()
-
             }
 
+            closeInitializationCallback()
+
             resolve({
-                key: thisFunctionName,
+                key: "PLAYER",
                 value: {
+                    /*
                     player: _plyer,
                     closeInitializationCallback: closeInitializationCallback
+                    */
                 }
             })
         })

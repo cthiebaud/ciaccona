@@ -74,9 +74,9 @@
             const count = artists.size() - 1
             let i = 1
             // Object.keys(artists).forEach((key) => {
-            const sorted = artists.artists.sort((a, b) => b['▶'].viewPerMonth - a['▶'].viewPerMonth)
+            const sorted = artists.artists/* .sort((a, b) => b['▶'].viewsPerMonth - a['▶'].viewsPerMonth) */
             sorted.forEach((artist) => {
-                console.log(artist.fullname, artist['▶'].viewPerMonth, artist['▶'].url)
+                console.log(artist.fullname, artist['▶'].viewsPerMonth, artist['▶'].url)
                 const key = artist.fullnameNoSpaceLowercaseNoDiacritics
                 const results = template({
                     key: key,
@@ -95,7 +95,7 @@
                     saveAs(blob, `_${key}.html`);
                     console.log('saved', key)
                 }, 300 * i++)
-           */
+                */
                 // throw BreakException;
             })
         })

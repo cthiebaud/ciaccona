@@ -1,9 +1,5 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-/*
-import IsotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-import isotopeFitColumns from 'https://cdn.jsdelivr.net/npm/isotope-fit-columns@1.1.4/+esm'
-*/
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import { shuffleArray } from "/js/__utils.js"
 import { index2duration } from "/js/__timings.js"
@@ -11,7 +7,7 @@ import { index2duration } from "/js/__timings.js"
 const $ = jquery
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
-    const thisFunctionName = "createColoredBadges"
+
     return new Promise((resolve) => {
 
         const _widths_ = [
@@ -149,10 +145,10 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 
         const templateForArtist =
             `
-<div id="gb-artist" data-sort="-2" class="grid-brick artist">
+<div id="gb-artist" data-sort="-2" class="grid-brick artist" style="${!fullameNoSpaceLowercaseNoDiacritics ? 'display: none;' : ''}">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
         <div class="p-2" >
-            <span class="name" style="color: #d0d0d0">?</span>
+            <span class="name" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
             <a class="url text-muted" href="#">
                 <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="#external-link"></use>
@@ -249,6 +245,9 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         $gridById.children('.grid-brick').remove()
         $gridById.append($bricks)
 
-        resolve({ key: thisFunctionName, value: { iso: undefined } })
+        resolve({
+            key: "BADGES",
+            value: {}
+        })
     })
 }

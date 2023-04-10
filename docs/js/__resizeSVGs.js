@@ -1,5 +1,4 @@
 export default function resizeSVGs(selection, withOffsetX, elementCallback) {
-    const thisFunctionName = "resizeSVGs"
     let maxWidth = 0
     let maxHeight = 0
 
@@ -72,7 +71,7 @@ export default function resizeSVGs(selection, withOffsetX, elementCallback) {
 
         Promise.allSettled(lesPromessesDeLeSVG)
             .then(setViewBoxes)
-            .then(() => resolve({ key: thisFunctionName, value: { maxWidth: maxWidth, maxHeight: maxHeight } }))
+            .then(() => resolve({ key: "RESIZE", value: {} }))
             .catch((error) => reject(error))
     })
 }

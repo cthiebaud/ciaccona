@@ -47,11 +47,11 @@ const Ω = {
                             video: yt,
                             views: views,
                             started: started,
-                            viewPerMonth: Math.floor(views / durationInMonths)
+                            viewsPerMonth: Math.floor(views / durationInMonths)
                         })
                     })
                     res.sort((a, b) => {
-                        return b.viewPerMonth - a.viewPerMonth;
+                        return b.viewsPerMonth - a.viewsPerMonth;
                         // return a.started.diff(b.started)
                     })
                     const ff = new Intl.NumberFormat('fr-FR')
@@ -60,7 +60,7 @@ const Ω = {
                     console.log(s)
                     console.log("---------------------------+-------------+-------------+-----------")
                     res.forEach((r) => {
-                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewPerMonth).padStart(10)}`
+                        const s = `${r.artist.padEnd(26)} |    ${r.started.format('MMM YYYY')} | ${ff.format(r.views).padStart(11)} | ${ff.format(r.viewsPerMonth).padStart(10)}`
                         console.log(s)
                     })
                     */
