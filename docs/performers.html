@@ -256,13 +256,12 @@
                             if (line.children[cell_index].hasAttribute('data-timestamp')) {
                                 // if value is date, we store it's timestamp, so we can sort like a number
                                 key = line.children[cell_index].getAttribute('data-timestamp');
+                                number_count++;
                             }
                             else if (line.children[cell_index].hasAttribute('data-lastname')) {
-                                // if value is date, we store it's timestamp, so we can sort like a number
                                 key = line.children[cell_index].getAttribute('data-lastname');
                             }
                             else if (line.children[cell_index].hasAttribute('data-number')) {
-                                // if value is date, we store it's timestamp, so we can sort like a number
                                 key = line.children[cell_index].getAttribute('data-number');
                                 number_count++;
                             }
