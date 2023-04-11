@@ -5,10 +5,12 @@
     id: mg9kT7XiLoU
     views: 20052
     published: Apr 28, 2017
-  🕸:
+    length: 12′51″
+  others:
     - "https://youtu.be/mg9kT7XiLoU"
     - "https://youtu.be/6m0d3WtdJ3Q"
     - "https://youtu.be/He1A6_wuvhM"
+  🕸:
     - "https://www.amandinebeyer.com/"
 - firstname: Adolf
   lastname: Busch
@@ -16,6 +18,7 @@
     id: _ii7aPCQgHE
     views: 15832
     published: Mar 25, 2011
+    length: 13′48″
 - firstname: Andrea
   lastname: De Vitis
   twitter: itsDeVitis
@@ -23,6 +26,7 @@
     id: oxWq93mlAyc
     views: 117167
     published: Jan 5, 2020
+    length: 14′10″ 
   🕸: "http://www.andreadevitis.com/"
 - firstname: Anneleen
   lastname: Lenaerts
@@ -31,6 +35,7 @@
     id: KHwsHXtVWks
     views: 24159
     published: Aug 6, 2018
+    length: 14′16″
   🕸: "https://www.anneleenlenaerts.com/"
 - firstname: Bella
   lastname: Hristova
@@ -38,6 +43,7 @@
     id: XkfsGCIiHb4
     views: 219999
     published: Mar 4, 2014
+    length: 13′46″
   🕸: "https://www.bellahristova.com/"
 - firstname: Chiara
   lastname: Massini
@@ -46,6 +52,7 @@
     id: SzxzLtwK-eo
     views: 73417
     published: Apr 6, 2018
+    length: 12′31″
   🕸: "http://www.chiaramassini.com/"
 - firstname: Christian
   lastname: Tetzlaff
@@ -53,6 +60,7 @@
     id: mTTT5_oX69Q
     views: 26645
     published: Sep 7, 2017
+    length: 14′07″
   🕸: "https://www.christian-tetzlaff.de/"
 - firstname: Florentin
   lastname: Ginot
@@ -61,6 +69,7 @@
     id: maDgVXxV1b0
     views: 26314
     published: Nov 5, 2021
+    length: 14′49″
   🕸: "https://florentinginot.com/"
 - firstname: Genzoh
   lastname: Takehisa
@@ -70,6 +79,7 @@
     trueId: ze_QPWuyZLo
     views: 16200
     published: Oct 9, 2011
+    length: 12′22″
   🕸: "http://www.genzoh.jp"
 - firstname: Hilary
   lastname: Hahn
@@ -78,6 +88,7 @@
     id: ngjEVKxQCWs
     views: 1934985
     published: Aug 15, 2020
+    length: 17′50″
   🕸: "https://www.instagram.com/violincase/"
 - firstname: Isabelle
   lastname: Faust
@@ -85,6 +96,7 @@
     id: r67BASAgP5Q
     views: 14541
     published: Mar 28, 2020
+    length: 12′28″
   🕸: "https://www.impresariat-simmenauer.de/en/artist/isabelle-faust/"
 - firstname: Julia
   lastname: Fischer
@@ -92,6 +104,7 @@
     id: WZ0wkyRBlqo
     views: 22392
     published: Sep 26, 2014
+    length: 15′41″
   🕸: "https://www.juliafischer.com/"
 - firstname: Lisa
   lastname: Jacobs
@@ -100,6 +113,7 @@
     id: dyAcRqpjbqU
     views: 5491
     published: Jun 2, 2021
+    length: 14′58″
   🕸: "https://lisajacobs.nl/"
 - firstname: Liza
   lastname: Ferschtman
@@ -107,6 +121,7 @@
     id: 17uCirXzs8Q
     views: 8736
     published: Oct 22, 2020
+    length: 13′29″
   🕸: "https://lizaferschtman.nl/"
 - firstname: Marta
   lastname: Femenía
@@ -114,6 +129,7 @@
     id: P93o202UJRs
     views: 13495
     published: Oct 1, 2017
+    length: 15′36″
   🕸: "http://www.martafemenia.com/"
 - firstname: Martin
   lastname: Baker
@@ -122,6 +138,7 @@
     id: bKIPJqqH--Q
     views: 6293
     published: Oct 28, 2022
+    length: 18′18″
   🕸: "https://twitter.com/MartinBaker"
 - firstname: Michael
   lastname: Leontchik
@@ -129,12 +146,14 @@
     id: BVBgKOLkYu8
     views: 4041
     published: Nov 11, 2014
+    length: 13′43″
 - firstname: Midori
   lastname: Gotō
   ▶:
     id: KgSKvOAJMb8
     views: 781797
     published: Oct 17, 2017
+    length: 13′47″
   🕸: "https://www.midori-violin.com/"
 - firstname: Miguel
   lastname: Rincón
@@ -142,6 +161,7 @@
     id: Kxn0ySsHDRA
     views: 47398
     published: Sep 4, 2020
+    length: 10′48″
   🕸: "https://miguelrincon.net/"
 - firstname: Mika
   lastname: Stoltzman
@@ -150,11 +170,12 @@
     id: BYg7Di8CH9w
     views: 3681
     published: May 29, 2021
-    messaged: yes
-      - "https://youtu.be/MLX0Px_UtwI"
-      - "https://youtu.be/QaFgKp7Qvzw"
-      - "https://youtu.be/QaFgKp7Qvzw"
-      - "https://youtu.be/YOu5y_vyJr0"
+    length: 16′48″
+  others:
+    - "https://youtu.be/MLX0Px_UtwI"
+    - "https://youtu.be/QaFgKp7Qvzw"
+    - "https://youtu.be/QaFgKp7Qvzw"
+    - "https://youtu.be/YOu5y_vyJr0"
   🕸: "https://mikarimba-stoltzman.com/"
 - firstname: Moran
   lastname: Wasser
@@ -162,6 +183,7 @@
     id: YzP6mkPVzm0
     views: 615510
     published: May 19, 2016
+    length: 12′17″
   🕸: "https://www.youtube.com/@moranwasser"
 - firstname: Polina
   lastname: Osetinskaya
@@ -169,6 +191,7 @@
     id: AKMNFzKRTuc
     views: 48361
     published: Jul 4, 2021
+    length: 15′00″
   🕸: "https://osetinskaya.com/"
 - firstname: Petra
   lastname: Poláčková
@@ -176,6 +199,7 @@
     id: lxZqC_J0C74
     views: 107592
     published: Dec 11, 2019
+    length: 13′28″
   🕸: "http://www.petrapolackova.com/en/"
 - firstname: Rachel
   lastname: Podger
@@ -184,6 +208,7 @@
     id: 1HSJufg7I1I
     views: 81373
     published: Nov 26, 2017
+    length: 13′29″
   🕸: "https://www.rachelpodger.com/"
 - firstname: Rachell Ellen
   lastname: Wong
@@ -192,6 +217,7 @@
     id: 59KFAY_qf-Q
     views: 9479
     published: Jun 6, 2020
+    length: 14′05″
   🕸: "https://www.rachellwong.com/"
 - firstname: Raphaella
   lastname: Smits
@@ -199,12 +225,14 @@
     id: Jcy7E4uHYK8
     views: 348251
     published: Apr 20, 2015
+    length: 14′21″
 - firstname: Sigiswald
   lastname: Kuijken
   ▶:
     id: NCTDf8dNT5s
     views: 7224
     published: Apr 3, 2018
+    length: 11′39″
   🕸: "https://lapetitebande.be/en/"
 - firstname: Veronika
   lastname: Eberle
@@ -213,6 +241,7 @@
     id: Ilb3no_cwnI
     views: 70141
     published: May 28, 2020
+    length: 13′41″
   🕸: "https://www.instagram.com/veronikaeberle/"
 - firstname: Veronique
   lastname: De Raedemaeker
@@ -220,6 +249,7 @@
     id: AbZxSocrvvs
     views: 1274
     published: Mar 21, 2023
+    length: 15′46″
   🕸: "https://veroniquederaedemaeker.com/"
 - firstname: Virginie
   lastname: Robilliard
@@ -227,7 +257,7 @@
     id: KWcGsRKbe-U
     views: 3557
     published: May 18, 2021
-    messaged: yes
+    length: 13′45″
   🕸: "https://virginierobilliard.com/"
 - firstname: Von
   lastname: Hansen
@@ -235,6 +265,7 @@
     id: X5-F_w-rX4k
     views: 1588
     published: Apr 9, 2015
+    length: 14′47″
   🕸: "https://vonhansenmusic.com/"
 - firstname: Yun
   lastname: Park
@@ -242,6 +273,7 @@
     id: 5ITydjLkYUk
     views: 2175
     published: May 14, 2022
+    length: 12′31″
   🕸: "https://yunparkpercussion.com/"
 - firstname: Christophe
   lastname: Thiebaud
@@ -250,3 +282,4 @@
     id: Vslz1tDsaWw
     views: 895
     published: Sep 25, 2022
+    length: 14′42″

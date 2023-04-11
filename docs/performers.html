@@ -55,17 +55,48 @@
         }
 
         /* table head */
-        thead>tr>th:not(:first-child):not(:nth-child(4)) {
+        thead>tr>th:not(:first-child) {
             border-left: .5px solid gray;
         }
 
-        thead>tr>th:nth-child(5),
-        thead>tr>th:nth-child(6) {
+        thead>tr>th:nth-child(4),
+        thead>tr>th:nth-child(5) {
             white-space: nowrap;
         }
 
-        thead>tr>th>span:last-child {
+        thead>tr>th.sortable>span {
+            float: right;
+        }
+
+        thead>tr>th:not(.sortable)>span:last-child {
             display: none;
+        }
+
+        thead>tr>th.sortable>span {
+            position: relative;
+            min-width: 2rem;
+        }
+
+        thead>tr>th.sortable>span::after {
+            display: inline-block;
+            content: '';
+            background-image: url(svg/_sort-undefined.svg);
+            background-size: 22px 22px;
+            height: 22px;
+            width: 22px;
+            top:0;
+            right:0; 
+            position: absolute;
+        }
+
+        thead>tr>th.sortable.sorted_asc>span::after {
+            background-image: url(svg/_sort-asc.svg);
+            opacity: 1;
+        }
+
+        thead>tr>th.sortable.sorted_desc>span::after {
+            background-image: url(svg/_sort-desc.svg);
+            opacity: 1;
         }
 
         /* table body */
@@ -83,12 +114,13 @@
             white-space: nowrap;
         }
 
-        tbody>tr>td:nth-child(4) {
+        tbody>tr>td:nth-child(5) {
             font-style: italic;
         }
 
-        tbody>tr>td:nth-child(5),
-        tbody>tr>td:nth-child(6) {
+        tbody>tr>td:nth-child(3),
+        tbody>tr>td:nth-child(6),
+        tbody>tr>td:nth-child(7) {
             font-family: var(--bs-font-monospace) !important;
         }
     </style>
@@ -106,14 +138,14 @@
             <div id="perfContainerCol" class="col">
                 <table id="theTable" class="table table-fit table-responsive table-striped table-hover table-sm ">
                     <thead>
-                        <tr>
+                        <tr style="font-size:smaller">
                             <!-- th scope="col">#</!-->
-                            <th scope="col" class="text-start"> Performer <span>&uarr;</span></th>
-                            <th scope="col" class="text-center">YT<span>&uarr;</span></th>
-                            <th scope="col" class="text-end"> Published <span>&uarr;</span></th>
-                            <th scope="col" class="text-start"> on <span>&uarr;</span></th>
-                            <th scope="col" class="text-center">Views <span>&uarr;</span></th>
-                            <th scope="col" class="text-end"> Monthly Views<span>&uarr;</span></th>
+                            <th scope="col" class="text-start sortable"             >Performer    <span>&nbsp;</span></th>
+                            <th scope="col" class="text-center"                     >YT           <span>&nbsp;</span></th>
+                            <th scope="col" class="text-center sortable"            >&nbsp;       <span>&nbsp;</span></th>
+                            <th scope="col" class="text-center sortable" colspan="2">Published on <span>&nbsp;</span></th>
+                            <th scope="col" class="text-center sortable"            >Views        <span>&nbsp;</span></th>
+                            <th scope="col" class="text-end sortable"               >Monthly      <span>&nbsp;</span></th>
                         </tr>
                     </thead>
                     <tbody id="theBody">
@@ -123,15 +155,17 @@
         </div>
     </main>
 
+
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
 <!-- th scope="row">{{@index}}</!-->
 <th><a href={{thisUrl}}>{{hideMe fullname}}</a></th>
 <td class="text-center"><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
-<td class="text-end">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
+<td class="text-end">{{v.length}}</td>
+<td class="text-end" data-timestamp="{{dateFormat v.publishedMoment "YYMM"}}">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td>{{humanize v.durationMoment}}</td>
-<td class="text-end">{{numberFormat v.views}}</td>
-<td class="text-end">{{numberFormat v.viewsPerMonth}}</td>
+<td class="text-end" data-number="{{v.views}}">{{numberFormat v.views}}</td>
+<td class="text-end" data-number="{{v.viewsPerMonth}}">{{numberFormat v.viewsPerMonth}}</td>
 </tr>{{/each}}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -167,20 +201,26 @@
 
             const bodyContent = template(sorted)
             theBody.innerHTML = bodyContent
+
+            document.querySelector('#theTable > thead > tr > th:last-child').classList.add('sorted_asc')
         })
 
     </script>
 
-    <!-- script>
+    <script>
         window.onload = function () {
-            document.querySelectorAll('th').forEach((element) => { // Table headers
+            document.querySelectorAll('th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6)').forEach((element) => { // Table headers
                 element.addEventListener('click', function () {
                     let table = this.closest('table');
 
                     // If the column is sortable
                     if (this.querySelector('span')) {
-                        let order_icon = this.querySelector('span');
-                        let order = encodeURI(order_icon.innerHTML).includes('%E2%86%91') ? 'desc' : 'asc';
+                        let previousOrder = undefined
+                        if (element.classList.contains("sorted_asc")) {
+                            previousOrder = 'asc'
+                        } if (element.classList.contains("sorted_desc")) {
+                            previousOrder = 'desc'
+                        }
                         let separator = '-----'; // Separate the value of it's index, so data keeps intact
 
                         let value_list = {}; // <tr> Object
@@ -189,15 +229,21 @@
                         let string_count = 0;
                         let number_count = 0;
 
+                        const cell_index = element.cellIndex < 3 ? element.cellIndex : element.cellIndex + 1
+
                         // <tbody> rows
                         table.querySelectorAll('tbody tr').forEach((line, index_line) => {
                             // Value of each field
-                            let key = line.children[element.cellIndex].textContent.toUpperCase();
+                            let key = line.children[cell_index].textContent.toUpperCase();
 
                             // Check if value is date, numeric or string
-                            if (line.children[element.cellIndex].hasAttribute('data-timestamp')) {
+                            if (line.children[cell_index].hasAttribute('data-timestamp')) {
                                 // if value is date, we store it's timestamp, so we can sort like a number
-                                key = line.children[element.cellIndex].getAttribute('data-timestamp');
+                                key = line.children[cell_index].getAttribute('data-timestamp');
+                            }
+                            else if (line.children[cell_index].hasAttribute('data-number')) {
+                                // if value is date, we store it's timestamp, so we can sort like a number
+                                key = line.children[cell_index].getAttribute('data-number');
                             }
                             else if (key.replace('-', '').match(/^[0-9,.]*$/g)) {
                                 number_count++;
@@ -218,12 +264,20 @@
                             obj_key.sort();
                         }
 
-                        if (order === 'desc') {
+                        table.querySelectorAll('thead tr th ').forEach((line, index_line) => {
+                            line.classList.remove("sorted_asc")
+                            line.classList.remove("sorted_desc")
+                        })
+
+                        if (typeof previousOrder === 'undefined') {
+                            element.classList.add("sorted_desc")
+                        } else if (previousOrder === 'desc') {
                             obj_key.reverse();
-                            order_icon.innerHTML = '&darr;';
-                        }
-                        else {
-                            order_icon.innerHTML = '&uarr;';
+                            element.classList.add("sorted_asc")
+                        } else if (previousOrder === 'asc') {
+                            element.classList.add("sorted_desc")
+                        } else {
+                            throw Error('non si può')
                         }
 
                         let html = '';
@@ -235,7 +289,7 @@
                 });
             });
         }
-    </!script -->
+    </script>
 
 </body>
 
