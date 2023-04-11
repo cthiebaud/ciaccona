@@ -1,6 +1,7 @@
 - firstname: Amandine
   lastname: Beyer
   twitter: AmandineBeyerGI
+  flag: 🇫🇷
   ▶:
     id: mg9kT7XiLoU
     views: 20052
@@ -16,6 +17,7 @@
     - "https://www.amandinebeyer.com/"
 - firstname: Adolf
   lastname: Busch
+  flag: 🇩🇪
   ▶:
     id: _ii7aPCQgHE
     views: 15832
@@ -26,6 +28,7 @@
 - firstname: Andrea
   lastname: De Vitis
   twitter: itsDeVitis
+  flag: 🇮🇹
   ▶:
     id: oxWq93mlAyc
     views: 117167
@@ -37,6 +40,7 @@
 - firstname: Anneleen
   lastname: Lenaerts
   twitter: AnnelLenaerts
+  flag: 🇧🇪
   ▶:
     id: KHwsHXtVWks
     views: 24159
@@ -47,6 +51,7 @@
   🕸: "https://www.anneleenlenaerts.com/"
 - firstname: Bella
   lastname: Hristova
+  flag: 🇧🇬
   ▶:
     id: XkfsGCIiHb4
     views: 219999
@@ -58,6 +63,7 @@
 - firstname: Chiara
   lastname: Massini
   twitter: Chiara2110
+  flag: 🇮🇹
   ▶:
     id: SzxzLtwK-eo
     views: 73417
@@ -69,6 +75,7 @@
   🕸: "http://www.chiaramassini.com/"
 - firstname: Christian
   lastname: Tetzlaff
+  flag: 🇩🇪
   ▶:
     id: mTTT5_oX69Q
     views: 26645
@@ -80,6 +87,7 @@
 - firstname: Florentin
   lastname: Ginot
   twitter: FlorentinGinot
+  flag: 🇫🇷
   ▶:
     id: maDgVXxV1b0
     views: 26314
@@ -91,6 +99,7 @@
 - firstname: Genzoh
   lastname: Takehisa
   twitter: genzohtakehisa
+  flag: 🇯🇵
   ▶:
     id: JETARLGbUJo
     trueId: ze_QPWuyZLo
@@ -104,6 +113,7 @@
 - firstname: Hilary
   lastname: Hahn
   twitter: violincase
+  flag: 🇺🇸
   ▶:
     id: ngjEVKxQCWs
     views: 1934985
@@ -114,6 +124,7 @@
   🕸: "https://www.instagram.com/violincase/"
 - firstname: Isabelle
   lastname: Faust
+  flag: 🇩🇪
   ▶:
     id: r67BASAgP5Q
     views: 14541
@@ -124,6 +135,7 @@
   🕸: "https://www.impresariat-simmenauer.de/en/artist/isabelle-faust/"
 - firstname: Julia
   lastname: Fischer
+  flag: 🇩🇪
   ▶:
     id: WZ0wkyRBlqo
     views: 22392
@@ -135,6 +147,7 @@
 - firstname: Lisa
   lastname: Jacobs
   twitter: lisajacobs85
+  flag: 🇳🇱
   ▶:
     id: dyAcRqpjbqU
     views: 5491
@@ -145,6 +158,7 @@
   🕸: "https://lisajacobs.nl/"
 - firstname: Liza
   lastname: Ferschtman
+  flag: 🇳🇱
   ▶:
     id: 17uCirXzs8Q
     views: 8736
@@ -155,6 +169,7 @@
   🕸: "https://lizaferschtman.nl/"
 - firstname: Marta
   lastname: Femenía
+  flag: 🇪🇸
   ▶:
     id: P93o202UJRs
     views: 13495
@@ -166,6 +181,7 @@
 - firstname: Martin
   lastname: Baker
   twitter: MartinBaker
+  flag: 🇬🇧
   ▶:
     id: bKIPJqqH--Q
     views: 6293
@@ -176,6 +192,7 @@
   🕸: "https://twitter.com/MartinBaker"
 - firstname: Michael
   lastname: Leontchik
+  flag: 🇧🇾
   ▶:
     id: BVBgKOLkYu8
     views: 4041
@@ -185,6 +202,7 @@
     a4: 440
 - firstname: Midori
   lastname: Gotō
+  flag: 🇯🇵
   ▶:
     id: KgSKvOAJMb8
     views: 781797
@@ -195,6 +213,7 @@
   🕸: "https://www.midori-violin.com/"
 - firstname: Miguel
   lastname: Rincón
+  flag: 🇪🇸
   ▶:
     id: Kxn0ySsHDRA
     views: 47398
@@ -206,6 +225,7 @@
 - firstname: Mika
   lastname: Stoltzman
   twitter: MikaStoltzman
+  flag: 🇯🇵
   ▶:
     id: BYg7Di8CH9w
     views: 3681
@@ -221,6 +241,7 @@
   🕸: "https://mikarimba-stoltzman.com/"
 - firstname: Moran
   lastname: Wasser
+  flag: '?'
   ▶:
     id: YzP6mkPVzm0
     views: 615510
@@ -231,6 +252,7 @@
   🕸: "https://www.youtube.com/@moranwasser"
 - firstname: Polina
   lastname: Osetinskaya
+  flag: 🇷🇺
   ▶:
     id: AKMNFzKRTuc
     views: 48361
@@ -241,6 +263,7 @@
   🕸: "https://osetinskaya.com/"
 - firstname: Petra
   lastname: Poláčková
+  flag: 🇨🇿
   ▶:
     id: lxZqC_J0C74
     views: 107592
@@ -252,6 +275,7 @@
 - firstname: Rachel
   lastname: Podger
   twitter: RachPodger
+  flag: 🇬🇧
   ▶:
     id: 1HSJufg7I1I
     views: 81373
@@ -263,6 +287,7 @@
 - firstname: Rachell Ellen
   lastname: Wong
   twitter: rachellviolin
+  flag: 🇺🇸
   ▶:
     id: 59KFAY_qf-Q
     views: 9479
@@ -273,6 +298,7 @@
   🕸: "https://www.rachellwong.com/"
 - firstname: Raphaella
   lastname: Smits
+  flag: 🇧🇪
   ▶:
     id: Jcy7E4uHYK8
     views: 348251
@@ -280,8 +306,10 @@
     length: 14′21″
     pitch: 69.3
     a4: 415
+  🕸: https://www.rsmits.com/
 - firstname: Sigiswald
   lastname: Kuijken
+  flag: 🇧🇪
   ▶:
     id: NCTDf8dNT5s
     views: 7224
@@ -293,6 +321,7 @@
 - firstname: Veronika
   lastname: Eberle
   twitter: veronika_eberle
+  flag: 🇩🇪
   ▶:
     id: Ilb3no_cwnI
     views: 70141
@@ -303,6 +332,7 @@
   🕸: "https://www.instagram.com/veronikaeberle/"
 - firstname: Veronique
   lastname: De Raedemaeker
+  flag: 🇧🇪
   ▶:
     id: AbZxSocrvvs
     views: 1274
@@ -313,6 +343,7 @@
   🕸: "https://veroniquederaedemaeker.com/"
 - firstname: Virginie
   lastname: Robilliard
+  flag: 🇫🇷
   ▶:
     id: KWcGsRKbe-U
     views: 3557
@@ -323,6 +354,7 @@
   🕸: "https://virginierobilliard.com/"
 - firstname: Von
   lastname: Hansen
+  flag: 🇺🇸
   ▶:
     id: X5-F_w-rX4k
     views: 1588
@@ -333,6 +365,7 @@
   🕸: "https://vonhansenmusic.com/"
 - firstname: Yun
   lastname: Park
+  flag: 🇰🇷
   ▶:
     id: 5ITydjLkYUk
     views: 2175
@@ -344,6 +377,7 @@
 - firstname: Christophe
   lastname: Thiebaud
   twitter: cthiebaud
+  flag: 🇫🇷
   ▶:
     id: Vslz1tDsaWw
     views: 895

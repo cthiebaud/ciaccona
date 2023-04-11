@@ -59,8 +59,8 @@
             border-left: .5px solid gray;
         }
 
-        thead>tr>th:nth-child(6),
-        thead>tr>th:nth-child(7) {
+        thead>tr>th.published,
+        thead>tr>th.since {
             white-space: nowrap;
         }
 
@@ -75,8 +75,9 @@
         thead>tr>th.sortable {
             min-width: 5rem;
         }
+
         thead>tr>th.sortable>span {
-            position: relative; 
+            position: relative;
         }
 
         thead>tr>th.sortable>span::after {
@@ -87,8 +88,8 @@
             background-repeat: no-repeat;
             height: 22px;
             width: 22px;
-            top:0;
-            right:0; 
+            top: 0;
+            right: 0;
             position: absolute;
         }
 
@@ -121,7 +122,6 @@
             font-style: italic;
         }
 
-        tbody>tr>td.yt,
         tbody>tr>td.herz,
         tbody>tr>td.length,
         tbody>tr>td.views,
@@ -145,13 +145,14 @@
                     <thead>
                         <tr style="font-size:smaller">
                             <!-- th scope="col">#</!-->
-                            <th scope="col" class="text-start sortable"             >Performer    <span></span></th>
-                            <th scope="col" class="text-center"                     >YT           <span></span></th>
-                            <th scope="col" class="text-center sortable"><img src="svg/diapason-tuner-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span></th>         
-                            <th scope="col" class="text-center sortable"><img src="svg/pendulum-tempo-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span></th>
-                            <th scope="col" class="text-center sortable" colspan="2">Published on <span></span></th>
-                            <th scope="col" class="text-center sortable"            >Views        <span></span></th>
-                            <th scope="col" class="text-end sortable"               >Monthly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></th>
+                            <th scope="col" class="name      text-start  sortable">Performer <span></span></th>
+                            <th scope="col" class="flag      text-center sortable">&nbsp;   <span></span></th>
+                            <th scope="col" class="published text-center sortable" colspan="2">Published on <span></span></th>
+                            <th scope="col" class="views     text-center sortable">Views <span></span></th>
+                            <th scope="col" class="monthly   text-end    sortable">Monthly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></th>
+                            <th scope="col" class="length    text-center sortable"><img src="svg/pendulum-tempo-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span></th>
+                            <th scope="col" class="herz      text-center sortable"><img src="svg/diapason-tuner-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span></th>
+                            <th scope="col" class="yt        text-center">YT <span></span></th>
                         </tr>
                     </thead>
                     <tbody id="theBody">
@@ -166,13 +167,14 @@
 <tr>
 <!-- th scope="row">{{@index}}</!-->
 <th class="name"><a href={{thisUrl}}>{{hideMe fullname}}</a></th>
-<td class="yt text-center"><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
-<td class="herz text-center">{{v.a4}}<span style="font-size:10pt;">hz</span></td>
-<td class="length text-center">{{v.length}}</td>
+<th class="flag text-center">{{flag}}</th>
 <td class="published text-end" data-timestamp="{{dateFormat v.publishedMoment "YYMM"}}">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td class="since">{{humanize v.durationMoment}}</td>
-<td class="views text-end" data-number="{{v.views}}">{{numberFormat v.views}}</td>
-<td class="monthly text-end" data-number="{{v.viewsPerMonth}}">{{numberFormat v.viewsPerMonth}}</td>
+<td class="views     text-end" data-number="{{v.views}}">{{numberFormat v.views}}</td>
+<td class="monthly   text-end" data-number="{{v.viewsPerMonth}}">{{numberFormat v.viewsPerMonth}}</td>
+<td class="length    text-center">{{v.length}}</td>
+<td class="herz      text-center">{{v.a4}}<span style="font-size:10pt;">hz</span></td>
+<td class="yt        text-center"><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
 </tr>{{/each}}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -204,19 +206,17 @@
         const template = Handlebars.compile(source);
 
         loadArtists().then((artists) => {
-            const sorted = artists.sort((a, b) => b['▶'].viewsPerMonth - a['▶'].viewsPerMonth)
-
-            const bodyContent = template(sorted)
+            const bodyContent = template(artists.artists)
             theBody.innerHTML = bodyContent
 
-            document.querySelector('#theTable > thead > tr > th:last-child').classList.add('sorted_asc')
+            // document.querySelector('#theTable > thead > tr > th:last-child').classList.add('sorted_asc')
         })
 
     </script>
 
     <script>
         window.onload = function () {
-            document.querySelectorAll('th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6), th:nth-child(7)').forEach((element) => { // Table headers
+            document.querySelectorAll('th:nth-child(1), th:nth-child(2), th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6), th:nth-child(7)').forEach((element) => { // Table headers
                 element.addEventListener('click', function () {
                     let table = this.closest('table');
 
@@ -236,7 +236,7 @@
                         let string_count = 0;
                         let number_count = 0;
 
-                        const cell_index = element.cellIndex < 5 ? element.cellIndex : element.cellIndex + 1
+                        const cell_index = element.cellIndex < 3 ? element.cellIndex : element.cellIndex + 1
 
                         // <tbody> rows
                         table.querySelectorAll('tbody tr').forEach((line, index_line) => {
