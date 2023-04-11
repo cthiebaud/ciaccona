@@ -1,5 +1,6 @@
 - firstname: Amandine
   lastname: Beyer
+  twitter: AmandineBeyerGI
   ▶:
     id: mg9kT7XiLoU
     views: 20052
@@ -9,7 +10,6 @@
     - "https://youtu.be/6m0d3WtdJ3Q"
     - "https://youtu.be/He1A6_wuvhM"
     - "https://www.amandinebeyer.com/"
-  twitter: AmandineBeyerGI
 - firstname: Adolf
   lastname: Busch
   ▶:
@@ -18,20 +18,20 @@
     published: Mar 25, 2011
 - firstname: Andrea
   lastname: De Vitis
+  twitter: itsDeVitis
   ▶:
     id: oxWq93mlAyc
     views: 117167
     published: Jan 5, 2020
   🕸: "http://www.andreadevitis.com/"
-  twitter: itsDeVitis
 - firstname: Anneleen
   lastname: Lenaerts
+  twitter: AnnelLenaerts
   ▶:
     id: KHwsHXtVWks
     views: 24159
     published: Aug 6, 2018
   🕸: "https://www.anneleenlenaerts.com/"
-  twitter: AnnelLenaerts
 - firstname: Bella
   lastname: Hristova
   ▶:
@@ -41,12 +41,12 @@
   🕸: "https://www.bellahristova.com/"
 - firstname: Chiara
   lastname: Massini
+  twitter: Chiara2110
   ▶:
     id: SzxzLtwK-eo
     views: 73417
     published: Apr 6, 2018
   🕸: "http://www.chiaramassini.com/"
-  twitter: Chiara2110
 - firstname: Christian
   lastname: Tetzlaff
   ▶:
@@ -56,29 +56,29 @@
   🕸: "https://www.christian-tetzlaff.de/"
 - firstname: Florentin
   lastname: Ginot
+  twitter: FlorentinGinot
   ▶:
     id: maDgVXxV1b0
     views: 26314
     published: Nov 5, 2021
   🕸: "https://florentinginot.com/"
-  twitter: FlorentinGinot
 - firstname: Genzoh
   lastname: Takehisa
+  twitter: genzohtakehisa
   ▶:
     id: JETARLGbUJo
     trueId: ze_QPWuyZLo
     views: 16200
     published: Oct 9, 2011
   🕸: "http://www.genzoh.jp"
-  twitter: genzohtakehisa
 - firstname: Hilary
   lastname: Hahn
+  twitter: violincase
   ▶:
     id: ngjEVKxQCWs
     views: 1934985
     published: Aug 15, 2020
   🕸: "https://www.instagram.com/violincase/"
-  twitter: violincase
 - firstname: Isabelle
   lastname: Faust
   ▶:
@@ -95,12 +95,12 @@
   🕸: "https://www.juliafischer.com/"
 - firstname: Lisa
   lastname: Jacobs
+  twitter: lisajacobs85
   ▶:
     id: dyAcRqpjbqU
     views: 5491
     published: Jun 2, 2021
   🕸: "https://lisajacobs.nl/"
-  twitter: lisajacobs85
 - firstname: Liza
   lastname: Ferschtman
   ▶:
@@ -117,12 +117,12 @@
   🕸: "http://www.martafemenia.com/"
 - firstname: Martin
   lastname: Baker
+  twitter: MartinBaker
   ▶:
     id: bKIPJqqH--Q
     views: 6293
     published: Oct 28, 2022
-  🕸: "https://twitter.com/martinbaker"
-  twitter: MartinBaker
+  🕸: "https://twitter.com/MartinBaker"
 - firstname: Michael
   lastname: Leontchik
   ▶:
@@ -145,6 +145,7 @@
   🕸: "https://miguelrincon.net/"
 - firstname: Mika
   lastname: Stoltzman
+  twitter: MikaStoltzman
   ▶:
     id: BYg7Di8CH9w
     views: 3681
@@ -155,7 +156,6 @@
       - "https://youtu.be/QaFgKp7Qvzw"
       - "https://youtu.be/YOu5y_vyJr0"
   🕸: "https://mikarimba-stoltzman.com/"
-  twitter: MikaStoltzman
 - firstname: Moran
   lastname: Wasser
   ▶:
@@ -179,20 +179,20 @@
   🕸: "http://www.petrapolackova.com/en/"
 - firstname: Rachel
   lastname: Podger
+  twitter: RachPodger
   ▶:
     id: 1HSJufg7I1I
     views: 81373
     published: Nov 26, 2017
   🕸: "https://www.rachelpodger.com/"
-  twitter: RachPodger
 - firstname: Rachell Ellen
   lastname: Wong
+  twitter: rachellviolin
   ▶:
     id: 59KFAY_qf-Q
     views: 9479
     published: Jun 6, 2020
   🕸: "https://www.rachellwong.com/"
-  twitter: rachellviolin
 - firstname: Raphaella
   lastname: Smits
   ▶:
@@ -208,12 +208,12 @@
   🕸: "https://lapetitebande.be/en/"
 - firstname: Veronika
   lastname: Eberle
+  twitter: veronika_eberle
   ▶:
     id: Ilb3no_cwnI
     views: 70141
     published: May 28, 2020
   🕸: "https://www.instagram.com/veronikaeberle/"
-  twitter: veronika_eberle
 - firstname: Veronique
   lastname: De Raedemaeker
   ▶:
@@ -245,6 +245,7 @@
   🕸: "https://yunparkpercussion.com/"
 - firstname: Christophe
   lastname: Thiebaud
+  twitter: cthiebaud
   ▶:
     id: Vslz1tDsaWw
     views: 895

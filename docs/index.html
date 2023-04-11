@@ -424,8 +424,8 @@
 
     <header style="display: none !important; z-index: 3; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top p-3 d-flex flex-wrap justify-content-center align-items-center">
-        <ul class="nav col-md-4 flex-fill justify-content-center list-unstyled d-flex" style="background: #57728b40;">
-            <li class="">
+        <ul class="nav col-md-4 flex-fill justify-content-center list-unstyled d-flex"><!-- style="background: #57728b40;" -->
+            <li class="" style="display: none;">
                 <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#github"></use>
@@ -433,34 +433,34 @@
                 </a>
             </li>
             <li class="ms-2">
-                <a class="text-muted" target="twitter" href="https://twitter.com/cthiebaud">
+                <a class="text-muted" target="twitter" href="https://twitter.com/ciacconabwv1004">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#twitter"></use>
                     </svg>
                 </a>
             </li>
-            <li class="ms-2">
+            <li class="ms-2" style="display: none;">
                 <a class="text-muted" target="linkedin" href="https://www.linkedin.com/in/cthiebaud">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#linkedin"></use>
                     </svg>
                 </a>
             </li>
-            <li class="ms-2">
+            <li class="ms-2" style="display: none;">
                 <a class="text-muted" target="instagram" href="https://www.instagram.com/cthiebaud/">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#instagram"></use>
                     </svg>
                 </a>
             </li>
-            <li class="ms-2">
+            <li class="ms-2" style="display: none;">
                 <a class="text-muted" target="facebook" href="https://www.facebook.com/christophe.thiebaud">
                     <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#facebook"></use>
                     </svg>
                 </a>
             </li>
-            <li class="ms-2">
+            <li class="ms-2" style="display: none;">
                 <a class="text-muted" target="youtube" href="https://www.youtube.com/channel/UCxt1pFJkKS3LlhmSsHCrZkg">
                     <svg width="34.286" height="24" preserveAspectRatio="xMidYMid meet">
                         <use xlink:href="#youtubeBlack"></use>
@@ -488,7 +488,7 @@
                 </svg>
             </a>
         </div>
-        <div class="ms-3" style="margin-top: auto; background: #57728b40;">
+        <div class="ms-3" style="margin-top: auto;"><!--  background: #57728b40; -->
             <span class="text-muted" style="margin-top: auto;"><span>© 2023 Christophe Thiebaud</span></span>
         </div>
         <div class="ms-3" style="margin-top: auto;">
@@ -496,6 +496,11 @@
             <script>
                 document.getElementById('version').innerHTML = ver
             </script>
+            <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
+                <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
+                    <use xlink:href="#github"></use>
+                </svg>
+            </a>
         </div>
     </footer>
 
