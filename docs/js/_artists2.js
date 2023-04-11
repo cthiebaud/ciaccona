@@ -17,6 +17,7 @@ class Artist {
 
         const vid = this['▶']
         vid.youtubeUrl = `https://youtu.be/${vid.id}`
+        if (vid.trueId) vid.youtubeTrueUrl = `https://youtu.be/${vid.trueId}`
         vid.timingsUrl = `timings/${this.fullnameNoSpace}-${vid.id}.js`
 
         const videoIdNoHyphen = vid.id.replace(/-/gi, '_')
