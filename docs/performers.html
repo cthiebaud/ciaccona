@@ -54,45 +54,66 @@
             width: auto !important;
         }
 
+        /* table head */
+        thead>tr>th:not(:first-child):not(:nth-child(4)) {
+            border-left: .5px solid gray;
+        }
+
         thead>tr>th:nth-child(5),
         thead>tr>th:nth-child(6) {
             white-space: nowrap;
         }
+
         thead>tr>th>span:last-child {
-            display:none;
+            display: none;
+        }
+
+        /* table body */
+        tbody>tr>td:nth-child(2) {
+            font-family: var(--bs-font-monospace) !important;
+            font-size: 10pt;
+            max-width: 4rem;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         tbody>tr>td:nth-child(3),
         tbody>tr>td:nth-child(4) {
             white-space: nowrap;
         }
+
         tbody>tr>td:nth-child(4) {
-            font-style:italic;
+            font-style: italic;
         }
 
+        tbody>tr>td:nth-child(5),
+        tbody>tr>td:nth-child(6) {
+            font-family: var(--bs-font-monospace) !important;
+        }
     </style>
 
 </head>
 
 <body id="body" class="d-flex flex-column">
     <main id="perfContainer" class="container-fluid">
-        <header class="fixed-top p-2" style="background-color: #f0f0f0; height: 5.5rem">
+        <header class="fixed-top p-2" style="background-color: #f0f0f0; height: 6rem">
             <button id="go-back" type="button" class="btn btn-light" style="float:right"><img src="svg/go-back-arrow-svgrepo-com.svg" style="width:32px;height:auto;"></button>
             <h1>Performers</h1>
             <p>Meters were read on 8 April 2023</p>
         </header>
-        <div id="perfContainerRow" class="row" style="margin-top: 5.5rem;">
+        <div id="perfContainerRow" class="row" style="margin-top: 6rem;">
             <div id="perfContainerCol" class="col">
                 <table id="theTable" class="table table-fit table-responsive table-striped table-hover table-sm ">
                     <thead>
                         <tr>
                             <!-- th scope="col">#</!-->
-                            <th scope="col">Performer                       <span>&uarr;</span></th>
-                            <th scope="col">Youtube                         <span>&uarr;</span></th>
-                            <th scope="col" class="text-end">Published      <span>&uarr;</span></th>
-                            <th scope="col">&nbsp;                          <span>&uarr;</span></th>
-                            <th scope="col" class="text-end">Total Views    <span>&uarr;</span></th>
-                            <th scope="col" class="text-end">Views per Month<span>&uarr;</span></th>
+                            <th scope="col" class="text-start"> Performer <span>&uarr;</span></th>
+                            <th scope="col" class="text-center">YT<span>&uarr;</span></th>
+                            <th scope="col" class="text-end"> Published <span>&uarr;</span></th>
+                            <th scope="col" class="text-start"> on <span>&uarr;</span></th>
+                            <th scope="col" class="text-center">Views <span>&uarr;</span></th>
+                            <th scope="col" class="text-end"> Monthly Views<span>&uarr;</span></th>
                         </tr>
                     </thead>
                     <tbody id="theBody">
@@ -105,14 +126,13 @@
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
 <!-- th scope="row">{{@index}}</!-->
-<td><a href={{thisUrl}}>{{hideMe fullname}}</a></td>
-<td><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
+<th><a href={{thisUrl}}>{{hideMe fullname}}</a></th>
+<td class="text-center"><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
 <td class="text-end">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
-<td>({{humanize v.durationMoment}})</td>
+<td>{{humanize v.durationMoment}}</td>
 <td class="text-end">{{numberFormat v.views}}</td>
 <td class="text-end">{{numberFormat v.viewsPerMonth}}</td>
-</tr>{{/each}}
-</script>
+</tr>{{/each}}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
@@ -124,7 +144,7 @@
             history.back();
         });
 
-        const ff = new Intl.NumberFormat('en-US')
+        const ff = new Intl.NumberFormat()
 
         Handlebars.registerHelper('dateFormat', function (object, formatting) {
             return object.format(formatting)
@@ -147,8 +167,6 @@
 
             const bodyContent = template(sorted)
             theBody.innerHTML = bodyContent
-
-            // Sortable.create(document.getElementById('theTable'));
         })
 
     </script>
@@ -217,7 +235,7 @@
                 });
             });
         }
-    </!script>
+    </!script -->
 
 </body>
 
