@@ -73,7 +73,7 @@
         }
 
         thead>tr>th.sortable {
-            min-width: 5rem;
+            /* min-width: 5rem; */
         }
 
         thead>tr>th.sortable>span {
@@ -113,6 +113,10 @@
             white-space: nowrap;
         }
 
+        tbody>tr>td.flag {
+            font-size: 16pt;
+        }
+
         tbody>tr>td.published,
         tbody>tr>td.since {
             white-space: nowrap;
@@ -145,13 +149,18 @@
                     <thead>
                         <tr style="font-size:smaller">
                             <!-- th scope="col">#</!-->
-                            <th scope="col" class="name      text-start  sortable">Performer <span></span></th>
-                            <th scope="col" class="flag      text-center sortable">&nbsp;   <span></span></th>
+                            <th scope="col" class="name      text-start  sortable">
+                                <img src="svg/person-male-svgrepo-com.svg" style="width: 24px; height:24px;">
+                                <span></span>
+                            </th>
+                            <th scope="col" class="flag      text-center sortable">&nbsp; <span></span></th>
                             <th scope="col" class="published text-center sortable" colspan="2">Published on <span></span></th>
                             <th scope="col" class="views     text-center sortable">Views <span></span></th>
                             <th scope="col" class="monthly   text-end    sortable">Monthly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></th>
-                            <th scope="col" class="length    text-center sortable"><img src="svg/pendulum-tempo-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span></th>
-                            <th scope="col" class="herz      text-center sortable"><img src="svg/diapason-tuner-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span></th>
+                            <th scope="col" class="length    text-center sortable"><img src="svg/pendulum-tempo-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span>
+                            </th>
+                            <th scope="col" class="herz      text-center sortable"><img src="svg/diapason-tuner-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span>
+                            </th>
                             <th scope="col" class="yt        text-center">YT <span></span></th>
                         </tr>
                     </thead>
@@ -166,8 +175,8 @@
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
 <!-- th scope="row">{{@index}}</!-->
-<th class="name"><a href={{thisUrl}}>{{hideMe fullname}}</a></th>
-<th class="flag text-center">{{flag}}</th>
+<th class="name" data-lastname="{{lastname}}"><a href={{thisUrl}}>{{hideMe fullname}}</a></th>
+<td class="flag text-center">{{flag}}</td>
 <td class="published text-end" data-timestamp="{{dateFormat v.publishedMoment "YYMM"}}">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td class="since">{{humanize v.durationMoment}}</td>
 <td class="views     text-end" data-number="{{v.views}}">{{numberFormat v.views}}</td>
@@ -248,6 +257,10 @@
                                 // if value is date, we store it's timestamp, so we can sort like a number
                                 key = line.children[cell_index].getAttribute('data-timestamp');
                             }
+                            else if (line.children[cell_index].hasAttribute('data-lastname')) {
+                                // if value is date, we store it's timestamp, so we can sort like a number
+                                key = line.children[cell_index].getAttribute('data-lastname');
+                            }
                             else if (line.children[cell_index].hasAttribute('data-number')) {
                                 // if value is date, we store it's timestamp, so we can sort like a number
                                 key = line.children[cell_index].getAttribute('data-number');
@@ -262,7 +275,7 @@
                             value_list[key + separator + index_line] = line.outerHTML.replace(/(\t)|(\n)/g, ''); // Adding <tr> to object
                             obj_key.push(key + separator + index_line);
                         });
-                        if (string_count === 0) { // If all values are numeric
+                        if (string_count === 0 && number_count > 0) { // If all values are numeric
                             obj_key.sort(function (a, b) {
                                 return a.split(separator)[0] - b.split(separator)[0];
                             });

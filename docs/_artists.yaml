@@ -1,3 +1,13 @@
+- firstname: Adolf
+  lastname: Busch
+  flag: 🇩🇪
+  ▶:
+    id: _ii7aPCQgHE
+    views: 15832
+    published: Mar 25, 2011
+    length: 13′48″
+    pitch: 295.4
+    a4: 443
 - firstname: Amandine
   lastname: Beyer
   twitter: AmandineBeyerGI
@@ -15,16 +25,6 @@
     - "https://youtu.be/He1A6_wuvhM"
   🕸:
     - "https://www.amandinebeyer.com/"
-- firstname: Adolf
-  lastname: Busch
-  flag: 🇩🇪
-  ▶:
-    id: _ii7aPCQgHE
-    views: 15832
-    published: Mar 25, 2011
-    length: 13′48″
-    pitch: 295.4
-    a4: 443
 - firstname: Andrea
   lastname: De Vitis
   twitter: itsDeVitis
@@ -250,17 +250,6 @@
     pitch: 69.5
     a4: 415
   🕸: "https://www.youtube.com/@moranwasser"
-- firstname: Polina
-  lastname: Osetinskaya
-  flag: 🇷🇺
-  ▶:
-    id: AKMNFzKRTuc
-    views: 48361
-    published: Jul 4, 2021
-    length: 15′00″
-    pitch: 73.7
-    a4: 440
-  🕸: "https://osetinskaya.com/"
 - firstname: Petra
   lastname: Poláčková
   flag: 🇨🇿
@@ -272,6 +261,17 @@
     pitch: 143.1
     a4: 429
   🕸: "http://www.petrapolackova.com/en/"
+- firstname: Polina
+  lastname: Osetinskaya
+  flag: 🇷🇺
+  ▶:
+    id: AKMNFzKRTuc
+    views: 48361
+    published: Jul 4, 2021
+    length: 15′00″
+    pitch: 73.7
+    a4: 440
+  🕸: "https://osetinskaya.com/"
 - firstname: Rachel
   lastname: Podger
   twitter: RachPodger
@@ -374,6 +374,7 @@
     pitch: 594.3
     a4: 444
   🕸: "https://yunparkpercussion.com/"
+
 - firstname: Christophe
   lastname: Thiebaud
   twitter: cthiebaud
