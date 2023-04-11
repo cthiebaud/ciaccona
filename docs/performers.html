@@ -264,8 +264,9 @@
                             else if (line.children[cell_index].hasAttribute('data-number')) {
                                 // if value is date, we store it's timestamp, so we can sort like a number
                                 key = line.children[cell_index].getAttribute('data-number');
+                                number_count++;
                             }
-                            else if (key.replace('-', '').match(/^[0-9,.]*$/g)) {
+                            else if (/^[0-9,.]*$/g.test(key.replace('-', ''))) { // key.replace('-', '').test(/^[0-9,.]*$/g)
                                 number_count++;
                             }
                             else {
