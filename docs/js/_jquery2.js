@@ -97,7 +97,7 @@ const Ω = {
     showArtist: (artist) => {
         $('.artist .name').html(artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname)
         $('.artist .url').attr({
-            href: `https://youtu.be/${artist['▶'].trueId ? artist['▶'].trueId : artist['▶'].id}`,
+            href: artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl,
             target: artist['▶'].id
         })
         $('.artist a#social').attr({
