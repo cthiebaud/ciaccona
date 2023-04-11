@@ -132,7 +132,7 @@
         <header class="fixed-top p-2" style="background-color: #f0f0f0; height: 6rem">
             <button id="go-back" type="button" class="btn btn-light" style="float:right"><img src="svg/go-back-arrow-svgrepo-com.svg" style="width:32px;height:auto;"></button>
             <h1>Performers</h1>
-            <p>Meters were read on 8 April 2023</p>
+            <p>Views meters were read on 8 April 2023. Pitch detection is approximate.</p>
         </header>
         <div id="perfContainerRow" class="row" style="margin-top: 6rem;">
             <div id="perfContainerCol" class="col">
@@ -142,7 +142,8 @@
                             <!-- th scope="col">#</!-->
                             <th scope="col" class="text-start sortable"             >Performer    <span>&nbsp;</span></th>
                             <th scope="col" class="text-center"                     >YT           <span>&nbsp;</span></th>
-                            <th scope="col" class="text-center sortable"            >&nbsp;       <span>&nbsp;</span></th>
+                            <th scope="col" class="text-center sortable"><img src="svg/diapason-tuner-svgrepo-com.svg" style="width: 20px; height:20px;"><span>&nbsp;</span></th>         
+                            <th scope="col" class="text-center sortable"><img src="svg/pendulum-tempo-svgrepo-com.svg" style="width: 20px; height:20px;"><span>&nbsp;</span></th>
                             <th scope="col" class="text-center sortable" colspan="2">Published on <span>&nbsp;</span></th>
                             <th scope="col" class="text-center sortable"            >Views        <span>&nbsp;</span></th>
                             <th scope="col" class="text-end sortable"               >Monthly      <span>&nbsp;</span></th>
@@ -161,7 +162,8 @@
 <!-- th scope="row">{{@index}}</!-->
 <th><a href={{thisUrl}}>{{hideMe fullname}}</a></th>
 <td class="text-center"><a href={{v.youtubeUrl}} target={{v.id}}>{{v.id}}</a></td>
-<td class="text-end">{{v.length}}</td>
+<td class="text-center">{{v.a4}}</td>
+<td class="text-center">{{v.length}}</td>
 <td class="text-end" data-timestamp="{{dateFormat v.publishedMoment "YYMM"}}">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td>{{humanize v.durationMoment}}</td>
 <td class="text-end" data-number="{{v.views}}">{{numberFormat v.views}}</td>
@@ -209,7 +211,7 @@
 
     <script>
         window.onload = function () {
-            document.querySelectorAll('th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6)').forEach((element) => { // Table headers
+            document.querySelectorAll('th:nth-child(1), th:nth-child(3), th:nth-child(4), th:nth-child(5), th:nth-child(6), th:nth-child(7)').forEach((element) => { // Table headers
                 element.addEventListener('click', function () {
                     let table = this.closest('table');
 
@@ -229,7 +231,7 @@
                         let string_count = 0;
                         let number_count = 0;
 
-                        const cell_index = element.cellIndex < 4 ? element.cellIndex : element.cellIndex + 1
+                        const cell_index = element.cellIndex < 5 ? element.cellIndex : element.cellIndex + 1
 
                         // <tbody> rows
                         table.querySelectorAll('tbody tr').forEach((line, index_line) => {

@@ -6,6 +6,8 @@
     views: 20052
     published: Apr 28, 2017
     length: 12′51″
+    pitch: 274.7
+    a4: 412
   others:
     - "https://youtu.be/mg9kT7XiLoU"
     - "https://youtu.be/6m0d3WtdJ3Q"
@@ -19,6 +21,8 @@
     views: 15832
     published: Mar 25, 2011
     length: 13′48″
+    pitch: 295.4
+    a4: 443
 - firstname: Andrea
   lastname: De Vitis
   twitter: itsDeVitis
@@ -26,7 +30,9 @@
     id: oxWq93mlAyc
     views: 117167
     published: Jan 5, 2020
-    length: 14′10″ 
+    length: 14′10″
+    pitch: 147.6
+    a4: 442
   🕸: "http://www.andreadevitis.com/"
 - firstname: Anneleen
   lastname: Lenaerts
@@ -36,6 +42,8 @@
     views: 24159
     published: Aug 6, 2018
     length: 14′16″
+    pitch: 73.7
+    a4: 442
   🕸: "https://www.anneleenlenaerts.com/"
 - firstname: Bella
   lastname: Hristova
@@ -44,6 +52,8 @@
     views: 219999
     published: Mar 4, 2014
     length: 13′46″
+    pitch: 293.8
+    a4: 440
   🕸: "https://www.bellahristova.com/"
 - firstname: Chiara
   lastname: Massini
@@ -53,6 +63,9 @@
     views: 73417
     published: Apr 6, 2018
     length: 12′31″
+    tonality: G
+    pitch: 186.3
+    a4: 419
   🕸: "http://www.chiaramassini.com/"
 - firstname: Christian
   lastname: Tetzlaff
@@ -61,6 +74,8 @@
     views: 26645
     published: Sep 7, 2017
     length: 14′07″
+    pitch: 292.3
+    a4: 438
   🕸: "https://www.christian-tetzlaff.de/"
 - firstname: Florentin
   lastname: Ginot
@@ -70,6 +85,8 @@
     views: 26314
     published: Nov 5, 2021
     length: 14′49″
+    pitch: 98.4
+    a4: 440
   🕸: "https://florentinginot.com/"
 - firstname: Genzoh
   lastname: Takehisa
@@ -80,6 +97,9 @@
     views: 16200
     published: Oct 9, 2011
     length: 12′22″
+    tonality: G
+    pitch: 93.3
+    a4: 419
   🕸: "http://www.genzoh.jp"
 - firstname: Hilary
   lastname: Hahn
@@ -89,6 +109,8 @@
     views: 1934985
     published: Aug 15, 2020
     length: 17′50″
+    pitch: 293.7
+    a4: 440
   🕸: "https://www.instagram.com/violincase/"
 - firstname: Isabelle
   lastname: Faust
@@ -97,6 +119,8 @@
     views: 14541
     published: Mar 28, 2020
     length: 12′28″
+    pitch: 292.8
+    a4: 439
   🕸: "https://www.impresariat-simmenauer.de/en/artist/isabelle-faust/"
 - firstname: Julia
   lastname: Fischer
@@ -105,6 +129,8 @@
     views: 22392
     published: Sep 26, 2014
     length: 15′41″
+    pitch: 296.6
+    a4: 444
   🕸: "https://www.juliafischer.com/"
 - firstname: Lisa
   lastname: Jacobs
@@ -114,6 +140,8 @@
     views: 5491
     published: Jun 2, 2021
     length: 14′58″
+    pitch: 293.4
+    a4: 440
   🕸: "https://lisajacobs.nl/"
 - firstname: Liza
   lastname: Ferschtman
@@ -122,6 +150,8 @@
     views: 8736
     published: Oct 22, 2020
     length: 13′29″
+    pitch: 295.1
+    a4: 442
   🕸: "https://lizaferschtman.nl/"
 - firstname: Marta
   lastname: Femenía
@@ -130,6 +160,8 @@
     views: 13495
     published: Oct 1, 2017
     length: 15′36″
+    pitch: 591.0
+    a4: 443
   🕸: "http://www.martafemenia.com/"
 - firstname: Martin
   lastname: Baker
@@ -139,6 +171,8 @@
     views: 6293
     published: Oct 28, 2022
     length: 18′18″
+    pitch: 293.7
+    a4: 440
   🕸: "https://twitter.com/MartinBaker"
 - firstname: Michael
   lastname: Leontchik
@@ -147,6 +181,8 @@
     views: 4041
     published: Nov 11, 2014
     length: 13′43″
+    pitch: 294.0
+    a4: 440
 - firstname: Midori
   lastname: Gotō
   ▶:
@@ -154,6 +190,8 @@
     views: 781797
     published: Oct 17, 2017
     length: 13′47″
+    pitch: 295.2
+    a4: 442
   🕸: "https://www.midori-violin.com/"
 - firstname: Miguel
   lastname: Rincón
@@ -162,6 +200,8 @@
     views: 47398
     published: Sep 4, 2020
     length: 10′48″
+    pitch: 138.4
+    a4: 415
   🕸: "https://miguelrincon.net/"
 - firstname: Mika
   lastname: Stoltzman
@@ -171,6 +211,8 @@
     views: 3681
     published: May 29, 2021
     length: 16′48″
+    pitch: 888.0
+    a4: 440
   others:
     - "https://youtu.be/MLX0Px_UtwI"
     - "https://youtu.be/QaFgKp7Qvzw"
@@ -184,6 +226,8 @@
     views: 615510
     published: May 19, 2016
     length: 12′17″
+    pitch: 69.5
+    a4: 415
   🕸: "https://www.youtube.com/@moranwasser"
 - firstname: Polina
   lastname: Osetinskaya
@@ -192,6 +236,8 @@
     views: 48361
     published: Jul 4, 2021
     length: 15′00″
+    pitch: 73.7
+    a4: 440
   🕸: "https://osetinskaya.com/"
 - firstname: Petra
   lastname: Poláčková
@@ -200,6 +246,8 @@
     views: 107592
     published: Dec 11, 2019
     length: 13′28″
+    pitch: 143.1
+    a4: 429
   🕸: "http://www.petrapolackova.com/en/"
 - firstname: Rachel
   lastname: Podger
@@ -209,6 +257,8 @@
     views: 81373
     published: Nov 26, 2017
     length: 13′29″
+    pitch: 276.8
+    a4: 415
   🕸: "https://www.rachelpodger.com/"
 - firstname: Rachell Ellen
   lastname: Wong
@@ -218,6 +268,8 @@
     views: 9479
     published: Jun 6, 2020
     length: 14′05″
+    pitch: 273.1
+    a4: 410
   🕸: "https://www.rachellwong.com/"
 - firstname: Raphaella
   lastname: Smits
@@ -226,6 +278,8 @@
     views: 348251
     published: Apr 20, 2015
     length: 14′21″
+    pitch: 69.3
+    a4: 415
 - firstname: Sigiswald
   lastname: Kuijken
   ▶:
@@ -233,6 +287,8 @@
     views: 7224
     published: Apr 3, 2018
     length: 11′39″
+    pitch: 282.6
+    a4: 424
   🕸: "https://lapetitebande.be/en/"
 - firstname: Veronika
   lastname: Eberle
@@ -242,6 +298,8 @@
     views: 70141
     published: May 28, 2020
     length: 13′41″
+    pitch: 293.3
+    a4: 440
   🕸: "https://www.instagram.com/veronikaeberle/"
 - firstname: Veronique
   lastname: De Raedemaeker
@@ -250,6 +308,8 @@
     views: 1274
     published: Mar 21, 2023
     length: 15′46″
+    pitch: 296.9
+    a4: 444
   🕸: "https://veroniquederaedemaeker.com/"
 - firstname: Virginie
   lastname: Robilliard
@@ -258,6 +318,8 @@
     views: 3557
     published: May 18, 2021
     length: 13′45″
+    pitch: 298.0
+    a4: 446
   🕸: "https://virginierobilliard.com/"
 - firstname: Von
   lastname: Hansen
@@ -266,6 +328,8 @@
     views: 1588
     published: Apr 9, 2015
     length: 14′47″
+    pitch: 147.5
+    a4: 441
   🕸: "https://vonhansenmusic.com/"
 - firstname: Yun
   lastname: Park
@@ -274,6 +338,8 @@
     views: 2175
     published: May 14, 2022
     length: 12′31″
+    pitch: 594.3
+    a4: 444
   🕸: "https://yunparkpercussion.com/"
 - firstname: Christophe
   lastname: Thiebaud
@@ -283,3 +349,5 @@
     views: 895
     published: Sep 25, 2022
     length: 14′42″
+    pitch: 63.6
+    a4: 440
