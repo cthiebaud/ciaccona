@@ -598,8 +598,9 @@
         }
 
         const scoreDisplay2 = scoreDisplay
-        const radioId = `${scoreDisplay2}Checked`
-        document.getElementById(radioId).checked = true
+        const gridradioId = `${scoreDisplay2}Checked`
+        document.getElementById(gridradioId).checked = true
+        document.getElementById('grid').dataset.scoreDisplay = scoreDisplay2
 
         let showHelpAtStartChecked = showHelpAtStart
         if (showHelpAtStartChecked) {

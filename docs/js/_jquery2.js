@@ -79,6 +79,7 @@ const Ω = {
         $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
             setCookie('scoreDisplay', scoreDisplay )
+            document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
             if (scoreDisplay === 'firstBar') {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
@@ -150,6 +151,7 @@ const Ω = {
             if (iso) iso.layout()
         }
 
+        document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
         if (scoreDisplay === 'firstBar') {
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
