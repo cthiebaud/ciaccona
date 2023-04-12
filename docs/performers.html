@@ -72,8 +72,8 @@
             display: none;
         }
 
-        thead>tr>th.sortable {
-            /* min-width: 5rem; */
+        thead>tr>th.sortable:not(:first-child) {
+            padding-left: 0.5rem;
         }
 
         thead>tr>th.sortable>span {
@@ -149,19 +149,29 @@
                     <thead>
                         <tr style="font-size:smaller">
                             <!-- th scope="col">#</!-->
-                            <th scope="col" class="name      text-start  sortable">
-                                <img src="svg/person-male-svgrepo-com.svg" style="width: 24px; height:24px;">
+                            <th scope="col" class="name      text-center sortable">
+                                <img src="svg/person-male-svgrepo-com.svg" style="width: 22px; height:22px;">
                                 <span></span>
                             </th>
-                            <th scope="col" class="flag      text-center sortable">&nbsp; <span></span></th>
-                            <th scope="col" class="published text-center sortable" colspan="2">Published on <span></span></th>
-                            <th scope="col" class="views     text-center sortable">Views <span></span></th>
-                            <th scope="col" class="monthly   text-end    sortable">Monthly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></th>
-                            <th scope="col" class="length    text-center sortable"><img src="svg/pendulum-tempo-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span>
+                            <th scope="col" class="flag      text-start  sortable">&nbsp; <span></span></th>
+                            <th scope="col" class="published text-start  sortable" colspan="2">Published on <span></span></th>
+                            <th scope="col" class="views     text-start  sortable">Views <span></span></th>
+                            <th scope="col" class="monthly   text-start  sortable" style="min-width: 6rem;">
+                                Monthly
+                                <span style="float: right;"></span>
                             </th>
-                            <th scope="col" class="herz      text-center sortable"><img src="svg/diapason-tuner-svgrepo-com.svg" style="width: 20px; height:20px;"><span></span>
+                            <th scope="col" class="length    text-start  sortable" style="min-width: 4rem;">
+                                <img src="svg/stopwatch-svgrepo-com.svg" style="width: 22px; height:22px;">
+                                <span></span>
                             </th>
-                            <th scope="col" class="yt        text-center">YT <span></span></th>
+                            <th scope="col" class="herz      text-start  sortable" style="min-width: 4rem;">
+                                <img src="svg/diapason-svgrepo-com.svg" style="width: 22px; height:22px;">
+                                <span></span>
+                            </th>
+                            <th scope="col" class="yt        text-center">
+                                <img src="svg/YouTube_social_white_square_(2017)_white_middle.svg" style="width: 22px; height:22px;">
+                                <span></span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="theBody">

@@ -103,7 +103,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.20"
+        const ver = "v0.6.21"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -138,7 +138,8 @@
             document.documentElement.style.setProperty('--vw', `${vw}px`)
 
             // brick width
-            const gridBricksPerRow = 1 + Math.floor(window.innerWidth / 400)
+            const containerWidth = document.getElementById('grid').getBoundingClientRect().width
+            const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
             const gridBrickPercentageWidth = 100 / gridBricksPerRow
             document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
         }
