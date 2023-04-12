@@ -76,6 +76,25 @@ const Ω = {
             window.location = url.pathname
         })
 
+        $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
+            const scoreDisplay = e.currentTarget.dataset.scoreDisplay
+            setCookie('scoreDisplay', scoreDisplay )
+            if (scoreDisplay === 'firstBar') {
+                $('#gridContainerCol').removeClass('fullwidth')
+                $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+                $('.score').css({visibility: 'visible'})
+            } else if (scoreDisplay === 'fullScore') {
+                $('#gridContainerCol').addClass('fullwidth')
+                $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
+                $('.score').css({visibility: 'visible'})
+            } else if (scoreDisplay === 'noScore') {
+                $('#gridContainerCol').removeClass('fullwidth')
+                $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+                $('.score').css({visibility: 'hidden'})
+            } 
+            if (iso) iso.layout()
+        })
+
         $("#fullWidthChecked").on("click", function () {
             fullWidthChecked = !fullWidthChecked
             setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
@@ -124,12 +143,29 @@ const Ω = {
         $('#gridContainerCol').css({ visibility: 'visible' })
     },
 
-    afterCreateColoredBadges: (fullWidthChecked, iso) => {
+    afterCreateColoredBadges: (fullWidthChecked, iso, scoreDisplay) => {
         if (fullWidthChecked) {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick, .score').addClass('fullwidth')
             if (iso) iso.layout()
         }
+
+        if (scoreDisplay === 'firstBar') {
+            $('#gridContainerCol').removeClass('fullwidth')
+            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+            $('.grid-brick, .score').css({visibility: 'visible'})
+        } else if (scoreDisplay === 'fullScore') {
+            $('#gridContainerCol').addClass('fullwidth')
+            $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
+            $('.grid-brick, .score').css({visibility: 'visible'})
+        } else if (scoreDisplay === 'noScore') {
+            $('#gridContainerCol').removeClass('fullwidth')
+            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+            $('.grid-brick, .score').css({visibility: 'hidden'})
+        } 
+        if (iso) iso.layout()
+
+
 
         $(".brick.hasScore").click(function (e) {
             const hadClass = $(e.currentTarget).parent().hasClass('selected')

@@ -103,7 +103,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.18"
+        const ver = "v0.6.19"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -401,10 +401,29 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="configMenuLink">
                 <form class="px-4 py-3">
-                    <div class="form-check">
+                    <div class="form-check" style="display: none;">
                         <input type="checkbox" class="form-check-input" id="fullWidthChecked">
                         <label class="form-check-label align-top" for="fullWidthChecked">
                             Full Score <span style="display: none; font-size:2rem;">𝄞</span>
+                        </label>
+                    </div>
+                    <div class="label">Score</div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="firstBar" id="firstBarChecked">
+                        <label class="form-check-label" for="firstBarChecked">
+                            1st Bar
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="fullScore" id="fullScoreChecked">
+                        <label class="form-check-label" for="fullScoreChecked">
+                            Full
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="noScore" id="noScoreChecked">
+                        <label class="form-check-label" for="noScoreChecked">
+                            None
                         </label>
                     </div>
                     <div style="display:none;">
@@ -532,7 +551,7 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import { fullscore, showHelpAtStart } from "/js/_config2.js"
+        import { fullscore, scoreDisplay, showHelpAtStart } from "/js/_config2.js"
         import createColoredBadges from "/js/_colors2.js"
         import { createTimings } from "/js/_timings2.js"
         import resizeSVGs from "/js/_resizeSVGs2.js"
@@ -569,11 +588,14 @@
         // elaborate a bit some config values 
         let fullWidthChecked = fullscore
         if (fullWidthChecked) {
-            document.getElementById('fullWidthChecked').setAttribute('checked', 'checked')
+            document.getElementById('fullWidthChecked').checked = true
         }
+        const scoreDisplay2 = scoreDisplay
+        const radioId = `${scoreDisplay2}Checked`
+        document.getElementById(radioId).checked = true
         let showHelpAtStartChecked = showHelpAtStart
         if (showHelpAtStartChecked) {
-            document.getElementById('helpAtStartCheck').setAttribute('checked', 'checked')
+            document.getElementById('helpAtStartCheck').checked = true
         }
 
         // loading 
@@ -604,8 +626,10 @@
                     SVGs,
                     !fullWidthChecked, // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
                     (obj) => {
-                        obj.parentNode.style.visibility = 'visible'
                         obj.parentNode.parentNode.style.visibility = 'visible'
+                        if (scoreDisplay !== 'noScore') {
+                            obj.parentNode.style.visibility = 'visible'
+                        }
                     })
             })
         )
@@ -661,7 +685,7 @@
 
                 // big buffer of everything that needs to be done AFTER bricks are ready
                 Ω.setClickHandlers(fullWidthChecked, showHelpAtStartChecked, theIsotope)
-                Ω.afterCreateColoredBadges(fullWidthChecked, theIsotope)
+                Ω.afterCreateColoredBadges(fullWidthChecked, theIsotope, scoreDisplay2)
 
                 result.value.iso = theIsotope
 

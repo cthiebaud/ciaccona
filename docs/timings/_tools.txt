@@ -30,3 +30,6 @@ for file in _*; do mv $file $(echo $file | sed -e 's/^.//'); done
 // look for javascript files imports
 ["']\/js\/_(_.*)\.js["']
 "/js/$12.js"
+
+rename all _xxx\d.js files to _xxx4.js
+for file in _*; do mv $file $(echo $file | sed -e 's/[0-9]/4/g'); done
