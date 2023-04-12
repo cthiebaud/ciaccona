@@ -145,12 +145,19 @@ a {
   border-color: transparent !important;
 }
 
-.grid-brick.hasScore.selected .brick :not(:first-child) {
+#grid:not([data-score-display="noScore"])
+  .grid-brick.hasScore.selected
+  .brick
+  :not(:first-child) {
   display: none !important;
 }
 
+#grid[data-score-display="noScore"] .grid-brick.hasScore.selected .brick {
+  background-color: #faebd7e0 !important; /* antique white with some transparency */
+}
+
 .grid-brick.hasScore.selected {
-  background-color: #ffffffe0 !important;
+  background-color: #faebd7e0 !important;
 }
 
 .grid-brick:not(.gbPlaying) {
@@ -258,10 +265,8 @@ span.Δ {
   opacity: 1;
 }
 
+#playerWrapper > div > button.plyr__control--overlaid,
 #playerWrapper
-  > div
-  > button.plyr__control--overlaid,
-  #playerWrapper
   > div
   > div.plyr__controls
   > div.plyr__controls__item.plyr__menu {
