@@ -7,6 +7,9 @@ if (!fullscore || fullscore === 'false') {
     fullscore = true
 }
 
+let scoreDisplay = getCookie('scoreDisplay')
+if (!scoreDisplay) scoreDisplay = 'firstBar'
+
 let showHelpAtStart = getCookie('showHelpAtStart')
 if (!showHelpAtStart || showHelpAtStart === 'true') {
     showHelpAtStart = true
@@ -14,4 +17,4 @@ if (!showHelpAtStart || showHelpAtStart === 'true') {
     showHelpAtStart = false
 }
 
-export { fullscore, showHelpAtStart }
+export { fullscore, scoreDisplay, showHelpAtStart }

@@ -3,10 +3,18 @@ import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import { shuffleArray } from "/js/_utils2.js"
 import { index2duration } from "/js/_timings2.js"
+import { loadArtists } from "/js/_artists2.js"
 
 const $ = jquery
 
-export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
+export default function loadArtistsThencreateColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
+    return loadArtists().then((artists) => {
+        return createColoredBadges(fullameNoSpaceLowercaseNoDiacritics, artists)
+    })
+}
+
+
+function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics, artists) {
 
     return new Promise((resolve) => {
 
@@ -44,7 +52,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             { w: 307 }, // 31
             { w: 356 }, // 32
             { w: 255 }, // 33
-            { w: 300 }, // 34 (max possible)
+            { w: 220 }, // 34 (max possible)
             { w: 0 }  // 35 ?
         ]
 
@@ -187,10 +195,30 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 
             const svgOffsetX = (i == 0 || i == 17 || i == 27 || i == 33 ? "0" : "6.5")
 
-            const templateVariations =
+
+            const brickStyle = i < 33 ? `style="${bg};"` : `style="background-image: url(svg/facsimile.jpg); background-size: cover;"`
+
+            let templateVariationRight = `
+<div class="d-flex flex-column justify-content-between" 
+     style="height:100%; text-align: right; ${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
+    <div class="pt-1">${barFrom + 1}</div>
+    <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
+        ${warning}
+    </div>
+    <div class="pb-1">${barTo}</div>
+</div>
+<div class="fw-bold text-center" style="${i == _colors_.length - 1 ? "display:none;" : ""}margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
+    ${i == 0 ? "" : i}
+</div>
+`
+            if (i >= 33) {
+                templateVariationRight = ``
+            }
+
+            const templateVariation =
                 `
 <div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor};"> <!-- background-color: ${c.p_rgb_original}; -->
-    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
+    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" ${brickStyle} data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px; visibility: hidden;" data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 
@@ -204,28 +232,46 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                 ${tonality}
             </span>
         </div>
-        <!-- div class="flex-grow-1"></!-->
-        
-        <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
-            <div class="pt-1">${barFrom + 1}</div>
-            <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
-                ${warning}
-            </div>
-            <div class="pb-1">${barTo}</div>
-        </div>
-        <div class="fw-bold text-center" style="${i == _colors_.length - 1 ? "display:none;" : ""}margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
-            ${i == 0 ? "" : i}
+        <div class="d-flex flex-grow-1 justify-content-end">
+            ${templateVariationRight}
         </div>
     </div>
 </div>
 `
-            $bricksTemporaryContainer.append($(templateVariations));
+            $bricksTemporaryContainer.append($(templateVariation));
+
 
             // bumpers
             barFrom = barFrom += duration
             i++
         });
 
+        const $bricksTemporaryContainer2 = $("<span>");
+        if (!fullameNoSpaceLowercaseNoDiacritics) {
+            const performedBy =
+                `
+<div id="gb-performedBy" data-sort="${twoZeroPad(i++)}" class="grid-brick">
+    <div class="brick d-flex align-items-center justify-content-center">
+        <div class="magnificent-card p-2">
+            &nbsp;Performed by&nbsp;
+        </div>
+    </div>
+</div>
+`
+            // $bricksTemporaryContainer2.append(performedBy);
+
+            artists.artists.forEach((a, j) => {
+                const backgroundImage = `url('/screenshots/${artists.artists[j].fullnameNoSpaceLowercaseNoDiacritics}.jpg')`
+                const templatePerformer = `
+<div id="gb${i}_performer" data-sort="${twoZeroPad(i++)}.5" class="grid-brick hasPerformer"> 
+<div class="brick hasPerformer d-flex align-items-center justify-content-between" style="background-image: ${backgroundImage}; background-size: 200%; background-position: 40%;">
+</div>
+</div>
+`
+                const $templatePerformer = $(templatePerformer)
+                $bricksTemporaryContainer2.append($templatePerformer);
+            })
+        }
         const oblivion =
             `
 <div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
@@ -240,10 +286,15 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         $bricksTemporaryContainer.append($(oblivion))
 
         const $bricks = $bricksTemporaryContainer.children().detach()
+        const $bricks2 = $bricksTemporaryContainer2.children().detach()
 
         let $gridById = $("#grid")
         $gridById.children('.grid-brick').remove()
         $gridById.append($bricks)
+
+        let $grid2ById = $("#grid2")
+        $grid2ById.children('.grid-brick').remove()
+        $grid2ById.append($bricks2)
 
         resolve({
             key: "BADGES",
@@ -251,3 +302,4 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         })
     })
 }
+

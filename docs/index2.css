@@ -99,7 +99,6 @@ a {
 }
 
 .grid-brick .brick {
-  border-radius: 0 3rem 3rem 0;
   width: 100%;
   height: 100%;
 }
@@ -108,16 +107,23 @@ a {
   cursor: pointer;
 }
 
+.grid-brick.hasScore:not(#gb33) .brick {
+  border-radius: 0 3rem 3rem 0;
+}
+
 .grid-brick.selected .brick {
   border-radius: 0 !important;
 }
 
-.grid-brick .brick .score {
+.grid-brick.hasScore .brick .score {
   position: relative;
   height: 5rem;
-  border-radius: 0 3rem 3rem 0;
   overflow-y: hidden;
   overflow-x: hidden;
+}
+
+.grid-brick.hasScore:not(#gb33) .brick .score {
+  border-radius: 0 3rem 3rem 0;
 }
 
 .grid-brick.hasScore.selected .score {
@@ -164,13 +170,15 @@ a {
 .grid-brick#gb33 {
   background-color: transparent !important;
 }
-.grid-brick#gb33 .brick {
-  background-color: #232222;
+.grid-brick#gb33 .brick div:last-child{
+  /* background-color: #232222; */
   background-image: url(/svg/Johann_Sebastian_Bach_signature.svg);
-  background-size: 240px 38px;
+  /* background-size: 240px 38px; */
   background-position-y: center;
-  background-position-x: right;
+  background-position-x: right; 
+  background-size: contain;
   background-repeat: no-repeat;
+  height: 100%;
 }
 
 /* + + + + + + + + +  */

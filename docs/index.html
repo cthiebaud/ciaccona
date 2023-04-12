@@ -103,7 +103,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.18"
+        const ver = "v0.6.19"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -126,28 +126,6 @@
             removeCookie('startBarOfLastSelectedVariation')
         }
 
-        // <!-- CSS variable for dimensions -->
-        const afterResizeWindow = () => {
-            // console.log('RESIZED!')
-            // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-            const vh = window.innerHeight * 0.01
-            const vw = window.innerWidth * 0.01
-
-            // set the value in custom properties to the root of the document
-            document.documentElement.style.setProperty('--vh', `${vh}px`)
-            document.documentElement.style.setProperty('--vw', `${vw}px`)
-
-            // brick width
-            const gridBricksPerRow = 1 + Math.floor(window.innerWidth / 400)
-            const gridBrickPercentageWidth = 100 / gridBricksPerRow
-            document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
-        }
-
-        afterResizeWindow()
-
-        window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with isotope own debounce
-            afterResizeWindow()
-        }/* , 750) */)
     </script>
 
     <!-- google font -->
@@ -156,7 +134,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index.css" rel="stylesheet">
+    <link href="index2.css" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -401,10 +379,29 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="configMenuLink">
                 <form class="px-4 py-3">
-                    <div class="form-check">
+                    <div class="form-check" style="display: none;">
                         <input type="checkbox" class="form-check-input" id="fullWidthChecked">
                         <label class="form-check-label align-top" for="fullWidthChecked">
                             Full Score <span style="display: none; font-size:2rem;">𝄞</span>
+                        </label>
+                    </div>
+                    <div class="label">Score</div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="firstBar" id="firstBarChecked">
+                        <label class="form-check-label" for="firstBarChecked">
+                            1st Bar
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="fullScore" id="fullScoreChecked">
+                        <label class="form-check-label" for="fullScoreChecked">
+                            Full
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="noScore" id="noScoreChecked">
+                        <label class="form-check-label" for="noScoreChecked">
+                            None
                         </label>
                     </div>
                     <div style="display:none;">
@@ -517,11 +514,13 @@
     </div>
 
     <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 1; position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
-        <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
+        <div id="gridContainerRow" class="row justify-content-end" style="margin:0; position: relative;"> <!--  -->
             <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
             </div>
             <div id="gridContainerCol" class="col" style="visibility: hidden"> <!--  -->
-                <div id="grid" style="visibility: visible">
+                <div id="grid" style="visibility: visible; width: 60vw; display: inline-block; top: 0; position: absolute;">
+                </div>
+                <div id="grid2" style="visibility: visible; width: 39vw; display: inline-block; top: 0; position: absolute;">
                 </div>
             </div>
         </div>
@@ -532,8 +531,9 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import { fullscore, showHelpAtStart } from "/js/_config2.js"
-        import createColoredBadges from "/js/_colors2.js"
+        import ImagesLoaded from 'https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/+esm'
+        import { fullscore, scoreDisplay, showHelpAtStart } from "/js/_config2.js"
+        import loadArtistsThencreateColoredBadges from "/js/_colors2.js"
         import { createTimings } from "/js/_timings2.js"
         import resizeSVGs from "/js/_resizeSVGs2.js"
         import createPlayer from "/js/_player2.js"
@@ -562,18 +562,48 @@
         // transform windows loaded event to promise
         const windowLoaded = new Promise((resolve) => {
             window.addEventListener('load', (event) => {
-                resolve(event)
+                // <!-- CSS variable for dimensions -->
+                const afterResizeWindow = () => {
+                    // console.log('RESIZED!')
+                    // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+                    const vh = window.innerHeight * 0.01
+                    const vw = window.innerWidth * 0.01
+
+                    // set the value in custom properties to the root of the document
+                    document.documentElement.style.setProperty('--vh', `${vh}px`)
+                    document.documentElement.style.setProperty('--vw', `${vw}px`)
+
+                    // brick width
+                    const containerWidth = document.getElementById('grid').getBoundingClientRect().width
+                    const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
+                    const gridBrickPercentageWidth = 100 / gridBricksPerRow
+                    document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
+                }
+
+                afterResizeWindow()
+
+                window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with isotope own debounce
+                    afterResizeWindow()
+                }/* , 750) */)
+                ImagesLoaded(document.getElementById('grid'), () => {
+                    resolve(event)
+                })
             })
         })
 
         // elaborate a bit some config values 
         let fullWidthChecked = fullscore
         if (fullWidthChecked) {
-            document.getElementById('fullWidthChecked').setAttribute('checked', 'checked')
+            document.getElementById('fullWidthChecked').checked = true
         }
+
+        const scoreDisplay2 = scoreDisplay
+        const radioId = `${scoreDisplay2}Checked`
+        document.getElementById(radioId).checked = true
+
         let showHelpAtStartChecked = showHelpAtStart
         if (showHelpAtStartChecked) {
-            document.getElementById('helpAtStartCheck').setAttribute('checked', 'checked')
+            document.getElementById('helpAtStartCheck').checked = true
         }
 
         // loading 
@@ -590,25 +620,6 @@
         const allPromises = new Map()
         // name of main promises, for bookkeeping
         const RESIZE = "RESIZE", PLAYER = "PLAYER", BADGES = "BADGES";
-
-        // 1. promise resolves when 1) windows is loaded, then 2) all SVGs for scores have been loaded and resized
-        allPromises.set(
-            RESIZE,
-            windowLoaded.then((result) => {
-                const SVGs = document.querySelectorAll('#grid object')
-                if (SVGs.length === 0) {
-                    console.log('no SVG to resize')
-                    return this
-                }
-                return resizeSVGs(
-                    SVGs,
-                    !fullWidthChecked, // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
-                    (obj) => {
-                        obj.parentNode.style.visibility = 'visible'
-                        obj.parentNode.parentNode.style.visibility = 'visible'
-                    })
-            })
-        )
 
         // 2. promises resolves when 1) timings for this artist have been loeaded, then 2) video player is ready
         if (fullameNoSpaceLowercaseNoDiacritics) {
@@ -641,7 +652,26 @@
         // 3. create and flood color bricks into isotope
         allPromises.set(
             BADGES,
-            createColoredBadges(fullameNoSpaceLowercaseNoDiacritics).then((result) => {
+            loadArtistsThencreateColoredBadges(fullameNoSpaceLowercaseNoDiacritics).then((result) => {
+                /*
+                const theIsotope2 = new isotopeLayout('#grid2', {
+                    itemSelector: ".grid-brick",
+                    sortBy: 'id',
+                    getSortData: {
+                        id: '[data-sort]'
+                    },
+                    filter: '*',
+                    percentPosition: true,
+                })
+                theIsotope2.on('layoutComplete', function () {
+                    console.log("isotope2 layout complete");
+                })
+                theIsotope2.on('arrangeComplete', function (filteredItems) {
+                    console.log("isotope2 arrange complete");
+                })
+                result.value.iso2 = theIsotope2
+                */
+
 
                 const theIsotope = new isotopeLayout('#grid', {
                     itemSelector: ".grid-brick",
@@ -661,11 +691,31 @@
 
                 // big buffer of everything that needs to be done AFTER bricks are ready
                 Ω.setClickHandlers(fullWidthChecked, showHelpAtStartChecked, theIsotope)
-                Ω.afterCreateColoredBadges(fullWidthChecked, theIsotope)
+                Ω.afterCreateColoredBadges(fullWidthChecked, theIsotope, scoreDisplay2)
 
                 result.value.iso = theIsotope
-
+                
                 return result
+            })
+        )
+        // 1. promise resolves when 1) windows is loaded, then 2) all SVGs for scores have been loaded and resized
+        allPromises.set(
+            RESIZE,
+            windowLoaded.then((result) => {
+                const SVGs = document.querySelectorAll('object')
+                if (SVGs.length === 0) {
+                    console.log('no SVG to resize')
+                    return this
+                }
+                return resizeSVGs(
+                    SVGs,
+                    !fullWidthChecked, // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
+                    (obj) => {
+                        obj.parentNode.parentNode.style.visibility = 'visible'
+                        if (scoreDisplay !== 'noScore') {
+                            obj.parentNode.style.visibility = 'visible'
+                        }
+                    })
             })
         )
 
