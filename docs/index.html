@@ -103,7 +103,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.21"
+        const ver = "v0.6.22"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -625,7 +625,7 @@
         allPromises.set(
             RESIZE,
             windowLoaded.then((result) => {
-                const SVGs = document.querySelectorAll('#grid object')
+                const SVGs = document.querySelectorAll('#grid .brick > .score > object')
                 if (SVGs.length === 0) {
                     console.log('no SVG to resize')
                     return this
@@ -634,9 +634,11 @@
                     SVGs,
                     !fullWidthChecked, // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
                     (obj) => {
-                        obj.parentNode.parentNode.style.visibility = 'visible'
-                        if (scoreDisplay !== 'noScore') {
-                            obj.parentNode.style.visibility = 'visible'
+                        obj.parentNode.parentNode.style.visibility = 'inherit'
+                        if (scoreDisplay === 'noScore') {
+                            obj.parentNode.style.visibility = 'hidden'
+                        } else {
+                            obj.parentNode.style.visibility = 'inherit'
                         }
                     })
             })

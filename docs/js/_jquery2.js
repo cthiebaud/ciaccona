@@ -37,7 +37,7 @@ const Ω = {
             })
             $('footer.footer').show()
 
-            $('#gridContainerCol, #grid, .grid.brick, .brick, .score, #playerWrapper').css({ visibility: 'hidden' })
+            $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
         }
 
         this.hideAbout = () => {
@@ -51,7 +51,7 @@ const Ω = {
             $('#credits').hide()
             $('footer.footer').hide()
 
-            $('#gridContainerCol, #grid, .grid.brick, .brick, .score, #playerWrapper').css({ visibility: 'visible' })
+            $('#gridContainerCol, #playerWrapper').css({ visibility: 'visible' })
         }
         const _this = this
         $('a#about').on('click', (e) => {
@@ -83,11 +83,11 @@ const Ω = {
             if (scoreDisplay === 'firstBar') {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-                $('.score').css({visibility: 'visible'})
+                $('.score').css({visibility: 'inherit'})
             } else if (scoreDisplay === 'fullScore') {
                 $('#gridContainerCol').addClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-                $('.score').css({visibility: 'visible'})
+                $('.score').css({visibility: 'inherit'})
             } else if (scoreDisplay === 'noScore') {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
@@ -123,14 +123,14 @@ const Ω = {
         $('.artist a#social').attr({
             href: artist.social
         })
-        $('.artist, .artist .brick').css({ visibility: "visible" })
+        $('.artist, .artist .brick').css({ visibility: "inherit" })
     },
 
     beforeCreatePlayer: (videoId) => {
         const idPlayer = "blah2"
 
         $('#loading').css({ "background-color": "#00000080" })
-        $('#gridContainerCol').css({ visibility: 'hidden' }).addClass('push2right')
+        $('#gridContainerCol').addClass('push2right') // css({ visibility: 'hidden' })
 
         const $blah2 = $(`<div id="${idPlayer}" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`)
 
@@ -155,15 +155,15 @@ const Ω = {
         if (scoreDisplay === 'firstBar') {
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            $('.grid-brick, .score').css({visibility: 'visible'})
+            // $('.score').css({visibility: 'inherit'}) // not now, but after resizeSVG
         } else if (scoreDisplay === 'fullScore') {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-            $('.grid-brick, .score').css({visibility: 'visible'})
+            // $('.score').css({visibility: 'inherit'})
         } else if (scoreDisplay === 'noScore') {
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            $('.grid-brick, .score').css({visibility: 'hidden'})
+            // $('.score').css({visibility: 'hidden'})
         } 
         if (iso) iso.layout()
 

@@ -96,6 +96,7 @@ a {
   border-style: dashed solid;
   border-width: 2.5px !important;
   display: inline-block;
+  visibility: inherit;
 }
 
 .grid-brick .brick {
@@ -118,6 +119,7 @@ a {
   border-radius: 0 3rem 3rem 0;
   overflow-y: hidden;
   overflow-x: hidden;
+  visibility: hidden;
 }
 
 .grid-brick.hasScore.selected .score {
@@ -143,6 +145,10 @@ a {
 
 .grid-brick:not(.selected) {
   border-color: transparent !important;
+}
+
+#grid {
+  visibility: inherit;
 }
 
 #grid:not([data-score-display="noScore"])
