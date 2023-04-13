@@ -102,12 +102,12 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     const transparency = .600
     _colors_.push(_last_color_[0])
     // https://cubic-bezier.com/
-    let easing = bezierEasing(.5, .5, .5, .5)
-    easing = bezierEasing(0, 1, 1, .4)
+    const easingVanishingContrast = bezierEasing(0, 1, 1, .4)
+    const easingTheDarkertheLighter = bezierEasing(0,1.5,.166,.5)
     for (let s of _colors_) {
         // const nl = normalize(s.luminance, max, min)
         s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
-        s.brightnessChange = (1 - easing(s.nl)) * 100 // s.luminance *100 // 
+        s.brightnessChange = (1 - easingVanishingContrast(s.nl)) * 100 // s.luminance *100 // 
         if (tinycolor(s.p_rgb).isLight()) {
             s.textColor = tinycolor(s.p_rgb).darken(s.brightnessChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).darken(5).toString("hex6").slice(1)
@@ -115,7 +115,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).lighten(5).toString("hex6").slice(1)
         }
-        s.borderColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
+        s.easingTheDarkertheLighter = easingTheDarkertheLighter(s.luminance)*100
+        s.borderColor = tinycolor(s.p_rgb).lighten(s.easingTheDarkertheLighter).toString("hex6").slice(1)
         // some transparency to show video behind
         if (fullameNoSpaceLowercaseNoDiacritics) {
             s.p_rgb_original = new tinycolor(s.p_rgb).toRgbString()
@@ -179,13 +180,11 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             #${c.p_rgb} 100%); 
             background-size: 16.97px 16.97px;`
 
-
-
         const svgOffsetX = (i == 0 || i == 17 || i == 27 || i == 33 ? "0" : "6.5")
 
         const templateVariations =
             `
-<div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripe}; border-color: #${c.borderColor};">
+<div id="gb${i}" data-sort="${twoZeroPad(i)}" data-lum="${c.luminance} > ${c.easingTheDarkertheLighter}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripe}; border-color: #${c.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 

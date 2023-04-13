@@ -93,12 +93,15 @@ a {
   width: min(var(--vw, 1vw) * 100, 24rem);
   height: 6rem;
   padding: 0.4rem;
-  border-style: none solid;
-  border-width: 2px !important;
+  border-style: solid;
+  border-width: 1.5px !important;
   display: inline-block;
   visibility: inherit;
 }
-
+.no-vid .grid-brick {
+  background-color:transparent !important;
+  background-image: none !important;
+}
 .grid-brick .brick {
   border-radius: 0 3rem 3rem 0;
   width: 100%;
@@ -118,7 +121,8 @@ a {
   background-image: none !important;
 }
 
-.grid-brick.hasScore.Δ:not(.selected) {
+.no-vid .grid-brick.hasScore.Δ,
+:not(.no-vid) .grid-brick.hasScore.Δ:not(.selected) {
   background-color: rgba(192, 192, 192, 0.4) !important;
 }
 
