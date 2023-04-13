@@ -114,13 +114,17 @@ a {
 }
 
 .grid-brick.hasScore:not(.selected) {
-  /* background-color: #faebd7e0 !important; */
   background-color: transparent !important;
+  background-image: none !important;
+}
+
+.grid-brick.hasScore.Δ:not(.selected) {
+  background-color: rgba(192, 192, 192, 0.4) !important;
 }
 
 .grid-brick .brick .score {
   position: relative;
-  height: 5rem;
+  height: 100%;
   border-radius: 0 3rem 3rem 0;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -129,13 +133,13 @@ a {
 
 .grid-brick.hasScore.selected .score {
   border-radius: 0 !important;
-  background-color: #ffffffc0 !important;
+  background-color: #aaaaaa40 !important;
   width: 100% !important;
   overflow-x: scroll;
 }
 
 .score object {
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.80);
   height: 100%;
   background-clip: padding-box;
   position: absolute;
@@ -170,10 +174,6 @@ a {
 
 .grid-brick:not(.gbPlaying) {
   border-color: transparent !important;
-}
-
-.grid-brick.Δ {
-  background-color: rgba(128, 128, 128, 0.3);
 }
 
 .grid-brick#gb33 {
@@ -338,8 +338,8 @@ li a.dropdown-item img#keyboard {
 }
 
 li a.dropdown-item div {
-  margin-left: .5rem;
-  margin-right: .5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 li a.dropdown-item div:last-child {
