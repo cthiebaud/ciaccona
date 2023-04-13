@@ -111,19 +111,18 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         if (tinycolor(s.p_rgb).isLight()) {
             s.textColor = tinycolor(s.p_rgb).darken(s.brightnessChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).darken(10).toString("hex6").slice(1)
-            s.borderColor = tinycolor(s.p_rgb).darken(20).toString("hex6").slice(1)
         } else {
             s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
-            s.borderColor = tinycolor(s.p_rgb).lighten(20).toString("hex6").slice(1)
         }
+        s.borderColor = tinycolor(s.p_rgb).lighten(30).toString("hex6").slice(1)
         // some transparency to show video behind
         if (fullameNoSpaceLowercaseNoDiacritics) {
             s.p_rgb_original = new tinycolor(s.p_rgb).toRgbString()
             s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
             s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
             s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
-            // s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
+            s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
         }
     }
 
@@ -186,7 +185,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 
         const templateVariations =
             `
-<div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="border-color: #${c.borderColor};"> <!-- background-color: ${c.p_rgb_original}; -->
+<div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bg}; border-color: #${c.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bg};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
