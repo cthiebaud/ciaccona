@@ -22,17 +22,11 @@ const Ω = {
             $('header.header').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
-
-                $("code#artists").load('/_artists.yaml', function (response, status, xhr) {
+                $("code#thanks").load('/_thanks.yaml', function (response, status, xhr) {
                     if (status == "success") {
                         Prism.highlightElement(this)
+                        $('#credits').show()
                     }
-                    $("code#thanks").load('/_thanks.yaml', function (response, status, xhr) {
-                        if (status == "success") {
-                            Prism.highlightElement(this)
-                            $('#credits').show()
-                        }
-                    })
                 })
             })
             $('footer.footer').show()
@@ -78,21 +72,21 @@ const Ω = {
 
         $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
-            setCookie('scoreDisplay', scoreDisplay )
+            setCookie('scoreDisplay', scoreDisplay)
             document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
             if (scoreDisplay === 'firstBar') {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-                $('.score').css({visibility: 'inherit'})
+                $('.score').css({ visibility: 'inherit' })
             } else if (scoreDisplay === 'fullScore') {
                 $('#gridContainerCol').addClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-                $('.score').css({visibility: 'inherit'})
+                $('.score').css({ visibility: 'inherit' })
             } else if (scoreDisplay === 'noScore') {
                 $('#gridContainerCol').removeClass('fullwidth')
                 $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-                $('.score').css({visibility: 'hidden'})
-            } 
+                $('.score').css({ visibility: 'hidden' })
+            }
             if (iso) iso.layout()
         })
 
@@ -164,7 +158,7 @@ const Ω = {
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
             // $('.score').css({visibility: 'hidden'})
-        } 
+        }
         if (iso) iso.layout()
 
 

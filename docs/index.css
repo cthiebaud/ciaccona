@@ -355,6 +355,7 @@ pre[class*="language-"] {
 }
 
 span.d {
+  display: none;
   color: #6c757d !important;
   font-family: var(--bs-font-monospace) !important;
   text-align: right;

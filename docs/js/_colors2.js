@@ -84,7 +84,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     ];
 
     let _last_color_ = [
-        { rgb: "000000", p_rgb: "232222", sim: 92, pantone: "Neutral Black C", name: "Bleached Silk" }
+        /* { rgb: "000000", p_rgb: "232222", sim: 92, pantone: "Neutral Black C", name: "Bleached Silk" } */
+        { rgb: "d8b998", p_rgb: "d8b998", sim: 92, pantone: "Pantone 13-1014 Tcx", name: "Mellow Buff" }
     ]
 
     let _colors_ = _first_color_.concat(_other_colors_)
