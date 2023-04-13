@@ -103,7 +103,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.23"
+        const ver = "v0.6.24"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -111,7 +111,7 @@
         let no_plyr_event = params.no_plyr_event ?? undefined
 
         if (!validFullamesNoSpaceLowercaseNoDiacritics.includes(fullameNoSpaceLowercaseNoDiacritics)) {
-            console.log('name ', fullameNoSpaceLowercaseNoDiacritics, 'is invalid')
+            console.log(`invalid name: ${fullameNoSpaceLowercaseNoDiacritics}`)
             fullameNoSpaceLowercaseNoDiacritics = undefined
         }
 
@@ -139,7 +139,7 @@
 
         window.addEventListener("DOMContentLoaded", (event) => {
             calcBrickWidth()
-        }, {once: true});
+        }, { once: true });
 
         window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with isotope own debounce
             theTrickToViewportUnitsOnMobile()
@@ -564,6 +564,13 @@
         import createPlayer from "/js/_player2.js"
         import { Ω } from "/js/_jquery2.js"
 
+        // transform windows loaded event to promise
+        const windowLoaded = new Promise((resolve) => {
+            window.addEventListener('load', (event) => {
+                resolve(event)
+            })
+        })
+
         // useless, but nice
         Ω.boot()
         const about = new Ω.About()
@@ -584,12 +591,8 @@
             document.getElementById('body').style['background-color'] = 'transparent'
         }
 
-        // transform windows loaded event to promise
-        const windowLoaded = new Promise((resolve) => {
-            window.addEventListener('load', (event) => {
-                resolve(event)
-            })
-        })
+        // * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+        createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
 
         // elaborate a bit some config values 
         let fullWidthChecked = fullscore
@@ -619,7 +622,7 @@
         // everything
         const allPromises = new Map()
         // name of main promises, for bookkeeping
-        const RESIZE = "RESIZE", PLAYER = "PLAYER", BADGES = "BADGES";
+        const RESIZE = "RESIZE", PLAYER = "PLAYER", ISOTOPE = "ISOTOPE";
 
         // 1. promise resolves when 1) windows is loaded, then 2) all SVGs for scores have been loaded and resized
         allPromises.set(
@@ -674,9 +677,8 @@
 
         // 3. create and flood color bricks into isotope
         allPromises.set(
-            BADGES,
-            createColoredBadges(fullameNoSpaceLowercaseNoDiacritics).then((result) => {
-
+            ISOTOPE,
+            new Promise((resolve, reject) => {
                 const theIsotope = new isotopeLayout('#grid', {
                     itemSelector: ".grid-brick",
                     sortBy: 'id',
@@ -690,16 +692,14 @@
                     console.log("isotope layout complete");
                 })
                 theIsotope.on('arrangeComplete', function (filteredItems) {
-                    console.log("isotope arrange complete");
+                    console.log("isotope arrange complete", filteredItems);
                 })
 
                 // big buffer of everything that needs to be done AFTER bricks are ready
                 Ω.setClickHandlers(fullWidthChecked, showHelpAtStartChecked, theIsotope)
                 Ω.afterCreateColoredBadges(fullWidthChecked, theIsotope, scoreDisplay2)
 
-                result.value.iso = theIsotope
-
-                return result
+                resolve({key: ISOTOPE, value: theIsotope})
             })
         )
 
@@ -725,12 +725,12 @@
 
             console.log(`All promises settled. Promises fullfilled: ${map.size} / ${result.length}`, result)
 
-            const createColoredBadgesResult = map.get(BADGES)
+            const isotopeResult = map.get(ISOTOPE)
             const createPlayerResult = map.get(PLAYER)
 
-            if (createColoredBadgesResult && !createPlayerResult) {
+            if (isotopeResult && !createPlayerResult) {
                 console.log("change isotope filter to hide artist name")
-                createColoredBadgesResult.iso.arrange({ filter: ':not(.artist)' })
+                isotopeResult.arrange({ filter: ':not(.artist)' })
             }
 
             hideLoading();

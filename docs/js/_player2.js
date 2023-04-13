@@ -182,19 +182,17 @@ export default function createPlayer(selector, timings, ignore_all_events) {
             _plyer.on('volumechange', (event) => {
                 console.log("Plyr volumechange event", event.detail.plyr.media.volume)
             })
-
             _plyer.on('canplay', (event) => {
-                console.log("Plyr canplay event", event)
+                console.log("Plyr canplay event", event.detail)
             })
-
             _plyer.on('canplaythrough', (event) => {
-                console.log("Plyr canplaythrough event", event)
+                console.log("Plyr canplaythrough event", event.detail)
             })
             _plyer.on('statechange', (event) => {
-                console.log("Plyr statechange event")
+                console.log("Plyr statechange event", event.detail.code)
             })
             _plyer.on('waiting', (event) => {
-                console.log("Plyr waiting event")
+                console.log("Plyr waiting event", event.detail)
             })
             _plyer.on('progress', (event) => {
                 console.log("Plyr progress event", event.detail.plyr.buffered)
@@ -249,35 +247,25 @@ export default function createPlayer(selector, timings, ignore_all_events) {
 
             setBrickClickEvent(_plyer, timings)
 
-            function closeInitializationCallback(closecloseCallback) {
+            if (!ignore_all_events) {
+                INIT_EVENT_HANDLERS()
 
-                if (!ignore_all_events) {
-                    INIT_EVENT_HANDLERS()
-
-                    let theStartingBar = timings.bars[0]
-                    let theLastStartingBarIndex = timings.getStartBarOfLastSelectedVariation()
-                    if (theLastStartingBarIndex != null) {
-                        theStartingBar = timings.bars[theLastStartingBarIndex]
-                    }
-                    console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
-                    _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
-                } else {
-                    _plyer.on('timeupdate', (event) => {
-                        console.log("Plyr timeupdate event", event.detail.plyr.currentTime)
-                    })
+                let theStartingBar = timings.bars[0]
+                let theLastStartingBarIndex = timings.getStartBarOfLastSelectedVariation()
+                if (theLastStartingBarIndex != null) {
+                    theStartingBar = timings.bars[theLastStartingBarIndex]
                 }
-                if (closecloseCallback) closecloseCallback()
+                console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
+                _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000
+            } else {
+                _plyer.on('timeupdate', (event) => {
+                    console.log("Plyr timeupdate event", event.detail.plyr.currentTime)
+                })
             }
-
-            closeInitializationCallback()
 
             resolve({
                 key: "PLAYER",
                 value: {
-                    /*
-                    player: _plyer,
-                    closeInitializationCallback: closeInitializationCallback
-                    */
                 }
             })
         })
