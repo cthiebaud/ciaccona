@@ -10,6 +10,7 @@
     a4: 443
 - firstname: Amandine
   lastname: Beyer
+  insta: amandinebeyer
   twitter: AmandineBeyerGI
   flag: 🇫🇷
   ▶:
@@ -27,6 +28,7 @@
     - "https://www.amandinebeyer.com/"
 - firstname: Andrea
   lastname: De Vitis
+  insta: andreadevitis_classical_guitar
   twitter: itsDeVitis
   flag: 🇮🇹
   ▶:
@@ -39,6 +41,7 @@
   🕸: "http://www.andreadevitis.com/"
 - firstname: Anneleen
   lastname: Lenaerts
+  insta: anneleenlenaerts
   twitter: AnnelLenaerts
   flag: 🇧🇪
   ▶:
@@ -51,6 +54,7 @@
   🕸: "https://www.anneleenlenaerts.com/"
 - firstname: Bella
   lastname: Hristova
+  insta: bellahristovaviolin
   flag: 🇧🇬
   ▶:
     id: XkfsGCIiHb4
@@ -98,6 +102,7 @@
   🕸: "https://florentinginot.com/"
 - firstname: Genzoh
   lastname: Takehisa
+  insta: genzoh_takehisa
   twitter: genzohtakehisa
   flag: 🇯🇵
   ▶:
@@ -112,6 +117,7 @@
   🕸: "http://www.genzoh.jp"
 - firstname: Hilary
   lastname: Hahn
+  insta: violincase
   twitter: violincase
   flag: 🇺🇸
   ▶:
@@ -136,6 +142,7 @@
   🕸: "https://www.impresariat-simmenauer.de/en/artist/isabelle-faust/"
 - firstname: Julia
   lastname: Fischer
+  insta: juliafischer_official
   flag: 🇩🇪
   ▶:
     id: WZ0wkyRBlqo
@@ -147,6 +154,7 @@
   🕸: "https://www.juliafischer.com/"
 - firstname: Lisa
   lastname: Jacobs
+  insta: lisajacobsviolin
   twitter: lisajacobs85
   flag: 🇳🇱
   ▶:
@@ -159,6 +167,7 @@
   🕸: "https://lisajacobs.nl/"
 - firstname: Liza
   lastname: Ferschtman
+  insta: lizaferschtmanviolin
   flag: 🇳🇱
   ▶:
     id: 17uCirXzs8Q
@@ -170,6 +179,7 @@
   🕸: "https://lizaferschtman.nl/"
 - firstname: Marta
   lastname: Femenía
+  insta: marta.femenia
   flag: 🇪🇸
   ▶:
     id: P93o202UJRs
@@ -214,6 +224,7 @@
   🕸: "https://www.midori-violin.com/"
 - firstname: Miguel
   lastname: Rincón
+  insta: migueliuto_
   flag: 🇪🇸
   ▶:
     id: Kxn0ySsHDRA
@@ -225,6 +236,7 @@
   🕸: "https://miguelrincon.net/"
 - firstname: Mika
   lastname: Stoltzman
+  insta: chick_and_me_
   twitter: MikaStoltzman
   flag: 🇯🇵
   ▶:
@@ -253,6 +265,7 @@
   🕸: "https://www.youtube.com/@moranwasser"
 - firstname: Petra
   lastname: Poláčková
+  insta: petraguitarpolackova
   flag: 🇨🇿
   ▶:
     id: lxZqC_J0C74
@@ -264,6 +277,7 @@
   🕸: "http://www.petrapolackova.com/en/"
 - firstname: Polina
   lastname: Osetinskaya
+  insta: polinaosetinskaya
   flag: 🇷🇺
   ▶:
     id: AKMNFzKRTuc
@@ -275,6 +289,7 @@
   🕸: "https://osetinskaya.com/"
 - firstname: Rachel
   lastname: Podger
+  insta: rachelpodgerofficial
   twitter: RachPodger
   flag: 🇬🇧
   ▶:
@@ -321,6 +336,7 @@
   🕸: "https://lapetitebande.be/en/"
 - firstname: Veronika
   lastname: Eberle
+  insta: veronikaeberle
   twitter: veronika_eberle
   flag: 🇩🇪
   ▶:
@@ -333,6 +349,7 @@
   🕸: "https://www.instagram.com/veronikaeberle/"
 - firstname: Veronique
   lastname: De Raedemaeker
+  insta: veronique.deraedemaeker
   flag: 🇧🇪
   ▶:
     id: AbZxSocrvvs
@@ -344,6 +361,7 @@
   🕸: "https://veroniquederaedemaeker.com/"
 - firstname: Virginie
   lastname: Robilliard
+  insta: ___
   flag: 🇫🇷
   ▶:
     id: KWcGsRKbe-U
@@ -355,6 +373,7 @@
   🕸: "https://virginierobilliard.com/"
 - firstname: Von
   lastname: Hansen
+  insta: vonhansenmusic
   flag: 🇺🇸
   ▶:
     id: X5-F_w-rX4k
@@ -366,6 +385,7 @@
   🕸: "https://vonhansenmusic.com/"
 - firstname: Yun
   lastname: Park
+  insta: playp49
   flag: 🇰🇷
   ▶:
     id: 5ITydjLkYUk
@@ -378,6 +398,7 @@
 
 - firstname: Christophe
   lastname: Thiebaud
+  insta: cthiebaud
   twitter: cthiebaud
   flag: 🇫🇷
   ▶:
