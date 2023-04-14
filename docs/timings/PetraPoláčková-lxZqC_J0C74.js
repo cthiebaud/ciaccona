@@ -1,16 +1,16 @@
 const lxZqC_J0C74 = {
-  /* offset:{ minutes: 0, seconds: 0 },
-  adjust: { seconds: 0, milliseconds: 0 }, */
+  /* offset:{ minutes: 0, seconds: 0 }, */
+  adjust: { seconds: 0, milliseconds: 500 },
   start: "2023-03-22T22:48:58.439Z",
   bars: [
     /*{
       "Time Recorded": "2023-03-22T22:48:58.439Z"
     },*/
     {
-      "Time Recorded": "2023-03-22T22:49:11.161Z"
+      "Time Recorded": "2023-03-22T22:49:10.300Z"
     },
     {
-      "Time Recorded": "2023-03-22T22:49:13.862Z"
+      "Time Recorded": "2023-03-22T22:49:13.262Z"
     },
     {
       "Time Recorded": "2023-03-22T22:49:16.989Z"
@@ -383,7 +383,7 @@ const lxZqC_J0C74 = {
     },
     {
       "Time Recorded original": "2023-03-22T22:55:28.110Z",
-      "Time Recorded": "2023-03-22T22:55:27.200Z"
+      "Time Recorded": "2023-03-22T22:55:27.900Z"
     },
     {
       "Time Recorded": "2023-03-22T22:55:30.496Z"
@@ -690,7 +690,7 @@ const lxZqC_J0C74 = {
     },
     {
       "Time Recorded original": "2023-03-22T23:00:55.146Z",
-      "Time Recorded": "2023-03-22T23:00:54.346Z"
+      "Time Recorded": "2023-03-22T23:00:54.900Z"
     },
     {
       "Time Recorded": "2023-03-22T23:00:57.980Z"
@@ -786,7 +786,7 @@ const lxZqC_J0C74 = {
       "Time Recorded": "2023-03-22T23:02:24.278Z"
     },
     {
-      "Time Recorded": "2023-03-22T23:02:30.242Z"
+      "Time Recorded": "2023-03-22T23:02:30.555Z"
     }
     ]
 }

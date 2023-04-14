@@ -44,7 +44,7 @@ function selectAndScrollToVariation(source, variation, options) {
         scrollToSelector = '.grid-brick#gb-bwv1004'
     }
 
-    jquery('.grid-brick').removeClass('selected')
+    jquery('.grid-brick').removeClass('selected').find('.score').scrollLeft(0)
     document.querySelector(selector)?.classList.add('selected')
 
     const scrollToElement = document.querySelector(scrollToSelector)
@@ -52,25 +52,27 @@ function selectAndScrollToVariation(source, variation, options) {
     scrollToElement?.scrollIntoView(options)
 }
 
+function unselect() {
+    jquery('.grid-brick.gbPlaying').removeClass('gbPlaying').removeClass('selected').find('.score').scrollLeft(0)
+}
+
 function showPlay(currentTime, timings) {
     const barIndex = timings.time2bar(currentTime)
     if (barIndex == null || barIndex === -1) {
         console.log('no variation here', currentTime)
-        jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
-        jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+        unselect()
         return
     }
     const variation = timings.bars[barIndex].variation
     console.log('showing play of variation', variation)
-    jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
-    jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+    unselect()
     jquery(`.grid-brick#gb${variation}`).addClass('gbPlaying').addClass('selected')
 }
 
 function hidePlay(cause) {
     console.log('hidding play')
     if (cause !== 'pause') jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
-    jquery('.grid-brick.gbPlaying').removeClass('gbPlaying')
+    unselect()
 }
 
 const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, scrollToVariation, scrollOptions) => {
@@ -80,8 +82,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     const barIndex = timings.time2bar(currentTime)
     if (barIndex == null || barIndex === -1) {
         console.log('no variation here', currentTime)
-        jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
-        jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
+        unselect()
         if (doSave) {
             config.startBarOfLastSelectedVariation = undefined
         }
@@ -118,12 +119,10 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
         // console.log(source, 'SWAP from', altID, 'to', neuID, '?', doIt ? "yes!" : "no!")
         if (doIt) {
             // swap
-            oldBrickplaying.find('.score').scrollLeft(0)
+            unselect()
             if (isPlaying) {
-                jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
                 newBrick.addClass('gbPlaying').addClass('selected')
             } else {
-                jquery('.grid-brick').removeClass('selected')
                 newBrick.addClass('selected')
             }
             if (scrollToVariation) {
