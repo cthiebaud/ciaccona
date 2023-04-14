@@ -101,7 +101,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.39"
+        const ver = "v0.7.0"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -418,12 +418,6 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="configMenuLink">
                 <form class="px-4 py-3">
-                    <div class="form-check" style="display: none;">
-                        <input type="checkbox" class="form-check-input" id="fullWidthChecked">
-                        <label class="form-check-label align-top" for="fullWidthChecked">
-                            Full Score <span style="display: none; font-size:2rem;">𝄞</span>
-                        </label>
-                    </div>
                     <div class="label">Score</div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="firstBar" id="firstBarChecked">
@@ -443,10 +437,11 @@
                             None
                         </label>
                     </div>
-                    <div style="display:none;">
-                        <input type="checkbox" class="form-check-input" id="helpAtStartCheck">
-                        <label class="form-check-label align-top" for="helpAtStartCheck">
-                            Show Help at Start <span style="display: none; font-size:2rem;">𝄞</span>
+                    <hr>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="autoplayChecked">
+                        <label class="form-check-label align-top" for="autoplayChecked">
+                            Autoplay
                         </label>
                     </div>
                     <hr>
@@ -604,6 +599,11 @@
         createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
 
         // elaborate a bit some config values 
+        let autoplayChecked = config.autoplay
+        if (autoplayChecked) {
+            document.getElementById('autoplayChecked').checked = true
+        }
+
         const gridradioId = `${config.scoreDisplay}Checked`
         document.getElementById(gridradioId).checked = true
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
@@ -634,7 +634,7 @@
                 }
                 return resizeSVGs(
                     SVGs,
-                    !fullWidthChecked, // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
+                    config.scoreDisplay !== 'fullScore', // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
                     (obj) => {
                         obj.parentNode.parentNode.style.visibility = 'inherit'
                         if (config.scoreDisplay === 'noScore') {

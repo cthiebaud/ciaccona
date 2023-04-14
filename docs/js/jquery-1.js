@@ -90,6 +90,11 @@ const Ω = {
             config.scoreDisplay = scoreDisplay
             showScoreDisplay()
         })
+
+        $("#autoplayChecked").on("click", function () {
+            config.autoplay = !config.autoplay
+        })
+        
     },
 
     showArtist: (artist) => {

@@ -4,6 +4,7 @@ class Config {
     #scoreDisplay
     #playing
     #startBarOfLastSelectedVariation
+    #autoplay
 
     constructor() {
         // 
@@ -14,6 +15,9 @@ class Config {
 
         // 
         this.startBarOfLastSelectedVariation = getCookie('startBarOfLastSelectedVariation')
+
+        // 
+        this.autoplay = getCookie('autoplay')
     }
 
     // 
@@ -42,7 +46,7 @@ class Config {
         } else {
             this.#playing = false
         }
-        this.#playing = playing
+
         if (!this.#playing) {
             removeCookie('playing')
         } else {
@@ -58,17 +62,35 @@ class Config {
         let temp
         if (!startBarOfLastSelectedVariation) {
             temp = 0
-        } else { 
+        } else {
             temp = parseInt(startBarOfLastSelectedVariation)
             if (isNaN(temp)) temp = 0
         }
-        
+
         this.#startBarOfLastSelectedVariation = temp
 
         if (this.#startBarOfLastSelectedVariation === 0) {
             removeCookie('startBarOfLastSelectedVariation')
         } else {
             setCookie('startBarOfLastSelectedVariation', this.#startBarOfLastSelectedVariation)
+        }
+    }
+
+    // 
+    get autoplay() {
+        return this.#autoplay
+    }
+    set autoplay(autoplay) {
+        if (autoplay && (autoplay === 'true' || autoplay === true)) {
+            this.#autoplay = true
+        } else {
+            this.#autoplay = false
+        }
+
+        if (!this.#autoplay || this.#autoplay === false) {
+            removeCookie('autoplay')
+        } else {
+            setCookie('autoplay', 'true')
         }
     }
 }

@@ -2,6 +2,8 @@ import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import config from "/js/config-1.js"
 
+let begin = true
+
 function scrollScore(selector, timings, variation, currentTime) {
     if (variation === 33) return -1
     const sco = document.querySelector(selector)
@@ -239,7 +241,18 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                 feedbackOnCurrentTime('seeking', seekTime, timings, true /* do not save variation */, _plyer.playing, true, { behavior: "instant", block: "center" })
             })
             _plyer.on('seeked', (event) => {
-                console.log("Plyr seeked event")
+                console.log("Plyr seeked event", 'begin', begin, 'config.playing', config.playing, '_plyer.playing', _plyer.playing)
+                if (begin) {
+                    begin = false
+                    if (config.autoplay) {
+                        if (config.playing && !event.detail.plyr.playing) {
+                            setTimeout(() => {
+                                event.detail.plyr.pause()
+                                event.detail.plyr.play()
+                            }, 500)
+                        }
+                    }
+                }
                 feedbackOnCurrentTime('seeked', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "center" })
             })
         }
