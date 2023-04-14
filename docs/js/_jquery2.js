@@ -58,7 +58,7 @@ const Ω = {
         })
     },
 
-    setClickHandlers: (fullWidthChecked, showHelpAtStartChecked, iso) => {
+    setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
         $('a[data-name-no-space-lowercase-no-diacritics]').on('click', (e) => {
@@ -89,35 +89,20 @@ const Ω = {
             }
             if (iso) iso.layout()
         })
-
-        $("#fullWidthChecked").on("click", function () {
-            fullWidthChecked = !fullWidthChecked
-            setCookie('fullscore', fullWidthChecked ? 'true' : 'false')
-            if (fullWidthChecked) {
-                $('#gridContainerCol').addClass('fullwidth')
-                $('.grid-brick, .score').addClass('fullwidth')
-            } else {
-                $('#gridContainerCol').removeClass('fullwidth')
-                $('.grid-brick, .score').removeClass('fullwidth')
-            }
-            if (iso) iso.layout()
-        })
-        $("#helpAtStartCheck").on("click", function () {
-            showHelpAtStartChecked = !showHelpAtStartChecked
-            setCookie('showHelpAtStart', showHelpAtStartChecked ? 'true' : 'false', 30) // one month
-        })
     },
 
     showArtist: (artist) => {
-        $('.artist .name').html(artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname)
-        $('.artist .url').attr({
+        const $artist = $('.grid-brick.artist#gb-artist');
+
+        $artist.css({ visibility: "inherit" })
+        $artist.find('.fullname').html(artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname)
+        $artist.find('a#youtube-url').attr({
             href: artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl,
             target: artist['▶'].id
         })
-        $('.artist a#social').attr({
+        $artist.find('a#social').attr({
             href: artist.social
         })
-        $('.artist, .artist .brick').css({ visibility: "inherit" })
     },
 
     beforeCreatePlayer: (videoId) => {
@@ -138,12 +123,7 @@ const Ω = {
         $('#gridContainerCol').css({ visibility: 'visible' })
     },
 
-    afterCreateColoredBadges: (fullWidthChecked, iso, scoreDisplay) => {
-        if (fullWidthChecked) {
-            $('#gridContainerCol').addClass('fullwidth')
-            $('.grid-brick, .score').addClass('fullwidth')
-            if (iso) iso.layout()
-        }
+    afterCreateColoredBadges: (iso, scoreDisplay) => {
 
         document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
         if (scoreDisplay === 'firstBar') {
@@ -160,8 +140,6 @@ const Ω = {
             // $('.score').css({visibility: 'hidden'})
         }
         if (iso) iso.layout()
-
-
 
         $(".brick.hasScore").click(function (e) {
             const hadClass = $(e.currentTarget).parent().hasClass('selected')

@@ -103,9 +103,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     _colors_.push(_last_color_[0])
     // https://cubic-bezier.com/
     const easingVanishingContrast = bezierEasing(0, 1, 1, .4)
-    const easingTheDarkertheLighter = bezierEasing(0,1.5,.166,.5)
+    const easingTheDarkerTheLighter = bezierEasing(0,1.5,.166,.5)
     for (let s of _colors_) {
-        // const nl = normalize(s.luminance, max, min)
         s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
         s.brightnessChange = (1 - easingVanishingContrast(s.nl)) * 100 // s.luminance *100 // 
         if (tinycolor(s.p_rgb).isLight()) {
@@ -115,8 +114,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).lighten(5).toString("hex6").slice(1)
         }
-        s.easingTheDarkertheLighter = easingTheDarkertheLighter(s.luminance)*100
-        s.borderColor = tinycolor(s.p_rgb).lighten(s.easingTheDarkertheLighter).toString("hex6").slice(1)
+        const theDarkerTheLighter = easingTheDarkerTheLighter(s.luminance)*100
+        s.borderColor = tinycolor(s.p_rgb).lighten(theDarkerTheLighter).toString("hex6").slice(1)
         // some transparency to show video behind
         if (fullameNoSpaceLowercaseNoDiacritics) {
             s.p_rgb_original = new tinycolor(s.p_rgb).toRgbString()
@@ -145,14 +144,14 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 <div id="gb-artist" data-sort="-2" class="grid-brick artist" style="${!fullameNoSpaceLowercaseNoDiacritics ? 'display: none;' : ''}">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
         <div class="p-2" >
-            <span class="name" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
-            <a class="url text-muted" href="#">
-                <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
-                    <use xlink:href="#external-link"></use>
+            <span class="fullname" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
+            <a id="youtube-url" class="text-muted" target="_youtube" href="#">
+                <svg width="28" height="28" preserveAspectRatio="xMidYMid meet">
+                    <use xlink:href="#youtube-external-link"></use>
                 </svg>
             </a>
-            <a id="social" class="share text-muted" target=_facebook" href="#">
-                <svg width="20" height="20" preserveAspectRatio="xMidYMid meet">
+            <a id="social" class="share text-muted" target="_facebook" href="#">
+                <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="#share"></use>
                 </svg>
             </a>
@@ -184,7 +183,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 
         const templateVariations =
             `
-<div id="gb${i}" data-sort="${twoZeroPad(i)}" data-lum="${c.luminance} > ${c.easingTheDarkertheLighter}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripe}; border-color: #${c.borderColor};">
+<div id="gb${i}" data-sort="${twoZeroPad(i)}" data-lum="${c.luminance} > ${c.easingTheDarkerTheLighter}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripe}; border-color: #${c.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 

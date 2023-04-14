@@ -6,12 +6,6 @@ body {
   height: calc(var(--vh, 1vh) * 100);
   background-color: black;
   overscroll-behavior: none;
-  /*
-  background-image: url(svg/BachsiegelColorWheel.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-color: transparent;
-  */
 }
 
 body.no-vid,
@@ -25,8 +19,10 @@ body.about {
   left: 0;
   bottom: 0;
   right: 0;
+  height: 100vh;
+  width: 100vw;
   height: calc(var(--vh, 1vh) * 100);
-  width: calc(var(--vw, 1vh) * 100);
+  width: calc(var(--vw, 1vw) * 100);
 }
 
 #loading {
@@ -54,6 +50,7 @@ body.about {
 }
 
 .container-fluid {
+  height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
 }
 
@@ -77,6 +74,7 @@ a {
   margin: 0;
   padding: 0;
 }
+
 #gridContainerCol.push2right .grid-brick {
   width: 100% !important;
 }
@@ -88,9 +86,11 @@ a {
 
 /* + + + + + + + + +  */
 
-.grid-brick {
+#gridContainerCol .grid-brick {
   font-size: 1.4rem;
+  width: 24rem;
   width: min(var(--vw, 1vw) * 100, 24rem);
+  width: var(--gbw, 100%);
   height: 6rem;
   padding: 0.4rem;
   border-style: solid;
@@ -98,35 +98,37 @@ a {
   display: inline-block;
   visibility: inherit;
 }
-.no-vid .grid-brick {
+
+.no-vid #gridContainerCol .grid-brick {
   background-color:transparent !important;
   background-image: none !important;
 }
-.grid-brick .brick {
+
+#gridContainerCol .grid-brick .brick {
   border-radius: 0 3rem 3rem 0;
   width: 100%;
   height: 100%;
 }
 
-.grid-brick.hasScore .brick {
+#gridContainerCol .grid-brick.hasScore .brick {
   cursor: pointer;
 }
 
-.grid-brick.selected .brick {
+#gridContainerCol .grid-brick.selected .brick {
   border-radius: 0 !important;
 }
 
-.grid-brick.hasScore:not(.selected) {
+#gridContainerCol .grid-brick.hasScore:not(.selected) {
   background-color: transparent !important;
   background-image: none !important;
 }
 
-.no-vid .grid-brick.hasScore.Δ,
-:not(.no-vid) .grid-brick.hasScore.Δ:not(.selected) {
+.no-vid #gridContainerCol .grid-brick.hasScore.Δ,
+:not(.no-vid) #gridContainerCol .grid-brick.hasScore.Δ:not(.selected) {
   background-color: rgba(192, 192, 192, 0.4) !important;
 }
 
-.grid-brick .brick .score {
+#gridContainerCol .grid-brick .brick .score {
   position: relative;
   height: 100%;
   border-radius: 0 3rem 3rem 0;
@@ -135,14 +137,14 @@ a {
   visibility: hidden;
 }
 
-.grid-brick.hasScore.selected .score {
+#gridContainerCol .grid-brick.hasScore.selected .score {
   border-radius: 0 !important;
   background-color: #aaaaaa40 !important;
   width: 100% !important;
   overflow-x: scroll;
 }
 
-.score object {
+#gridContainerCol .grid-brick .score object {
   background-color: rgba(255, 255, 255, 0.80);
   height: 100%;
   background-clip: padding-box;
@@ -150,14 +152,10 @@ a {
   display: block;
 }
 
-.grid.gbPlaying object {
+#gridContainerCol .grid-brick .grid.gbPlaying object {
   border-radius: 0 !important;
   width: 100% !important;
   height: 100% !important;
-}
-
-.grid-brick:not(.selected) {
-  border-color: transparent !important;
 }
 
 #grid {
@@ -234,10 +232,6 @@ div.siegel#logoRight {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
   color: #121212;
-}
-
-.grid-brick {
-  width: var(--gbw, 100%);
 }
 
 div#gb-artist > div > div {
