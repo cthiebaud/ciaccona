@@ -7,20 +7,13 @@ class Config {
 
     constructor() {
         // 
-        this.#scoreDisplay = getCookie('scoreDisplay')
-        if (!this.#scoreDisplay || !(this.#scoreDisplay === 'fullScore' || this.#scoreDisplay === 'noScore')) this.#scoreDisplay = 'firstBar'
+        this.scoreDisplay = getCookie('scoreDisplay')
 
         // 
-        this.#playing = getCookie('playing')
-        if (this.#playing && this.#playing === 'true') {
-            this.#playing = true
-        } else {
-            this.#playing = false
-        }
+        this.playing = getCookie('playing')
 
         // 
-        this.#startBarOfLastSelectedVariation = getCookie('startBarOfLastSelectedVariation')
-        if (!this.#startBarOfLastSelectedVariation) this.#startBarOfLastSelectedVariation = 0
+        this.startBarOfLastSelectedVariation = getCookie('startBarOfLastSelectedVariation')
     }
 
     // 
@@ -44,6 +37,11 @@ class Config {
         return this.#playing
     }
     set playing(playing) {
+        if (playing && (playing === 'true' || playing === true)) {
+            this.#playing = true
+        } else {
+            this.#playing = false
+        }
         this.#playing = playing
         if (!this.#playing) {
             removeCookie('playing')
@@ -57,8 +55,17 @@ class Config {
         return this.#startBarOfLastSelectedVariation
     }
     set startBarOfLastSelectedVariation(startBarOfLastSelectedVariation) {
-        this.#startBarOfLastSelectedVariation = startBarOfLastSelectedVariation
-        if (!this.#startBarOfLastSelectedVariation) {
+        let temp
+        if (!startBarOfLastSelectedVariation) {
+            temp = 0
+        } else { 
+            temp = parseInt(startBarOfLastSelectedVariation)
+            if (isNaN(temp)) temp = 0
+        }
+        
+        this.#startBarOfLastSelectedVariation = temp
+
+        if (this.#startBarOfLastSelectedVariation === 0) {
             removeCookie('startBarOfLastSelectedVariation')
         } else {
             setCookie('startBarOfLastSelectedVariation', this.#startBarOfLastSelectedVariation)

@@ -1,10 +1,25 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import config from "/js/_config2.js"
-/*
-import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
-*/
 
 const $ = jquery
+
+function showScoreDisplay(iso) {
+    document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay 
+    if (config.scoreDisplay === 'firstBar') {
+        $('#gridContainerCol').removeClass('fullwidth')
+        $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+        $('.score').css({ visibility: 'inherit' })
+    } else if (config.scoreDisplay === 'fullScore') {
+        $('#gridContainerCol').addClass('fullwidth')
+        $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
+        $('.score').css({ visibility: 'inherit' })
+    } else if (config.scoreDisplay === 'noScore') {
+        $('#gridContainerCol').removeClass('fullwidth')
+        $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+        $('.score').css({ visibility: 'hidden' })
+    }
+    if (iso) iso.layout()
+}
 
 const Ω = {
     boot: () => {
@@ -73,21 +88,7 @@ const Ω = {
         $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
             config.scoreDisplay = scoreDisplay
-            document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
-            if (scoreDisplay === 'firstBar') {
-                $('#gridContainerCol').removeClass('fullwidth')
-                $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-                $('.score').css({ visibility: 'inherit' })
-            } else if (scoreDisplay === 'fullScore') {
-                $('#gridContainerCol').addClass('fullwidth')
-                $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-                $('.score').css({ visibility: 'inherit' })
-            } else if (scoreDisplay === 'noScore') {
-                $('#gridContainerCol').removeClass('fullwidth')
-                $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-                $('.score').css({ visibility: 'hidden' })
-            }
-            if (iso) iso.layout()
+            showScoreDisplay()
         })
     },
 
@@ -123,23 +124,9 @@ const Ω = {
         $('#gridContainerCol').css({ visibility: 'visible' })
     },
 
-    afterCreateColoredBadges: (iso, scoreDisplay) => {
+    afterCreateColoredBadges: (iso) => {
 
-        document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
-        if (scoreDisplay === 'firstBar') {
-            $('#gridContainerCol').removeClass('fullwidth')
-            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            // $('.score').css({visibility: 'inherit'}) // not now, but after resizeSVG
-        } else if (scoreDisplay === 'fullScore') {
-            $('#gridContainerCol').addClass('fullwidth')
-            $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-            // $('.score').css({visibility: 'inherit'})
-        } else if (scoreDisplay === 'noScore') {
-            $('#gridContainerCol').removeClass('fullwidth')
-            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            // $('.score').css({visibility: 'hidden'})
-        }
-        if (iso) iso.layout()
+        showScoreDisplay(iso)
 
         $(".brick.hasScore").click(function (e) {
             const hadClass = $(e.currentTarget).parent().hasClass('selected')

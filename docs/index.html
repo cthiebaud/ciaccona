@@ -101,7 +101,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.6.34"
+        const ver = "v0.6.35"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -695,7 +695,7 @@
 
                 // big buffer of everything that needs to be done AFTER bricks are ready
                 Ω.setClickHandlers(theIsotope)
-                Ω.afterCreateColoredBadges(theIsotope, config.scoreDisplay)
+                Ω.afterCreateColoredBadges(theIsotope)
 
                 resolve({ key: ISOTOPE, value: theIsotope })
             })
