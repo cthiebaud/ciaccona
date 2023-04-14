@@ -146,12 +146,12 @@
     </script>
 
     <script type="module">
-        import { removeCookie } from "/js/_utils2.js"
+        import config from "/js/_config2.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
-            removeCookie('playing')
-            removeCookie('startBarOfLastSelectedVariation')
+            config.playing = undefined
+            config.startBarOfLastSelectedVariation = undefined
         }
     </script>
 
@@ -566,7 +566,7 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import { scoreDisplay } from "/js/_config2.js"
+        import config from "/js/_config2.js"
         import createColoredBadges from "/js/_colors5.js"
         import { createTimings } from "/js/_timings2.js"
         import resizeSVGs from "/js/_resizeSVGs2.js"
@@ -606,10 +606,9 @@
         createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
 
         // elaborate a bit some config values 
-        const scoreDisplay2 = scoreDisplay
-        const gridradioId = `${scoreDisplay2}Checked`
+        const gridradioId = `${config.scoreDisplay}Checked`
         document.getElementById(gridradioId).checked = true
-        document.getElementById('grid').dataset.scoreDisplay = scoreDisplay2
+        document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
 
         // loading 
         const hideLoading = () => {
@@ -640,7 +639,7 @@
                     !fullWidthChecked, // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
                     (obj) => {
                         obj.parentNode.parentNode.style.visibility = 'inherit'
-                        if (scoreDisplay === 'noScore') {
+                        if (config.scoreDisplay === 'noScore') {
                             obj.parentNode.style.visibility = 'hidden'
                         } else {
                             obj.parentNode.style.visibility = 'inherit'
@@ -696,7 +695,7 @@
 
                 // big buffer of everything that needs to be done AFTER bricks are ready
                 Ω.setClickHandlers(theIsotope)
-                Ω.afterCreateColoredBadges(theIsotope, scoreDisplay2)
+                Ω.afterCreateColoredBadges(theIsotope, config.scoreDisplay)
 
                 resolve({ key: ISOTOPE, value: theIsotope })
             })

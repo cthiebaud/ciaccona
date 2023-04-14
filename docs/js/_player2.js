@@ -1,6 +1,6 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { setCookie, removeCookie } from "/js/_utils2.js"
+import config from "/js/_config2.js"
 
 function scrollScore(selector, timings, variation, currentTime) {
     if (variation === 33) return -1
@@ -83,7 +83,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
         jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
         jquery('.grid-brick').removeClass('gbPlaying').removeClass('selected')
         if (doSave) {
-            timings.setStartBarOfLastSelectedVariation(undefined)
+            config.startBarOfLastSelectedVariation = undefined
         }
         return
     }
@@ -91,8 +91,8 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     const startBarOfThisVariation = timings.bars[barIndex].variationStartBarIndex
 
     // changement de variation 
-    if (timings.getStartBarOfLastSelectedVariation() != startBarOfThisVariation) {
-        timings.setStartBarOfLastSelectedVariation(startBarOfThisVariation)
+    if (config.startBarOfLastSelectedVariation != startBarOfThisVariation) {
+        config.startBarOfLastSelectedVariation = startBarOfThisVariation
     }
 
     if (isPlaying) {
@@ -147,7 +147,7 @@ const setBrickClickEvent = (_plyer, timings) => {
         // DOM element has bar index in data
         const thisBar = parseInt(this.dataset.bar)
 
-        if (timings.getStartBarOfLastSelectedVariation() === thisBar) {
+        if (config.startBarOfLastSelectedVariation === thisBar) {
             // just toggle play state
             if (isPlaying) {
                 _plyer.pause()
@@ -201,18 +201,18 @@ export default function createPlayer(selector, timings, ignore_all_events) {
 
             _plyer.on('pause', (event) => {
                 console.log("Plyr pause event")
-                setCookie('playing', 'false')
+                config.playing = false
                 hidePlay('pause')
             })
             _plyer.on('ended', (event) => {
                 console.log("Plyr ended event")
-                removeCookie('playing')
-                timings.setStartBarOfLastSelectedVariation(0)
+                config.playing = undefined
+                config.startBarOfLastSelectedVariation = undefined
                 hidePlay()
             })
             _plyer.on('playing', (event) => {
                 console.log("Plyr playing event")
-                setCookie('playing', 'true')
+                config.playing = true
                 showPlay(event.detail.plyr.currentTime, timings)
                 feedbackOnCurrentTime('playing', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "nearest" })
             })
@@ -251,7 +251,7 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                 INIT_EVENT_HANDLERS()
 
                 let theStartingBar = timings.bars[0]
-                let theLastStartingBarIndex = timings.getStartBarOfLastSelectedVariation()
+                let theLastStartingBarIndex = config.startBarOfLastSelectedVariation
                 if (theLastStartingBarIndex != null) {
                     theStartingBar = timings.bars[theLastStartingBarIndex]
                 }

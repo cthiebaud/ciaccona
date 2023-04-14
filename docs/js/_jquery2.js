@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import { setCookie } from "/js/_utils2.js"
+import config from "/js/_config2.js"
 /*
 import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
 */
@@ -72,7 +72,7 @@ const Ω = {
 
         $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
-            setCookie('scoreDisplay', scoreDisplay)
+            config.scoreDisplay = scoreDisplay
             document.getElementById('grid').dataset.scoreDisplay = scoreDisplay
             if (scoreDisplay === 'firstBar') {
                 $('#gridContainerCol').removeClass('fullwidth')
