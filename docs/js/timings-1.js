@@ -1,7 +1,7 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-import { binaryRangeSearch } from "/js/_utils2.js"
-import { loadArtists } from "/js/_artists2.js"
+import { binaryRangeSearch } from "/js/utils-1.js"
+import { loadArtists } from "/js/artists-1.js"
 
 
 

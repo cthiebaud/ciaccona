@@ -1,4 +1,4 @@
-import { getCookie, setCookie, removeCookie } from "/js/_utils2.js"
+import { getCookie, setCookie, removeCookie } from "/js/utils-1.js"
 
 class Config {
     #scoreDisplay

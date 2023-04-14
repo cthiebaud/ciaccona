@@ -1,6 +1,6 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/_config2.js"
+import config from "/js/config-1.js"
 
 function scrollScore(selector, timings, variation, currentTime) {
     if (variation === 33) return -1
