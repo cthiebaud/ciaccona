@@ -52,27 +52,30 @@ function selectAndScrollToVariation(source, variation, options) {
     scrollToElement?.scrollIntoView(options)
 }
 
-function unselect() {
-    jquery('.grid-brick.gbPlaying').removeClass('gbPlaying').removeClass('selected').find('.score').scrollLeft(0)
+function unplay_and_unselect(keepSelect) {
+    const playingBricks = jquery('.grid-brick.gbPlaying')
+    playingBricks.removeClass('gbPlaying')
+    if (!keepSelect) {
+        playingBricks.removeClass('selected').find('.score').scrollLeft(0)
+    }
 }
 
 function showPlay(currentTime, timings) {
     const barIndex = timings.time2bar(currentTime)
     if (barIndex == null || barIndex === -1) {
         console.log('no variation here', currentTime)
-        unselect()
+        unplay_and_unselect()
         return
     }
     const variation = timings.bars[barIndex].variation
     console.log('showing play of variation', variation)
-    unselect()
+    unplay_and_unselect()
     jquery(`.grid-brick#gb${variation}`).addClass('gbPlaying').addClass('selected')
 }
 
 function hidePlay(cause) {
     console.log('hidding play')
-    if (cause !== 'pause') jquery('.grid-brick.gbPlaying .score').scrollLeft(0)
-    unselect()
+    unplay_and_unselect(cause === 'pause')
 }
 
 const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, scrollToVariation, scrollOptions) => {
@@ -82,7 +85,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     const barIndex = timings.time2bar(currentTime)
     if (barIndex == null || barIndex === -1) {
         console.log('no variation here', currentTime)
-        unselect()
+        unplay_and_unselect()
         if (doSave) {
             config.startBarOfLastSelectedVariation = undefined
         }
@@ -119,7 +122,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
         // console.log(source, 'SWAP from', altID, 'to', neuID, '?', doIt ? "yes!" : "no!")
         if (doIt) {
             // swap
-            unselect()
+            unplay_and_unselect()
             if (isPlaying) {
                 newBrick.addClass('gbPlaying').addClass('selected')
             } else {
