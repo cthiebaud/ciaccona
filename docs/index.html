@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.7.6"
+        const ver = "v0.7.7"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -735,13 +735,11 @@
 
             if (isotopeResult) {
                 isotopeResult.on('arrangeComplete', function (filteredItems) {
-                    document.querySelectorAll('.score').forEach((score) => {
-                        if (config.scoreDisplay === 'noScore') {
-                            score.style.visibility = 'hidden'
-                        } else {
-                            score.style.visibility = 'inherit'
-                        }
-                    })
+                    if (config.scoreDisplay === 'noScore') {
+                        document.querySelectorAll('.score').forEach((score) => score.style.visibility = 'hidden')
+                    } else {
+                        Ω.animateUnveilScores()
+                    }
                     hideLoading(playerResult);
                 })
                 if (!playerResult) {

@@ -9,6 +9,30 @@ const Ω = {
         return true
     },
 
+    animateUnveilScores: () => {
+        $('.score').css({ visibility: 'inherit', width: '0' })
+
+        const speed = 500/34
+        // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
+        function methodThatReturnsAPromise(id) {
+            return new Promise((resolve) => {
+                $(id).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
+                    resolve(id)
+                })
+            })
+        }
+
+        let result = $('.score').toArray().reduce((accumulatorPromise, nextID) => {
+            return accumulatorPromise.then(() => {
+                return methodThatReturnsAPromise(nextID);
+            });
+        }, Promise.resolve());
+
+        result.then(e => {
+            console.log("'unveil scores' animation complete")
+        });
+    },
+
     showScoreDisplay: function (iso) {
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
