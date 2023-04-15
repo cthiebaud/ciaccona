@@ -29,11 +29,11 @@ for file in _*; do mv $file $(echo $file | sed -e 's/^.//'); done
 
 // look for javascript and css files imports
 ["'](\/js\/)*(.*)--\d\.(js|css|yaml)["']
-"$1$2--3.$3"
+"$1$2--4.$3"
 
 rename all _xxx\d.js files to _xxx4.js
 # check first
 for file in *; do echo $file; done
-for file in *; do echo $(echo $file | sed -e 's/[0-9]/2/g'); done
+for file in *; do echo $(echo $file | sed -e 's/[0-9]/4/g'); done
 # then go
-for file in *; do mv $file $(echo $file | sed -e 's/[0-9]/2/g'); done
+for file in *; do mv $file $(echo $file | sed -e 's/[0-9]/4/g'); done
