@@ -101,7 +101,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.7.3"
+        const ver = "v0.7.4"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -734,7 +734,7 @@
                     isotopeResult.arrange({ filter: ':not(.artist)' })
                 } else {
                     console.log("change isotope filter to show artist name")
-                    isotopeResult.arrange({ filter: ':not(.artist)' })
+                    isotopeResult.arrange({ filter: '*' })
                 }
             }
 
