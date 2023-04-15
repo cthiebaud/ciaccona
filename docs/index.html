@@ -610,7 +610,8 @@
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
 
         // loading 
-        const hideLoading = () => {
+        const hideLoading = (hasPlayer) => {
+            if (hasPlayer) document.getElementById('playerWrapper').style.visibility = 'visible'
             document.getElementById('config-menu').style.display = 'flex'
             document.getElementById('videos-menu').style.display = 'flex'
             document.getElementById('loading').style.display = 'none'
@@ -660,10 +661,7 @@
 
                     const selectorPlyr = Ω.beforeCreatePlayer(artist['▶'].id) // big buffer of everything that needs to be done BEFORE creating the player
 
-                    return createPlayer(selectorPlyr, artist, no_plyr_event).then((result) => {
-                        Ω.afterCreatePlayer() // big buffer of everything that needs to be done AFTER player is ready
-                        return result
-                    })
+                    return createPlayer(selectorPlyr, artist, no_plyr_event)
                 }).catch((error) => {
                     console.log(error);
                     document.getElementById('gridContainerCol').classList.remove('push2right')
@@ -729,7 +727,7 @@
                             score.style.visibility = 'inherit'
                         }
                     })
-                    hideLoading();
+                    hideLoading(playerResult);
                 })
                 if (!playerResult) {
                     console.log("change isotope filter to hide artist name")

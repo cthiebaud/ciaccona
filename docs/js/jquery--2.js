@@ -124,11 +124,6 @@ const Ω = {
         return '#' + idPlayer
     },
 
-    afterCreatePlayer: () => {
-        $('#playerWrapper').css({ visibility: "visible" })
-        $('#gridContainerCol').css({ visibility: 'visible' })
-    },
-
     afterIsotope: (iso) => {
 
         Ω.setClickHandlers(iso)
