@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config-1.js"
+import config from "/js/config--2.js"
 
 const $ = jquery
 

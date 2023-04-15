@@ -27,11 +27,13 @@ const XXXXXXXX = {
 
 for file in _*; do mv $file $(echo $file | sed -e 's/^.//'); done
 
-// look for javascript files imports
-["']\/js\/_(_.*)\.js["']
-"/js/$12.js"
+// look for javascript and css files imports
+["'](\/js\/)*(.*)-\d\.(js|css)["']
+"$1$2--2.$3"
 
 rename all _xxx\d.js files to _xxx4.js
-for file in _*; do mv $file $(echo $file | sed -e 's/[0-9]/4/g'); done
-
-for file in _*; do mv $file $(echo $file | sed -e 's/[0-9]/-1/g'); done
+# check first
+for file in *; do echo $file; done
+for file in *; do echo $(echo $file | sed -e 's/[0-9]/2/g'); done
+# then go
+for file in *; do mv $file $(echo $file | sed -e 's/[0-9]/2/g'); done
