@@ -28,8 +28,8 @@ const XXXXXXXX = {
 for file in _*; do mv $file $(echo $file | sed -e 's/^.//'); done
 
 // look for javascript and css files imports
-["'](\/js\/)*(.*)-\d\.(js|css)["']
-"$1$2--2.$3"
+["'](\/js\/)*(.*)--\d\.(js|css|yaml)["']
+"$1$2--3.$3"
 
 rename all _xxx\d.js files to _xxx4.js
 # check first

@@ -67,6 +67,8 @@
 
     <script>
         const validFullamesNoSpaceLowercaseNoDiacritics = [
+            'moi', 
+
             'adolfbusch',
             'amandinebeyer',
             'andreadevitis',
@@ -111,6 +113,8 @@
         if (!validFullamesNoSpaceLowercaseNoDiacritics.includes(fullameNoSpaceLowercaseNoDiacritics)) {
             console.log(`invalid name: ${fullameNoSpaceLowercaseNoDiacritics}`)
             fullameNoSpaceLowercaseNoDiacritics = undefined
+        } else if (fullameNoSpaceLowercaseNoDiacritics === 'christophethiebaud') {
+            fullameNoSpaceLowercaseNoDiacritics = 'moi'
         }
 
         // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
@@ -146,7 +150,7 @@
     </script>
 
     <script type="module">
-        import config from "/js/config--2.js"
+        import config from "/js/config--3.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -161,7 +165,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index--2.css" rel="stylesheet">
+    <link href="index--3.css" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -343,7 +347,7 @@
                 <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="moranwasser">
                         <div><span class="c">&check;</span>Moran Wasser<span class="d">12′17″</span></div>
                     </a></li>
-                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="christophethiebaud">
+                <li><a class="dropdown-item d-flex justify-content-between" href="#" data-name-no-space-lowercase-no-diacritics="moi">
                         <div><span class="c">&check;</span>Moi<span class="d">14′42″</span></div>
                     </a></li>
                 <li>
@@ -532,17 +536,20 @@
         </div>
     </footer>
 
-    <div id="loading" class="fullscreen" style="z-index: 20; background-color: #ffffff80; position: absolute; z-index: 3000;">
-        <div class="spinner-border" role="status">
+    <div id="loading" class="d-flex flex-column justify-content-center align-items-center"> <!-- background-color: #ffffff80;  -->
+        <div id="message">
+            &nbsp;
         </div>
-        <div id="signature" class="_magnificent-card"
-            style="position: relative; top: calc(50% + 20px); margin: auto; width: fit-content; color: #58728a; background-color: transparent;">
-            <svg>
-                <use xlink:href="#JSBach"></use>
-            </svg>
+        <script>
+            if (fullameNoSpaceLowercaseNoDiacritics) {
+                document.getElementById('message').innerHTML = fullameNoSpaceLowercaseNoDiacritics
+            }
+        </script>
+        <div id="spinner" class="spinner-border m-2" role="status">
+        </div>
+        <div id="signature">
         </div>
     </div>
-
     <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 1; position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
@@ -559,12 +566,12 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import config from "/js/config--2.js"
-        import createColoredBadges from "/js/colors--2.js"
-        import createTimings from "/js/timings--2.js"
-        import resizeSVGs from "/js/resizeSVGs--2.js"
-        import createPlayer from "/js/player--2.js"
-        import Ω from "/js/jquery--2.js"
+        import config from "/js/config--3.js"
+        import createColoredBadges from "/js/colors--3.js"
+        import createTimings from "/js/timings--3.js"
+        import resizeSVGs from "/js/resizeSVGs--3.js"
+        import createPlayer from "/js/player--3.js"
+        import Ω from "/js/jquery--3.js"
 
         // transform windows loaded event to promise
         const windowLoaded = new Promise((resolve) => {

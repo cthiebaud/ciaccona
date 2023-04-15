@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--2.js"
+import config from "/js/config--3.js"
 
 const $ = jquery
 
@@ -9,7 +9,7 @@ const Ω = {
         return true
     },
 
-    showScoreDisplay: function(iso) {
+    showScoreDisplay: function (iso) {
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
             $('#gridContainerCol').removeClass('fullwidth')
@@ -100,8 +100,11 @@ const Ω = {
     showArtist: (artist) => {
         const $artist = $('.grid-brick.artist#gb-artist');
 
+        const fullname = artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname;
+
+        $('#loading #message').html(fullname);
         $artist.css({ visibility: "inherit" })
-        $artist.find('.fullname').html(artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname)
+        $artist.find('.fullname').html(fullname)
         $artist.find('a#youtube-url').attr({
             href: artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl,
             target: artist['▶'].id
