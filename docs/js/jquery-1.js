@@ -3,28 +3,28 @@ import config from "/js/config-1.js"
 
 const $ = jquery
 
-function showScoreDisplay(iso) {
-    document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay 
-    if (config.scoreDisplay === 'firstBar') {
-        $('#gridContainerCol').removeClass('fullwidth')
-        $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-        $('.score').css({ visibility: 'inherit' })
-    } else if (config.scoreDisplay === 'fullScore') {
-        $('#gridContainerCol').addClass('fullwidth')
-        $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-        $('.score').css({ visibility: 'inherit' })
-    } else if (config.scoreDisplay === 'noScore') {
-        $('#gridContainerCol').removeClass('fullwidth')
-        $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-        $('.score').css({ visibility: 'hidden' })
-    }
-    if (iso) iso.layout()
-}
-
 const Ω = {
     boot: () => {
         console.log('jquery is here')
         return true
+    },
+
+    showScoreDisplay: function(iso) {
+        document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
+        if (config.scoreDisplay === 'firstBar') {
+            $('#gridContainerCol').removeClass('fullwidth')
+            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+            if (iso) $('.score').css({ visibility: 'inherit' })
+        } else if (config.scoreDisplay === 'fullScore') {
+            $('#gridContainerCol').addClass('fullwidth')
+            $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
+            if (iso) $('.score').css({ visibility: 'inherit' })
+        } else if (config.scoreDisplay === 'noScore') {
+            $('#gridContainerCol').removeClass('fullwidth')
+            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+            if (iso) $('.score').css({ visibility: 'hidden' })
+        }
+        if (iso) iso.layout()
     },
 
     About: function () {
@@ -88,13 +88,13 @@ const Ω = {
         $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
             config.scoreDisplay = scoreDisplay
-            showScoreDisplay()
+            Ω.showScoreDisplay(iso)
         })
 
-        $("#autoplayChecked").on("click", function () {
+        $("#autoplayChecked").on("click", function (e) {
             config.autoplay = !config.autoplay
         })
-        
+
     },
 
     showArtist: (artist) => {
@@ -129,9 +129,9 @@ const Ω = {
         $('#gridContainerCol').css({ visibility: 'visible' })
     },
 
-    afterCreateColoredBadges: (iso) => {
+    afterIsotope: (iso) => {
 
-        showScoreDisplay(iso)
+        Ω.setClickHandlers(iso)
 
         $(".brick.hasScore").click(function (e) {
             const hadClass = $(e.currentTarget).parent().hasClass('selected')
@@ -157,4 +157,4 @@ const Ω = {
 }
 
 
-export { Ω }
+export default Ω

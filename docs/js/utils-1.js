@@ -65,5 +65,8 @@ function binaryRangeSearch(value, array, getValue) {
     return undefined
 }
 
+const variationIndex2BarCount = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
 
-export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch };
+
+
+export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, variationIndex2BarCount };

@@ -101,7 +101,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.7.0"
+        const ver = "v0.7.1"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -561,10 +561,10 @@
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
         import config from "/js/config-1.js"
         import createColoredBadges from "/js/colors-1.js"
-        import { createTimings } from "/js/timings-1.js"
+        import createTimings from "/js/timings-1.js"
         import resizeSVGs from "/js/resizeSVGs-1.js"
         import createPlayer from "/js/player-1.js"
-        import { Ω } from "/js/jquery-1.js"
+        import Ω from "/js/jquery-1.js"
 
         // transform windows loaded event to promise
         const windowLoaded = new Promise((resolve) => {
@@ -597,6 +597,7 @@
 
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * 
         createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
+        Ω.showScoreDisplay()
 
         // elaborate a bit some config values 
         let autoplayChecked = config.autoplay
@@ -636,12 +637,12 @@
                     SVGs,
                     config.scoreDisplay !== 'fullScore', // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
                     (obj) => {
-                        obj.parentNode.parentNode.style.visibility = 'inherit'
+                        /*
                         if (config.scoreDisplay === 'noScore') {
                             obj.parentNode.style.visibility = 'hidden'
                         } else {
                             obj.parentNode.style.visibility = 'inherit'
-                        }
+                        }*/
                     })
             })
         )
@@ -681,19 +682,14 @@
                     getSortData: {
                         id: '[data-sort]'
                     },
-                    filter: '*',
                     percentPosition: true,
                 })
                 theIsotope.on('layoutComplete', function () {
                     console.log("isotope layout complete");
                 })
-                theIsotope.on('arrangeComplete', function (filteredItems) {
-                    console.log("isotope arrange complete", filteredItems);
-                })
 
                 // big buffer of everything that needs to be done AFTER bricks are ready
-                Ω.setClickHandlers(theIsotope)
-                Ω.afterCreateColoredBadges(theIsotope)
+                Ω.afterIsotope(theIsotope)
 
                 resolve({ key: ISOTOPE, value: theIsotope })
             })
@@ -724,12 +720,25 @@
             const isotopeResult = map.get(ISOTOPE)
             const playerResult = map.get(PLAYER)
 
-            if (isotopeResult && !playerResult) {
-                console.log("change isotope filter to hide artist name")
-                isotopeResult.arrange({ filter: ':not(.artist)' })
+            if (isotopeResult) {
+                isotopeResult.on('arrangeComplete', function (filteredItems) {
+                    document.querySelectorAll('.score').forEach((score) => {
+                        if (config.scoreDisplay === 'noScore') {
+                            score.style.visibility = 'hidden'
+                        } else {
+                            score.style.visibility = 'inherit'
+                        }
+                    })
+                    hideLoading();
+                })
+                if (!playerResult) {
+                    console.log("change isotope filter to hide artist name")
+                    isotopeResult.arrange({ filter: ':not(.artist)' })
+                } else {
+                    console.log("change isotope filter to show artist name")
+                    isotopeResult.arrange({ filter: ':not(.artist)' })
+                }
             }
-
-            hideLoading();
 
         }).catch((error) => {
 

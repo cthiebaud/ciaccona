@@ -1,8 +1,7 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import { shuffleArray } from "/js/utils-1.js"
-import { index2duration } from "/js/timings-1.js"
+import { shuffleArray, variationIndex2BarCount } from "/js/utils-1.js"
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
 
@@ -165,7 +164,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     let barFrom = 0
     _colors_.forEach(function (c) {
         const tonality = (17 <= i && i < 27) ? "Δ" : "";
-        const duration = index2duration(i)
+        const duration = variationIndex2BarCount(i)
         const warning = duration != 8 ? `(${duration})` : "";
         const barTo = barFrom + duration
         const bg = `background-color: #${c.p_rgb}`
