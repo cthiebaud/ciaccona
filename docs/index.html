@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.7.7"
+        const ver = "v0.7.8"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -653,12 +653,14 @@
                     SVGs,
                     config.scoreDisplay !== 'fullScore', // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
                     (obj) => {
-                        /*
+                        // console.log('done', obj.id)
+                    }).then(result => {
                         if (config.scoreDisplay === 'noScore') {
-                            obj.parentNode.style.visibility = 'hidden'
+                            document.querySelectorAll('.score').forEach((score) => score.style.visibility = 'hidden')
                         } else {
-                            obj.parentNode.style.visibility = 'inherit'
-                        }*/
+                            Ω.animateUnveilScores()
+                        }
+                        return result
                     })
             })
         )
@@ -735,11 +737,6 @@
 
             if (isotopeResult) {
                 isotopeResult.on('arrangeComplete', function (filteredItems) {
-                    if (config.scoreDisplay === 'noScore') {
-                        document.querySelectorAll('.score').forEach((score) => score.style.visibility = 'hidden')
-                    } else {
-                        Ω.animateUnveilScores()
-                    }
                     hideLoading(playerResult);
                 })
                 if (!playerResult) {
