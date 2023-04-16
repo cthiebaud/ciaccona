@@ -67,6 +67,69 @@ function binaryRangeSearch(value, array, getValue) {
 
 const variationIndex2BarCount = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
 
+function normalizeVraiment(x, srcmin, srcmax, dstmin, dstmax) {
+    if (srcmax === srcmin) return 0
+    const y = dstmin + (dstmax - dstmin) * (x - srcmin) / (srcmax - srcmin)
+    return y
+}
 
+const nameOf = (f) => (f).toString().replace(/[ |\(\)=>]/g, '');
 
-export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, variationIndex2BarCount };
+function logFunc(f, xMin, xMax, yTicks) {
+    if (!xMin) xMin = 0
+    if (!xMax) xMax = 1
+    const xTicks = 100
+    if (!yTicks) yTicks = 20
+    yTicks--;
+    // console.log('𝅅·°○●ₒ∘°')
+    const a = new Array(xTicks + 1)
+    a[0] = '+'
+    a.fill('+', 1, a.length)
+    const title = nameOf(f)
+    if (title) {
+        const l = a.join('')
+        const seg = l.substring(0, (l.length - title.length) / 2)
+        console.log('   ' + seg + ' ' + title + ' ' + seg)
+    }
+    ///////////////////////////////////
+    // find yMin and yMax
+    let yMin = Number.MAX_VALUE
+    let yMax = Number.MIN_VALUE
+
+    for (let t0 = 0; t0 <= yTicks; t0++) {
+        let x0 = normalizeVraiment(t0, 0, yTicks, xMin, xMax)
+        const y0 = f()(x0)
+        yMin = Math.min(yMin, y0)
+        yMax = Math.max(yMax, y0)
+    }
+    let zeroIndex
+    if (xMin <= 0 && 0 <= xMax) {
+        const yZero = f()(0)
+        zeroIndex = normalizeVraiment(-yZero, -yMax, -yMin, 0, xTicks)
+    }
+
+    for (let t = 0; t <= yTicks; t++) {
+        let x
+        if (t === 0) {
+            x = xMin
+        } else if (t === yTicks) {
+            x = xMax
+        } else {
+            x = normalizeVraiment(t, 0, yTicks, xMin, xMax)
+        }
+        const y = f()(x)
+        const index = normalizeVraiment(-y, -yMax, -yMin, 0, xTicks)
+
+        a[0] = '+'
+        a.fill('-', 1, a.length)
+        a[Math.round(zeroIndex)] = '+'
+        a[Math.round(index)] = '●'
+        console.log(
+            (x).toFixed(2).padStart(5, '0'),
+            a.join(''),
+            y.toFixed(22).padStart(25, ' '),
+            index)
+    }
+}
+
+export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, variationIndex2BarCount, normalizeVraiment, logFunc };

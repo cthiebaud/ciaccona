@@ -1,7 +1,8 @@
-import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
+import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import { shuffleArray, variationIndex2BarCount } from "/js/utils--4.js"
+import { shuffleArray, variationIndex2BarCount, normalizeVraiment, logFunc } from "/js/utils--4.js"
+
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
 
@@ -103,6 +104,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     // https://cubic-bezier.com/
     const easingVanishingContrast = bezierEasing(0, 1, 1, .4)
     const easingTheDarkerTheLighter = bezierEasing(0,1.5,.166,.5)
+    logFunc(() => easingTheDarkerTheLighter)
     for (let s of _colors_) {
         s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
         s.brightnessChange = (1 - easingVanishingContrast(s.nl)) * 100 // s.luminance *100 // 
