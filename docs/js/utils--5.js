@@ -73,6 +73,7 @@ function normalizeVraiment(x, srcmin, srcmax, dstmin, dstmax) {
     return y
 }
 
+// https://stackoverflow.com/a/66935761/1070215
 const nameOf = (f) => (f).toString().replace(/[ |\(\)=>]/g, '');
 
 function logFunc(f, xMin, xMax, yTicks) {

@@ -37,13 +37,9 @@ const Ω = {
         if (config.scoreDisplay === 'firstBar') {
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            // $('.score').removeClass('no-score')
-            // if (iso) $('.score').css({ visibility: 'inherit' })
         } else if (config.scoreDisplay === 'fullScore') {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-            // $('.score').removeClass('no-score')
-            // if (iso) $('.score').css({ visibility: 'inherit' })
         } 
         
         if (iso) iso.layout()
@@ -154,7 +150,7 @@ const Ω = {
         const idPlayer = "blah2"
 
         $('#loading').css({ "background-color": "#00000080" })
-        $('#gridContainerCol').addClass('push2right') // css({ visibility: 'hidden' })
+        $('#gridContainerCol').addClass('push2right') 
 
         const $blah2 = $(`<div id="${idPlayer}" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`)
 
