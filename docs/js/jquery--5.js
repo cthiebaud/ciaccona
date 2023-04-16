@@ -10,7 +10,7 @@ const Ω = {
     },
 
     animateUnveilScores: () => {
-        const speed = 1000/34
+        const speed = 50 //  (1700/34)
         // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
         function methodThatReturnsAPromise(id) {
             return new Promise((resolve) => {
@@ -20,7 +20,7 @@ const Ω = {
                 })
             })
         }
-
+        $('.score').css({width: 0})
         let result = $('.score').toArray().reduce((accumulatorPromise, nextID) => {
             return accumulatorPromise.then(() => {
                 return methodThatReturnsAPromise(nextID);
