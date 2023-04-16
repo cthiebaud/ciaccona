@@ -180,7 +180,6 @@ a {
   border-radius: 0 3rem 3rem 0;
   overflow-y: hidden;
   overflow-x: hidden;
-  visibility: hidden;
 }
 
 #gridContainerCol #grid .grid-brick.hasScore.selected .score {
@@ -192,6 +191,10 @@ a {
 
 #gridContainerCol #grid .grid-brick.hasScore .brick .score {
   visibility: inherit !important;
+}
+
+#gridContainerCol #grid .grid-brick.hasScore .brick .score.init {
+  visibility: hidden !important;
 }
 
 #gridContainerCol #grid.selectedBrick .grid-brick.hasScore:not(.selected) .brick .score {

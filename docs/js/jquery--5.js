@@ -10,10 +10,11 @@ const Ω = {
     },
 
     animateUnveilScores: () => {
-        const speed = 500/34
+        const speed = 1000/34
         // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
         function methodThatReturnsAPromise(id) {
             return new Promise((resolve) => {
+                id.classList.remove('init')
                 $(id).css({ visibility: 'inherit'}).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
                     resolve(id)
                 })

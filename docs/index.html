@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.8.0"
+        const ver = "v0.8.1"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -666,13 +666,12 @@
                     (obj) => {
                         // console.log('done', obj.id)
                     }).then(result => {
-                        if (config.scoreDisplay === 'noScore') {
-                            document.querySelectorAll('.score').forEach((score) => {
-                                // score.style.visibility = 'hidden'
-                                score.classList.add('no-score')
-                            })
-                        } else {
+                        if (config.scoreInBricks === 'allBricks') {
                             Ω.animateUnveilScores()
+                        } else {
+                            document.querySelectorAll('.score').forEach((score) => {
+                            score.classList.remove('init')
+                        })                        
                         }
                         return result
                     })

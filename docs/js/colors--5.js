@@ -193,7 +193,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             `
 <div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripeAlpha}; border-color: #${c.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}">
-        <div class="score" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
+        <div class="score init" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 
                     data="scores/bwv-1004_5_for_PNGs-${i + 1}.svg" 
