@@ -1,5 +1,6 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--5.js"
+import config from "/js/config--6.js"
+import codec from "/js/structure--6.js"
 
 const $ = jquery
 
@@ -150,7 +151,6 @@ const Ω = {
         const idPlayer = "blah2"
 
         $('#loading').css({ "background-color": "#00000080" })
-        $('#gridContainerCol').addClass('push2right') 
 
         const $blah2 = $(`<div id="${idPlayer}" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`)
 
@@ -168,7 +168,10 @@ const Ω = {
             $('.grid-brick.selected .score').scrollLeft(0)
             $('.grid-brick.selected').removeClass('selected')
             if (!hadClass) {
-                $(e.currentTarget).parent().addClass('selected')
+                e.currentTarget.parentNode.classList.add('selected')
+                const variation = e.currentTarget.parentNode.dataset.variation
+                const startBar = codec.variation2bar(variation)
+                config.startBarOfLastSelectedVariation = startBar
             }
         });
 

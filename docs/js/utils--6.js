@@ -65,8 +65,6 @@ function binaryRangeSearch(value, array, getValue) {
     return undefined
 }
 
-const variationIndex2BarCount = (i) => (i == 10 || i == 15 || i == 19 || i == 29) ? 4 : ((i == 8 || i == 30) ? 12 : 8)
-
 function normalizeVraiment(x, srcmin, srcmax, dstmin, dstmax) {
     if (srcmax === srcmin) return 0
     const y = dstmin + (dstmax - dstmin) * (x - srcmin) / (srcmax - srcmin)
@@ -133,4 +131,4 @@ function logFunc(f, xMin, xMax, yTicks) {
     }
 }
 
-export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, variationIndex2BarCount, normalizeVraiment, logFunc };
+export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, normalizeVraiment, logFunc };

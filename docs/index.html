@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.8.2"
+        const ver = "v0.8.1"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -158,12 +158,12 @@
     </script>
 
     <script type="module">
-        import config from "/js/config--5.js"
+        import config from "/js/config--6.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
             config.playing = undefined
-            config.startBarOfLastSelectedVariation = undefined
+            // config.startBarOfLastSelectedVariation = undefined
         }
     </script>
 
@@ -173,7 +173,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index--5.css" rel="stylesheet">
+    <link href="index--6.css" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -582,12 +582,13 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import config from "/js/config--5.js"
-        import createColoredBadges from "/js/colors--5.js"
-        import createTimings from "/js/timings--5.js"
-        import resizeSVGs from "/js/resizeSVGs--5.js"
-        import createPlayer from "/js/player--5.js"
-        import Ω from "/js/jquery--5.js"
+        import config from "/js/config--6.js"
+        import codec from "/js/structure--6.js"
+        import createColoredBadges from "/js/colors--6.js"
+        import createTimings from "/js/timings--6.js"
+        import resizeSVGs from "/js/resizeSVGs--6.js"
+        import createPlayer from "/js/player--6.js"
+        import Ω from "/js/jquery--6.js"
 
         // transform windows loaded event to promise
         const windowLoaded = new Promise((resolve) => {
@@ -670,8 +671,8 @@
                             Ω.animateUnveilScores()
                         } else {
                             document.querySelectorAll('.score').forEach((score) => {
-                            score.classList.remove('init')
-                        })                        
+                                score.classList.remove('init')
+                            })
                         }
                         return result
                     })
@@ -755,6 +756,14 @@
                 if (!playerResult) {
                     console.log("change isotope filter to hide artist name")
                     isotopeResult.arrange({ filter: ':not(.artist)' })
+                    // select last variation
+                    let theLastStartingBarIndex = config.startBarOfLastSelectedVariation
+                    const varation = codec.bar2variation(theLastStartingBarIndex)
+                    const e = document.getElementById(`gb${varation}`)
+                    if (e) {
+                        e.classList.add('selected')
+                        e.scrollIntoView({ behavior: "smooth", block: "center" })
+                    }
                 } else {
                     console.log("change isotope filter to show artist name")
                     isotopeResult.arrange({ filter: '*' })

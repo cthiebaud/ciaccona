@@ -1,29 +1,10 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-import { binaryRangeSearch, variationIndex2BarCount } from "/js/utils--5.js"
-import { loadArtists } from "/js/artists--5.js"
-
-const variationsCount = 1 + 32 + 1
-class Codec {
-    #variationsStartBars = []
-    constructor() {
-        for (let v = 0, bar = 0; v < variationsCount; v++) {
-            const duration = variationIndex2BarCount(v)
-            this.#variationsStartBars.push(bar)
-            bar = bar + duration
-        }
-        this.variation2bar = (v) => {
-            return this.#variationsStartBars[v]
-        }
-        this.bar2variation = (b) => {
-            return binaryRangeSearch(b, this.#variationsStartBars)
-        }
-    }
-}
+import codec from "/js/structure--6.js"
+import { binaryRangeSearch } from "/js/utils--6.js"
+import { loadArtists } from "/js/artists--6.js"
 
 class Timings {
-
-    codec = new Codec()
 
     #initializeBarObject = (bar, barIndex) => {
         if (bar == null || barIndex == null) {
@@ -40,8 +21,8 @@ class Timings {
             bar.duration.subtract(this.adjust)
         }
         bar.index = barIndex
-        bar.variation = this.codec.bar2variation(bar.index)
-        bar.variationStartBarIndex = this.codec.variation2bar(bar.variation)
+        bar.variation = codec.bar2variation(bar.index)
+        bar.variationStartBarIndex = codec.variation2bar(bar.variation)
         if (this.freezedBecauseOFPub &&
             this.freezedBecauseOFPub.fromVariation &&
             this.freezedBecauseOFPub.from &&
@@ -95,7 +76,7 @@ class Timings {
             if (256 <= this.bars.length) {
                 // get duration of first variation 
                 console.log('var 0', this.bars[0].m.format())
-                const lastvarbar = this.codec.variation2bar(33)
+                const lastvarbar = codec.variation2bar(33)
                 console.log('var 0', this.bars[0].m.format(), 'last var bar', lastvarbar, this.bars[lastvarbar].m.format())
                 // from 0 to 256 bar :
                 const from0to256 = this.bars[lastvarbar].m.diff(this.bars[0].m)

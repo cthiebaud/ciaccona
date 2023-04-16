@@ -1,6 +1,7 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--5.js"
+import config from "/js/config--6.js"
+import codec from "/js/structure--6.js"
 
 let begin = true
 
@@ -17,8 +18,8 @@ function scrollScore(selector, timings, variation, currentTime) {
         return -1
     const maxScroll = objWidth
 
-    const curr = timings.codec.variation2bar(variation)
-    const next = timings.codec.variation2bar(variation + 1)
+    const curr = codec.variation2bar(variation)
+    const next = codec.variation2bar(variation + 1)
     const thisStartBar = timings.bars[curr]
     const nextStartBar = timings.bars[next]
     const thisStartTime = thisStartBar.duration.asMilliseconds() / 1000
