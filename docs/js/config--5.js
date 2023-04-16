@@ -1,7 +1,8 @@
-import { getCookie, setCookie, removeCookie } from "/js/utils--4.js"
+import { getCookie, setCookie, removeCookie } from "/js/utils--5.js"
 
 class Config {
     #scoreDisplay
+    #scoreInBricks
     #playing
     #startBarOfLastSelectedVariation
     #autoplay
@@ -9,6 +10,9 @@ class Config {
     constructor() {
         // 
         this.scoreDisplay = getCookie('scoreDisplay')
+
+        // 
+        this.scoreInBricks = getCookie('scoreInBricks')
 
         // 
         this.playing = getCookie('playing')
@@ -25,7 +29,7 @@ class Config {
         return this.#scoreDisplay
     }
     set scoreDisplay(scoreDisplay) {
-        if (scoreDisplay !== 'firstBar' && scoreDisplay !== 'fullScore' && scoreDisplay !== 'noScore') scoreDisplay = 'firstBar'
+        if (scoreDisplay !== 'firstBar' && scoreDisplay !== 'fullScore') scoreDisplay = 'firstBar'
 
         this.#scoreDisplay = scoreDisplay
 
@@ -36,6 +40,21 @@ class Config {
         }
     }
 
+    // 
+    get scoreInBricks() {
+        return this.#scoreInBricks
+    }
+    set scoreInBricks(scoreInBricks) {
+        if (scoreInBricks !== 'allBricks' && scoreInBricks !== 'selectedBrick') scoreInBricks = 'allBricks'
+
+        this.#scoreInBricks = scoreInBricks
+
+        if (!this.#scoreInBricks || this.#scoreInBricks === 'firstBar') {
+            removeCookie('scoreInBricks')
+        } else {
+            setCookie('scoreInBricks', this.#scoreInBricks)
+        }
+    }
     // 
     get playing() {
         return this.#playing

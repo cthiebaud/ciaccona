@@ -1,0 +1,25 @@
+/* + + + + + + + + +  */
+
+
+
+#gridContainerCol .grid-brick .grid.gbPlaying object {
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#grid /* :not([data-score-display="noScore"]) */
+  .grid-brick.hasScore.selected
+  .brick
+  :not(:first-child) {
+  display: none !important;
+}
+
+#grid[data-score-display="noScore"] .grid-brick.hasScore:not(.selected) .brick {
+  /* background-color: #faebd7e0 !important; antique white with some transparency */
+  background-color: transparent;
+}
+
+
+
+/* + + + + + + + + +  */

@@ -1,5 +1,5 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--4.js"
+import config from "/js/config--5.js"
 
 const $ = jquery
 
@@ -10,13 +10,11 @@ const Ω = {
     },
 
     animateUnveilScores: () => {
-        $('.score').css({ visibility: 'inherit', width: '0' })
-
         const speed = 500/34
         // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
         function methodThatReturnsAPromise(id) {
             return new Promise((resolve) => {
-                $(id).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
+                $(id).css({ visibility: 'inherit'}).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
                     resolve(id)
                 })
             })
@@ -38,17 +36,25 @@ const Ω = {
         if (config.scoreDisplay === 'firstBar') {
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            if (iso) $('.score').css({ visibility: 'inherit' })
+            // $('.score').removeClass('no-score')
+            // if (iso) $('.score').css({ visibility: 'inherit' })
         } else if (config.scoreDisplay === 'fullScore') {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-            if (iso) $('.score').css({ visibility: 'inherit' })
-        } else if (config.scoreDisplay === 'noScore') {
-            $('#gridContainerCol').removeClass('fullwidth')
-            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
-            if (iso) $('.score').css({ visibility: 'hidden' })
-        }
+            // $('.score').removeClass('no-score')
+            // if (iso) $('.score').css({ visibility: 'inherit' })
+        } 
+        
         if (iso) iso.layout()
+    },
+
+    showScoreInBricks: function () {
+        document.getElementById('grid').dataset.scoreInBricks = config.scoreInBricks
+        if (config.scoreInBricks === 'allBricks') {
+            $('#grid').removeClass('selectedBrick')
+        } else if (config.scoreInBricks === 'selectedBrick') {
+            $('#grid').addClass('selectedBrick')
+        }
     },
 
     About: function () {
@@ -109,10 +115,15 @@ const Ω = {
             window.location = url.pathname
         })
 
-        $("#firstBarChecked, #fullScoreChecked, #noScoreChecked").on("click", function (e) {
+        $("#firstBarChecked, #fullScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
             config.scoreDisplay = scoreDisplay
             Ω.showScoreDisplay(iso)
+        })
+        $("#allBricksChecked, #selectedBrickChecked").on("click", function (e) {
+            const scoreInBricks = e.currentTarget.dataset.scoreInBricks
+            config.scoreInBricks = scoreInBricks
+            Ω.showScoreInBricks()
         })
 
         $("#autoplayChecked").on("click", function (e) {

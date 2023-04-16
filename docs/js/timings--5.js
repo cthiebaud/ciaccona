@@ -1,7 +1,7 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-import { binaryRangeSearch, variationIndex2BarCount } from "/js/utils--4.js"
-import { loadArtists } from "/js/artists--4.js"
+import { binaryRangeSearch, variationIndex2BarCount } from "/js/utils--5.js"
+import { loadArtists } from "/js/artists--5.js"
 
 const variationsCount = 1 + 32 + 1
 class Codec {

@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.7.11"
+        const ver = "v0.8.0"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -158,7 +158,7 @@
     </script>
 
     <script type="module">
-        import config from "/js/config--4.js"
+        import config from "/js/config--5.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -173,7 +173,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index--4.css" rel="stylesheet">
+    <link href="index--5.css" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -430,11 +430,12 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="configMenuLink">
                 <form class="px-4 py-3">
+
                     <div class="label">Score</div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="firstBar" id="firstBarChecked">
                         <label class="form-check-label" for="firstBarChecked">
-                            1st Bar
+                            1st&nbsp;Bar
                         </label>
                     </div>
                     <div class="form-check">
@@ -443,10 +444,17 @@
                             Full
                         </label>
                     </div>
+                    <div class="label" style="font-size: smaller;">... in ...</div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="noScore" id="noScoreChecked">
-                        <label class="form-check-label" for="noScoreChecked">
-                            None
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" data-score-in-bricks="allBricks" id="allBricksChecked">
+                        <label class="form-check-label" for="allBricksChecked">
+                            All&nbsp;Variations
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" data-score-in-bricks="selectedBrick" id="selectedBrickChecked">
+                        <label class="form-check-label" for="selectedBrickChecked">
+                            Selected
                         </label>
                     </div>
                     <hr>
@@ -574,12 +582,12 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import config from "/js/config--4.js"
-        import createColoredBadges from "/js/colors--4.js"
-        import createTimings from "/js/timings--4.js"
-        import resizeSVGs from "/js/resizeSVGs--4.js"
-        import createPlayer from "/js/player--4.js"
-        import Ω from "/js/jquery--4.js"
+        import config from "/js/config--5.js"
+        import createColoredBadges from "/js/colors--5.js"
+        import createTimings from "/js/timings--5.js"
+        import resizeSVGs from "/js/resizeSVGs--5.js"
+        import createPlayer from "/js/player--5.js"
+        import Ω from "/js/jquery--5.js"
 
         // transform windows loaded event to promise
         const windowLoaded = new Promise((resolve) => {
@@ -613,6 +621,7 @@
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * 
         createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
         Ω.showScoreDisplay()
+        Ω.showScoreInBricks()
 
         // elaborate a bit some config values 
         let autoplayChecked = config.autoplay
@@ -623,6 +632,10 @@
         const gridradioId = `${config.scoreDisplay}Checked`
         document.getElementById(gridradioId).checked = true
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
+
+        const gridradioId2 = `${config.scoreInBricks}Checked`
+        document.getElementById(gridradioId2).checked = true
+        document.getElementById('grid').dataset.scoreInBricks = config.scoreInBricks
 
         // loading 
         const hideLoading = (hasPlayer) => {
@@ -654,7 +667,10 @@
                         // console.log('done', obj.id)
                     }).then(result => {
                         if (config.scoreDisplay === 'noScore') {
-                            document.querySelectorAll('.score').forEach((score) => score.style.visibility = 'hidden')
+                            document.querySelectorAll('.score').forEach((score) => {
+                                // score.style.visibility = 'hidden'
+                                score.classList.add('no-score')
+                            })
                         } else {
                             Ω.animateUnveilScores()
                         }

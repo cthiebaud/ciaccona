@@ -42,7 +42,7 @@ body.about {
   padding: 1rem;
   width: fit-content;
   height: 56px;
-  color: #F0F8FF; /* alice blue */
+  color: #f0f8ff; /* alice blue */
 }
 #loading .spinner-border {
   width: 5rem;
@@ -94,9 +94,15 @@ a {
   width: 100% !important;
 }
 
-/* + + + + + + + + +  */
+/* % % % % % % % % % % % % % % % % */
 
-#gridContainerCol .grid-brick {
+#grid {
+  visibility: inherit;
+}
+
+/* -  -  -  -  -  -  -  -  -  -  -  */
+/* .grid-brick */
+#gridContainerCol #grid .grid-brick {
   font-size: 1.4rem;
   width: 24rem;
   width: min(var(--vw, 1vw) * 100, 24rem);
@@ -109,35 +115,65 @@ a {
   visibility: inherit;
 }
 
-.no-vid #gridContainerCol .grid-brick {
+/*
+.no-vid #gridContainerCol #grid .grid-brick {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+*/
+
+#gridContainerCol #grid .grid-brick.hasScore:not(.selected) {
   background-color: transparent !important;
   background-image: none !important;
 }
 
-#gridContainerCol .grid-brick .brick {
+#gridContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
+  background-color: rgba(192, 192, 192, 0.4) !important;
+}
+
+#gridContainerCol #grid .grid-brick:not(.gbPlaying) {
+  border-color: transparent !important;
+}
+
+/* last, signature .grid_brick */
+.grid-brick#gb33 {
+  background-color: transparent !important;
+}
+
+.grid-brick#gb33 .brick {
+  background-image: url(/svg/Johann_Sebastian_Bach_signature.svg);
+  background-size: 240px 38px;
+  background-position-y: center;
+  background-position-x: right;
+  background-repeat: no-repeat;
+}
+
+/* -  -  -  -  -  -  -  -  -  -  -  */
+/* .brick */
+#gridContainerCol #grid .grid-brick .brick {
   border-radius: 0 3rem 3rem 0;
   width: 100%;
   height: 100%;
 }
 
-#gridContainerCol .grid-brick.hasScore .brick {
+#gridContainerCol #grid .grid-brick.hasScore .brick {
   cursor: pointer;
 }
 
-#gridContainerCol .grid-brick.selected .brick {
+#gridContainerCol #grid .grid-brick.selected .brick {
   border-radius: 0 !important;
 }
 
-#gridContainerCol .grid-brick.hasScore:not(.selected) {
-  background-color: transparent !important;
-  background-image: none !important;
+#gridContainerCol
+  #grid
+  .grid-brick.hasScore.selected
+  .brick
+  :not(:first-child) {
+  display: none !important;
 }
 
-.no-vid #gridContainerCol .grid-brick.hasScore.Δ,
-:not(.no-vid) #gridContainerCol .grid-brick.hasScore.Δ:not(.selected) {
-  background-color: rgba(192, 192, 192, 0.4) !important;
-}
-
+/* -  -  -  -  -  -  -  -  -  -  -  */
+/* .score */
 #gridContainerCol .grid-brick .brick .score {
   position: relative;
   height: 100%;
@@ -147,13 +183,23 @@ a {
   visibility: hidden;
 }
 
-#gridContainerCol .grid-brick.hasScore.selected .score {
+#gridContainerCol #grid .grid-brick.hasScore.selected .score {
   border-radius: 0 !important;
   background-color: #aaaaaa40 !important;
   width: 100% !important;
   overflow-x: scroll;
 }
 
+#gridContainerCol #grid .grid-brick.hasScore .brick .score {
+  visibility: inherit !important;
+}
+
+#gridContainerCol #grid.selectedBrick .grid-brick.hasScore:not(.selected) .brick .score {
+  visibility: hidden !important;
+}
+
+/* -  -  -  -  -  -  -  -  -  -  -  */
+/* .object */
 #gridContainerCol .grid-brick .score object {
   background-color: rgba(255, 255, 255, 0.8);
   height: 100%;
@@ -162,45 +208,7 @@ a {
   display: block;
 }
 
-#gridContainerCol .grid-brick .grid.gbPlaying object {
-  border-radius: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-#grid {
-  visibility: inherit;
-}
-
-#grid:not([data-score-display="noScore"])
-  .grid-brick.hasScore.selected
-  .brick
-  :not(:first-child) {
-  display: none !important;
-}
-
-#grid[data-score-display="noScore"] .grid-brick.hasScore:not(.selected) .brick {
-  /* background-color: #faebd7e0 !important; antique white with some transparency */
-  background-color: transparent;
-}
-
-.grid-brick:not(.gbPlaying) {
-  border-color: transparent !important;
-}
-
-.grid-brick#gb33 {
-  background-color: transparent !important;
-}
-.grid-brick#gb33 .brick {
-  background-color: #232222;
-  background-image: url(/svg/Johann_Sebastian_Bach_signature.svg);
-  background-size: 240px 38px;
-  background-position-y: center;
-  background-position-x: right;
-  background-repeat: no-repeat;
-}
-
-/* + + + + + + + + +  */
+/* % % % % % % % % % % % % % % % % */
 
 div.siegel {
   background-size: contain;

@@ -1,7 +1,7 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import { shuffleArray, variationIndex2BarCount, normalizeVraiment, logFunc } from "/js/utils--4.js"
+import { shuffleArray, variationIndex2BarCount, normalizeVraiment, logFunc } from "/js/utils--5.js"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -88,39 +88,36 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         { rgb: "d8b998", p_rgb: "d8b998", sim: 92, pantone: "Pantone 13-1014 Tcx", name: "Mellow Buff" }
     ]
 
-    let _colors_ = _first_color_.concat(_other_colors_)
-
-    for (let s of _colors_) {
-        s.luminance = tinycolor(s.p_rgb).getLuminance();
-    }
-    _colors_ = _colors_.sort((a, b) => b.luminance - a.luminance)
-    const max = _colors_[0].luminance
-    const min = _colors_[_colors_.length - 1].luminance
-    const normalize = (val, max, min) => (val - min) / (max - min)
-    _colors_ = _first_color_.concat(shuffleArray(_other_colors_))
-    let k = 0
-    const transparency = .600
+    let _colors_ = _first_color_.concat(shuffleArray(_other_colors_))
     _colors_.push(_last_color_[0])
+
+    const transparency = .400
     // https://cubic-bezier.com/
     const easingVanishingContrast = bezierEasing(0, 1, 1, .4)
-    const easingTheDarkerTheLighter = bezierEasing(0,1.5,.166,.5)
+    const easingTheDarkerTheLighter = bezierEasing(0, 1.5, .166, .5)
     logFunc(() => easingTheDarkerTheLighter)
+    let k = 0
     for (let s of _colors_) {
-        s.nl = normalize(k++, (_colors_.length - 1) + 1, 0)
-        s.brightnessChange = (1 - easingVanishingContrast(s.nl)) * 100 // s.luminance *100 // 
+        const k0_1normalized = normalizeVraiment(k++, 0, _colors_.length, 0, 1)
+        const contrastChange = (1 - easingVanishingContrast(k0_1normalized)) * 100
         if (tinycolor(s.p_rgb).isLight()) {
-            s.textColor = tinycolor(s.p_rgb).darken(s.brightnessChange).toString("hex6").slice(1)
+            s.textColor = tinycolor(s.p_rgb).darken(contrastChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).darken(5).toString("hex6").slice(1)
+            s.stripeColorAlpha = tinycolor(s.p_rgb).darken(5).setAlpha(transparency).toString("hex8").slice(1)
         } else {
-            s.textColor = tinycolor(s.p_rgb).lighten(s.brightnessChange).toString("hex6").slice(1)
+            s.textColor = tinycolor(s.p_rgb).lighten(contrastChange).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).lighten(5).toString("hex6").slice(1)
+            s.stripeColorAlpha = tinycolor(s.p_rgb).lighten(5).setAlpha(transparency).toString("hex8").slice(1)
         }
-        const theDarkerTheLighter = easingTheDarkerTheLighter(s.luminance)*100
+        const luminance = tinycolor(s.p_rgb).getLuminance();
+        const theDarkerTheLighter = easingTheDarkerTheLighter(luminance) * 100
         s.borderColor = tinycolor(s.p_rgb).lighten(theDarkerTheLighter).toString("hex6").slice(1)
+        s.p_rgbAlpha = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
+
         // some transparency to show video behind
+        s.p_rgb_original = new tinycolor(s.p_rgb)
         if (fullameNoSpaceLowercaseNoDiacritics) {
-            s.p_rgb_original = new tinycolor(s.p_rgb).toRgbString()
-            s.p_rgb = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
+            s.p_rgb = tinycolor(s.p_rgb_original).setAlpha(transparency).toString("hex8").slice(1)
             s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
             s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
             s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
@@ -170,21 +167,31 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         const warning = duration != 8 ? `(${duration})` : "";
         const barTo = barFrom + duration
         const bg = `background-color: #${c.p_rgb}`
+        const bgAlpha = `background-color: #${c.p_rgbAlpha}`
         const bgstripe = !tonality ? bg : `background-image: linear-gradient(135deg, 
-            #${c.stripeColor} 25%, 
-            #${c.p_rgb} 25%, 
-            #${c.p_rgb} 50%, 
-            #${c.stripeColor} 50%, 
-            #${c.stripeColor} 75%, 
-            #${c.p_rgb} 75%, 
-            #${c.p_rgb} 100%); 
-            background-size: 16.97px 16.97px;`
+                #${c.stripeColor} 25%, 
+                #${c.p_rgb} 25%, 
+                #${c.p_rgb} 50%, 
+                #${c.stripeColor} 50%, 
+                #${c.stripeColor} 75%, 
+                #${c.p_rgb} 75%, 
+                #${c.p_rgb} 100%); 
+                background-size: 16.97px 16.97px;`
+        const bgstripeAlpha = !tonality ? bgAlpha : `background-image: linear-gradient(135deg, 
+                #${c.stripeColorAlpha} 25%, 
+                #${c.p_rgbAlpha} 25%, 
+                #${c.p_rgbAlpha} 50%, 
+                #${c.stripeColorAlpha} 50%, 
+                #${c.stripeColorAlpha} 75%, 
+                #${c.p_rgbAlpha} 75%, 
+                #${c.p_rgbAlpha} 100%); 
+                background-size: 16.97px 16.97px;`
 
         const svgOffsetX = (i == 0 || i == 17 || i == 27 || i == 33 ? "0" : "6.5")
 
         const templateVariations =
             `
-<div id="gb${i}" data-sort="${twoZeroPad(i)}" data-lum="${c.luminance} > ${c.easingTheDarkerTheLighter}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripe}; border-color: #${c.borderColor};">
+<div id="gb${i}" data-sort="${twoZeroPad(i)}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripeAlpha}; border-color: #${c.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}">
         <div class="score" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
