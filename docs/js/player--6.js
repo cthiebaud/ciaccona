@@ -47,7 +47,7 @@ function selectAndScrollToVariation(source, variation, options) {
         scrollToSelector = '.grid-brick#gb-bwv1004'
     }
 
-    jquery('.grid-brick').removeClass('selected').find('.score').scrollLeft(0)
+    jquery('.grid-brick').removeClass('selected', 'goodbye', 'hello').find('.score').scrollLeft(0)
     document.querySelector(selector)?.classList.add('selected')
 
     const scrollToElement = document.querySelector(scrollToSelector)
@@ -56,10 +56,11 @@ function selectAndScrollToVariation(source, variation, options) {
 }
 
 function unplay_and_unselect(keepSelect) {
-    const playingBricks = jquery('.grid-brick.gbPlaying')
-    playingBricks.removeClass('gbPlaying')
+    jquery('.grid-brick.gbPlaying').removeClass('gbPlaying')
+    jquery('.grid-brick.goodbye').removeClass('goodbye')
+    jquery('.grid-brick.hello').removeClass('hello')
     if (!keepSelect) {
-        playingBricks.removeClass('selected').find('.score').scrollLeft(0)
+        jquery('.grid-brick.selected').removeClass('selected').find('.score').scrollLeft(0)
     }
 }
 
@@ -160,6 +161,14 @@ const setBrickClickEvent = (_plyer, timings) => {
                 _plyer.play()
             }
         } else {
+            // immediate feedback
+            const thisVariation = this.dataset.variation
+            const selector = `.grid-brick#gb${thisVariation}`
+            console.log('immediate feedback', document.querySelector(selector), thisVariation, selector)
+            document.querySelector(selector)?.classList.add('selected')
+            document.querySelector('.grid-brick.gbPlaying')?.classList.add('goodbye')
+            this.parentNode.classList.add('hello')
+
             // get bar data from timings
             let startBar = timings.bars[thisBar]
             console.log(`CLICKED on bar ${thisBar} [${timings.bars[thisBar]["Time Recorded"]}], variation ${timings.bars[thisBar].variation}, variation starts at bar ${startBar.index}`)

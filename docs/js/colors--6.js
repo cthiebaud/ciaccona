@@ -193,7 +193,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         const templateVariations =
             `
 <div id="gb${i}" data-sort="${twoZeroPad(i)}" data-variation="${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripeAlpha}; border-color: #${c.borderColor};">
-    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}">
+    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}" data-variation="${i}" >
         <div class="score init" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 

@@ -16,12 +16,12 @@ const Ω = {
         function methodThatReturnsAPromise(id) {
             return new Promise((resolve) => {
                 id.classList.remove('init')
-                $(id).css({ visibility: 'inherit'}).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
+                // console.log( 'id.dataset.width', id.dataset.width )
+                $(id).css({ visibility: 'inherit', width: '0'}).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
                     resolve(id)
                 })
             })
         }
-        $('.score').css({width: 0})
         let result = $('.score').toArray().reduce((accumulatorPromise, nextID) => {
             return accumulatorPromise.then(() => {
                 return methodThatReturnsAPromise(nextID);
@@ -167,6 +167,8 @@ const Ω = {
             const hadClass = $(e.currentTarget).parent().hasClass('selected')
             $('.grid-brick.selected .score').scrollLeft(0)
             $('.grid-brick.selected').removeClass('selected')
+            $('.grid-brick.goodbye').removeClass('goodbye')
+            $('.grid-brick.hello').removeClass('hello')
             if (!hadClass) {
                 e.currentTarget.parentNode.classList.add('selected')
                 const variation = e.currentTarget.parentNode.dataset.variation
