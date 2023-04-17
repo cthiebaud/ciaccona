@@ -136,6 +136,10 @@
             white-space: nowrap;
         }
 
+        tbody>tr>td.fb img {
+            width: 20px;
+            height: 20px;
+        }
         tbody>tr>td.flag {
             font-size: 16pt;
         }
@@ -195,6 +199,10 @@
                                 <img src="svg/YouTube_social_white_square_(2017)_white_middle.svg" style="width: 22px; height:22px;">
                                 <span></span>
                             </th>
+                            <th scope="col" class="fb        text-center">
+                                <img src="svg/2021_Facebook_icon.svg" style="width: 22px; height:22px;">
+                                <span></span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="theBody">
@@ -221,6 +229,11 @@
     target={{fullnameNoSpaceLowercaseNoDiacritics}}>
         {{#if v.trueId}}{{v.trueId}}{{else}}{{v.id}}{{/if}}
     </a></td>
+<td class="fb        text-center">
+    {{#if facebookPost}}<a href={{facebookPost}} target=FB><img src="svg/External_link_font_awesome.svg"></a>
+    {{else}}
+    &nbsp;{{/if}}
+</td>
 </tr>{{/each}}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
