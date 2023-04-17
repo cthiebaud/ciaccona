@@ -91,7 +91,9 @@ class Config {
         if (this.#startBarOfLastSelectedVariation === 0) {
             removeCookie('startBarOfLastSelectedVariation')
         } else {
-            setCookie('startBarOfLastSelectedVariation', this.#startBarOfLastSelectedVariation)
+            // https://github.com/js-cookie/js-cookie/wiki/Frequently-Asked-Questions#expire-cookies-in-less-than-a-day
+            var in30Minutes = 1/48;            
+            setCookie('startBarOfLastSelectedVariation', this.#startBarOfLastSelectedVariation, in30Minutes)
         }
     }
 
