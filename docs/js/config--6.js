@@ -49,7 +49,7 @@ class Config {
 
         this.#scoreInBricks = scoreInBricks
 
-        if (!this.#scoreInBricks || this.#scoreInBricks === 'firstBar') {
+        if (!this.#scoreInBricks || this.#scoreInBricks === 'allBricks') {
             removeCookie('scoreInBricks')
         } else {
             setCookie('scoreInBricks', this.#scoreInBricks)
