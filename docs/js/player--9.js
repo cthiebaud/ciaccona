@@ -1,8 +1,8 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--6.js"
-import codec from "/js/structure--6.js"
-import { normalizeVraiment } from "/js/utils--6.js"
+import config from "/js/config--9.js"
+import codec from "/js/structure--9.js"
+import { normalizeVraiment } from "/js/utils--9.js"
 
 let begin = true
 
