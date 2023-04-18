@@ -96,7 +96,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     // https://cubic-bezier.com/
     const easingVanishingContrast = bezierEasing(0, 1, 1, .4)
     const easingTheDarkerTheLighter = bezierEasing(0, 1.5, .166, .5)
-    logFunc(() => easingTheDarkerTheLighter)
+    // logFunc(() => easingTheDarkerTheLighter)
     let k = 0
     for (let s of _colors_) {
         const k0_1normalized = normalizeVraiment(k++, 0, _colors_.length, 0, 1)

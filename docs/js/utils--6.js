@@ -126,7 +126,7 @@ function logFunc(f, xMin, xMax, yTicks) {
         console.log(
             (x).toFixed(2).padStart(5, '0'),
             a.join(''),
-            y.toFixed(22).padStart(25, ' '),
+            y.toFixed(2).padStart(5, ' '),
             index)
     }
 }

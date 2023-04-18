@@ -23,7 +23,12 @@ export default function resizeSVGs(selection, withOffsetX, elementCallback) {
                 const x = centerX - maxWidth / 2
                 const centerY = box.y + box.height / 2
                 const y = centerY - maxHeight / 2
-                const viewBox = [box.x + (withOffsetX && result.value.offset ? result.value.offset : 0), y, box.width, maxHeight].join(" ")
+                const translate = withOffsetX && result.value.offset ? result.value.offset : 0
+                const viewBox = [
+                    box.x + translate, 
+                    y, 
+                    box.width - translate, 
+                    maxHeight].join(" ")
                 svg.setAttribute("viewBox", viewBox)
                 svg.setAttribute("preserveAspectRatio", "xMinYMid meet")
                 svg.removeAttribute("height")

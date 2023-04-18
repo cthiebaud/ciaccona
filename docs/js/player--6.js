@@ -2,11 +2,13 @@ import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import config from "/js/config--6.js"
 import codec from "/js/structure--6.js"
+import { normalizeVraiment } from "/js/utils--6.js"
 
 let begin = true
 
-function scrollScore(selector, timings, variation, currentTime) {
+function horzScrollScore(timings, variation, currentTime) {
     if (variation === 33) return -1
+    const selector = `#gb${variation} > div > div.score`
     const sco = document.querySelector(selector)
     if (sco == null) return -1
     const obj = sco.firstElementChild
@@ -16,7 +18,6 @@ function scrollScore(selector, timings, variation, currentTime) {
     const objWidth = obj.getBoundingClientRect().width
     if (objWidth <= scoWidth)
         return -1
-    const maxScroll = objWidth
 
     const curr = codec.variation2bar(variation)
     const next = codec.variation2bar(variation + 1)
@@ -24,14 +25,14 @@ function scrollScore(selector, timings, variation, currentTime) {
     const nextStartBar = timings.bars[next]
     const thisStartTime = thisStartBar.duration.asMilliseconds() / 1000
     const nextStartTime = nextStartBar.duration.asMilliseconds() / 1000
-    const ellapsed = currentTime - thisStartTime
-    const maximum = nextStartTime - thisStartTime
-    // règle de trois : 
-    /* 
-    scrollLeft / maxScroll = ellapsed / maximum
-    */
-    const scrollLeft = Math.floor(((ellapsed * maxScroll) / maximum) - (scoWidth / 2))
-    if (scrollLeft < 0 || objWidth - scoWidth <= scrollLeft) return -1
+
+    let scrollLeft = normalizeVraiment(currentTime, thisStartTime, nextStartTime, 0, objWidth)
+    // wait for a portion of score window width to start scrolling
+    scrollLeft -= scoWidth * (2/5)
+
+    if (scrollLeft <= 0 || objWidth - scoWidth < scrollLeft) {
+        return -1
+    }
 
     sco.scrollLeft = scrollLeft
 
@@ -104,10 +105,9 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     }
 
     if (isPlaying) {
-        const selector = `#gb${variation} > div > div.score`
-        const scrollLeft = scrollScore(selector, timings, variation, currentTime)
-
+        horzScrollScore(timings, variation, currentTime)
     }
+
     if (true) {
 
         const doSwap = (alt, neu) => {
