@@ -428,3 +428,9 @@ span.d {
   padding-top: 0;
   padding-bottom: 0;
 }
+
+.my-menu > .dropdown > a.btn :first-child {
+  width: 40px;
+  height:33px;
+  object-fit: cover;
+}

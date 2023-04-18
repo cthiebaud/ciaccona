@@ -58,11 +58,12 @@ const Ω = {
     About: function () {
         this.about = false;
         this.showAbout = () => {
-            $('a#about > div').html("&check;&nbsp;About&hellip;")
+            $('a#about > label').html("&check; About &hellip;")
 
             $('body').addClass('about')
 
             $('header.header').show()
+            $('#close-about').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
                 $("code#thanks").load('/_thanks.yaml', function (response, status, xhr) {
@@ -75,20 +76,23 @@ const Ω = {
             $('footer.footer').show()
 
             $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
+            this.about = true
         }
 
         this.hideAbout = () => {
-            $('a#about > div').html("About&hellip;")
+            $('a#about > label').html("About&hellip;")
 
             $('body').removeClass('about')
 
             $('header.header').hide()
+            $('#close-about').hide()
             $('div.fullscreen.siegel#logoLeft').hide()
             $('div.fullscreen.siegel#logoRight').hide()
             $('#credits').hide()
             $('footer.footer').hide()
 
             $('#gridContainerCol, #playerWrapper').css({ visibility: 'visible' })
+            this.about = false
         }
         const _this = this
         $('a#about').on('click', (e) => {
@@ -97,7 +101,9 @@ const Ω = {
             } else {
                 _this.showAbout()
             }
-            _this.about = !_this.about
+        })
+        $('#close-about').on('click', (e) => {
+            _this.hideAbout()
         })
     },
 
