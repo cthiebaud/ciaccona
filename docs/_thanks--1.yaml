@@ -1,0 +1,19 @@
+
+👤: 
+  - "https://ciaccona.cthiebaud.com/performers.html"
+🎵:
+  - mutopia: "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1426"
+  - lilypond: "http://lilypond.org/"
+JS:
+  - bezier-easing: "https://github.com/gre/bezier-easing"
+  - bootstrap: "https://getbootstrap.com/"
+  - isotope: "https://isotope.metafizzy.co/"
+  - jquery: "https://jquery.com/"
+  - js-cookies: "https://github.com/js-cookie/js-cookie"
+  - js-yaml: "https://github.com/nodeca/js-yaml"
+  - lodash: "https://lodash.com/"
+  - moment: "https://momentjs.com/"
+  - plyr: "https://plyr.io/"
+  - tinycolor2: "https://github.com/TinyCommunity/tinycolor2"
+SVGs: 
+  - "https://www.svgrepo.com/"
