@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.8.6"
+        const ver = "v0.8.7"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -430,24 +430,24 @@
             <ul class="dropdown-menu" aria-labelledby="configMenuLink">
                 <form class="px-4 py-3">
 
-                    <div class="label">Score</div>
+                    <div class="label" >Show Score …</div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="firstBar" id="firstBarChecked">
                         <label class="form-check-label" for="firstBarChecked">
-                            1st&nbsp;Bar
+                            1st Bar
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="fullScore" id="fullScoreChecked">
                         <label class="form-check-label" for="fullScoreChecked">
-                            Full
+                            As Much As Possible
                         </label>
                     </div>
-                    <div class="label" style="font-size: smaller;">... in ...</div>
+                    <div class="label" >… for …</div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault2" data-score-in-bricks="allBricks" id="allBricksChecked">
                         <label class="form-check-label" for="allBricksChecked">
-                            All&nbsp;Variations
+                            All
                         </label>
                     </div>
                     <div class="form-check">
@@ -456,17 +456,20 @@
                             Selected
                         </label>
                     </div>
+                    <div class="label" >… Variation(s)</div>
                     <hr>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="autoplayChecked">
                         <label class="form-check-label align-top" for="autoplayChecked">
-                            Autoplay
+                            Auto-play Next Video
                         </label>
                     </div>
                     <hr>
-                    <a id="about" class="dropdown-item d-flex justify-content-between" href="#">
-                        &nbsp;<div>About&hellip;</div>
-                    </a>
+                    <div class="dropdown-item d-flex p-0" >
+                        <a id="about" class="ms-auto" href="#" style="text-decoration: none;">
+                            &nbsp;<label>About &hellip;</label>
+                        </a>
+                    </div>
                 </form>
             </ul>
         </span>

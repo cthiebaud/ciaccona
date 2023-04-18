@@ -409,10 +409,14 @@ span.d {
   z-index: 20;
 }
 
+.my-menu > .dropdown label {
+  white-space: nowrap; 
+}
+
 .my-menu#videos-menu > .dropdown {
   left: 0;
   margin: 0.3rem 0 0.3rem 0.3rem;
-}
+}  
 
 .my-menu#config-menu > .dropdown {
   right: 0;
