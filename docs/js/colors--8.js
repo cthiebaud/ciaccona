@@ -142,7 +142,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         `
 <div id="gb-artist" data-sort="-2" class="grid-brick artist" style="${!fullameNoSpaceLowercaseNoDiacritics ? 'display: none;' : ''}">
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
-        <div class="p-2" style="white-space: nowrap;>
+        <div class="p-2" style="white-space: nowrap;">
             <span class="fullname" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
             <a id="youtube-url" class="text-muted" target="_youtube" href="#">
                 <svg width="28" height="28" preserveAspectRatio="xMidYMid meet">
