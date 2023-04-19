@@ -1,8 +1,8 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import codec from "/js/structure--9.js"
-import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils--9.js"
+import codec from "/js/structure--10.js"
+import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils--10.js"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -164,9 +164,9 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     let barFrom = 0
     _colors_.forEach(function (c) {
         const tonality = (17 <= i && i < 27) ? "Δ" : "";
-        const duration = codec.variationIndex2BarCount(i)
-        const warning = duration != 8 ? `(${duration})` : "";
-        const barTo = barFrom + duration
+        const barsCount = codec.variation2barsCount(i)
+        const warning = barsCount != 8 ? `(${barsCount})` : "";
+        const barTo = barFrom + barsCount
         const bg = `background-color: #${c.p_rgb}`
         const bgAlpha = `background-color: #${c.p_rgbAlpha}`
         const bgstripe = !tonality ? bg : `background-image: linear-gradient(135deg, 
@@ -225,8 +225,10 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         $bricksTemporaryContainer.append(jquery(templateVariations));
 
         // bumpers
-        barFrom = barFrom += duration
-        i++
+        {
+            barFrom = barTo
+            i++
+        }
     });
 
     const oblivion =

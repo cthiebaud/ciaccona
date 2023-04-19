@@ -1,8 +1,8 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
-import codec from "/js/structure--9.js"
-import { binaryRangeSearch } from "/js/utils--9.js"
-import { loadArtists } from "/js/artists--9.js"
+import lodashMerge from 'https://cdn.jsdelivr.net/npm/lodash.merge@4.6.2/+esm'
+import codec from "/js/structure--10.js"
+import { binaryRangeSearch } from "/js/utils--10.js"
+import { loadArtists } from "/js/artists--10.js"
 
 class Timings {
 
@@ -47,8 +47,7 @@ class Timings {
     }
 
     constructor(interestingData, data) {
-        lodash.merge(this, interestingData)
-        lodash.merge(this, data)
+        lodashMerge(this, interestingData, data)
 
         if (this.#isDefinedNotNullAndNotADuration(this.offset)) {
             this.offset = moment.duration(this.offset)
@@ -83,7 +82,7 @@ class Timings {
                 const lastD = 3 * (from0to256 / 256)
                 const duration = moment.duration(from0to256 + lastD)
                 this.lengthAsAString = `${duration.minutes()}′${duration.seconds()}″`
-                console.log(this.lengthAsAString)
+                console.log('duration is roughly', this.lengthAsAString)
             }
         }
     }

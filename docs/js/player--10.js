@@ -1,8 +1,8 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--9.js"
-import codec from "/js/structure--9.js"
-import { normalizeVraiment } from "/js/utils--9.js"
+import config from "/js/config--10.js"
+import codec from "/js/structure--10.js"
+import { normalizeVraiment } from "/js/utils--10.js"
 
 let begin = true
 
@@ -164,7 +164,7 @@ const setBrickClickEvent = (_plyer, timings) => {
             // immediate feedback
             const thisVariation = this.dataset.variation
             const selector = `.grid-brick#gb${thisVariation}`
-            console.log('immediate feedback', document.querySelector(selector), thisVariation, selector)
+
             document.querySelector(selector)?.classList.add('selected')
             document.querySelector('.grid-brick.gbPlaying')?.classList.add('goodbye')
             this.parentNode.classList.add('hello')

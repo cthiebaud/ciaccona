@@ -111,7 +111,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.8.14"
+        const ver = "v0.8.15"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -158,7 +158,7 @@
     </script>
 
     <script type="module">
-        import config from "/js/config--9.js"
+        import config from "/js/config--10.js"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -173,7 +173,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
     <!-- my styles -->
-    <link href="index--9.css" rel="stylesheet">
+    <link href="index--10.css" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -585,13 +585,13 @@
 
     <script async type="module">
         import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
-        import config from "/js/config--9.js"
-        import codec from "/js/structure--9.js"
-        import createColoredBadges from "/js/colors--9.js"
-        import createTimings from "/js/timings--9.js"
-        import resizeSVGs from "/js/resizeSVGs--9.js"
-        import createPlayer from "/js/player--9.js"
-        import Ω from "/js/jquery--9.js"
+        import config from "/js/config--10.js"
+        import codec from "/js/structure--10.js"
+        import createColoredBadges from "/js/colors--10.js"
+        import createTimings from "/js/timings--10.js"
+        import resizeSVGs from "/js/resizeSVGs--10.js"
+        import createPlayer from "/js/player--10.js"
+        import Ω from "/js/jquery--10.js"
 
         // transform windows loaded event to promise
         const windowLoaded = new Promise((resolve) => {

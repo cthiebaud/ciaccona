@@ -1,11 +1,11 @@
 import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
-import lodash from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
+import lodashMerge from 'https://cdn.jsdelivr.net/npm/lodash.merge@4.6.2/+esm'
 
 const theDayWhenIReadTheVideoMeters = moment('2023-04-08T00:00:00Z')
 
 class Artist {
     constructor(a) {
-        lodash.merge(this, a)
+        lodashMerge(this, a)
 
         this.fullname = `${a.firstname} ${a.lastname}`
         this.fullnameNoSpace = this.fullname.replace(/\s/gi, '')
@@ -54,7 +54,7 @@ class Artists {
 
 function loadArtists() {
     return new Promise((resolve, reject) => {
-        const urlArtistsYAML = "/_artists--9.yaml"
+        const urlArtistsYAML = "/_artists--10.yaml"
         const artistsRequest = new Request(urlArtistsYAML);
         const artists = new Artists()
 
