@@ -37,3 +37,5 @@ for file in *; do echo $file; done
 for file in *; do echo $(echo $file | sed -e 's/[0-9]/10/g'); done
 # then go
 for file in *; do mv $file $(echo $file | sed -e 's/[0-9]/10/g'); done
+
+for file in *; do echo md5sum $file; done

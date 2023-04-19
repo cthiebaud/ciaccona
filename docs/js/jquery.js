@@ -1,6 +1,6 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config--10.js"
-import codec from "/js/structure--10.js"
+import config from "/js/config.js?v=0.8.16"
+import codec from "/js/structure.js?v=0.8.16"
 
 const $ = jquery
 
@@ -66,7 +66,7 @@ const Ω = {
             $('#close-about').show()
             $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
             $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
-                $("code#thanks").load("/_thanks--10.yaml", function (response, status, xhr) {
+                $("code#thanks").load("/_thanks.yaml?v=0.8.16", function (response, status, xhr) {
                     if (status == "success") {
                         Prism.highlightElement(this)
                         $('#credits').show()
