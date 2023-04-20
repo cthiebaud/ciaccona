@@ -58,7 +58,7 @@ const Ω = {
     About: function () {
         this.about = false;
         this.showAbout = () => {
-            $('#config-menu a#about > label').html("&check; About &hellip;")
+            $('#config-menu a#about > label').html("&check; About&hellip;")
 
             $('body').addClass('about')
 
@@ -77,7 +77,7 @@ const Ω = {
         }
 
         this.hideAbout = () => {
-            $('#config-menu a#about > label').html("About &hellip;")
+            $('#config-menu a#about > label').html("About&hellip;")
 
             $('body').removeClass('about')
 
