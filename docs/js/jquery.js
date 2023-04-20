@@ -1,6 +1,7 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import config from "/js/config.js?v=0.8.18"
 import codec from "/js/structure.js?v=0.8.18"
+import { shuffleArray } from "/js/utils.js?v=0.8.18"
 
 const $ = jquery
 
@@ -57,16 +58,21 @@ const Ω = {
 
     About: function () {
         this.about = false;
-        this.animations = new Array(
-            {
-                left_: { left: "-111vw", top: 0 },
-                right: { left: "+111vw", top: 0 }
-            },
-            {
-                left_: { left: 0, top: "-111vh" },
-                right: { left: 0, top: "+111vh" }
-            },
-        )
+        const pos = [
+            { left: "-111vw", top: 0 },
+            { left: "+111vw", top: 0 },
+            { left: 0, top: "+111vh" },
+            { left: 0, top: "-111vh" },
+        ]
+        this.animations = []
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (i != j) {
+                    this.animations.push({ left_: pos[i], right: pos[j] })
+                }
+            }
+        }
+        this.animations = shuffleArray(this.animations)
         this.a = 0;
         this.showAbout = () => {
             $('#config-menu a#about > label').html("&check; About&hellip;")
@@ -80,29 +86,24 @@ const Ω = {
                 $('footer.footer').show()
                 $('#gridContainerCol, #playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
                     $('#gridContainerCol, #playerWrapper').hide()
+                    this.a = (this.a + 1) % this.animations.length
                 })
             })
-
-            this.a = (this.a + 1) % this.animations.length
-
-            // $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
             this.about = true
         }
-
         this.hideAbout = () => {
             $('#config-menu a#about > label').html("About&hellip;")
 
-            $('body').removeClass('about')
-
             $('header.header').hide()
             $('footer.footer').hide()
-
-            $('#gridContainerCol, #playerWrapper').show().animate({ opacity: 1 }, 1200, 'linear')
-            $('div#logoLeft ').animate(this.animations[this.a].left_, 1800, 'swing')
-            $('div#logoRight').animate(this.animations[this.a].right, 1800, 'swing', () => {
+            $('#gridContainerCol, #playerWrapper').show().animate({ opacity: 1 }, 600, 'linear', () => {
                 $('#close-about').hide()
-                $('div#logoLeft').hide()
-                $('div#logoRight').hide()
+                $('div#logoLeft ').animate(this.animations[this.a].left_, 1800, 'swing')
+                $('div#logoRight').animate(this.animations[this.a].right, 1800, 'swing', () => {
+                    $('div#logoLeft').hide()
+                    $('div#logoRight').hide()
+                    $('body').removeClass('about')
+                })
             })
             this.about = false
         }
@@ -121,16 +122,7 @@ const Ω = {
 
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
-        /* 
-        $('a[data-name-no-space-lowercase-no-diacritics]').on('click', (e) => {
-            let location = `${url.pathname}video/${e.currentTarget.dataset.nameNoSpaceLowercaseNoDiacritics}.html`
-            window.location = location
-        })
-        $('a#home').on('click', (e) => {
-            window.location = url.pathname
-        })
 
-        */
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((e) => {
             const nameNoSpaceLowercaseNoDiacritics = e.dataset.nameNoSpaceLowercaseNoDiacritics
             if (nameNoSpaceLowercaseNoDiacritics === '') {
@@ -138,20 +130,20 @@ const Ω = {
             } else {
                 e.setAttribute('href', `${url.pathname}video/${nameNoSpaceLowercaseNoDiacritics}.html`)
             }
-            console.log(e)
         })
-
 
         $("#firstBarChecked, #fullScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
             config.scoreDisplay = scoreDisplay
             Ω.showScoreDisplay(iso)
         })
+
         $("#allBricksChecked, #selectedBrickChecked").on("click", function (e) {
             const scoreInBricks = e.currentTarget.dataset.scoreInBricks
             config.scoreInBricks = scoreInBricks
             Ω.showScoreInBricks()
         })
+
         $("#autoplayChecked").on("click", function (e) {
             config.autoplay = !config.autoplay
         })
