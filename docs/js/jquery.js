@@ -17,7 +17,7 @@ const Ω = {
             return new Promise((resolve) => {
                 id.classList.remove('init')
                 // console.log( 'id.dataset.width', id.dataset.width )
-                $(id).css({ visibility: 'inherit', width: '0'}).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
+                $(id).css({ visibility: 'inherit', width: '0' }).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
                     resolve(id)
                 })
             })
@@ -41,8 +41,8 @@ const Ω = {
         } else if (config.scoreDisplay === 'fullScore') {
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
-        } 
-        
+        }
+
         if (iso) iso.layout()
     },
 
@@ -57,20 +57,33 @@ const Ω = {
 
     About: function () {
         this.about = false;
+        this.animations = new Array(
+            {
+                left_: { left: "-111vw", top: 0 },
+                right: { left: "+111vw", top: 0 }
+            },
+            {
+                left_: { left: 0, top: "-111vh" },
+                right: { left: 0, top: "+111vh" }
+            },
+        )
+        this.a = 0;
         this.showAbout = () => {
             $('#config-menu a#about > label').html("&check; About&hellip;")
 
             $('body').addClass('about')
 
-            $('div#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
-            $('div#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
+            $('div#logoLeft ').css(this.animations[this.a].left_).show().animate({ left: 0, top: 0 }, 1800, 'swing')
+            $('div#logoRight').css(this.animations[this.a].right).show().animate({ left: 0, top: 0 }, 1800, 'swing', () => {
                 $('header.header').show()
                 $('#close-about').show()
                 $('footer.footer').show()
-                $('#gridContainerCol, #playerWrapper').animate({ opacity: 0 }, 500, undefined, () => {
+                $('#gridContainerCol, #playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
                     $('#gridContainerCol, #playerWrapper').hide()
                 })
             })
+
+            this.a = (this.a + 1) % this.animations.length
 
             // $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
             this.about = true
@@ -82,13 +95,15 @@ const Ω = {
             $('body').removeClass('about')
 
             $('header.header').hide()
-            $('#close-about').hide()
-            $('div#logoLeft').hide()
-            $('div#logoRight').hide()
-            $('#credits').hide()
             $('footer.footer').hide()
 
-            $('#gridContainerCol, #playerWrapper').css({opacity: 1}).show()
+            $('#gridContainerCol, #playerWrapper').show().animate({ opacity: 1 }, 1200, 'linear')
+            $('div#logoLeft ').animate(this.animations[this.a].left_, 1800, 'swing')
+            $('div#logoRight').animate(this.animations[this.a].right, 1800, 'swing', () => {
+                $('#close-about').hide()
+                $('div#logoLeft').hide()
+                $('div#logoRight').hide()
+            })
             this.about = false
         }
         const _this = this
