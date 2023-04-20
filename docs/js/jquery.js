@@ -84,7 +84,8 @@ const Ω = {
             $('div#logoRight').css(this.animations[this.a].back)
             $('div#logoLeft').show()
             $('div#logoRight').show()
-            window.requestAnimationFrame(() => {
+            
+            window.requestAnimationFrame((chrono) => {
                 $('div#logoLeft').animate({ left: 0, top: 0 }, 1800, 'swing')
                 $('div#logoRight').animate({ left: 0, top: 0 }, 1800, 'swing', () => {
                     console.log('MIDDLE show about')
@@ -93,7 +94,7 @@ const Ω = {
                     $('footer.footer').show()
                     $('#gridContainerCol').animate({ opacity: 0 }, 600)
                     $('#playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
-                        $('#gridContainerCol, #playerWrapper').hide()
+                        $('#gridContainerCol, #playerWrapper').css({visibility: 'hidden'})
                         this.a = (this.a + 1) % this.animations.length
                         console.log('FIN show about')
                     })
@@ -108,9 +109,10 @@ const Ω = {
             $('header.header').hide()
             $('#close-about').hide()
             $('footer.footer').hide()
-            window.requestAnimationFrame(() => {
-                $('#gridContainerCol').show().animate({ opacity: 1 }, 600, 'linear')
-                $('#playerWrapper').show().animate({ opacity: 1 }, 600, 'linear', () => {
+
+            window.requestAnimationFrame((chrono) => {
+                $('#gridContainerCol').css({visibility: 'visible'}).animate({ opacity: 1 }, 600, 'linear')
+                $('#playerWrapper').css({visibility: 'visible'}).animate({ opacity: 1 }, 600, 'linear', () => {
                     console.log('MIDDLE hide about')
                     $('div#logoLeft ').animate(this.animations[this.a].fore, 1800, 'swing')
                     $('div#logoRight').animate(this.animations[this.a].back, 1800, 'swing', () => {
