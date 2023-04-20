@@ -121,15 +121,26 @@ const Ω = {
 
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
-
+        /* 
         $('a[data-name-no-space-lowercase-no-diacritics]').on('click', (e) => {
             let location = `${url.pathname}video/${e.currentTarget.dataset.nameNoSpaceLowercaseNoDiacritics}.html`
             window.location = location
         })
-
         $('a#home').on('click', (e) => {
             window.location = url.pathname
         })
+
+        */
+        document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((e) => {
+            const nameNoSpaceLowercaseNoDiacritics = e.dataset.nameNoSpaceLowercaseNoDiacritics
+            if (nameNoSpaceLowercaseNoDiacritics === '') {
+                e.setAttribute('href', url.pathname)
+            } else {
+                e.setAttribute('href', `${url.pathname}video/${nameNoSpaceLowercaseNoDiacritics}.html`)
+            }
+            console.log(e)
+        })
+
 
         $("#firstBarChecked, #fullScoreChecked").on("click", function (e) {
             const scoreDisplay = e.currentTarget.dataset.scoreDisplay
@@ -141,7 +152,6 @@ const Ω = {
             config.scoreInBricks = scoreInBricks
             Ω.showScoreInBricks()
         })
-
         $("#autoplayChecked").on("click", function (e) {
             config.autoplay = !config.autoplay
         })
