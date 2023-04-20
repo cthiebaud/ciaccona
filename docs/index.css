@@ -236,15 +236,53 @@ div.siegel {
   background-color: transparent;
 }
 
-div.siegel#logoLeft {
-  background-image: url("svg/Bach_Seal_full_left_120x120.svg");
+div#logoLeft {
+  background-color: transparent;
   left: -111vw;
 }
 
-div.siegel#logoRight {
-  background-image: url("svg/Bach_Seal_full_right_120x120.svg");
+div#logoLeft div#backgroundLeft {
+  position: relative;
+  background-color: #ffffffc0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+div#logoLeft div.siegel#foregroundLeft {
+  background-image: url("svg/Bach_Seal_full_left_120x120.svg");
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+}
+
+div#logoRight {
+  background-color: transparent;
   left: +111vw;
 }
+
+div#logoRight div#backgroundRight {
+  position: relative;
+  background-color: #ffffffc0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
+
+div#logoRight div.siegel#foregroundRight {
+  background-image: url("svg/Bach_Seal_full_right_120x120.svg");
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+/* % % % % % % % % % % % % % % % % */
 
 .glowing_bubble_siegel {
   width: 100%;

@@ -1,8 +1,8 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import codec from "/js/structure.js?v=0.8.16"
-import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils.js?v=0.8.16"
+import codec from "/js/structure.js?v=0.8.17"
+import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils.js?v=0.8.17"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {

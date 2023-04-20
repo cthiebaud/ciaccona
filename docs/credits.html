@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-DJBNRY1Z9M');
+    </script>
+    <meta charset="utf-8">
+    <!-- meta name="viewport" content="width=device-width, initial-scale=1" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keywords" content="Bach, JSBach, J.S. Bach, BWV1004, BWV 1004, Partita, 2nd Partita, Ciaconna, Chaconne">
+    <meta name="author" content="Christophe Thiebaud">
+
+    <!-- HTML Meta Tags -->
+    <title>Ciaccona Credits</title>
+    <meta name="description" content="Performers of Ciaccona from Johann Sebastian Bach's Partita in D minor for solo violin (#BWV1004)">
+
+    <!-- https://realfavicongenerator.net/ -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="fb:app_id" content="176898451849553">
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content="ciaccona.cthiebaud.com" />
+    <meta property="og:url" content="https://ciaccona.cthiebaud.com/performers.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ciaccona Performers">
+    <meta property="og:description" content="32 + 1 performances of Johann Sebastian Bach's Ciaccona from Partita in D minor for solo violin BWV1004">
+    <meta property="og:image" content="https://ciaccona.cthiebaud.com/screenshots/performers.jpg" />
+    <meta property="og:image:url" content="https://ciaccona.cthiebaud.com/screenshots/performers.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1800" />
+    <meta property="og:image:height" content="942" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@cthiebaud">
+    <meta property="twitter:domain" content="ciaccona.cthiebaud.com">
+    <meta property="twitter:url" content="https://ciaccona.cthiebaud.com/performers.html">
+    <meta name="twitter:title" content="Ciaccona Performers">
+    <meta name="twitter:description" content="32 + 1 performances of Johann Sebastian Bach's Ciaccona from Partita in D minor for solo violin BWV1004">
+    <meta name="twitter:image" content="https://ciaccona.cthiebaud.com/screenshots/performers.jpg">
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <!-- Lightweight, robust, elegant syntax highlighting -->
+    <link rel="stylesheet" href="prism.css">
+
+    <style>
+    </style>
+
+</head>
+
+<body id="body" class="d-flex flex-column">
+    <main id="perfContainer" class="container">
+        <header class="p-2" style="background-color: #f0f0f0; height: 4rem">
+            <button id="go-back" type="button" class="btn btn-light m-0 p-0" style="float:right"><img src="svg/close-circle-svgrepo-com.svg"
+                    style="width:32px;height:auto;"></button>
+            <h1>Credits</h1>
+        </header>
+        <div id="perfContainerRow" class="row" style="">
+            <div id="perfContainerCol" class="col">
+                <pre id="credits" class="container autolinker language-yaml" style="width: fit-content;"><code id="thanks" class="autolinker language-yaml"></code></pre>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></!-->
+    <script src="prism.js"></script>
+
+    <script async type="module">
+        import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
+
+        document.getElementById("go-back").addEventListener("click", () => {
+            history.back();
+        });
+
+        jquery("code#thanks").load("/_thanks.yaml?v=0.8.17", function (response, status, xhr) {
+            if (status == "success") {
+                Prism.highlightElement(this)
+                jquery('#credits').show()
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

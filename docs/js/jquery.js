@@ -1,6 +1,6 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config.js?v=0.8.16"
-import codec from "/js/structure.js?v=0.8.16"
+import config from "/js/config.js?v=0.8.17"
+import codec from "/js/structure.js?v=0.8.17"
 
 const $ = jquery
 
@@ -58,40 +58,37 @@ const Ω = {
     About: function () {
         this.about = false;
         this.showAbout = () => {
-            $('a#about > label').html("&check; About &hellip;")
+            $('#config-menu a#about > label').html("&check; About &hellip;")
 
             $('body').addClass('about')
 
-            $('header.header').show()
-            $('#close-about').show()
-            $('div.fullscreen.siegel#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
-            $('div.fullscreen.siegel#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
-                $("code#thanks").load("/_thanks.yaml?v=0.8.16", function (response, status, xhr) {
-                    if (status == "success") {
-                        Prism.highlightElement(this)
-                        $('#credits').show()
-                    }
+            $('div#logoLeft').css({ left: "-111vw" }).show().animate({ left: 0 }, 2000)
+            $('div#logoRight').css({ left: "+111vw" }).show().animate({ left: 0 }, 2000, undefined, () => {
+                $('header.header').show()
+                $('#close-about').show()
+                $('footer.footer').show()
+                $('#gridContainerCol, #playerWrapper').animate({ opacity: 0 }, 500, undefined, () => {
+                    $('#gridContainerCol, #playerWrapper').hide()
                 })
             })
-            $('footer.footer').show()
 
-            $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
+            // $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
             this.about = true
         }
 
         this.hideAbout = () => {
-            $('a#about > label').html("About&hellip;")
+            $('#config-menu a#about > label').html("About &hellip;")
 
             $('body').removeClass('about')
 
             $('header.header').hide()
             $('#close-about').hide()
-            $('div.fullscreen.siegel#logoLeft').hide()
-            $('div.fullscreen.siegel#logoRight').hide()
+            $('div#logoLeft').hide()
+            $('div#logoRight').hide()
             $('#credits').hide()
             $('footer.footer').hide()
 
-            $('#gridContainerCol, #playerWrapper').css({ visibility: 'visible' })
+            $('#gridContainerCol, #playerWrapper').css({opacity: 1}).show()
             this.about = false
         }
         const _this = this
