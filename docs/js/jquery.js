@@ -1,7 +1,7 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config.js?v=0.8.19"
-import codec from "/js/structure.js?v=0.8.19"
-import { shuffleArray } from "/js/utils.js?v=0.8.19"
+import config from "/js/config.js?v=0.8.20"
+import codec from "/js/structure.js?v=0.8.20"
+import { shuffleArray } from "/js/utils.js?v=0.8.20"
 
 const $ = jquery
 
@@ -59,50 +59,63 @@ const Ω = {
     About: function () {
         this.about = false;
         const pos = [
-            { left: "-111vw", top: 0 },
-            { left: "+111vw", top: 0 },
-            { left: 0, top: "+111vh" },
-            { left: 0, top: "-111vh" },
+            { left: '-111vw', top: 0 },
+            { left: '+111vw', top: 0 },
+            { left: 0, top: '+111vh' },
+            { left: 0, top: '-111vh' },
         ]
         this.animations = []
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < pos.length; i++) {
+            for (let j = 0; j < pos.length; j++) {
                 if (i != j) {
-                    this.animations.push({ left_: pos[i], right: pos[j] })
+                    this.animations.push({ fore: pos[i], back: pos[j] })
                 }
             }
         }
         this.animations = shuffleArray(this.animations)
         this.a = 0;
         this.showAbout = () => {
+            console.log('BEGIN show about')
             $('#config-menu a#about > label').html("&check; About&hellip;")
 
             $('body').addClass('about')
 
-            $('div#logoLeft ').css(this.animations[this.a].left_).show().animate({ left: 0, top: 0 }, 1800, 'swing')
-            $('div#logoRight').css(this.animations[this.a].right).show().animate({ left: 0, top: 0 }, 1800, 'swing', () => {
+            $('div#logoLeft' ).css(this.animations[this.a].fore)
+            $('div#logoRight').css(this.animations[this.a].back)
+            $('div#logoLeft' ).show()
+            $('div#logoRight').show()
+
+            $('div#logoLeft').animate({ left: 0, top: 0 }, 1800, 'swing')
+            $('div#logoRight').animate({ left: 0, top: 0 }, 1800, 'swing', () => {
+                console.log('MIDDLE show about')
                 $('header.header').show()
                 $('#close-about').show()
                 $('footer.footer').show()
-                $('#gridContainerCol, #playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
+                $('#gridContainerCol').animate({ opacity: 0 }, 600)
+                $('#playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
                     $('#gridContainerCol, #playerWrapper').hide()
                     this.a = (this.a + 1) % this.animations.length
+                    console.log('FIN show about')
                 })
             })
             this.about = true
         }
         this.hideAbout = () => {
+            console.log('BEGIN hide about')
             $('#config-menu a#about > label').html("About&hellip;")
 
             $('header.header').hide()
+            $('#close-about').hide()
             $('footer.footer').hide()
-            $('#gridContainerCol, #playerWrapper').show().animate({ opacity: 1 }, 600, 'linear', () => {
-                $('#close-about').hide()
-                $('div#logoLeft ').animate(this.animations[this.a].left_, 1800, 'swing')
-                $('div#logoRight').animate(this.animations[this.a].right, 1800, 'swing', () => {
+            $('#gridContainerCol').show().animate({ opacity: 1 }, 600, 'linear')
+            $('#playerWrapper').show().animate({ opacity: 1 }, 600, 'linear', () => {
+                console.log('MIDDLE hide about')
+                $('div#logoLeft ').animate(this.animations[this.a].fore, 1800, 'swing')
+                $('div#logoRight').animate(this.animations[this.a].back, 1800, 'swing', () => {
                     $('div#logoLeft').hide()
                     $('div#logoRight').hide()
                     $('body').removeClass('about')
+                    console.log('FIN hide about')
                 })
             })
             this.about = false
