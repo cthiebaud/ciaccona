@@ -80,24 +80,25 @@ const Ω = {
 
             $('body').addClass('about')
 
-            $('div#logoLeft' ).css(this.animations[this.a].fore)
+            $('div#logoLeft').css(this.animations[this.a].fore)
             $('div#logoRight').css(this.animations[this.a].back)
-            $('div#logoLeft' ).show()
+            $('div#logoLeft').show()
             $('div#logoRight').show()
-
-            $('div#logoLeft').animate({ left: 0, top: 0 }, 1800, 'swing')
-            $('div#logoRight').animate({ left: 0, top: 0 }, 1800, 'swing', () => {
-                console.log('MIDDLE show about')
-                $('header.header').show()
-                $('#close-about').show()
-                $('footer.footer').show()
-                $('#gridContainerCol').animate({ opacity: 0 }, 600)
-                $('#playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
-                    $('#gridContainerCol, #playerWrapper').hide()
-                    this.a = (this.a + 1) % this.animations.length
-                    console.log('FIN show about')
+            window.requestAnimationFrame(() => {
+                $('div#logoLeft').animate({ left: 0, top: 0 }, 1800, 'swing')
+                $('div#logoRight').animate({ left: 0, top: 0 }, 1800, 'swing', () => {
+                    console.log('MIDDLE show about')
+                    $('header.header').show()
+                    $('#close-about').show()
+                    $('footer.footer').show()
+                    $('#gridContainerCol').animate({ opacity: 0 }, 600)
+                    $('#playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
+                        $('#gridContainerCol, #playerWrapper').hide()
+                        this.a = (this.a + 1) % this.animations.length
+                        console.log('FIN show about')
+                    })
                 })
-            })
+            });
             this.about = true
         }
         this.hideAbout = () => {
@@ -107,15 +108,17 @@ const Ω = {
             $('header.header').hide()
             $('#close-about').hide()
             $('footer.footer').hide()
-            $('#gridContainerCol').show().animate({ opacity: 1 }, 600, 'linear')
-            $('#playerWrapper').show().animate({ opacity: 1 }, 600, 'linear', () => {
-                console.log('MIDDLE hide about')
-                $('div#logoLeft ').animate(this.animations[this.a].fore, 1800, 'swing')
-                $('div#logoRight').animate(this.animations[this.a].back, 1800, 'swing', () => {
-                    $('div#logoLeft').hide()
-                    $('div#logoRight').hide()
-                    $('body').removeClass('about')
-                    console.log('FIN hide about')
+            window.requestAnimationFrame(() => {
+                $('#gridContainerCol').show().animate({ opacity: 1 }, 600, 'linear')
+                $('#playerWrapper').show().animate({ opacity: 1 }, 600, 'linear', () => {
+                    console.log('MIDDLE hide about')
+                    $('div#logoLeft ').animate(this.animations[this.a].fore, 1800, 'swing')
+                    $('div#logoRight').animate(this.animations[this.a].back, 1800, 'swing', () => {
+                        $('div#logoLeft').hide()
+                        $('div#logoRight').hide()
+                        $('body').removeClass('about')
+                        console.log('FIN hide about')
+                    })
                 })
             })
             this.about = false
