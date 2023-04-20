@@ -54,7 +54,7 @@ class Artists {
 
 function loadArtists() {
     return new Promise((resolve, reject) => {
-        const urlArtistsYAML = "/_artists.yaml?v=0.8.22"
+        const urlArtistsYAML = "/_artists.yaml?v=0.8.23"
         const artistsRequest = new Request(urlArtistsYAML);
         const artists = new Artists()
 

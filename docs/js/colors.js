@@ -1,8 +1,8 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import codec from "/js/structure.js?v=0.8.22"
-import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils.js?v=0.8.22"
+import codec from "/js/structure.js?v=0.8.23"
+import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils.js?v=0.8.23"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -146,12 +146,12 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             <span class="fullname" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
             <a id="youtube-url" class="text-muted" target="_youtube" href="#">
                 <svg width="28" height="28" preserveAspectRatio="xMidYMid meet">
-                    <use xlink:href="index.svg?v=0.8.22#youtube-external-link"></use>
+                    <use xlink:href="index.svg?v=0.8.23#youtube-external-link"></use>
                 </svg>
             </a>
             <a id="social" class="share text-muted" target="_facebook" href="#">
                 <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                    <use xlink:href="index.svg?v=0.8.22#share"></use>
+                    <use xlink:href="index.svg?v=0.8.23#share"></use>
                 </svg>
             </a>
         </div>
