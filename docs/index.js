@@ -47,6 +47,11 @@ if (autoplayChecked) {
     document.getElementById('autoplayChecked').checked = true
 }
 
+let incognitoChecked = config.incognito
+if (incognitoChecked) {
+    document.getElementById('incognitoChecked').checked = true
+}
+
 const gridradioId = `${config.scoreDisplay}Checked`
 document.getElementById(gridradioId).checked = true
 document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay

@@ -7,6 +7,8 @@ class Config {
     #playing = false
     #startBarOfLastSelectedVariation = 0
     #autoplay = false
+    #incognito = false
+
     #inConstructor = true
 
     constructor() {
@@ -24,6 +26,9 @@ class Config {
 
         // 
         this.autoplay = getCookie('autoplay')
+
+        // 
+        this.incognito = getCookie('incognito')
 
         this.#inConstructor = false
     }
@@ -148,6 +153,29 @@ class Config {
             }
         }
     }
+
+    // 
+    get incognito() {
+        return this.#incognito
+    }
+    set incognito(incognito) {
+        if (incognito && (incognito === 'true' || incognito === true)) {
+            incognito = true
+        } else {
+            incognito = false
+        }
+
+        if (incognito !== this.#incognito) {
+            this.#incognito = incognito
+            if (!this.#inConstructor) {
+                if (this.#incognito === false) {
+                    removeCookie('incognito')
+                } else {
+                    setCookie('incognito', 'true')
+                }
+            }
+        }
+    }
 }
 
 const config = new Config()
@@ -156,7 +184,7 @@ function getMethods(o) {
         .filter(m => 'function' !== typeof o[m])
 }
 console.log('+ - - - - - - = config = - - - - - - -')
-getMethods(config).map(x => console.log('|', x,'=', config[x]))
+getMethods(config).map(x => console.log('|', x, '=', config[x]))
 console.log('+ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~')
 
 export default config

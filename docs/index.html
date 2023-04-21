@@ -123,7 +123,7 @@
         let fullameNoSpaceLowercaseNoDiacritics = params.a ?? undefined
         let no_plyr_event = params.no_plyr_event ?? undefined
         let test = params.test ?? undefined
-        
+
 
         if (!validFullamesNoSpaceLowercaseNoDiacritics.includes(fullameNoSpaceLowercaseNoDiacritics)) {
             console.log(`invalid name: ${fullameNoSpaceLowercaseNoDiacritics}`)
@@ -171,12 +171,15 @@
             // r.à.z.
             config.playing = undefined
             // config.startBarOfLastSelectedVariation = undefined
-        } else {
+        }
+        if (!config.incognito) {
             const url = new URL(window.location)
             if (url.hostname !== 'localhost' || test === 'true') {
-                const countAPIurl = `https://api.countapi.xyz/hit/ciaccona.cthiebaud.com/${fullameNoSpaceLowercaseNoDiacritics}`
+                const countAPIurl = `https://api.countapi.xyz/hit/ciaccona.cthiebaud.com/${fullameNoSpaceLowercaseNoDiacritics || "index"}`
                 fetch(countAPIurl).then(response => {
-                    console.log(countAPIurl, response)
+                    return response.json()
+                }).then(json => {
+                    console.log(countAPIurl, json)
                 })
             }
         }
@@ -399,6 +402,13 @@
                         <input type="checkbox" class="form-check-input" id="autoplayChecked">
                         <label class="form-check-label align-top" for="autoplayChecked">
                             Auto-play Next Video
+                        </label>
+                    </div>
+                    <hr>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="incognitoChecked">
+                        <label class="form-check-label align-top" style="width: 100%;" for="incognitoChecked">
+                            Incognito<div class="float-end font-monospace badge rounded-pill bg-light text-dark">0</div>
                         </label>
                     </div>
                     <hr>
