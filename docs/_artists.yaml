@@ -131,6 +131,10 @@
   insta: violincase
   twitter: violincase
   tiktok: hilaryhahnofficial
+  facebook: hilaryhahn
+  youtube: hilaryhahnvideos
+  wikipedia: https://en.wikipedia.org/wiki/Hilary_Hahn
+  site:
   facebookPost: 
   flag: 🇺🇸
   ▶:
@@ -140,7 +144,6 @@
     length: 17′50″
     pitch: 293.7
     a4: 440
-  🕸: "https://www.instagram.com/violincase/"
 - firstname: Isabelle
   lastname: Faust
   twitter: ImpSim
@@ -316,6 +319,7 @@
   insta: rachelpodgerofficial
   twitter: RachPodger
   linkedin: rachel-podger-22807a4
+  facebook: rachel.podger
   flag: 🇬🇧
   ▶:
     id: 1HSJufg7I1I
