@@ -43,7 +43,7 @@ class Artists {
     }
     addArtist = (a) => {
         this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.set(a.fullnameNoSpaceLowercaseNoDiacritics, a)
-        console.log(a.fullnameNoSpaceLowercaseNoDiacritics, a)
+        // console.log(a.fullnameNoSpaceLowercaseNoDiacritics, a)
         this.artists.push(a)
     }
     getArtistFromNameNoSpaceLowercaseNoDiacritics = (nameNoSpaceLowercaseNoDiacritics) => {
