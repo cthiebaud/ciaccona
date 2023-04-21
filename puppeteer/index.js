@@ -23,37 +23,37 @@ const puppeteer = require('puppeteer');
     const performers = [
         'adolfbusch',
         'amandinebeyer',
-        // 'andreadevitis',
-        // 'anneleenlenaerts',
-        // 'bellahristova',
-        // 'chiaramassini',
+        'andreadevitis',
+        'anneleenlenaerts',
+        'bellahristova',
+        'chiaramassini',
         'christiantetzlaff',
-        // 'moi',
-        // 'florentinginot',
-        // 'genzohtakehisa',
+        'moi',
+        'florentinginot',
+        'genzohtakehisa',
         'hilaryhahn',
         'isabellefaust',
         'juliafischer',
-        // 'lisajacobs',
-        // 'lizaferschtman',
-        // 'martafemenia',
-        // 'martinbaker',
-        // 'michaelleontchik',
-        // 'midorigoto',
-        // 'miguelrincon',
-        // 'mikastoltzman',
-        // 'moranwasser',
-        // 'petrapolackova',
-        // 'polinaosetinskaya',
-        // 'rachellellenwong',
+        'lisajacobs',
+        'lizaferschtman',
+        'martafemenia',
+        'martinbaker',
+        'michaelleontchik',
+        'midorigoto',
+        'miguelrincon',
+        'mikastoltzman',
+        'moranwasser',
+        'petrapolackova',
+        'polinaosetinskaya',
+        'rachellellenwong',
         'rachelpodger',
-        // 'raphaellasmits',
-        // 'sigiswaldkuijken',
-        // 'veronikaeberle',
-        // 'veroniquederaedemaeker',
-        // 'virginierobilliard',
-        // 'vonhansen',
-        // 'yunpark',
+        'raphaellasmits',
+        'sigiswaldkuijken',
+        'veronikaeberle',
+        'veroniquederaedemaeker',
+        'virginierobilliard',
+        'vonhansen',
+        'yunpark',
     ]
 
     const cookies = [{
@@ -100,10 +100,14 @@ const puppeteer = require('puppeteer');
 
                     console.log(`seeking to variation ${variation}`)
 
+                    let max = 34;
                     // Do something with element...
                     if (!novid.includes(performer)) {
                         await element.click();
+                    } else {
+                        max = 1
                     }
+
 
                     const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
                     for (let qwe of playerControls) {
@@ -120,7 +124,7 @@ const puppeteer = require('puppeteer');
                             // Dispose of handle
                             await element.dispose();
 
-                            if (1 <= i) {
+                            if (max <= i) {
                                 console.log('resolving promiseVariations')
                                 console.log('clearInterval')
                                 clearInterval(intervalObj);
