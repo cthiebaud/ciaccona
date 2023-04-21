@@ -23,7 +23,7 @@ class Artist {
         const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
         vid.javascriptizedId = videoIdNoHyphenNoStartingNumber
 
-        if (false) { // calc viewsPerMonth ?
+        if (true) { // calc viewsPerMonth ?
             vid.publishedMoment = moment(vid.published)
             vid.duration = theDayWhenIReadTheVideoMeters.diff(vid.publishedMoment)
             vid.durationMoment = moment.duration(vid.duration)
