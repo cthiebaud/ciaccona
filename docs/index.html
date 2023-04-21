@@ -122,6 +122,8 @@
         })
         let fullameNoSpaceLowercaseNoDiacritics = params.a ?? undefined
         let no_plyr_event = params.no_plyr_event ?? undefined
+        let test = params.test ?? undefined
+        
 
         if (!validFullamesNoSpaceLowercaseNoDiacritics.includes(fullameNoSpaceLowercaseNoDiacritics)) {
             console.log(`invalid name: ${fullameNoSpaceLowercaseNoDiacritics}`)
@@ -169,6 +171,14 @@
             // r.à.z.
             config.playing = undefined
             // config.startBarOfLastSelectedVariation = undefined
+        } else {
+            const url = new URL(window.location)
+            if (url.hostname !== 'localhost' || test === 'true') {
+                const countAPIurl = `https://api.countapi.xyz/hit/ciaccona.cthiebaud.com/${fullameNoSpaceLowercaseNoDiacritics}`
+                fetch(countAPIurl).then(response => {
+                    console.log(countAPIurl, response)
+                })
+            }
         }
     </script>
 

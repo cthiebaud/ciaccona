@@ -12,19 +12,19 @@ const puppeteer = require('puppeteer');
     await page.setViewport({ width: 1280, height: 628 });
 
     const performers = [
-       // /* 'adolfbusch',
-       // 'amandinebeyer', */
-       // 'andreadevitis',
-       // 'anneleenlenaerts',
-       // 'bellahristova',
-       // 'chiaramassini',
-       // /*'christiantetzlaff', */
-       // 'moi',
+        'adolfbusch',
+        'amandinebeyer',
+        'andreadevitis',
+        'anneleenlenaerts',
+        'bellahristova',
+        'chiaramassini',
+        'christiantetzlaff',
+        'moi',
         'florentinginot',
         'genzohtakehisa',
-        /*'hilaryhahn',
+        'hilaryhahn',
         'isabellefaust',
-        'juliafischer', */
+        'juliafischer', 
         'lisajacobs',
         'lizaferschtman',
         'martafemenia',
@@ -37,7 +37,7 @@ const puppeteer = require('puppeteer');
         'petrapolackova',
         'polinaosetinskaya',
         'rachellellenwong',
-        /*'rachelpodger', */
+        'rachelpodger',
         'raphaellasmits',
         'sigiswaldkuijken',
         'veronikaeberle',
@@ -71,13 +71,15 @@ const puppeteer = require('puppeteer');
             fs.rmSync(`./performers/${performer}`, { force: true, recursive: true });
             fs.mkdirSync(`performers/${performer}`);
 
-            const website_url = `http://localhost:1010/video/${performer}.html`;
+            // const website_url = `http://localhost:1010/video/${performer}.html`;
+            const website_url = `https://api.countapi.xyz/create?namespace=ciaccona.cthiebaud.com&enable_reset=1&key=${performer}`
 
             console.log(website_url)
 
             // Open URL in current page  
             await page.goto(website_url, { waitUntil: 'networkidle0' });
 
+            /*
             let i = 0
             let intervalObj
             const promiseVariations = new Promise(async (resolveVariation, rejectVariation) => {
@@ -121,7 +123,6 @@ const puppeteer = require('puppeteer');
                 console.log('setinterval')
                 intervalObj = setInterval(myFunc, 2000, performer)
             });
-
             await promiseVariations.then(async (result) => {
                 console.log('promiseVariations then', p)
                 return result
@@ -129,6 +130,7 @@ const puppeteer = require('puppeteer');
                 console.log(error)
                 throw error
             })
+            */
             console.log('now we should go to next performer, or no ?', p)
         }
         console.log('finito with performers. resolving promisePerformers')
