@@ -11,20 +11,29 @@ const puppeteer = require('puppeteer');
     // Set viewport width and height
     await page.setViewport({ width: 1200, height: 628 });
 
+    const novid = [
+        'adolfbusch',
+        'amandinebeyer',
+        'christiantetzlaff',
+        'hilaryhahn',
+        'isabellefaust',
+        'juliafischer',
+        'rachelpodger',
+    ]
     const performers = [
-        // 'adolfbusch',
+        'adolfbusch',
         'amandinebeyer',
         // 'andreadevitis',
         // 'anneleenlenaerts',
         // 'bellahristova',
         // 'chiaramassini',
-        // 'christiantetzlaff',
+        'christiantetzlaff',
         // 'moi',
         // 'florentinginot',
         // 'genzohtakehisa',
-        // 'hilaryhahn',
-        // 'isabellefaust',
-        // 'juliafischer', 
+        'hilaryhahn',
+        'isabellefaust',
+        'juliafischer',
         // 'lisajacobs',
         // 'lizaferschtman',
         // 'martafemenia',
@@ -37,7 +46,7 @@ const puppeteer = require('puppeteer');
         // 'petrapolackova',
         // 'polinaosetinskaya',
         // 'rachellellenwong',
-        // 'rachelpodger',
+        'rachelpodger',
         // 'raphaellasmits',
         // 'sigiswaldkuijken',
         // 'veronikaeberle',
@@ -92,7 +101,9 @@ const puppeteer = require('puppeteer');
                     console.log(`seeking to variation ${variation}`)
 
                     // Do something with element...
-                    await element.click();
+                    if (!novid.includes(performer)) {
+                        await element.click();
+                    }
 
                     const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
                     for (let qwe of playerControls) {
