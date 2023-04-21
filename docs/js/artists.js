@@ -23,7 +23,7 @@ class Artist {
         const videoIdNoHyphenNoStartingNumber = videoIdNoHyphen.replace(/^(\d.*)/i, '_$1')
         vid.javascriptizedId = videoIdNoHyphenNoStartingNumber
 
-        if (true) { // calc viewsPerMonth ?
+        if (false) { // calc viewsPerMonth ?
             vid.publishedMoment = moment(vid.published)
             vid.duration = theDayWhenIReadTheVideoMeters.diff(vid.publishedMoment)
             vid.durationMoment = moment.duration(vid.duration)
@@ -43,6 +43,7 @@ class Artists {
     }
     addArtist = (a) => {
         this.#mapNameNoSpaceLowercaseNoDiacritics2Artist.set(a.fullnameNoSpaceLowercaseNoDiacritics, a)
+        console.log(a.fullnameNoSpaceLowercaseNoDiacritics, a)
         this.artists.push(a)
     }
     getArtistFromNameNoSpaceLowercaseNoDiacritics = (nameNoSpaceLowercaseNoDiacritics) => {
@@ -54,7 +55,7 @@ class Artists {
 
 function loadArtists() {
     return new Promise((resolve, reject) => {
-        const urlArtistsYAML = "/_artists.yaml?v=0.8.24"
+        const urlArtistsYAML = "/_artists.yaml?v=0.8.24.1"
         const artistsRequest = new Request(urlArtistsYAML);
         const artists = new Artists()
 
