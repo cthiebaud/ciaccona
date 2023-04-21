@@ -172,17 +172,22 @@
             config.playing = undefined
             // config.startBarOfLastSelectedVariation = undefined
         }
-        if (!config.incognito) {
-            const url = new URL(window.location)
-            if (url.hostname !== 'localhost' || test === 'true') {
-                const countAPIurl = `https://api.countapi.xyz/hit/ciaccona.cthiebaud.com/${fullameNoSpaceLowercaseNoDiacritics || "index"}`
-                fetch(countAPIurl).then(response => {
-                    return response.json()
-                }).then(json => {
-                    console.log(countAPIurl, json)
-                })
-            }
+        const url = new URL(window.location)
+        let action = 'get'
+        if (config.incognito) {
+            action = 'get'
+        } else if (test === 'true' || url.hostname !== 'localhost') {
+            action = 'hit'
         }
+        const countAPIurl = `https://api.countapi.xyz/${action}/ciaccona.cthiebaud.com/${fullameNoSpaceLowercaseNoDiacritics || "home"}`
+        fetch(countAPIurl).then(response => {
+            return response.json()
+        }).then(json => {
+            console.log(countAPIurl, json)
+            config.views = json.value
+            const zxc = document.getElementById('views')
+            if (zxc) zxc.innerHTML = config.views
+        })
     </script>
 
     <!-- google font -->
@@ -408,7 +413,7 @@
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="incognitoChecked">
                         <label class="form-check-label align-top" style="width: 100%;" for="incognitoChecked">
-                            Incognito<div class="float-end font-monospace badge rounded-pill bg-light text-dark">0</div>
+                            Incognito
                         </label>
                     </div>
                     <hr>
@@ -418,6 +423,7 @@
                         </a>
                     </div>
                     <div class="dropdown-item d-flex p-0">
+                        <div id="views" class="float-start font-monospace badge rounded-pill bg-light text-dark">0</div>
                         <a id="about" class="ms-auto" href="#" style="text-decoration: none;">
                             <label>About&hellip;</label>
                         </a>

@@ -9,6 +9,8 @@ class Config {
     #autoplay = false
     #incognito = false
 
+    #views = 0
+
     #inConstructor = true
 
     constructor() {
@@ -175,6 +177,13 @@ class Config {
                 }
             }
         }
+    }
+
+    get views() {
+        return this.#views
+    }
+    set views(views) {
+        this.#views = views
     }
 }
 

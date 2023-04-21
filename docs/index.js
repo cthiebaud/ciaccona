@@ -52,6 +52,8 @@ if (incognitoChecked) {
     document.getElementById('incognitoChecked').checked = true
 }
 
+document.getElementById('views').innerHTML = config.views
+
 const gridradioId = `${config.scoreDisplay}Checked`
 document.getElementById(gridradioId).checked = true
 document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
