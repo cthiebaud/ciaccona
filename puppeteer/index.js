@@ -9,42 +9,42 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage();
 
     // Set viewport width and height
-    await page.setViewport({ width: 1280, height: 628 });
+    await page.setViewport({ width: 1200, height: 628 });
 
     const performers = [
-        'adolfbusch',
+        // 'adolfbusch',
         'amandinebeyer',
-        'andreadevitis',
-        'anneleenlenaerts',
-        'bellahristova',
-        'chiaramassini',
-        'christiantetzlaff',
-        'moi',
-        'florentinginot',
-        'genzohtakehisa',
-        'hilaryhahn',
-        'isabellefaust',
-        'juliafischer', 
-        'lisajacobs',
-        'lizaferschtman',
-        'martafemenia',
-        'martinbaker',
-        'michaelleontchik',
-        'midorigoto',
-        'miguelrincon',
-        'mikastoltzman',
-        'moranwasser',
-        'petrapolackova',
-        'polinaosetinskaya',
-        'rachellellenwong',
-        'rachelpodger',
-        'raphaellasmits',
-        'sigiswaldkuijken',
-        'veronikaeberle',
-        'veroniquederaedemaeker',
-        'virginierobilliard',
-        'vonhansen',
-        'yunpark',
+        // 'andreadevitis',
+        // 'anneleenlenaerts',
+        // 'bellahristova',
+        // 'chiaramassini',
+        // 'christiantetzlaff',
+        // 'moi',
+        // 'florentinginot',
+        // 'genzohtakehisa',
+        // 'hilaryhahn',
+        // 'isabellefaust',
+        // 'juliafischer', 
+        // 'lisajacobs',
+        // 'lizaferschtman',
+        // 'martafemenia',
+        // 'martinbaker',
+        // 'michaelleontchik',
+        // 'midorigoto',
+        // 'miguelrincon',
+        // 'mikastoltzman',
+        // 'moranwasser',
+        // 'petrapolackova',
+        // 'polinaosetinskaya',
+        // 'rachellellenwong',
+        // 'rachelpodger',
+        // 'raphaellasmits',
+        // 'sigiswaldkuijken',
+        // 'veronikaeberle',
+        // 'veroniquederaedemaeker',
+        // 'virginierobilliard',
+        // 'vonhansen',
+        // 'yunpark',
     ]
 
     const cookies = [{
@@ -79,7 +79,6 @@ const puppeteer = require('puppeteer');
             // Open URL in current page  
             await page.goto(website_url, { waitUntil: 'networkidle0' });
 
-            /*
             let i = 0
             let intervalObj
             const promiseVariations = new Promise(async (resolveVariation, rejectVariation) => {
@@ -110,7 +109,7 @@ const puppeteer = require('puppeteer');
                             // Dispose of handle
                             await element.dispose();
 
-                            if (34 <= i) {
+                            if (1 <= i) {
                                 console.log('resolving promiseVariations')
                                 console.log('clearInterval')
                                 clearInterval(intervalObj);
@@ -130,7 +129,6 @@ const puppeteer = require('puppeteer');
                 console.log(error)
                 throw error
             })
-            */
             console.log('now we should go to next performer, or no ?', p)
         }
         console.log('finito with performers. resolving promisePerformers')
