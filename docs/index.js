@@ -2,7 +2,7 @@ import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+es
 import config from "/js/config.js?v=0.8.25"
 import codec from "/js/structure.js?v=0.8.25"
 import createColoredBadges from "/js/colors.js?v=0.8.25"
-import createTimings from "/js/timings.js?v=0.8.25"
+import createTimings from "/js/timings.js?v=0.8.25.1"
 import resizeSVGs from "/js/resizeSVGs.js?v=0.8.25"
 import createPlayer from "/js/player.js?v=0.8.25"
 import Ω from "/js/jquery.js?v=0.8.25"
