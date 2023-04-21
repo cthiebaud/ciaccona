@@ -59,7 +59,7 @@ function loadArtists() {
         const artistsRequest = new Request(urlArtistsYAML);
         const artists = new Artists()
 
-        fetch(artistsRequest).then((response) => {
+        fetch(artistsRequest, {cache: "no-store"}).then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error fetching ${urlArtistsYAML}! Status: ${response.status}`);
             }
