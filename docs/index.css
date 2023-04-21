@@ -127,9 +127,9 @@ a {
   background-image: none !important;
 }
 
-#gridContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
+/* #gridContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
   background-color: rgba(192, 192, 192, 0.4) !important;
-}
+} */
 
 #gridContainerCol #grid .grid-brick:not(.gbPlaying) {
   border-color: transparent !important;

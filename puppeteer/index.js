@@ -9,12 +9,43 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage();
 
     // Set viewport width and height
-    await page.setViewport({ width: 1200, height: 628 });
+    await page.setViewport({ width: 1280, height: 628 });
 
-    const performer = 'miguelrincon'
-
-    fs.rmSync(`./performers/${performer}`, {force: true, recursive: true});
-    fs.mkdirSync(`performers/${performer}`);
+    const performers = [
+       // /* 'adolfbusch',
+       // 'amandinebeyer', */
+       // 'andreadevitis',
+       // 'anneleenlenaerts',
+       // 'bellahristova',
+       // 'chiaramassini',
+       // /*'christiantetzlaff', */
+       // 'moi',
+        'florentinginot',
+        'genzohtakehisa',
+        /*'hilaryhahn',
+        'isabellefaust',
+        'juliafischer', */
+        'lisajacobs',
+        'lizaferschtman',
+        'martafemenia',
+        'martinbaker',
+        'michaelleontchik',
+        'midorigoto',
+        'miguelrincon',
+        'mikastoltzman',
+        'moranwasser',
+        'petrapolackova',
+        'polinaosetinskaya',
+        'rachellellenwong',
+        /*'rachelpodger', */
+        'raphaellasmits',
+        'sigiswaldkuijken',
+        'veronikaeberle',
+        'veroniquederaedemaeker',
+        'virginierobilliard',
+        'vonhansen',
+        'yunpark',
+    ]
 
     const cookies = [{
         name: 'scoreDisplay',
@@ -30,56 +61,87 @@ const puppeteer = require('puppeteer');
 
     console.log('cookies done!')
 
-    const website_url = `http://localhost:1010/video/${performer}.html`;
+    const promisePerformers = new Promise(async resolvePerformers => {
 
-    console.log(website_url)
+        for (let p = 0; p < performers.length; p++) {
+            const performer = performers[p]
 
-    // Open URL in current page  
-    await page.goto(website_url, { waitUntil: 'networkidle0' });
+            console.log(performer)
 
-    let i = 0
-    let intervalObj
-    const promise = new Promise(resolve => {
+            fs.rmSync(`./performers/${performer}`, { force: true, recursive: true });
+            fs.mkdirSync(`performers/${performer}`);
 
-        async function myFunc(performer) {
-            const variation = i.toString()
-            i++
-            // Query for an element handle.
-            const element = await page.waitForSelector(`#gb${variation} > div > div.score`);
+            const website_url = `http://localhost:1010/video/${performer}.html`;
 
-            console.log(`seeking to variation ${variation}`)
+            console.log(website_url)
 
-            // Do something with element...
-            await element.click();
+            // Open URL in current page  
+            await page.goto(website_url, { waitUntil: 'networkidle0' });
 
-            const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
-            for (let qwe of playerControls) {
-                //hover on each element handle
-                await qwe.hover();
-                setTimeout(async () => {
-                    // Capture screenshot
-                    const path = `performers/${performer}/${performer}-${variation}.jpg`
-                    console.log(`saving screenshot to ${path}`)
-                    await page.screenshot({
-                        path: path
-                    });
+            let i = 0
+            let intervalObj
+            const promiseVariations = new Promise(async (resolveVariation, rejectVariation) => {
 
-                    // Dispose of handle
-                    await element.dispose();
+                async function myFunc(performer) {
+                    const variation = i.toString()
+                    i++
+                    // Query for an element handle.
+                    const element = await page.waitForSelector(`#gb${variation} > div > div.score`);
 
-                    if (34 <= i) {
-                        resolve()
+                    console.log(`seeking to variation ${variation}`)
+
+                    // Do something with element...
+                    await element.click();
+
+                    const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
+                    for (let qwe of playerControls) {
+                        //hover on each element handle
+                        await qwe.hover();
+                        setTimeout(async () => {
+                            // Capture screenshot
+                            const path = `performers/${performer}/${performer}-${variation}.jpg`
+                            console.log(`saving screenshot to ${path}`)
+                            await page.screenshot({
+                                path: path
+                            });
+
+                            // Dispose of handle
+                            await element.dispose();
+
+                            if (34 <= i) {
+                                console.log('resolving promiseVariations')
+                                console.log('clearInterval')
+                                clearInterval(intervalObj);
+                                resolveVariation()
+                            }
+                        }, 1500, performer, variation)
+                        break;
                     }
-                }, 1500, performer, variation)
-                break;
-            }
-        }
-        intervalObj = setInterval(myFunc, 2000, performer)
-    });
+                }
+                console.log('setinterval')
+                intervalObj = setInterval(myFunc, 2000, performer)
+            });
 
-    promise.then(async () => {
-        clearInterval(intervalObj);
+            await promiseVariations.then(async (result) => {
+                console.log('promiseVariations then', p)
+                return result
+            }).catch(error => {
+                console.log(error)
+                throw error
+            })
+            console.log('now we should go to next performer, or no ?', p)
+        }
+        console.log('finito with performers. resolving promisePerformers')
+        resolvePerformers()
+    })
+
+    await promisePerformers.then(async (result) => {
+        console.log('promisePerformers then')
         await browser.close()
+        return result
+    }).catch(error => {
+        console.log(error)
+        throw error
     })
 
 })();
