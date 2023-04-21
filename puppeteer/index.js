@@ -71,8 +71,8 @@ const puppeteer = require('puppeteer');
             fs.rmSync(`./performers/${performer}`, { force: true, recursive: true });
             fs.mkdirSync(`performers/${performer}`);
 
-            // const website_url = `http://localhost:1010/video/${performer}.html`;
-            const website_url = `https://api.countapi.xyz/create?namespace=ciaccona.cthiebaud.com&enable_reset=1&key=${performer}`
+            const website_url = `http://localhost:1010/video/${performer}.html`;
+            // const website_url = `https://api.countapi.xyz/create?namespace=ciaccona.cthiebaud.com&enable_reset=1&key=${performer}`
 
             console.log(website_url)
 
