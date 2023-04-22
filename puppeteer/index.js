@@ -72,7 +72,7 @@ const puppeteer = require('puppeteer');
 
     const promisePerformers = new Promise(async resolvePerformers => {
 
-        for (let p = 0; p < 1/*(performers.length)*/; p++) {
+        for (let p = 0; p < performers.length; p++) {
             const performer = performers[p]
 
             console.log(performer)
@@ -121,12 +121,12 @@ const puppeteer = require('puppeteer');
                         for(var i=0; i< elements.length; i++){
                             elements[i].style.visibility = 'hidden'
                         }
-                    }, '#videos-menu, #config-menu, #gridContainerCol, .plyr__controls')
+                    }, '#videos-menu, #config-menu, #gridContainerCol')
 
                     const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
                     for (let playerControl of playerControls) {
                         //hover on each element handle
-                        // await playerControl.hover();
+                        await playerControl.hover();
                         setTimeout(async () => {
                             // Capture screenshot
                             const path = `artists/${performer}/${performer}-${variation}.jpg`
