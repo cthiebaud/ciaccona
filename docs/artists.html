@@ -142,6 +142,10 @@
             aspect-ratio: 1.91 / 1;
         }
 
+        .handle {
+            cursor: grab;
+        }
+
         .large {
             width: var(--2gbw, 100%) !important;
         }
@@ -213,7 +217,7 @@
                     grid.innerHTML += `
 <div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" style="background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, v)}">
     <!-- div>${a.fullname}</!-->
-    <div class="num" style="float:right"></div>
+    <div class="handle" style="float:right"></div>
 </div>`
                     v++
                 })
@@ -232,7 +236,9 @@
                 })
                 // make all grid-items draggable
                 $grid.find('.grid-artist').each(function (i, gridItem) {
-                    var draggie = new Draggabilly(gridItem);
+                    var draggie = new Draggabilly(gridItem, {
+                        handle: '.handle'
+                    });
                     // bind drag events to Packery
                     $grid.packery('bindDraggabillyEvents', draggie);
                 });
@@ -240,7 +246,7 @@
                     var itemElems = $grid.packery('getItemElements');
                     $(itemElems).each(function (i, itemElem) {
                         // console.log(i, itemElem)
-                        $(itemElem).css({ 'background-image': bg(itemElem.dataset.a, i) }).find('.num').text(i)
+                        $(itemElem).css({ 'background-image': bg(itemElem.dataset.a, i) }).find('.handle').text(i)
                     });
                 }
                 orderItems()
