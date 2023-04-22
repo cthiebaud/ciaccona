@@ -77,8 +77,8 @@ const puppeteer = require('puppeteer');
 
             console.log(performer)
 
-            fs.rmSync(`./performers/${performer}`, { force: true, recursive: true });
-            fs.mkdirSync(`performers/${performer}`);
+            fs.rmSync(`./artists/${performer}`, { force: true, recursive: true });
+            fs.mkdirSync(`artists/${performer}`);
 
             const website_url = `http://localhost:1010/video/${performer}.html`;
             // const website_url = `https://api.countapi.xyz/create?namespace=ciaccona.cthiebaud.com&enable_reset=1&key=${performer}`
@@ -95,6 +95,15 @@ const puppeteer = require('puppeteer');
                 async function myFunc(performer) {
                     const variation = i.toString()
                     i++
+
+                    // https://stackoverflow.com/a/50869650/1070215
+                    await page.evaluate((sel) => {
+                        var elements = document.querySelectorAll(sel);
+                        for(var i=0; i< elements.length; i++){
+                            elements[i].style.visibility = 'visible'
+                        }
+                    }, '#gridContainerCol')
+
                     // Query for an element handle.
                     const element = await page.waitForSelector(`#gb${variation} > div > div.score`);
 
@@ -102,20 +111,25 @@ const puppeteer = require('puppeteer');
 
                     let max = 34;
                     // Do something with element...
-                    if (!novid.includes(performer)) {
-                        await element.click();
-                    } else {
+                    /* if (!novid.includes(performer)) { */
+                    await element.click();
+                    /* } else {
                         max = 1
-                    }
-
+                    } */
+                    await page.evaluate((sel) => {
+                        var elements = document.querySelectorAll(sel);
+                        for(var i=0; i< elements.length; i++){
+                            elements[i].style.visibility = 'hidden'
+                        }
+                    }, '#videos-menu, #config-menu, #gridContainerCol, .plyr__controls')
 
                     const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
-                    for (let qwe of playerControls) {
+                    for (let playerControl of playerControls) {
                         //hover on each element handle
-                        await qwe.hover();
+                        // await playerControl.hover();
                         setTimeout(async () => {
                             // Capture screenshot
-                            const path = `performers/${performer}/${performer}-${variation}.jpg`
+                            const path = `artists/${performer}/${performer}-${variation}.jpg`
                             console.log(`saving screenshot to ${path}`)
                             await page.screenshot({
                                 path: path
@@ -130,7 +144,7 @@ const puppeteer = require('puppeteer');
                                 clearInterval(intervalObj);
                                 resolveVariation()
                             }
-                        }, 1500, performer, variation)
+                        }, 1000, performer, variation)
                         break;
                     }
                 }

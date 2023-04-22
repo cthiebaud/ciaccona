@@ -166,28 +166,15 @@
 
     <script type="module">
         import config from "/js/config.js?v=0.9.1"
+        import count from "/js/count.js?v=0.9.1"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
             config.playing = undefined
             // config.startBarOfLastSelectedVariation = undefined
         }
-        const url = new URL(window.location)
-        let action = 'get'
-        if (config.incognito) {
-            action = 'get'
-        } else if (test === 'true' || url.hostname !== 'localhost') {
-            action = 'hit'
-        }
-        const countAPIurl = `https://api.countapi.xyz/${action}/ciaccona.cthiebaud.com/${fullameNoSpaceLowercaseNoDiacritics || "home"}`
-        fetch(countAPIurl).then(response => {
-            return response.json()
-        }).then(json => {
-            console.log(countAPIurl, json)
-            config.views = json.value
-            const zxc = document.getElementById('views')
-            if (zxc) zxc.innerHTML = config.views
-        })
+
+        count(fullameNoSpaceLowercaseNoDiacritics || 'home', 'views', test)
     </script>
 
     <!-- google font -->

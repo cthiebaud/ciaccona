@@ -25,7 +25,11 @@ class Artist {
 
         if (true) { // calc viewsPerMonth ?
             vid.publishedMoment = moment(vid.published)
-            vid.duration = theDayWhenIReadTheVideoMeters.diff(vid.publishedMoment)
+            let collected = theDayWhenIReadTheVideoMeters
+            if (vid.collected) {
+                collected = moment(vid.collected)
+            }
+            vid.duration = collected.diff(vid.publishedMoment)
             vid.durationMoment = moment.duration(vid.duration)
             vid.viewsPerMonth = Math.floor(vid.views / vid.durationMoment.asMonths())
         }
