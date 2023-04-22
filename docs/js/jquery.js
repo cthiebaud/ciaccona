@@ -141,6 +141,10 @@ const Ω = {
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
+        $("#gb-ciaccona .magnificent-card").on("click", function (e) {
+            window.location = '/artists.html'
+        })
+
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((e) => {
             const nameNoSpaceLowercaseNoDiacritics = e.dataset.nameNoSpaceLowercaseNoDiacritics
             if (nameNoSpaceLowercaseNoDiacritics === '') {

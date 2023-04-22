@@ -139,11 +139,19 @@
             visibility: inherit;
             width: var(--gbw, 100%);
             /* height: 12rem; */
-            aspect-ratio: 1.91 / 1;
+            aspect-ratio: 1.9 / 1;
+            padding: 0;
+            margin: 0;
         }
 
         .handle {
             cursor: grab;
+            font-size: 12pt;
+            font-family: var(--bs-font-monospace) !important;
+            background-color: black;
+            border-radius: 0 2rem 0 0;
+            /* border : white solid 1px; */
+            padding: .6rem 1rem 0 0;
         }
 
         .large {
@@ -202,28 +210,32 @@
             let v = 0
             if (coerce) {
                 for (let v = 0; v < 34; v++) {
+                    console.log(coerce, v)
                     grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${coerce}" style="background-image: url('artists/${coerce}/${coerce}-${v}.jpg')">
+<div class="grid-artist draggable" data-a="${coerce}" style="background-image: ${bg(coerce, v)}">
   <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerce).fullname}</!-->
+  <div class="handle" style="float:right"></div>
 </div>`
                 }
             } else {
                 const qwe = shuffleArray(artists.artists)
                 qwe.forEach(a => {
+                    console.log(a)
                     /* if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
                         return
                     } */
                     // console.log(a)
                     grid.innerHTML += `
 <div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" style="background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, v)}">
-    <!-- div>${a.fullname}</!-->
     <div class="handle" style="float:right"></div>
+    <div style="visibility:hidden">${a.fullname}</div>
 </div>`
                     v++
                 })
             }
             grid.innerHTML += `
 <div class="grid-artist draggable" >
+    <div class="handle" style="float:right"></div>
 </div>`
             setTimeout(() => {
 
@@ -246,7 +258,11 @@
                     var itemElems = $grid.packery('getItemElements');
                     $(itemElems).each(function (i, itemElem) {
                         // console.log(i, itemElem)
-                        $(itemElem).css({ 'background-image': bg(itemElem.dataset.a, i) }).find('.handle').text(i)
+                        if (itemElem.dataset.a) {
+                            $(itemElem).css({ 'background-image': bg(itemElem.dataset.a, i) }).find('.handle').text(i)
+                        } else {
+                            $(itemElem).find('.handle').text(i)
+                        }
                     });
                 }
                 orderItems()
