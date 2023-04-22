@@ -4,7 +4,7 @@ body {
   height: 100vh;
   /* custom properties */
   height: calc(var(--vh, 1vh) * 100);
-  background-color: black;
+  background-color: black !important;
   overscroll-behavior: none;
 }
 
