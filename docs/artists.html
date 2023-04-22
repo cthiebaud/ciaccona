@@ -102,14 +102,19 @@
         // brick width
         function calcBrickWidth() {
             const containerWidth = document.getElementById('grid').getBoundingClientRect().width
-            const gutter_size = containerWidth / 50;
+            const gutter_size = containerWidth / 80;
             const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
             const gridBricksWidth = (containerWidth - (gridBricksPerRow - 1) * gutter_size) / gridBricksPerRow
-            const gridBricksDoubleWidth = 2 * gridBricksWidth + gutter_size - 1
+            const gridBricksDoubleWidth = 2 * gridBricksWidth + gutter_size - .1
             const gridBrickPercentageWidth = 100 * gridBricksWidth / containerWidth
             const gridBrickDoublPercentageWidth = 100 * gridBricksDoubleWidth / containerWidth
+            const gridBricksHeight = gridBricksWidth / 1.91;
+            const gridBricksDoubleHeight = gridBricksHeight * 2 + gutter_size - .1
+
             document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
+            document.documentElement.style.setProperty('--gbh', `${gridBricksHeight}px`)
             document.documentElement.style.setProperty('--2gbw', `${gridBrickDoublPercentageWidth}%`)
+            document.documentElement.style.setProperty('--2gbh', `${gridBricksDoubleHeight}px`)
         }
 
         window.addEventListener("DOMContentLoaded", (event) => {
@@ -125,7 +130,7 @@
     <style>
         #gridContainerCol #grid .grid-artist {
             align-items: flex-end;
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
             transition: background-image 0.5s linear;
@@ -138,10 +143,10 @@
             text-align: center;
             visibility: inherit;
             width: var(--gbw, 100%);
-            /* height: 12rem; */
-            aspect-ratio: 1.9 / 1;
+            height: var(--gbh, 12rem);
             padding: 0;
             margin: 0;
+            border: 1px #494F55 solid;
         }
 
         .handle {
@@ -150,16 +155,16 @@
             font-family: var(--bs-font-monospace) !important;
             background-color: black;
             border-radius: 0 2rem 0 0;
-            /* border : white solid 1px; */
-            padding: .6rem 1rem 0 0;
+            padding: .4rem .6rem 0 .3rem;
         }
 
         .large {
-            width: var(--2gbw, 100%) !important;
+            width: var(--2gbw, 200%) !important;
+            height: var(--2gbh, 24rem) !important;
         }
 
         .gutter-sizer {
-            width: 2%;
+            width: 1.25%;
         }
     </style>
 
@@ -214,20 +219,23 @@
                     grid.innerHTML += `
 <div class="grid-artist draggable" data-a="${coerce}" style="background-image: ${bg(coerce, v)}">
   <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerce).fullname}</!-->
-  <div class="handle" style="float:right"></div>
+  <div class="handle"></div>
 </div>`
                 }
             } else {
                 const qwe = shuffleArray(artists.artists)
                 qwe.forEach(a => {
                     console.log(a)
-                    /* if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
-                        return
-                    } */
+                    let bgFull
+                    if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
+                        bgFull = `background-color: #28282b;`
+                    } else {
+                        bgFull = `background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, v)};`
+                    }
                     // console.log(a)
                     grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" style="background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, v)}">
-    <div class="handle" style="float:right"></div>
+<div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" style="${bgFull}">
+    <div class="handle"></div>
     <div style="visibility:hidden">${a.fullname}</div>
 </div>`
                     v++
@@ -259,7 +267,14 @@
                     $(itemElems).each(function (i, itemElem) {
                         // console.log(i, itemElem)
                         if (itemElem.dataset.a) {
-                            $(itemElem).css({ 'background-image': bg(itemElem.dataset.a, i) }).find('.handle').text(i)
+                            let bgFull
+                            const a = itemElem.dataset.a
+                            if (a === 'moi') {
+                                bgFull = { 'background-color': '#28282b'}
+                            } else {
+                                bgFull = { 'background-image': bg(itemElem.dataset.a, i) }
+                            }
+                            $(itemElem).css(bgFull).find('.handle').text(i)
                         } else {
                             $(itemElem).find('.handle').text(i)
                         }
@@ -279,23 +294,37 @@
                 })
 
                 $grid.packery()
+
+                // https://codepen.io/desandro/pen/WxjJJW/
                 $grid.on('click', '.grid-artist', function (event) {
-                    // change size of item by toggling large class
-                    const hadClass = $(event.currentTarget).hasClass('large')
+                    var target = event.target;
+                    var $target = $(target);
+                    var wasLarge = $target.hasClass('large');
                     $('.grid-artist').removeClass('large')
-                    if (!hadClass) {
-                        $(event.currentTarget).toggleClass('large');
+                    if (!wasLarge) {
+                        $target.toggleClass('large');
                     }
-                    const hasClass = $(event.currentTarget).hasClass('large')
-                    // trigger layout after item size changes
-                    if (hasClass) {
-                        // fit large item
-                        $grid.packery('fit', event.currentTarget);
+                    var isLarge = $target.hasClass('large');
+                    var item = $grid.packery('getItem', target)
+                    if (isLarge) {
+                        // save previous position
+                        item.previousPosition = {
+                            x: item.position.x,
+                            y: item.position.y
+                        };
+                        $grid.packery('fit', target);
                     } else {
-                        // back to small, shiftLayout back
-                        $grid.packery('shiftLayout');
+                        if (item.previousPosition) {
+                            // fit back in previous position
+                            $grid.packery('fit', target, item.previousPosition.x, item.previousPosition.y);
+                            // remove previous position
+                            delete item.previousPosition;
+                        } else {
+                            $grid.packery('shiftLayout');
+                        }
                     }
                 });
+
 
             })
         }, 1000)
