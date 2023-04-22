@@ -72,7 +72,7 @@ const puppeteer = require('puppeteer');
 
     const promisePerformers = new Promise(async resolvePerformers => {
 
-        for (let p = 0; p < performers.length; p++) {
+        for (let p = 0; p < 1/*(performers.length)*/; p++) {
             const performer = performers[p]
 
             console.log(performer)
