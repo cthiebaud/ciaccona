@@ -105,11 +105,11 @@
             const gutter_size = containerWidth / 80;
             const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
             const gridBricksWidth = (containerWidth - (gridBricksPerRow - 1) * gutter_size) / gridBricksPerRow
-            const gridBricksDoubleWidth = 2 * gridBricksWidth + gutter_size - .1
+            const gridBricksDoubleWidth = 2 * gridBricksWidth + gutter_size - .2
             const gridBrickPercentageWidth = 100 * gridBricksWidth / containerWidth
             const gridBrickDoublPercentageWidth = 100 * gridBricksDoubleWidth / containerWidth
             const gridBricksHeight = gridBricksWidth / 1.91;
-            const gridBricksDoubleHeight = gridBricksHeight * 2 + gutter_size - .1
+            const gridBricksDoubleHeight = gridBricksHeight * 2 + gutter_size - .2
 
             document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
             document.documentElement.style.setProperty('--gbh', `${gridBricksHeight}px`)
