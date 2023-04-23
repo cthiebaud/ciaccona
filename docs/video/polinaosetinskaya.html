@@ -1,15 +1,19 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <script type="module">
+        import config from "/js/config.js?v=0.9.2"
 
-        gtag('config', 'G-DJBNRY1Z9M');
+        if (!config.incognito) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-DJBNRY1Z9M');
+        }
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -18,7 +22,8 @@
 
     <!-- HTML Meta Tags -->
     <title>Ciaccona - Polina Osetinskaya</title>
-    <meta name="description" content="Polina Osetinskaya performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with 32+ other performers.">
+    <meta name="description"
+        content="Polina Osetinskaya performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with 32+ other performers.">
 
     <!-- Facebook Meta Tags -->
     <meta property="fb:app_id" content="176898451849553">
@@ -27,7 +32,8 @@
     <meta property="og:url" content="https://ciaccona.cthiebaud/video/polinaosetinskaya.html">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Ciaccona - Polina Osetinskaya">
-    <meta property="og:description" content="Polina Osetinskaya performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with 32+ other performers.">
+    <meta property="og:description"
+        content="Polina Osetinskaya performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with 32+ other performers.">
     <meta property="og:image" content="https://ciaccona.cthiebaud.com/screenshots/polinaosetinskaya.jpg">
     <meta property="og:image:url" content="https://ciaccona.cthiebaud.com/screenshots/polinaosetinskaya.jpg">
     <meta property="og:image:type" content="image/jpeg">
@@ -40,11 +46,12 @@
     <meta property="twitter:domain" content="ciaccona.cthiebaud.com">
     <meta property="twitter:url" content="https://ciaccona.cthiebaud/video/polinaosetinskaya.html">
     <meta name="twitter:title" content="Ciaccona - Polina Osetinskaya">
-    <meta name="twitter:description" content="Polina Osetinskaya performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with 32+ other performers.">
+    <meta name="twitter:description"
+        content="Polina Osetinskaya performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with 32+ other performers.">
     <meta name="twitter:image" content="https://ciaccona.cthiebaud.com/screenshots/polinaosetinskaya.jpg">
     <script>
         window.location.href = "/?a=polinaosetinskaya"
     </script>
 </head>
+
 </html>
-    

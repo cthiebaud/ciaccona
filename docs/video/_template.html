@@ -16,6 +16,8 @@
     <!-- Google tag (gtag.js) -->
     <scr{{!}}ipt async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></scr{{!}}ipt>
     <scr{{!}}ipt type="module">
+        import config from "/js/config.js?v=0.9.2"
+
         if (!config.incognito) {
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
