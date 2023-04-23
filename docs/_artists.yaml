@@ -9,6 +9,7 @@
     length: 13′48″
     pitch: 295.4
     a4: 443
+    still: true
 - firstname: Amandine
   lastname: Beyer
   insta: amandinebeyer
@@ -23,6 +24,7 @@
     length: 12′51″
     pitch: 274.7
     a4: 412
+    still: true
   others:
     - "https://youtu.be/mg9kT7XiLoU"
     - "https://youtu.be/6m0d3WtdJ3Q"
@@ -94,6 +96,7 @@
     length: 14′07″
     pitch: 292.3
     a4: 438
+    still: true
   🕸: "https://www.christian-tetzlaff.de/"
 - firstname: Florentin
   lastname: Ginot
@@ -145,6 +148,7 @@
     length: 17′50″
     pitch: 293.7
     a4: 440
+    still: true
 - firstname: Isabelle
   lastname: Faust
   twitter: ImpSim
@@ -158,6 +162,7 @@
     length: 12′28″
     pitch: 292.8
     a4: 439
+    still: true
   🕸: "https://www.impresariat-simmenauer.de/en/artist/isabelle-faust/"
 - firstname: Julia
   lastname: Fischer
@@ -170,6 +175,7 @@
     length: 15′41″
     pitch: 296.6
     a4: 444
+    still: true
   🕸: "https://www.juliafischer.com/"
 - firstname: Lisa
   lastname: Jacobs
@@ -331,6 +337,7 @@
     length: 13′29″
     pitch: 276.8
     a4: 415
+    still: true
   🕸: "https://www.rachelpodger.com/"
 - firstname: Rachell Ellen
   lastname: Wong
