@@ -1,4 +1,4 @@
-import config from "/js/config.js?v=0.9.3"
+import config from "/js/config.js?v=0.9.4"
 
 // https://countapi.xyz/
 // https://medium.com/@mignunez/how-to-count-the-number-of-visits-on-your-website-with-html-css-javascript-and-the-count-api-2f99b42b5990
