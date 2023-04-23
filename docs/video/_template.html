@@ -15,12 +15,14 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <scr{{!}}ipt async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></scr{{!}}ipt>
-    <scr{{!}}ipt>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <scr{{!}}ipt type="module">
+        if (!config.incognito) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
 
-        gtag('config', 'G-DJBNRY1Z9M');
+            gtag('config', 'G-DJBNRY1Z9M');
+        }
     </scr{{!}}ipt>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -99,9 +101,11 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
             const sorted = artists.artists/* .sort((a, b) => b['▶'].viewsPerMonth - a['▶'].viewsPerMonth) */
             const instances = []
             sorted.forEach((artist) => {
+                /*
                 if (artist.fullnameNoSpaceLowercaseNoDiacritics !== 'jeannelamon') {
                     return
                 }
+                */
                 /*
                 const instantiated = template({
                     fullname: artist.fullname, 
@@ -131,16 +135,17 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
                 /*     
                 */
                 setTimeout(() => {
-                    var blob = new Blob([results], { type: "text/plain;charset=utf-8" });
-                    saveAs(blob, `_${key}.html`);
-                    console.log('saved', key)
+                    const blob = new Blob([results], { type: "text/plain;charset=utf-8" });
+                    const path = `_${key}.html`
+                    saveAs(blob, path);
+                    console.log('saved', key, 'to', path)
                 }, 300 * i++)
                 // throw BreakException;
-            })
+            }) /*
             var blob = new Blob(instances, { type: "text/plain;charset=utf-8" });
             // saveAs(blob, `_twitter.txt`);
             console.log('saved _twitter.txt')
-
+            */
         })
     </script>
 </head>
