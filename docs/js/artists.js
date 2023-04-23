@@ -1,7 +1,7 @@
 import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
 import lodashMerge from 'https://cdn.jsdelivr.net/npm/lodash.merge@4.6.2/+esm'
 
-const theDayWhenIReadTheVideoMeters = moment('2023-04-08T00:00:00Z')
+const theDayWhenIReadTheVideoMeters = moment('2023-04-23T00:00:00Z')
 
 class Artist {
     constructor(a) {
@@ -85,4 +85,4 @@ function loadArtists() {
     })
 }
 
-export { loadArtists }
+export { loadArtists, theDayWhenIReadTheVideoMeters}

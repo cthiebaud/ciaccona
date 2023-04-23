@@ -170,7 +170,7 @@
             <button id="go-back" type="button" class="btn btn-light m-0 p-0" style="float:right"><img src="svg/close-circle-svgrepo-com.svg"
                     style="width:32px;height:auto;"></button>
             <h1>Performers</h1>
-            <p>Views meters were read on 8 April 2023. Pitch detection is approximate.</p>
+            <p>Views meters were read on <span id="collected"></span>. Pitch detection is approximate.</p>
         </header>
         <div id="perfContainerRow" class="row" style="">
             <div id="perfContainerCol" class="col">
@@ -251,12 +251,15 @@
 
 
     <script async type="module">
-        import { loadArtists } from "/js/artists.js?v=0.9.1"
+        import { loadArtists, theDayWhenIReadTheVideoMeters } from "/js/artists.js?v=0.9.1"
         import countapi from 'https://cdn.jsdelivr.net/npm/countapi-js@1.0.2/+esm'
 
         document.getElementById("go-back").addEventListener("click", () => {
             history.back();
         });
+
+        document.getElementById("collected").innerHTML = theDayWhenIReadTheVideoMeters.format("D MMMM YYYY")
+
 
         const ff = new Intl.NumberFormat()
 
