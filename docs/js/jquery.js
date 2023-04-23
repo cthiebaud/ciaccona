@@ -1,7 +1,7 @@
 import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
-import config from "/js/config.js?v=0.9.2"
-import codec from "/js/structure.js?v=0.9.2"
-import { shuffleArray } from "/js/utils.js?v=0.9.2"
+import config from "/js/config.js?v=0.9.3"
+import codec from "/js/structure.js?v=0.9.3"
+import { shuffleArray } from "/js/utils.js?v=0.9.3"
 
 const $ = jquery
 
