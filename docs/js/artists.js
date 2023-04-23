@@ -7,7 +7,8 @@ class Artist {
     constructor(a) {
         lodashMerge(this, a)
 
-        this.fullname = `${a.firstname} ${a.lastname}`
+        // https://stackoverflow.com/a/32906951/1070215
+        this.fullname = [a.firstname, a.lastname].filter(Boolean).join(' ');
         this.fullnameNoSpace = this.fullname.replace(/\s/gi, '')
         this.fullnameNoSpaceLowercaseNoDiacritics = this.fullnameNoSpace.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '') // https://stackoverflow.com/a/37511463/1070215
 
