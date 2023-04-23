@@ -4,12 +4,16 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <script type="module">
+        import config from "/js/config.js?v=0.9.4"
 
-        gtag('config', 'G-DJBNRY1Z9M');
+        if (!config.incognito) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-DJBNRY1Z9M');
+        }
     </script>
     <meta charset="utf-8">
     <!-- meta name="viewport" content="width=device-width, initial-scale=1" -->
@@ -18,7 +22,7 @@
     <meta name="author" content="Christophe Thiebaud">
 
     <!-- HTML Meta Tags -->
-    <title>Ciaccona Credits</title>
+    <title>Ciaccona - Credits</title>
     <meta name="description" content="Performers of Ciaccona from Johann Sebastian Bach's Partita in D minor for solo violin (#BWV1004)">
 
     <!-- https://realfavicongenerator.net/ -->
