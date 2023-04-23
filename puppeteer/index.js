@@ -168,7 +168,7 @@ const puppeteer = require('puppeteer');
                 console.log(error)
                 throw error
             })
-            */
+            
             console.log('now we should go to next performer, or no ?', p)
         }
         console.log('finito with performers. resolving promisePerformers')
