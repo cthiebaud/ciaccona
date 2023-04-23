@@ -21,39 +21,40 @@ const puppeteer = require('puppeteer');
         'rachelpodger',
     ]
     const performers = [
-        'adolfbusch',
-        'amandinebeyer',
-        'andreadevitis',
-        'anneleenlenaerts',
-        'bellahristova',
-        'chiaramassini',
-        'christiantetzlaff',
-        'moi',
-        'florentinginot',
-        'genzohtakehisa',
-        'hilaryhahn',
-        'isabellefaust',
-        'juliafischer',
-        'lisajacobs',
-        'lizaferschtman',
-        'martafemenia',
-        'martinbaker',
-        'michaelleontchik',
-        'midorigoto',
-        'miguelrincon',
-        'mikastoltzman',
-        'moranwasser',
-        'petrapolackova',
-        'polinaosetinskaya',
-        'rachellellenwong',
-        'rachelpodger',
-        'raphaellasmits',
-        'sigiswaldkuijken',
-        'veronikaeberle',
-        'veroniquederaedemaeker',
-        'virginierobilliard',
-        'vonhansen',
-        'yunpark',
+        // 'adolfbusch',
+        // 'amandinebeyer',
+        // 'andreadevitis',
+        // 'anneleenlenaerts',
+        // 'bellahristova',
+        // 'chiaramassini',
+        // 'christiantetzlaff',
+        // 'moi',
+        // 'florentinginot',
+        // 'genzohtakehisa',
+        // 'hilaryhahn',
+        // 'isabellefaust',
+        'jeannelamon',
+        // 'juliafischer',
+        // 'lisajacobs',
+        // 'lizaferschtman',
+        // 'martafemenia',
+        // 'martinbaker',
+        // 'michaelleontchik',
+        // 'midorigoto',
+        // 'miguelrincon',
+        // 'mikastoltzman',
+        // 'moranwasser',
+        // 'petrapolackova',
+        // 'polinaosetinskaya',
+        // 'rachellellenwong',
+        // 'rachelpodger',
+        // 'raphaellasmits',
+        // 'sigiswaldkuijken',
+        // 'veronikaeberle',
+        // 'veroniquederaedemaeker',
+        // 'virginierobilliard',
+        // 'vonhansen',
+        // 'yunpark',
     ]
 
     const cookies = [{
@@ -132,11 +133,10 @@ const puppeteer = require('puppeteer');
                             elements[i].style.visibility = 'hidden'
                         }
                     }, '#videos-menu, #config-menu, #gridContainerCol')
-
                     const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
                     for (let playerControl of playerControls) {
                         //hover on each element handle
-                        await playerControl.hover();
+                        // await playerControl.hover();
                         setTimeout(async () => {
                             // Capture screenshot
                             const path = `artists/${performer}/${performer}-${variation}.jpg`

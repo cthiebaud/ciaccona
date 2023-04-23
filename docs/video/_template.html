@@ -91,7 +91,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
 
         loadArtists().then((artists) => {
 
-            const source = document.getElementById("youtube-template").innerHTML;
+            const source = document.getElementById("head-template").innerHTML;
             const template = Handlebars.compile(source);
             const BreakException = {};
             const count = artists.size() - 1
@@ -99,6 +99,10 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
             const sorted = artists.artists/* .sort((a, b) => b['▶'].viewsPerMonth - a['▶'].viewsPerMonth) */
             const instances = []
             sorted.forEach((artist) => {
+                if (artist.fullnameNoSpaceLowercaseNoDiacritics !== 'jeannelamon') {
+                    return
+                }
+                /*
                 const instantiated = template({
                     fullname: artist.fullname, 
                     hashtag: `#${artist.fullnameNoSpace}`, 
@@ -108,7 +112,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
                 },)
                 instances.push(instantiated)
                 console.log(instantiated)
-
+                */
                 // if (1 < i++) throw BreakException;
 
                 console.log(artist.fullname, artist['▶'].viewsPerMonth, artist['▶'].youtubeUrl)
@@ -125,12 +129,12 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
 
                 // console.log('pushed', key)
                 /*     
+                */
                 setTimeout(() => {
                     var blob = new Blob([results], { type: "text/plain;charset=utf-8" });
                     saveAs(blob, `_${key}.html`);
                     console.log('saved', key)
                 }, 300 * i++)
-                */
                 // throw BreakException;
             })
             var blob = new Blob(instances, { type: "text/plain;charset=utf-8" });

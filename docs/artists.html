@@ -227,6 +227,7 @@
             } else {
                 const qwe = shuffleArray(artists.artists)
                 qwe.forEach(a => {
+                    if (a.v.still) return
                     console.log(a)
                     let bgFull
                     if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
