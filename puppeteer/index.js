@@ -82,12 +82,22 @@ const puppeteer = require('puppeteer');
 
             const website_url = `http://localhost:1010/video/${performer}.html`;
             // const website_url = `https://api.countapi.xyz/create?namespace=ciaccona.cthiebaud.com&enable_reset=1&key=${performer}`
+            // const website_url = `http://localhost:1010/artists.html`
 
             console.log(website_url)
 
             // Open URL in current page  
             await page.goto(website_url, { waitUntil: 'networkidle0' });
+            /*
+            await page.evaluate(() => document.body.style.zoom = 0.666  );
 
+            const path = `artists-${p}.jpg`
+            console.log(`saving screenshot to ${path}`)
+            await page.screenshot({
+                path: path
+            });
+            */
+            
             let i = 0
             let intervalObj
             const promiseVariations = new Promise(async (resolveVariation, rejectVariation) => {
@@ -158,6 +168,7 @@ const puppeteer = require('puppeteer');
                 console.log(error)
                 throw error
             })
+            */
             console.log('now we should go to next performer, or no ?', p)
         }
         console.log('finito with performers. resolving promisePerformers')
