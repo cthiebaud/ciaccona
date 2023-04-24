@@ -10,6 +10,8 @@ https://developers.facebook.com/tools/debug/
 https://www.linkedin.com/post-inspector/inspect
 https://www.flutopedia.com/pitch_to_frequency.htm
 
+https://youmightnotneedjquery.com/
+
 
 const XXXXXXXX = {
     offset: { minutes: 0, seconds: 0 },

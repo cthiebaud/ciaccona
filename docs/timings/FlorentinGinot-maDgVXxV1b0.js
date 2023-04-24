@@ -6,7 +6,6 @@ const maDgVXxV1b0 = {
     fromVariation: 28,
     from: "2023-04-02T14:32:36.500Z",
     to : "2023-04-02T14:32:38.913Z",
-    duration: moment("2023-04-02T14:32:38.913Z").diff("2023-04-02T14:32:36.500Z"),
   },
   bars: [
     /*{      "Time Recorded": "2023-04-02T14:20:19.144Z"
