@@ -51,6 +51,8 @@
             color: #555;
             text-align: center;
             padding-bottom: 50px;
+            margin: 0;
+            padding: 0;
         }
 
         a {
@@ -74,6 +76,8 @@
             float: left;
             width: 150px;
             height: 157px;
+            transition: '.333s';
+
             /*   border: 1px solid; */
             background-color: #333;
             /* background-image: url('/artists/martinbaker/martinbaker-10.jpg'); */
@@ -175,42 +179,57 @@
             transform: translateY(100px);
         }
 
-
         .dialog b {
             color: #EA0;
         }
-        /*
-        .button {
-            font-size: 20px;
-            background-color: #19F;
-            background-image: linear-gradient(hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2));
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
 
-        .button:hover {
-            cursor: pointer;
-            background-color: #3AF;
-        }
-
-        .button:active {
-            background-color: #C25;
-            box-shadow: inset 0 2px 10px hsla(0, 0%, 0%, 0.5);
-        }
-        */
         .nesw.up,
         .nesw.down {
-            /* margin: auto; */
             padding: 0;
+            border-radius: 0 !important;
         }
 
-        .nesw.right,
         .nesw.left {
-            /* margin: auto; */
+            border-top-left-radius: 2rem;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
             max-width: 48px;
+        }
+
+        .nesw.right {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 2rem;
+            border-bottom-right-radius: 2rem;
             padding: 0;
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+            max-width: 48px;
+        }
+
+        #name {
+            margin: auto;
+            padding: 0.666rem;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            background-color: #333;
+            border-right: 1px solid gray;
+            white-space: nowrap;
+            min-width: 240px;
+        }
+
+        #vari {
+            margin: auto;
+            padding: 0.666rem;
+            border-top-right-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            background-color: #333;
+            min-width: 40px;
         }
     </style>
 
@@ -220,75 +239,79 @@
 </head>
 
 <body id="body">
-    <main id="perfContainer" class="container">
-
-        <div class="dialog-container">
-            <div class="dialog is-waiting">
-                <p class="dialog__text">&nbsp;</p>
-                <div>
-                    <button type="button" class="btn btn-secondary try-again-button">Try again</button>
-                    <button type="button" class="btn btn-secondary close-dialog-button">Close</button>
+    <main id="perfContainer">
+        <div class="d-flex flex-column" style="width:fit-content; margin:auto;">
+            <div class="dialog-container">
+                <div class="dialog is-waiting">
+                    <p class="dialog__text">&nbsp;</p>
+                    <div>
+                        <button type="button" class="btn btn-secondary try-again-button">Try again</button>
+                        <button type="button" class="btn btn-secondary close-dialog-button">Close</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="d-flex justify-content-around" style="margin:2rem">
-            <h2 class="text-light"><span id="artistsWithVidCount">a</span> Artists x <span id="variationsCount">v</span> Variations = <span id="puzzlesCount">v</span> Puzzles</a></h2>
-            <div>
+            <div class="d-flex justify-content-between" style="margin-top:2rem; margin-bottom:2rem; width: 100%;">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary nesw left text-center align-middle" id="left">&lArr;</button>
+                    <div class="d-flex flex-column" style="background-color: #6c757d;">
+                        <button type="button" class="btn btn-secondary nesw up text-center align-middle" id="up">&uArr; </button>
+                        <div class="d-flex" style="background-color: #6c757d;">
+                            <div id="name" class="name text-light" style=""></div>
+                            <div id="vari" class="text-light" style=""></div>
+                        </div>
+                        <button type="button" class="btn btn-secondary nesw down text-center align-middle" id="down">&dArr;</button>
+                    </div>
+                    <button type="button" class="btn btn-secondary nesw right text-center align-middle" id="right">&rArr;</button>
+                </div>
+                <div class="flex-grow-1 my-auto m-3">
+                    <h2 class="text-light" style="text-align: left;">
+                        <span id="artistsWithVidCount">a</span> Artists x <span id="variationsCount">v</span> Variations = <span id="puzzlesCount">v</span> Puzzles</a>
+                    </h2>
+                </div>
                 <button type="button" class="btn btn-primary shuffle-button">Shuffle</button>
             </div>
-        </div>
-        <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-secondary nesw left text-center align-middle" id="left">&lArr;</button>
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-column justify-content-center">
-                    <button type="button" class="btn btn-secondary nesw up text-center align-middle" id="up">&uArr; </button>
-                    <div id="name" class="name text-light" style="margin: auto;"></div>
-                </div>
-                <div class="grid">
-                    <div data-tile="a" class="tile     "></div>
-                    <div data-tile="b" class="tile bgx1"></div>
-                    <div data-tile="c" class="tile bgx2"></div>
-                    <div data-tile="d" class="tile bgx3"></div>
-                    <div data-tile="e" class="tile bgx4"></div>
-                    <div data-tile="f" class="tile bgx5"></div>
-                    <div data-tile="g" class="tile bgx6"></div>
-                    <div data-tile="h" class="tile bgx7"></div>
-                    <div data-tile="i" class="tile       bgy1"></div>
-                    <div data-tile="j" class="tile bgx1  bgy1"></div>
-                    <div data-tile="k" class="tile bgx2  bgy1"></div>
-                    <div data-tile="l" class="tile bgx3  bgy1"></div>
-                    <div data-tile="m" class="tile bgx4  bgy1"></div>
-                    <div data-tile="n" class="tile bgx5  bgy1"></div>
-                    <div data-tile="o" class="tile bgx6  bgy1"></div>
-                    <div data-tile="p" class="tile bgx7  bgy1"></div>
-                    <div data-tile="q" class="tile       bgy2"></div>
-                    <div data-tile="r" class="tile bgx1  bgy2"></div>
-                    <div data-tile="s" class="tile bgx2  bgy2"></div>
-                    <div data-tile="t" class="tile bgx3  bgy2"></div>
-                    <div data-tile="u" class="tile bgx4  bgy2"></div>
-                    <div data-tile="v" class="tile bgx5  bgy2"></div>
-                    <div data-tile="w" class="tile bgx6  bgy2"></div>
-                    <div data-tile="x" class="tile bgx7  bgy2"></div>
-                    <div data-tile="y" class="tile       bgy3"></div>
-                    <div data-tile="z" class="tile bgx1  bgy3"></div>
-                    <div data-tile="0" class="tile bgx2  bgy3"></div>
-                    <div data-tile="1" class="tile bgx3  bgy3"></div>
-                    <div data-tile="2" class="tile bgx4  bgy3"></div>
-                    <div data-tile="3" class="tile bgx5  bgy3"></div>
-                    <div data-tile="4" class="tile bgx6  bgy3"></div>
-                    <div data-tile="5" class="tile bgx7  bgy3"></div>
-                </div>
-                <button type="button" class="btn btn-secondary nesw down text-center align-middle" id="down">&dArr;</button>
+            <div class="grid" style="margin:auto;">
+                <div data-tile="a" class="tile     "></div>
+                <div data-tile="b" class="tile bgx1"></div>
+                <div data-tile="c" class="tile bgx2"></div>
+                <div data-tile="d" class="tile bgx3"></div>
+                <div data-tile="e" class="tile bgx4"></div>
+                <div data-tile="f" class="tile bgx5"></div>
+                <div data-tile="g" class="tile bgx6"></div>
+                <div data-tile="h" class="tile bgx7"></div>
+                <div data-tile="i" class="tile       bgy1"></div>
+                <div data-tile="j" class="tile bgx1  bgy1"></div>
+                <div data-tile="k" class="tile bgx2  bgy1"></div>
+                <div data-tile="l" class="tile bgx3  bgy1"></div>
+                <div data-tile="m" class="tile bgx4  bgy1"></div>
+                <div data-tile="n" class="tile bgx5  bgy1"></div>
+                <div data-tile="o" class="tile bgx6  bgy1"></div>
+                <div data-tile="p" class="tile bgx7  bgy1"></div>
+                <div data-tile="q" class="tile       bgy2"></div>
+                <div data-tile="r" class="tile bgx1  bgy2"></div>
+                <div data-tile="s" class="tile bgx2  bgy2"></div>
+                <div data-tile="t" class="tile bgx3  bgy2"></div>
+                <div data-tile="u" class="tile bgx4  bgy2"></div>
+                <div data-tile="v" class="tile bgx5  bgy2"></div>
+                <div data-tile="w" class="tile bgx6  bgy2"></div>
+                <div data-tile="x" class="tile bgx7  bgy2"></div>
+                <div data-tile="y" class="tile       bgy3"></div>
+                <div data-tile="z" class="tile bgx1  bgy3"></div>
+                <div data-tile="0" class="tile bgx2  bgy3"></div>
+                <div data-tile="1" class="tile bgx3  bgy3"></div>
+                <div data-tile="2" class="tile bgx4  bgy3"></div>
+                <div data-tile="3" class="tile bgx5  bgy3"></div>
+                <div data-tile="4" class="tile bgx6  bgy3"></div>
+                <div data-tile="5" class="tile bgx7  bgy3"></div>
             </div>
-            <button type="button" class="btn btn-secondary nesw right text-center align-middle" id="right">&rArr;</button>
         </div>
-
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
     <script async type="module">
+        // https://codepen.io/desandro/pen/eJXRbW
         import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
         import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm'
         import { shuffleArray } from "/js/utils.js?v=0.9.4"
@@ -320,27 +343,25 @@
 
         loadArtists().then((artists) => {
 
-            const artistsWithVid = artists.artists.filter(a => !a.v.still)
+            const artistsWithVid = shuffleArray(artists.artists.filter(a => !a.v.still))
             const artistsWithVidCount = artistsWithVid.length
-            const variationsCount     = 34
-            const puzzlesCount        = 34 * artistsWithVid.length
+            const variationsCount = 34
+            const puzzlesCount = 34 * artistsWithVid.length
 
             document.getElementById('artistsWithVidCount').innerHTML = artistsWithVidCount
-            document.getElementById('variationsCount'    ).innerHTML = variationsCount    
-            document.getElementById('puzzlesCount'       ).innerHTML = puzzlesCount    
+            document.getElementById('variationsCount').innerHTML = variationsCount
+            document.getElementById('puzzlesCount').innerHTML = puzzlesCount
 
             let v = 0
             let a = 0
-            function setName(n) {
-                document.getElementById('name').innerHTML = n
-            }
-            function setImage(n, v) {
+            function setImageAndName(a, v) {
+                document.getElementById('name').innerHTML = a.fullname
+                document.getElementById('vari').innerHTML = v
                 document.querySelectorAll('.tile').forEach(t => {
-                    t.style.backgroundImage = `url(/artists/${n}/${n}-${v}.jpg)`
+                    t.style.backgroundImage = `url(/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${v}.jpg)`
                 })
             }
-            setName(artistsWithVid[a].fullname)
-            setImage(artistsWithVid[a].fullnameNoSpaceLowercaseNoDiacritics, v)
+            setImageAndName(artistsWithVid[a], v)
 
             document.querySelectorAll('#up, #down, #left, #right').forEach(e => e.addEventListener("click", () => {
                 console.log(e.id)
@@ -351,17 +372,16 @@
                     case 'down':
                         a = (a + 1) % artistsWithVid.length
                         break;
-                    case 'right':
+                    case 'left':
                         v = (v + 33) % 34
                         break;
-                    case 'left':
+                    case 'right':
                         v = (v + 1) % 34
                         break;
                     default:
                         console.log(`Sorry, we are out of ${e.id}.`);
                 }
-                setName(artistsWithVid[a].fullname)
-                setImage(artistsWithVid[a].fullnameNoSpaceLowercaseNoDiacritics, v)
+                setImageAndName(artistsWithVid[a], v)
             }))
             function shuffleTiles() {
                 // shuffle items
