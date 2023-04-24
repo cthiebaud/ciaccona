@@ -2,7 +2,6 @@ import jsYaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm'
 import lodashMerge from 'https://cdn.jsdelivr.net/npm/lodash.merge@4.6.2/+esm'
 
 const theDayWhenIReadTheVideoMeters = moment('2023-04-23T00:00:00Z')
-
 class Artist {
     constructor(a) {
         lodashMerge(this, a)
@@ -10,7 +9,8 @@ class Artist {
         // https://stackoverflow.com/a/32906951/1070215
         this.fullname = [a.firstname, a.lastname].filter(Boolean).join(' ');
         this.fullnameNoSpace = this.fullname.replace(/\s/gi, '')
-        this.fullnameNoSpaceLowercaseNoDiacritics = this.fullnameNoSpace.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '') // https://stackoverflow.com/a/37511463/1070215
+        // https://stackoverflow.com/a/37511463/1070215
+        this.fullnameNoSpaceLowercaseNoDiacritics = this.fullnameNoSpace.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '') 
 
         this.thisUrl = `/video/${this.fullnameNoSpaceLowercaseNoDiacritics}.html`
         this.social = `https://www.facebook.com/sharer/sharer.php?u=https://ciaccona.cthiebaud.com${this.thisUrl}`
@@ -34,6 +34,7 @@ class Artist {
             vid.durationMoment = moment.duration(vid.duration)
             vid.viewsPerMonth = Math.floor(vid.views / vid.durationMoment.asMonths())
         }
+        // plus simple que this['▶'] ...
         this.v = vid
     }
 }

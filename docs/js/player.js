@@ -1,5 +1,4 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import config from "/js/config.js?v=0.9.4"
 import codec from "/js/structure.js?v=0.9.4"
 import { normalizeVraiment } from "/js/utils.js?v=0.9.4"
@@ -28,7 +27,7 @@ function horzScrollScore(timings, variation, currentTime) {
 
     let scrollLeft = normalizeVraiment(currentTime, thisStartTime, nextStartTime, 0, objWidth)
     // wait for a portion of score window width to start scrolling
-    scrollLeft -= scoWidth * (2/5)
+    scrollLeft -= scoWidth * (2 / 5)
 
     if (scrollLeft <= 0 || objWidth - scoWidth < scrollLeft) {
         return -1
@@ -48,7 +47,12 @@ function selectAndScrollToVariation(source, variation, options) {
         scrollToSelector = '.grid-brick#gb-bwv1004'
     }
 
-    jquery('.grid-brick').removeClass('selected', 'goodbye', 'hello').find('.score').scrollLeft(0)
+    document.querySelectorAll('.grid-brick.hasScore').forEach(el => {
+        el.classList.remove('selected');
+        el.classList.remove('goodbye');
+        el.classList.remove('hello');
+        el.querySelector('.score').pageXOffset = 0
+    })
     document.querySelector(selector)?.classList.add('selected')
 
     const scrollToElement = document.querySelector(scrollToSelector)
@@ -57,11 +61,14 @@ function selectAndScrollToVariation(source, variation, options) {
 }
 
 function unplay_and_unselect(keepSelect) {
-    jquery('.grid-brick.gbPlaying').removeClass('gbPlaying')
-    jquery('.grid-brick.goodbye').removeClass('goodbye')
-    jquery('.grid-brick.hello').removeClass('hello')
+    document.querySelectorAll('.grid-brick.gbPlaying').forEach(el => el.classList.remove('gbPlaying'))
+    document.querySelectorAll('.grid-brick.goodbye').forEach(el => el.classList.remove('goodbye'))
+    document.querySelectorAll('.grid-brick.hello').forEach(el => el.classList.remove('hello'))
     if (!keepSelect) {
-        jquery('.grid-brick.selected').removeClass('selected').find('.score').scrollLeft(0)
+        document.querySelectorAll('.grid-brick.selected.hasScore').forEach(el => {
+            el.classList.remove('selected');
+            el.querySelector('.score').pageXOffset = 0
+        })
     }
 }
 
@@ -75,7 +82,7 @@ function showPlay(currentTime, timings) {
     const variation = timings.bars[barIndex].variation
     console.log('showing play of variation', variation)
     unplay_and_unselect()
-    jquery(`.grid-brick#gb${variation}`).addClass('gbPlaying').addClass('selected')
+    document.querySelector(`.grid-brick#gb${variation}`).classList.add('gbPlaying', 'selected');
 }
 
 function hidePlay(cause) {
@@ -110,27 +117,27 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
 
     if (true) {
 
-        const doSwap = (alt, neu) => {
+        const shallWeSwap = (alt, neu) => {
             if (neu == null) return false
             if (alt == neu) return false
             return true
         }
-        const oldBrickplaying = jquery(".grid-brick.gbPlaying")
-        const newBrick = jquery(`.grid-brick#gb${variation}`)
-        const altID = oldBrickplaying.attr('id')
-        const neuID = newBrick.attr('id')
-        const doIt = doSwap(altID, neuID)
+        const oldBrickplaying = document.querySelector(".grid-brick.gbPlaying")
+        const newBrick = document.querySelector(`.grid-brick#gb${variation}`)
+        const altID = oldBrickplaying?.id
+        const neuID = newBrick?.id
+        const doSwap = shallWeSwap(altID, neuID)
         if (altID == null && neuID === 'gb0') {
             console.log("quel est le con qui m'envoie ça ?", altID, neuID)
         }
-        // console.log(source, 'SWAP from', altID, 'to', neuID, '?', doIt ? "yes!" : "no!")
-        if (doIt) {
+        // console.log(source, 'SWAP from', altID, 'to', neuID, '?', doSwap ? "yes!" : "no!")
+        if (doSwap) {
             // swap
             unplay_and_unselect()
             if (isPlaying) {
-                newBrick.addClass('gbPlaying').addClass('selected')
+                newBrick.classList.add('gbPlaying', 'selected')
             } else {
-                newBrick.addClass('selected')
+                newBrick.classList.add('selected')
             }
             if (scrollToVariation) {
                 selectAndScrollToVariation(source, variation, scrollOptions)
