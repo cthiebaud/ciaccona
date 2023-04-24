@@ -1,7 +1,7 @@
 import plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm'
-import config from "/js/config.js?v=0.9.4"
-import codec from "/js/structure.js?v=0.9.4"
-import { normalizeVraiment } from "/js/utils.js?v=0.9.4"
+import config from "/js/config.js?v=0.9.5"
+import codec from "/js/structure.js?v=0.9.5"
+import { normalizeVraiment } from "/js/utils.js?v=0.9.5"
 
 let begin = true
 
