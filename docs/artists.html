@@ -163,6 +163,10 @@
             position: absolute;
         }
 
+        .large .handle {
+            display: none;
+        }
+
         .handle {
             cursor: grab;
             font-size: 12pt;
@@ -345,56 +349,47 @@
             });
 
             // https://codepen.io/desandro/pen/WxjJJW/
-            $('body').on('click', function (event) {
-                event.stopPropagation()
-                const $wasLarge = $('.large');
-                if ($wasLarge.length) {
-                    $('.grid-artist').removeClass('large')
-
-                    let item = $grid.packery('getItem', $wasLarge[0])
-                    if (item && item.previousPosition) {
-                        // fit back in previous position
-                        $grid.packery('fit', $wasLarge[0], item.previousPosition.x, item.previousPosition.y);
-                        // remove previous position
-                        delete item.previousPosition;
-                    } else {
-                        $grid.packery('shiftLayout');
-                    }
-                }
-            })
             $grid.on('click', '.grid-artist .puzzle', function (event) {
                 event.stopPropagation()
-                $('.grid-artist').removeClass('large')
+                event.preventDefault()
                 const target = event.currentTarget.parentNode;
                 window.location = `puzzle.html?a=${target.dataset.a}&v=${target.dataset.v}`
             })
+            function removeLarges() {
+                const $wereLarges = $('.grid-artist.large');
+                $wereLarges.each((index, wasLarge) => {
+                    wasLarge.classList.remove('large')
+                    let item = $grid.packery('getItem', wasLarge)
+                    if (item && item.previousPosition) {
+                        // fit back in previous position
+                        console.log('about to fit')
+                        $grid.packery('fit', wasLarge, item.previousPosition.x, item.previousPosition.y);
+                        // remove previous position
+                        delete item.previousPosition;
+                    }
+                })
+            }
+            $('body').on('click', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
+                removeLarges()
+            })
             $grid.on('click', '.grid-artist', function (event) {
                 event.stopPropagation()
+                event.preventDefault()
                 var target = event.currentTarget;
-                var $target = $(target);
-                var wasLarge = $target.hasClass('large');
-                $('.grid-artist').removeClass('large')
-                if (!wasLarge) {
-                    $target.toggleClass('large');
-                }
-                var isLarge = $target.hasClass('large');
-                var item = $grid.packery('getItem', target)
-                if (isLarge) {
+                var targetWasLarge = target.classList.contains('large');
+                removeLarges()
+                if (!targetWasLarge) {
+                    target.classList.add('large');
+                    var item = $grid.packery('getItem', target)
                     // save previous position
                     item.previousPosition = {
                         x: item.position.x,
                         y: item.position.y
                     };
+                    console.log('about to fit')
                     $grid.packery('fit', target);
-                } else {
-                    if (item.previousPosition) {
-                        // fit back in previous position
-                        $grid.packery('fit', target, item.previousPosition.x, item.previousPosition.y);
-                        // remove previous position
-                        delete item.previousPosition;
-                    } else {
-                        $grid.packery('shiftLayout');
-                    }
                 }
             });
 
