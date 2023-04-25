@@ -85,6 +85,12 @@ allPromises.set(
             console.log('no SVG to resize')
             return this
         }
+        document.getElementById('resizeScores').addEventListener('click', () => {
+            resizeSVGs(
+                document.querySelectorAll('#grid .brick > .score > object'),
+                config.scoreDisplay !== 'fullScore'
+            )
+        });
         return resizeSVGs(
             SVGs,
             config.scoreDisplay !== 'fullScore', // full width IS NOT checked -> true: honor X offset to hide clef signature, else full width IS checked -> false: no offset
