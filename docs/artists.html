@@ -278,21 +278,22 @@
                     // bind drag events to Packery
                     $grid.packery('bindDraggabillyEvents', draggie);
                 });
-                function orderItems() {
+                function orderItems(reorder) {
                     var itemElems = $grid.packery('getItemElements');
                     $(itemElems).each(function (i, itemElem) {
                         // console.log(i, itemElem)
+                        const v = reorder || typeof itemElem.dataset.v === 'undefined' ? i : itemElem.dataset.v
                         if (itemElem.dataset.a) {
                             let bgFull
                             const a = itemElem.dataset.a
                             if (a === 'moi') {
                                 bgFull = { 'background-color': '#28282b' }
                             } else {
-                                bgFull = { 'background-image': bg(itemElem.dataset.a, itemElem.dataset.v) }
+                                bgFull = { 'background-image': bg(itemElem.dataset.a, v) }
                             }
-                            $(itemElem).css(bgFull).find('.handle').text(itemElem.dataset.v)
+                            $(itemElem).css(bgFull).find('.handle').text(v)
                         } else {
-                            $(itemElem).find('.handle').text(itemElem.dataset.v)
+                            $(itemElem).find('.handle').text(v)
                         }
                     });
                 }
@@ -301,7 +302,7 @@
                     console.log("Packery layout complete");
                 })
                 $grid.on('dragItemPositioned', function () {
-                    orderItems()
+                    orderItems(true)
                 });
 
                 $grid.on('fitComplete', function (item) {
