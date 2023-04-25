@@ -278,7 +278,7 @@
         import countapi from 'https://cdn.jsdelivr.net/npm/countapi-js@1.0.2/+esm'
 
         document.getElementById("go-back").addEventListener("click", () => {
-            history.back();
+            window.location = document.referrer
         });
 
         document.getElementById("collected").innerHTML = theDayWhenIReadTheVideoMeters.format("D MMMM YYYY")
