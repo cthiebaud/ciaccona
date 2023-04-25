@@ -211,23 +211,28 @@
         }
 
         #name {
-            margin: auto;
             padding: 0.666rem;
-            border-top-left-radius: 1rem;
-            border-bottom-left-radius: 1rem;
-            border-bottom-right-radius: 0;
-            border-top-right-radius: 0;
             background-color: #333;
-            border-right: 1px solid gray;
+            border-right: 2px solid gray;
             white-space: nowrap;
+            width: fit-content;
+        }
+
+        #nameHolder {
             min-width: 240px;
+            top:0 ;
+            bottom:0;
+            margin-top:auto;
+            margin-bottom: auto;
         }
 
         #vari {
             margin: auto;
             padding: 0.666rem;
-            border-top-right-radius: 1rem;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
+            border-top-right-radius: 1rem;
             background-color: #333;
             min-width: 40px;
         }
@@ -251,22 +256,30 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between" style="margin-top:2rem; margin-bottom:2rem; width: 100%;">
-                <div class="d-flex justify-content-center">
+            <div class="d-flex" style="margin:2rem;">
+                <div class="flex-grow-1 d-flex">
                     <button type="button" class="btn btn-secondary nesw left text-center align-middle" id="left">&lArr;</button>
                     <div class="d-flex flex-column" style="background-color: #6c757d;">
                         <button type="button" class="btn btn-secondary nesw up text-center align-middle" id="up">&uArr; </button>
                         <div class="d-flex" style="background-color: #6c757d;">
-                            <div id="name" class="name text-light" style=""></div>
                             <div id="vari" class="text-light" style=""></div>
                         </div>
                         <button type="button" class="btn btn-secondary nesw down text-center align-middle" id="down">&dArr;</button>
                     </div>
                     <button type="button" class="btn btn-secondary nesw right text-center align-middle" id="right">&rArr;</button>
+                    <div id="nameHolder">
+                        <div id="name" class="name text-light" style="text-align: left;"></div>
+                    </div>
                 </div>
-                <div class="flex-grow-1 my-auto m-3">
+                <div class="m-3">
                     <h2 class="text-light" style="text-align: left;">
-                        <span id="artistsWithVidCount">a</span> Artists x <span id="variationsCount">v</span> Variations = <span id="puzzlesCount">v</span> Puzzles</a>
+                        <span id="artistsWithVidCount">a</span> 
+                        Artists 
+                        <img src="svg/math-multiplication-icon.svg" style="width:22px; height:auto;">
+                        <span id="variationsCount">v</span>
+                        Variations
+                        <img src="svg/equals-symbol-svgrepo-com.svg" style="width:22px; height:auto;">
+                        <span id="puzzlesCount">v</span> Puzzles</a>
                     </h2>
                 </div>
                 <button type="button" class="btn btn-primary shuffle-button">Shuffle</button>

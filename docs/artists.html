@@ -17,7 +17,8 @@
     </script>
     <meta charset="utf-8">
     <!-- meta name="viewport" content="width=device-width, initial-scale=1" -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="keywords" content="Bach, JSBach, J.S. Bach, BWV1004, BWV 1004, Partita, 2nd Partita, Ciaconna, Chaconne">
     <meta name="author" content="Christophe Thiebaud">
@@ -157,17 +158,44 @@
             height: var(--gbh, 12rem);
             padding: 0;
             margin: 0;
-            border: 1px #494F55 solid;
+            border: 1px white solid;
             border-radius: 0 6rem 6rem 0;
+            position: absolute;
         }
 
         .handle {
             cursor: grab;
             font-size: 12pt;
             font-family: var(--bs-font-monospace) !important;
+            background-image: url(svg/cursor-hand-grab-svgrepo-com.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 3rem;
+            height: 3rem;
+            color: #d3d3d3;
+            font-size: 12px;
+            line-height: 4rem;
+            padding-left: .3rem;
+            /* 
             background-color: black;
             border-radius: 0 2rem 0 0;
             padding: .4rem .6rem 0 .3rem;
+            */
+        }
+
+        .puzzle {
+            cursor: pointer;
+            background-image: url(svg/puzzle-svgrepo-com.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 3rem;
+            height: 3rem;
+            position: relative;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin-top: auto;
+            margin-bottom: auto;
         }
 
         .large {
@@ -233,6 +261,7 @@
 <div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
   <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname}</!-->
   <div class="handle"></div>
+  <div class="puzzle flex-shrink-1"></div>
 </div>`
                 }
             } else {
@@ -251,121 +280,120 @@
 <div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" data-v="${coerceVariation || v}" style="${bgFull}">
     <div class="handle"></div>
     <div style="visibility:hidden">${a.fullname}</div>
+    <div class="puzzle flex-shring-0"></div>
 </div>`
                     v++
                 })
             }
-            /*
-            grid.innerHTML += `
-<div class="grid-artist draggable" >
-    <div class="handle" style="float:right"></div>
-</div>`
-            */
-            setTimeout(() => {
 
-                var $grid = $('#grid').packery({
-                    itemSelector: ".grid-artist",
-                    percentPosition: true,
-                    initLayout: false,
-                    gutter: '.gutter-sizer',
-                    resize: true
-                })
-                // make all grid-items draggable
-                $grid.find('.grid-artist').each(function (i, gridItem) {
-                    var draggie = new Draggabilly(gridItem, {
-                        handle: '.handle'
-                    });
-                    // bind drag events to Packery
-                    $grid.packery('bindDraggabillyEvents', draggie);
-                });
-                function orderItems(reorder) {
-                    var itemElems = $grid.packery('getItemElements');
-                    $(itemElems).each(function (i, itemElem) {
-                        // console.log(i, itemElem)
-                        const v = reorder || typeof itemElem.dataset.v === 'undefined' ? i : itemElem.dataset.v
-                        if (itemElem.dataset.a) {
-                            let bgFull
-                            const a = itemElem.dataset.a
-                            if (a === 'moi') {
-                                bgFull = { 'background-color': '#28282b' }
-                            } else {
-                                bgFull = { 'background-image': bg(itemElem.dataset.a, v) }
-                            }
-                            $(itemElem).css(bgFull).find('.handle').text(v)
-                        } else {
-                            $(itemElem).find('.handle').text(v)
-                        }
-                    });
-                }
-                orderItems()
-                $grid.on('layoutComplete', function () {
-                    console.log("Packery layout complete");
-                })
-                $grid.on('dragItemPositioned', function () {
-                    orderItems(true)
-                });
+            /* setTimeout(() => { */
 
-                $grid.on('fitComplete', function (item) {
-                    orderItems()
-                    $grid.packery('shiftLayout');
-                })
-
-                $grid.packery()
-
-                // https://codepen.io/desandro/pen/WxjJJW/
-                $('body').on('click', function (event) {
-                    const $wasLarge = $('.large');
-                    if ($wasLarge.length) {
-                        $('.grid-artist').removeClass('large')
-
-                        let item = $grid.packery('getItem', $wasLarge[0])
-                        if (item && item.previousPosition) {
-                            // fit back in previous position
-                            $grid.packery('fit', $wasLarge[0], item.previousPosition.x, item.previousPosition.y);
-                            // remove previous position
-                            delete item.previousPosition;
-                        } else {
-                            $grid.packery('shiftLayout');
-                        }
-                    }
-                    event.stopPropagation()
-                })
-                $grid.on('click', '.grid-artist', function (event) {
-                    event.stopPropagation()
-                    var target = event.currentTarget;
-                    var $target = $(target);
-                    var wasLarge = $target.hasClass('large');
-                    $('.grid-artist').removeClass('large')
-                    if (!wasLarge) {
-                        $target.toggleClass('large');
-                    } else {
-                        window.location = `puzzle.html?a=${target.dataset.a}&v=${target.dataset.v}`
-                        return
-                    }
-                    var isLarge = $target.hasClass('large');
-                    var item = $grid.packery('getItem', target)
-                    if (isLarge) {
-                        // save previous position
-                        item.previousPosition = {
-                            x: item.position.x,
-                            y: item.position.y
-                        };
-                        $grid.packery('fit', target);
-                    } else {
-                        if (item.previousPosition) {
-                            // fit back in previous position
-                            $grid.packery('fit', target, item.previousPosition.x, item.previousPosition.y);
-                            // remove previous position
-                            delete item.previousPosition;
-                        } else {
-                            $grid.packery('shiftLayout');
-                        }
-                    }
-                });
-
-
+            var $grid = $('#grid').packery({
+                itemSelector: ".grid-artist",
+                percentPosition: true,
+                initLayout: false,
+                gutter: '.gutter-sizer',
+                resize: true
             })
-        }, 1000)
+            // make all grid-items draggable
+            $grid.find('.grid-artist').each(function (i, gridItem) {
+                var draggie = new Draggabilly(gridItem, {
+                    handle: '.handle'
+                });
+                // bind drag events to Packery
+                $grid.packery('bindDraggabillyEvents', draggie);
+            });
+            function orderItems(reorder) {
+                var itemElems = $grid.packery('getItemElements');
+                $(itemElems).each(function (i, itemElem) {
+                    // console.log(i, itemElem)
+                    const v = reorder || typeof itemElem.dataset.v === 'undefined' ? i : itemElem.dataset.v
+                    if (itemElem.dataset.a) {
+                        let bgFull
+                        const a = itemElem.dataset.a
+                        if (a === 'moi') {
+                            bgFull = { 'background-color': '#28282b' }
+                        } else {
+                            bgFull = { 'background-image': bg(itemElem.dataset.a, v) }
+                        }
+                        $(itemElem).css(bgFull).find('.handle').text(v)
+                    } else {
+                        $(itemElem).find('.handle').text(v)
+                    }
+                });
+            }
+            orderItems()
+            $grid.on('layoutComplete', function () {
+                console.log("Packery layout complete");
+            })
+            $grid.on('dragItemPositioned', function () {
+                orderItems(true)
+            });
+
+            $grid.on('fitComplete', function (item) {
+                orderItems()
+                $grid.packery('shiftLayout');
+            })
+
+            $grid.packery()
+
+            // https://codepen.io/desandro/pen/WxjJJW/
+            $('body').on('click', function (event) {
+                event.stopPropagation()
+                const $wasLarge = $('.large');
+                if ($wasLarge.length) {
+                    $('.grid-artist').removeClass('large')
+
+                    let item = $grid.packery('getItem', $wasLarge[0])
+                    if (item && item.previousPosition) {
+                        // fit back in previous position
+                        $grid.packery('fit', $wasLarge[0], item.previousPosition.x, item.previousPosition.y);
+                        // remove previous position
+                        delete item.previousPosition;
+                    } else {
+                        $grid.packery('shiftLayout');
+                    }
+                }
+            })
+            $grid.on('click', '.grid-artist .puzzle', function (event) {
+                event.stopPropagation()
+                $('.grid-artist').removeClass('large')
+                const target = event.currentTarget.parentNode;
+                window.location = `puzzle.html?a=${target.dataset.a}&v=${target.dataset.v}`
+            })
+            $grid.on('click', '.grid-artist', function (event) {
+                event.stopPropagation()
+                var target = event.currentTarget;
+                var $target = $(target);
+                var wasLarge = $target.hasClass('large');
+                $('.grid-artist').removeClass('large')
+                if (!wasLarge) {
+                    $target.toggleClass('large');
+                }
+                var isLarge = $target.hasClass('large');
+                var item = $grid.packery('getItem', target)
+                if (isLarge) {
+                    // save previous position
+                    item.previousPosition = {
+                        x: item.position.x,
+                        y: item.position.y
+                    };
+                    $grid.packery('fit', target);
+                } else {
+                    if (item.previousPosition) {
+                        // fit back in previous position
+                        $grid.packery('fit', target, item.previousPosition.x, item.previousPosition.y);
+                        // remove previous position
+                        delete item.previousPosition;
+                    } else {
+                        $grid.packery('shiftLayout');
+                    }
+                }
+            });
+
+
+        })
+        /* }, 1000) */
 
     </script>
 
