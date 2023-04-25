@@ -240,8 +240,8 @@
     target={{fullnameNoSpaceLowercaseNoDiacritics}}>
         {{#if v.trueId}}{{v.trueId}}{{else}}{{v.id}}{{/if}}
     </a></td>
-<td class="fb        text-center">
-    {{#if facebookPost}}<a href={{facebookPost}} target=FB><img src="svg/External_link_font_awesome.svg"></a>
+<td class="fb        text-center"  data-number="{{#if facebookPost}}{{numberFormat facebookPost.sort}}{{else}}-1{{/if}}">
+    {{#if facebookPost}}<sup>{{facebookPost.sort}}</sup>&nbsp;<a href={{facebookPost.url}} target=FB><img src="svg/External_link_font_awesome.svg"></a>
     {{else}}
     &nbsp;{{/if}}
 </td>
@@ -257,7 +257,7 @@
             if (a.startsWith("Moi")) ret = -1
             else if (b.startsWith("Moi")) ret = 1
             else ret = a.localeCompare(b)
-            console.log(a, b, ret)
+            // console.log(a, b, ret)
             return ret
         }
         const sortMoiAlwaysFirst = (a, b) => {
@@ -267,7 +267,7 @@
             if (a.startsWith("Moi")) ret = 1
             else if (b.startsWith("Moi")) ret = -1
             else ret = a.localeCompare(b)
-            console.log(a, b, ret)
+            // console.log(a, b, ret)
             return ret
         }
 
