@@ -144,11 +144,11 @@ const Ω = {
         const url = new URL(window.location)
 
         $("#gb-ciaccona .magnificent-card").on("click", function (e) {
-            window.location = '/artists.html'
         })
-
+        
         $("#gb-bwv1004 .magnificent-card").on("click", function (e) {
-            window.location = '/puzzle.html'
+            window.location = '/artists.html'
+            // window.location = '/puzzle.html'
         })
 
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((e) => {

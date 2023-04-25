@@ -227,7 +227,7 @@
             const grid = document.getElementById('grid')
             let v = 0
             if (coerceArtist) {
-                for (let v = 0; v < 34; v++) {
+                for (let v = 0; v <= 1 + 32 + 1; v++) {
                     console.log(coerceArtist, v)
                     grid.innerHTML += `
 <div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
@@ -238,7 +238,7 @@
             } else {
                 const qwe = shuffle ? shuffleArray(artists.artists) : artists.artists
                 qwe.forEach(a => {
-                    if (/* a.v.still || */ a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
+                    if (a.v.still || a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
                     console.log(a)
                     let bgFull
                     if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
@@ -255,10 +255,12 @@
                     v++
                 })
             }
+            /*
             grid.innerHTML += `
 <div class="grid-artist draggable" >
     <div class="handle" style="float:right"></div>
 </div>`
+            */
             setTimeout(() => {
 
                 var $grid = $('#grid').packery({
@@ -310,13 +312,34 @@
                 $grid.packery()
 
                 // https://codepen.io/desandro/pen/WxjJJW/
+                $('body').on('click', function (event) {
+                    const $wasLarge = $('.large');
+                    if ($wasLarge.length) {
+                        $('.grid-artist').removeClass('large')
+
+                        let item = $grid.packery('getItem', $wasLarge[0])
+                        if (item && item.previousPosition) {
+                            // fit back in previous position
+                            $grid.packery('fit', $wasLarge[0], item.previousPosition.x, item.previousPosition.y);
+                            // remove previous position
+                            delete item.previousPosition;
+                        } else {
+                            $grid.packery('shiftLayout');
+                        }
+                    }
+                    event.stopPropagation()
+                })
                 $grid.on('click', '.grid-artist', function (event) {
+                    event.stopPropagation()
                     var target = event.currentTarget;
                     var $target = $(target);
                     var wasLarge = $target.hasClass('large');
                     $('.grid-artist').removeClass('large')
                     if (!wasLarge) {
                         $target.toggleClass('large');
+                    } else {
+                        window.location = `puzzle.html?a=${target.dataset.a}&v=${target.dataset.v}`
+                        return
                     }
                     var isLarge = $target.hasClass('large');
                     var item = $grid.packery('getItem', target)

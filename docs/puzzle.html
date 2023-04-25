@@ -316,6 +316,12 @@
         import { shuffleArray } from "/js/utils.js?v=0.9.6"
         import { loadArtists } from "/js/artists.js?v=0.9.6"
 
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop)
+        })
+        let coerceArtist = params.a ?? undefined
+        let coerceVariation = params.v ?? undefined
+
         var grid = document.querySelector('.grid');
         var pckry = new packeryLayout(grid, {
             itemSelector: '.tile',
@@ -351,8 +357,18 @@
             document.getElementById('variationsCount').innerHTML = variationsCount
             document.getElementById('puzzlesCount').innerHTML = puzzlesCount
 
-            let v = 0
+            let v = coerceVariation ?? 0
             let a = 0
+            if (coerceArtist) {
+                for (a = 0; a < artistsWithVid.length; a++) {
+                    if (artistsWithVid[a].fullnameNoSpaceLowercaseNoDiacritics === coerceArtist) {
+                        break;
+                    }
+                }
+            }
+            if (a < 0 || artistsWithVid.length <= a) {
+                a = 0
+            }
             function setImageAndName(a, v) {
                 document.getElementById('name').innerHTML = a.fullname
                 document.getElementById('vari').innerHTML = v
