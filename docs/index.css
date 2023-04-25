@@ -69,7 +69,20 @@ a {
 }
 
 #gridContainer {
-  padding: 0.5rem 0;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 100%;
+}
+
+body:not(.no-vid) #gridContainer {
+  max-width: none !important;
 }
 
 #gridContainerCol {
@@ -252,8 +265,8 @@ div#logoLeft div#backgroundLeft {
 div#logoLeft div.siegel#foregroundLeft {
   background-image: url("svg/Bach_Seal_full_left_120x120.svg");
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 6;
@@ -275,8 +288,8 @@ div#logoRight div#backgroundRight {
 div#logoRight div.siegel#foregroundRight {
   background-image: url("svg/Bach_Seal_full_right_120x120.svg");
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 5;
@@ -448,13 +461,13 @@ span.d {
 }
 
 .my-menu > .dropdown label {
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .my-menu#videos-menu > .dropdown {
   left: 0;
   margin: 0.3rem 0 0.3rem 0.3rem;
-}  
+}
 
 .my-menu#config-menu > .dropdown {
   right: 0;
@@ -469,6 +482,6 @@ span.d {
 
 .my-menu > .dropdown > a.btn :first-child {
   width: 40px;
-  height:33px;
+  height: 33px;
   object-fit: cover;
 }

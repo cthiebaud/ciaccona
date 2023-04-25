@@ -37,9 +37,11 @@ const Ω = {
     showScoreDisplay: function (iso) {
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
+            $('#gridContainer').removeClass('container-fluid').addClass('container-xxl')
             $('#gridContainerCol').removeClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
         } else if (config.scoreDisplay === 'fullScore') {
+            $('#gridContainer').removeClass('container-xxl').addClass('container-fluid')
             $('#gridContainerCol').addClass('fullwidth')
             $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
         }

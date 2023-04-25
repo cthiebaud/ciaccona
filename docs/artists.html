@@ -87,7 +87,14 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let test = params.test ?? undefined
-        let coerce = params.a ?? undefined
+        let coerceArtist = params.a ?? undefined
+        let coerceVariation = params.v ?? undefined
+        let shuffle = params.shuffle ?? undefined
+        if (typeof shuffle !== 'undefined' && (shuffle === 'false' || shuffle === '0' || !shuffle)) {
+            shuffle = false
+        } else {
+            shuffle = true
+        }
 
         // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
         function theTrickToViewportUnitsOnMobile(log) {
@@ -189,8 +196,8 @@
     <link href="index.css?v=0.9.5" rel="stylesheet">
 </head>
 
-<body id="body" class="artists d-flex flex-column">
-    <main id="gridContainer" class="container-fluid flex-shrink-0" style="z-index: 1; position: absolute; top:0; left:0; padding-top: .5rem; padding-bottom: .5rem; height: 100%;">
+<body id="body" class="artists no-vid d-flex flex-column">
+    <main id="gridContainer" class="container-xxl flex-shrink-0">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="gridContainerCol" class="col">
                 <div id="grid" style="color:white">
@@ -219,29 +226,29 @@
 
             const grid = document.getElementById('grid')
             let v = 0
-            if (coerce) {
+            if (coerceArtist) {
                 for (let v = 0; v < 34; v++) {
-                    console.log(coerce, v)
+                    console.log(coerceArtist, v)
                     grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${coerce}" style="background-image: ${bg(coerce, v)}">
-  <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerce).fullname}</!-->
+<div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
+  <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname}</!-->
   <div class="handle"></div>
 </div>`
                 }
             } else {
-                const qwe = shuffleArray(artists.artists)
+                const qwe = shuffle ? shuffleArray(artists.artists) : artists.artists
                 qwe.forEach(a => {
-                    if (a.v.still || a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
+                    if (/* a.v.still || */ a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
                     console.log(a)
                     let bgFull
                     if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
                         bgFull = `background-color: #28282b;`
                     } else {
-                        bgFull = `background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, v)};`
+                        bgFull = `background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || v)};`
                     }
                     // console.log(a)
                     grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" style="${bgFull}">
+<div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" data-v="${coerceVariation || v}" style="${bgFull}">
     <div class="handle"></div>
     <div style="visibility:hidden">${a.fullname}</div>
 </div>`
@@ -277,13 +284,13 @@
                             let bgFull
                             const a = itemElem.dataset.a
                             if (a === 'moi') {
-                                bgFull = { 'background-color': '#28282b'}
+                                bgFull = { 'background-color': '#28282b' }
                             } else {
-                                bgFull = { 'background-image': bg(itemElem.dataset.a, i) }
+                                bgFull = { 'background-image': bg(itemElem.dataset.a, itemElem.dataset.v) }
                             }
-                            $(itemElem).css(bgFull).find('.handle').text(i)
+                            $(itemElem).css(bgFull).find('.handle').text(itemElem.dataset.v)
                         } else {
-                            $(itemElem).find('.handle').text(i)
+                            $(itemElem).find('.handle').text(itemElem.dataset.v)
                         }
                     });
                 }
