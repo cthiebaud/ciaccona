@@ -46,8 +46,8 @@
     <meta property="og:image" content="{{image}}">
     <meta property="og:image:url" content="{{image}}">
     <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="2400">
-    <meta property="og:image:height" content="1256">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
@@ -91,7 +91,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
 
         loadArtists().then((artists) => {
 
-            const source = document.getElementById("youtube-template").innerHTML;
+            const source = document.getElementById("head-template").innerHTML;
             const template = Handlebars.compile(source);
             const BreakException = {};
             const count = artists.size() - 1
@@ -99,24 +99,24 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
             const sorted = artists.artists.sort((a, b) => b.fullname - a.fullname)
             const instances = []
             sorted.forEach((artist) => {
-                /*
-                if (artist.fullnameNoSpaceLowercaseNoDiacritics !==  'clara-jumikang') {
+                if (artist.fullnameNoSpaceLowercaseNoDiacritics !==  'ksenijakomljenovic') {
                     return
                 }
-                */
-               const instantiated = template({
-                   fullname: artist.fullname, 
-                   hashtag: `#${artist.fullnameNoSpace}`, 
-                   twitter: artist.twitter ? `@${artist.twitter}` : undefined, 
-                   filename: `${artist.fullnameNoSpaceLowercaseNoDiacritics}.html`
-                   
+                /*
+                const instantiated = template({
+                    fullname: artist.fullname, 
+                    hashtag: `#${artist.fullnameNoSpace}`, 
+                    twitter: artist.twitter ? `@${artist.twitter}` : undefined, 
+                    filename: `${artist.fullnameNoSpaceLowercaseNoDiacritics}.html`
+                    
                 },)
                 instances.push(instantiated)
                 console.log(instantiated)
+                */
                 /*
                 */
                 // if (1 < i++) throw BreakException;
-                /*
+                
                 console.log(artist.fullname, artist['▶'].viewsPerMonth, artist['▶'].youtubeUrl)
                 const key = artist.fullnameNoSpaceLowercaseNoDiacritics
                 const results = template({
@@ -128,23 +128,23 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
                     description: `${artist.fullname} performing the Chaconne from Johann Sebastian Bach's Partita in D minor for solo violin (BWV 1004), collated with ${count}+ other performers.`,
                     image: `https://ciaccona.cthiebaud.com/screenshots/${key}.jpg`,
                 });
-                */
+                console.log(results)
                 // console.log('pushed', key)
-                /*     
                 setTimeout(() => {
                     const blob = new Blob([results], { type: "text/plain;charset=utf-8" });
                     const path = `_${key}.html`
                     saveAs(blob, path);
                     console.log('saved', key, 'to', path)
                 }, 300 * i++)
+                /*     
                 */
                 // throw BreakException;
             }) 
             /*
-            */
             var blob = new Blob(instances, { type: "text/plain;charset=utf-8" });
             saveAs(blob, `__qwe.txt`);
             console.log('saved __qwe.txt')
+            */
         })
     </script>
 </head>

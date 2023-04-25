@@ -28,7 +28,7 @@ const puppeteer = require('puppeteer');
         // 'bellahristova',
         // 'chiaramassini',
         // 'christiantetzlaff',
-        'clara-jumikang',
+        // 'clara-jumikang',
         // 'moi',
         // 'florentinginot',
         // 'genzohtakehisa',
@@ -36,6 +36,7 @@ const puppeteer = require('puppeteer');
         // 'isabellefaust',
         // 'jeannelamon',
         // 'juliafischer',
+        'ksenijakomljenovic',
         // 'lisajacobs',
         // 'lizaferschtman',
         // 'martafemenia',
@@ -157,12 +158,12 @@ const puppeteer = require('puppeteer');
                                 clearInterval(intervalObj);
                                 resolveVariation()
                             }
-                        }, 1000, performer, variation)
+                        }, 1500, performer, variation)
                         break;
                     }
                 }
                 console.log('setinterval')
-                intervalObj = setInterval(myFunc, 2000, performer)
+                intervalObj = setInterval(myFunc, 3000, performer)
             });
             await promiseVariations.then(async (result) => {
                 console.log('promiseVariations then', p)
