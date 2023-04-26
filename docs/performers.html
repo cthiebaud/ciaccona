@@ -315,18 +315,7 @@
                 if (!fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics,` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]` )) {
                     document.querySelectorAll('.count').forEach(e => e.style.display = 'none')
                 }
-                /*
-                const countAPIurl = `https://api.countapi.xyz/get/ciaccona.cthiebaud.com/${a.fullnameNoSpaceLowercaseNoDiacritics}`
-                fetch(countAPIurl).then(response => {
-                    return response.json()
-                }).then(text => {
-                    const asd = document.querySelector(`.count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]`)
-                    asd.innerHTML = text.value
-                    asd.dataset.number = parseInt(text.value)
-                })
-                */
             })
-            // document.querySelector('#theTable > thead > tr > th:last-child').classList.add('sorted_asc')
         })
 
     </script>
