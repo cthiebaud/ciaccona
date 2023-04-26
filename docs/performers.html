@@ -179,10 +179,6 @@
                 <table id="theTable" class="table table-fit table-responsive table-striped table-hover table-sm ">
                     <thead>
                         <tr style="font-size:smaller">
-                            <th scope="col" id="count" class="count      text-start  sortable" style="min-width: 4rem;">
-                                <span>&nbsp;</span>
-                            </th>
-
                             <th scope="col" id="name" class="name      text-center sortable">
                                 <img src="svg/person-male-svgrepo-com.svg" style="width: 22px; height:22px;">
                                 <span></span>
@@ -222,7 +218,6 @@
 
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
-<td class="count     text-center" data-number="" data-fnnslnd="{{fullnameNoSpaceLowercaseNoDiacritics}}"></td>
 <th class="name" data-lastname="{{reverseFullname}}"><a href={{thisUrl}}>{{hideMe reverseFullname}}</a></th>
 <td class="flag text-center">{{flag}}</td>
 <td class="published text-end" data-timestamp="{{dateFormat v.publishedMoment "YYMM"}}">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
@@ -271,7 +266,6 @@
 
     <script async type="module">
         import { loadArtists, theDayWhenIReadTheVideoMeters } from "/js/artists.js?v=0.10.0"
-        import { fetchCountForKeyToSelector } from "/js/count.js?v=0.10.0"
 
         document.getElementById("go-back").addEventListener("click", () => {
             window.location = document.referrer
@@ -307,11 +301,6 @@
             const sorted = artists.artists.sort(sortMoiAlwaysFirst)
             const bodyContent = template(sorted)
             theBody.innerHTML = bodyContent
-            artists.artists.forEach((a) => {
-                if (!fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics, ` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]`)) {
-                    document.querySelectorAll('.count').forEach(e => e.style.display = 'none')
-                }
-            })
         })
 
     </script>

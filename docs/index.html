@@ -155,15 +155,12 @@
 
     <script type="module">
         import config from "/js/config.js?v=0.10.0"
-        import { count } from "/js/count.js?v=0.10.0"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
             config.playing = undefined
             // config.startBarOfLastSelectedVariation = undefined
         }
-
-        count(fullameNoSpaceLowercaseNoDiacritics || 'home', 'views', test)
     </script>
 
     <!-- google font -->
