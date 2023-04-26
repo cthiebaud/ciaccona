@@ -55,6 +55,7 @@ function selectAndScrollToVariation(source, variation, options) {
         el.querySelector('.score').scrollLeft = 0
     })
     document.querySelector(selector)?.classList.add('selected')
+    document.querySelector("#gb-bwv1004 a").dataset.v = variation
 
     const scrollToElement = document.querySelector(scrollToSelector)
     console.log(source, selector, 'to scroll into view', options)
@@ -69,6 +70,8 @@ function unplay_and_unselect(keepSelect) {
         document.querySelectorAll('.grid-brick.selected.hasScore').forEach(el => {
             el.classList.remove('selected');
             el.querySelector('.score').pageXOffset = 0
+            el.querySelector('.score').scrollLeft = 0
+            delete document.querySelector("#gb-bwv1004 a").dataset.v
         })
     }
 }
@@ -84,6 +87,7 @@ function showPlay(currentTime, timings) {
     console.log('showing play of variation', variation)
     unplay_and_unselect()
     document.querySelector(`.grid-brick#gb${variation}`).classList.add('gbPlaying', 'selected');
+    document.querySelector("#gb-bwv1004 a").dataset.v = variation
 }
 
 function hidePlay(cause) {
@@ -101,6 +105,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
         unplay_and_unselect()
         if (doSave) {
             config.startBarOfLastSelectedVariation = undefined
+            delete document.querySelector("#gb-bwv1004 a").dataset.v
         }
         return
     }
@@ -110,6 +115,7 @@ const feedbackOnCurrentTime = (source, currentTime, timings, noSave, isPlaying, 
     // changement de variation 
     if (config.startBarOfLastSelectedVariation != startBarOfThisVariation) {
         config.startBarOfLastSelectedVariation = startBarOfThisVariation
+        document.querySelector("#gb-bwv1004 a").dataset.v = variation
     }
 
     if (isPlaying) {
@@ -175,6 +181,7 @@ const setBrickClickEvent = (_plyer, timings) => {
 
             document.querySelector(selector)?.classList.add('selected')
             document.querySelector('.grid-brick.gbPlaying')?.classList.add('goodbye')
+            document.querySelector("#gb-bwv1004 a").dataset.v = thisVariation
             this.parentNode.classList.add('hello')
 
             // get bar data from timings
@@ -230,6 +237,7 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                 console.log("Plyr ended event")
                 config.playing = undefined
                 config.startBarOfLastSelectedVariation = undefined
+                delete document.querySelector("#gb-bwv1004 a").dataset.v
                 hidePlay()
             })
             _plyer.on('playing', (event) => {

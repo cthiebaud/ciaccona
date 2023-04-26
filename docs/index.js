@@ -109,6 +109,7 @@ allPromises.set(
 
 // 2. promises resolves when 1) timings for this artist have been loeaded, then 2) video player is ready
 if (fullameNoSpaceLowercaseNoDiacritics) {
+
     allPromises.set(
         PLAYER,
         createTimings(fullameNoSpaceLowercaseNoDiacritics).then((artist) => {
@@ -184,6 +185,7 @@ Promise.allSettled([...allPromises.values()]).then((results) => {
         if (!playerResult) {
             console.log("change isotope filter to hide artist name")
             isotopeResult.arrange({ filter: ':not(.artist)' })
+
             // select last variation
             let theLastStartingBarIndex = config.startBarOfLastSelectedVariation
             const varation = codec.bar2variation(theLastStartingBarIndex)
@@ -193,6 +195,7 @@ Promise.allSettled([...allPromises.values()]).then((results) => {
                 e.scrollIntoView({ behavior: "smooth", block: "center" })
             }
         } else {
+            document.querySelector("#gb-bwv1004 a").dataset.a = fullameNoSpaceLowercaseNoDiacritics
             console.log("change isotope filter to show artist name")
             isotopeResult.arrange({ filter: '*' })
         }

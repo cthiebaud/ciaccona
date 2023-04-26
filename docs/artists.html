@@ -222,8 +222,8 @@
     <main id="gridContainer" class="container-xxl flex-shrink-0">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="gridContainerCol" class="col">
-                <button id="go-back" type="button" class="btn btn-light m-0 p-0" style="float:right; position: absolute; right:0; top:0; z-index: 2;">
-                    <img src="svg/close-circle-svgrepo-com.svg" style="width:32px;height:auto;">
+                <button id="go-home" type="button" class="btn btn-light m-0 p-0" style="float:right; position: absolute; right:0; top:0; z-index: 2;">
+                    <span style="font-size:20pt;">🏠</span>
                 </button>
                 <div id="grid" style="color:white">
                     <div class="gutter-sizer"></div>
@@ -334,8 +334,8 @@
 
             $grid.packery()
 
-            document.getElementById("go-back").addEventListener("click", () => {
-                window.location = document.referrer
+            document.getElementById("go-home").addEventListener("click", () => {
+                window.location = '/'
             });
 
             // https://codepen.io/desandro/pen/WxjJJW/

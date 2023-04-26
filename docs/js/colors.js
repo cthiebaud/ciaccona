@@ -235,9 +235,9 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 <div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
     <!-- style="background-image: url(svg/facsimile.jpg);" -->
     <div class="brick d-flex align-items-center justify-content-center">
-        <div class="magnificent-card p-2">
+        <a class="magnificent-card p-2">
             &nbsp;BWV&nbsp;1004&nbsp;
-        </div>
+        </a>
     </div>
 </div>
 `

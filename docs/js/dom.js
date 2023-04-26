@@ -184,10 +184,18 @@ const Ω = {
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
-        document.querySelectorAll("#gb-bwv1004 .magnificent-card").forEach(elem => {
-            elem.addEventListener('click', () => window.location = '/artists.html');
+        document.querySelector("#gb-bwv1004 a").addEventListener('click', (e) => {
+            const a = e.currentTarget.dataset.a
+            const v = e.currentTarget.dataset.v 
+            if (a && v) {
+                window.location = `puzzle.html?a=${a}&v=${v}`
+            } else if (a) {
+                window.location = `puzzle.html?a=${a}`
+            } else {
+                window.location = '/artists.html'
+            }
         })
-
+        
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((elem) => {
             const nameNoSpaceLowercaseNoDiacritics = elem.dataset.nameNoSpaceLowercaseNoDiacritics
             if (nameNoSpaceLowercaseNoDiacritics === '') {
@@ -259,6 +267,7 @@ const Ω = {
                 const variation = e.currentTarget.parentNode.dataset.variation
                 const startBar = codec.variation2bar(variation)
                 config.startBarOfLastSelectedVariation = startBar
+                document.querySelector("#gb-bwv1004 a").dataset.v = variation
             }
         }))
 
