@@ -173,7 +173,7 @@ class Config {
                 if (this.#incognito === false) {
                     removeCookie('incognito')
                 } else {
-                    setCookie('incognito', 'true')
+                    setCookie('incognito', 'true', { expires: 365 })
                 }
             }
         }
