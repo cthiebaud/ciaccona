@@ -1,4 +1,4 @@
-const Szu_ui_fnzs = {
+var Szu_ui_fnzs = {
   offset: { minutes: 0, seconds: 0 },
   adjust: { seconds: 0, milliseconds: 200 },
   start: "2023-04-05T13:23:14.885Z",

@@ -1,4 +1,4 @@
-const Kxn0ySsHDRA = {
+var Kxn0ySsHDRA = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 0, milliseconds: 800 },
     start: "2023-04-06T17:01:38.772Z",

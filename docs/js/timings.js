@@ -1,4 +1,3 @@
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import lodashMerge from 'https://cdn.jsdelivr.net/npm/lodash.merge@4.6.2/+esm'
 import moment from 'https://cdn.jsdelivr.net/npm/moment@2.29.4/+esm'
 import codec from "/js/structure.js?v=0.9.7"
@@ -102,18 +101,22 @@ function createTimings(fullameNoSpaceLowercaseNoDiacritics) {
             const timingsURL = artistObject['▶'].timingsUrl
             const javascriptizedId = artistObject['▶'].javascriptizedId
             console.log('script loading', timingsURL)
-            jquery.ajax({
-                url: timingsURL,
-                dataType: "script",
-            }).done(function () {
-                console.log("script loaded", timingsURL);
+
+            fetch(timingsURL, {cache: "no-store"}).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error fetching ${timingsURL}! Status: ${response.status}`);
+                }
+                return response.text()
+            }).then((timingsAstext) => {
+                eval?.(timingsAstext)
                 const data = eval(javascriptizedId)
                 const timings = new Timings(artistObject, data)
                 resolve(timings)
-            }).fail(function (jqXHR, textStatus, error) {
-                console.log("script loading error", timingsURL, jqXHR, textStatus, error);
+            }).catch((error) => {
+                console.log("script loading error", timingsURL, error);
                 reject(error)
             })
+    
         }).catch((error) => {
             console.log('loadArtists error', error)
             reject(error)

@@ -1,4 +1,4 @@
-const mg9kT7XiLoU = {
+var mg9kT7XiLoU = {
   offset:{ minutes: 14, seconds: 36 },
   /* adjust: { seconds: 0, milliseconds: 0 }, */
   start: "2023-03-20T10:03:46.945Z",

@@ -1,8 +1,7 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import codec from "/js/structure.js?v=0.9.7"
-import { shuffleArray, normalizeVraiment, logFunc } from "/js/utils.js?v=0.9.7"
+import { shuffleArray, normalizeVraiment, logFunc, generateElement} from "/js/utils.js?v=0.9.7"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -125,7 +124,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         }
     }
 
-    const $bricksTemporaryContainer = jquery("<span>");
+    const $bricksTemporaryContainer = generateElement("<template>");
     const templateForTheme =
         `
 <div id="gb-ciaccona" data-sort="-1" class="grid-brick" >
@@ -136,7 +135,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         </div>
     </div>
 </div>`
-    $bricksTemporaryContainer.append(jquery(templateForTheme));
+    $bricksTemporaryContainer.appendChild(generateElement(templateForTheme));
 
     const templateForArtist =
         `
@@ -157,7 +156,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         </div>
     </div>
 </div>`
-    $bricksTemporaryContainer.append(jquery(templateForArtist));
+    $bricksTemporaryContainer.appendChild(generateElement(templateForArtist));
 
     const twoZeroPad = (num) => String(num).padStart(2, '0')
     let i = 0;
@@ -222,7 +221,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     </div>
 </div>
 `
-        $bricksTemporaryContainer.append(jquery(templateVariations));
+        $bricksTemporaryContainer.appendChild(generateElement(templateVariations));
 
         // bumpers
         {
@@ -242,13 +241,14 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     </div>
 </div>
 `
-    $bricksTemporaryContainer.append(jquery(oblivion))
+    $bricksTemporaryContainer.appendChild(generateElement(oblivion))
 
-    const $bricks = $bricksTemporaryContainer.children().detach()
+    const $bricks = $bricksTemporaryContainer.children
 
-    let $gridById = jquery("#grid")
-    $gridById.children('.grid-brick').remove()
-    $gridById.append($bricks)
+    let $gridById = document.getElementById("grid")
+    Array.from($gridById.children).forEach( e => e.remove())
+    Array.from($bricks).forEach(b => $gridById.appendChild(b))
+    
 
     return {}
 }

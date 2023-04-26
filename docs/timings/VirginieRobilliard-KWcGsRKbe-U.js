@@ -1,4 +1,4 @@
-const KWcGsRKbe_U = {
+var KWcGsRKbe_U = {
   offset:{ minutes: 18, seconds: 15 },
   /* adjust: { seconds: 0, milliseconds: 0 }, */
   start: "2023-03-28T15:48:31.916Z",

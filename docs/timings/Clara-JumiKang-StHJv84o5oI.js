@@ -1,4 +1,4 @@
-const StHJv84o5oI = {
+var StHJv84o5oI = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 1, milliseconds: 100 },
     start: "2023-04-23T19:41:34.883Z",

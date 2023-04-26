@@ -1,4 +1,4 @@
-const dyAcRqpjbqU = {
+var dyAcRqpjbqU = {
   /* offset:{ minutes: 0, seconds: 0 }, */
   adjust: { seconds: 0, milliseconds: 600 },
   start: "2023-03-21T14:25:55.723Z",

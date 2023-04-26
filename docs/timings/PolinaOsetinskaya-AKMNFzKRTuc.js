@@ -1,4 +1,4 @@
-const AKMNFzKRTuc = {
+var AKMNFzKRTuc = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 2, milliseconds: 0 },
     start: "2023-04-08T05:26:01.302Z",

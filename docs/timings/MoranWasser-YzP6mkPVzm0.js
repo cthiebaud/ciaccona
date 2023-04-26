@@ -1,4 +1,4 @@
-const YzP6mkPVzm0 = {
+var YzP6mkPVzm0 = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 0, milliseconds: 500 },
     start: "2023-04-07T16:31:20.302Z",

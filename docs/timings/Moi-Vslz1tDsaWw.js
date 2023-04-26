@@ -1,4 +1,4 @@
-const Vslz1tDsaWw = {
+var Vslz1tDsaWw = {
   /* offset:{ minutes: 0, seconds: 0 },
   adjust: { seconds: 0, milliseconds: 0 }, */
   start: "2023-03-20T00:42:45.200Z",

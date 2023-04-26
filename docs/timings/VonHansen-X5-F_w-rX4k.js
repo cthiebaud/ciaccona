@@ -1,4 +1,4 @@
-const X5_F_w_rX4k = {
+var X5_F_w_rX4k = {
   /* offset:{ minutes: 0, seconds: 0 },*/
   adjust: { seconds: 0, milliseconds: 400 }, 
   start: "2023-04-02T12:21:40.260Z",

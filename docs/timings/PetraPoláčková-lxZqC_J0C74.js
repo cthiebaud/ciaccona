@@ -1,4 +1,4 @@
-const lxZqC_J0C74 = {
+var lxZqC_J0C74 = {
   /* offset:{ minutes: 0, seconds: 0 }, */
   adjust: { seconds: 0, milliseconds: 500 },
   start: "2023-03-22T22:48:58.439Z",

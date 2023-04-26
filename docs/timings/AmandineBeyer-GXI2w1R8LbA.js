@@ -1,4 +1,4 @@
-const GXI2w1R8LbA = {
+var GXI2w1R8LbA = {
     offset: { minutes: 13, seconds: 2 },
     adjust: { seconds: 0, milliseconds: 0 },
     start: "2023-04-14T15:36:27.616Z",

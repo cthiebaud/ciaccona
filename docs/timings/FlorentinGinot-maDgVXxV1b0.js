@@ -1,4 +1,4 @@
-const maDgVXxV1b0 = {
+var maDgVXxV1b0 = {
   /* offset:{ minutes: 0, seconds: 0 },*/
   adjust: { seconds: 0, milliseconds: 300 }, 
   start: "2023-04-02T14:20:19.144Z",

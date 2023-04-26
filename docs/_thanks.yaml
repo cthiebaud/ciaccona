@@ -8,7 +8,6 @@ JS:
   - bezier-easing: "https://github.com/gre/bezier-easing"
   - bootstrap: "https://getbootstrap.com/"
   - isotope: "https://isotope.metafizzy.co/"
-  - jquery: "https://jquery.com/"
   - js-cookies: "https://github.com/js-cookie/js-cookie"
   - js-yaml: "https://github.com/nodeca/js-yaml"
   - lodash: "https://lodash.com/"

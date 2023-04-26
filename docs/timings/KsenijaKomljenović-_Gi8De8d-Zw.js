@@ -1,4 +1,4 @@
-const _Gi8De8d_Zw = {
+var _Gi8De8d_Zw = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 0, milliseconds: 600 },
     start: "2023-04-25T19:16:13.257Z",

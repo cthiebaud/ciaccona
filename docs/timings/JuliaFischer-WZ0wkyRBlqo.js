@@ -1,4 +1,4 @@
-const WZ0wkyRBlqo = {
+var WZ0wkyRBlqo = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 0, milliseconds: 300 },
     start: "2023-04-05T20:19:28.332Z",

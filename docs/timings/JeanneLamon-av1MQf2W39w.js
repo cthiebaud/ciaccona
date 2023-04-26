@@ -1,4 +1,4 @@
-const av1MQf2W39w = {
+var av1MQf2W39w = {
     offset: { minutes: 0, seconds: 0 },
     adjust: { seconds: 0, milliseconds: 500 },
     start: "2023-04-23T14:22:07.360Z",

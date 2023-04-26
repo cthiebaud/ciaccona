@@ -1,4 +1,4 @@
-const oxWq93mlAyc = {
+var oxWq93mlAyc = {
   /* offset:{ minutes: 0, seconds: 0 },
   adjust: { seconds: 0, milliseconds: 0 }, */
   start: "2023-03-22T14:37:07.374Z",

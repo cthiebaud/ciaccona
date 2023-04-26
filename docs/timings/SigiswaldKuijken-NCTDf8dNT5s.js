@@ -1,4 +1,4 @@
-const NCTDf8dNT5s = {
+var NCTDf8dNT5s = {
     /* offset:{ minutes: 0, seconds: 0 },*/
     adjust: { seconds: 0, milliseconds: 500 }, 
     start: "2023-03-25T17:07:50.217Z",

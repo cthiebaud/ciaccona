@@ -1,4 +1,4 @@
-const mTTT5_oX69Q = {
+var mTTT5_oX69Q = {
   offset: { minutes: 0, seconds: 0 },
   adjust: { seconds: 0, milliseconds: 300 },
   start: "2023-04-05T07:18:46.573Z",

@@ -1,5 +1,5 @@
 
-const BVBgKOLkYu8 = {
+var BVBgKOLkYu8 = {
     offset: { minutes: 0, seconds: 56 }, /* 56.2320991335144*/
     adjust: { seconds: 0, milliseconds: 600 },
     start: "2023-04-08T11:28:37.592Z",

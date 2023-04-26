@@ -1,4 +1,4 @@
-const XkfsGCIiHb4 = {
+var XkfsGCIiHb4 = {
   /* offset:{ minutes: 0, seconds: 0 }, */
   adjust: { seconds: 1, milliseconds: 0 },
   start: "2023-03-20T09:30:50.302Z",

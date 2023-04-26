@@ -1,4 +1,4 @@
-const AbZxSocrvvs = {
+var AbZxSocrvvs = {
   /*offset: { minutes: 0, seconds: 0 },*/
   adjust: { seconds: 0, milliseconds: 300 }, 
   start: "2023-04-03T18:54:11.216Z",

@@ -1,13 +1,11 @@
-import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
+import animejs from 'https://cdn.jsdelivr.net/npm/animejs@3.2.1/+esm'
 import config from "/js/config.js?v=0.9.7"
 import codec from "/js/structure.js?v=0.9.7"
-import { shuffleArray } from "/js/utils.js?v=0.9.7"
-
-const $ = jquery
+import { shuffleArray, generateElement } from "/js/utils.js?v=0.9.7"
 
 const Ω = {
     boot: () => {
-        console.log('jquery is here')
+        console.log('jquery is not here anymore')
         return true
     },
 
@@ -18,12 +16,18 @@ const Ω = {
             return new Promise((resolve) => {
                 id.classList.remove('init')
                 // console.log( 'id.dataset.width', id.dataset.width )
-                $(id).css({ visibility: 'inherit', width: '0' }).animate({ width: `${id.dataset.width}px` }, speed, "linear", () => {
-                    resolve(id)
-                })
+                id.style.visibility = 'inherit'
+                id.style.width = 0
+                animejs({
+                    targets: id,
+                    width: `${id.dataset.width}px`,
+                    duration: speed,
+                    easing: 'linear',
+                    complete: () => resolve(id)
+                });
             })
         }
-        let result = $('.score').toArray().reduce((accumulatorPromise, nextID) => {
+        const result = Array.from(document.querySelectorAll('.score')).reduce((accumulatorPromise, nextID) => {
             return accumulatorPromise.then(() => {
                 return methodThatReturnsAPromise(nextID);
             });
@@ -37,13 +41,15 @@ const Ω = {
     showScoreDisplay: function (iso) {
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
-            $('#gridContainer').removeClass('container-fluid').addClass('container-xxl')
-            $('#gridContainerCol').removeClass('fullwidth')
-            $('.grid-brick:not(.hasPerformer), .score').removeClass('fullwidth')
+            document.getElementById('gridContainer').classList.remove('container-xxl')
+            document.getElementById('gridContainer').classList.add('container-fluid')
+            document.getElementById('gridContainerCol').classList.remove('fullwidth')
+            document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.remove('fullwidth'))
         } else if (config.scoreDisplay === 'fullScore') {
-            $('#gridContainer').removeClass('container-xxl').addClass('container-fluid')
-            $('#gridContainerCol').addClass('fullwidth')
-            $('.grid-brick:not(.hasPerformer), .score').addClass('fullwidth')
+            document.getElementById('gridContainer').classList.remove('container-fluid')
+            document.getElementById('gridContainer').classList.add('container-xxl')
+            document.getElementById('gridContainerCol').classList.add('fullwidth')
+            document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.add('fullwidth'))
         }
 
         if (iso) iso.layout()
@@ -52,19 +58,19 @@ const Ω = {
     showScoreInBricks: function () {
         document.getElementById('grid').dataset.scoreInBricks = config.scoreInBricks
         if (config.scoreInBricks === 'allBricks') {
-            $('#grid').removeClass('selectedBrick')
+            document.getElementById('grid').classList.remove('selectedBrick')
         } else if (config.scoreInBricks === 'selectedBrick') {
-            $('#grid').addClass('selectedBrick')
+            document.getElementById('grid').classList.add('selectedBrick')
         }
     },
 
     About: function () {
         this.about = false;
         const pos = [
-            { left: '-111vw', top: 0 },
-            { left: '+111vw', top: 0 },
-            { left: 0, top: '+111vh' },
-            { left: 0, top: '-111vh' },
+            { left: '-111vw', top: '0' },
+            { left: '+111vw', top: '0' },
+            { left: '0', top: '+111vh' },
+            { left: '0', top: '-111vh' },
         ]
         this.animations = []
         for (let i = 0; i < pos.length; i++) {
@@ -74,68 +80,108 @@ const Ω = {
                 }
             }
         }
+        function style(elem, set) {
+            for (let key in set) {
+                elem.style[key] = set[key]
+            }
+        }
         this.animations = shuffleArray(this.animations)
         this.a = 0;
-        this.showAbout = () => {
+        this.showAbout = async () => {
             console.log('BEGIN show about')
-            $('#config-menu a#about > label').html("&check; About&hellip;")
+            document.querySelector('#config-menu a#about > label').innerHTML = "&check; About&hellip;"
 
-            $('body').addClass('about')
+            document.querySelector('body').classList.add('about')
 
-            $('div#logoLeft').css(this.animations[this.a].fore)
-            $('div#logoRight').css(this.animations[this.a].back)
-            $('div#logoLeft').show()
-            $('div#logoRight').show()
+            style(document.querySelector('div#logoLeft'), this.animations[this.a].fore)
+            style(document.querySelector('div#logoRight'), this.animations[this.a].back)
+            document.querySelector('div#logoLeft').style.display = 'inherit'
+            document.querySelector('div#logoRight').style.display = 'inherit'
 
             window.requestAnimationFrame((chrono) => {
-                $('div#logoLeft').animate({ left: 0, top: 0 }, 1800, 'swing')
-                $('div#logoRight').animate({ left: 0, top: 0 }, 1800, 'swing', () => {
-                    console.log('MIDDLE show about')
-                    $('header.header').show()
-                    $('#close-about').show()
-                    $('footer.footer').show()
-                    $('#gridContainerCol').animate({ opacity: 0 }, 600)
-                    $('#playerWrapper').animate({ opacity: 0 }, 600, 'linear', () => {
-                        $('#gridContainerCol, #playerWrapper').css({ visibility: 'hidden' })
-                        this.a = (this.a + 1) % this.animations.length
-                        console.log('FIN show about')
-                    })
+                animejs({
+                    targets: ['div#logoLeft', 'div#logoRight'],
+                    left: 0,
+                    top: 0,
+                    speed: 1800,
+                    easing: 'easeInOutQuad',
+                    complete: () => {
+                        console.log('MIDDLE show about')
+                        document.querySelector('header.header').style.display = 'flex'
+                        document.querySelector('#close-about').style.display = 'block'
+                        document.querySelector('footer.footer').style.display = 'flex'
+                        animejs({
+                            targets: ['#gridContainerCol', '#playerWrapper'],
+                            opacity: 0,
+                            speed: 600,
+                            easing: 'linear',
+                            complete: () => {
+                                document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'hidden')
+                                this.a = (this.a + 1) % this.animations.length
+                                console.log('FIN show about')
+                            }
+                        })
+                    }
                 })
             });
             this.about = true
         }
-        this.hideAbout = () => {
+        this.hideAbout = async () => {
             console.log('BEGIN hide about')
-            $('#config-menu a#about > label').html("About&hellip;")
+            document.querySelector('#config-menu a#about > label').innerHTML = "About&hellip;"
 
-            $('header.header').hide()
-            $('#close-about').hide()
-            $('footer.footer').hide()
+            document.querySelector('header.header').style.display = 'none'
+            document.querySelector('#close-about').style.display = 'none'
+            document.querySelector('footer.footer').style.display = 'none'
 
             window.requestAnimationFrame((chrono) => {
-                $('#gridContainerCol').css({ visibility: 'visible' }).animate({ opacity: 1 }, 600, 'linear')
-                $('#playerWrapper').css({ visibility: 'visible' }).animate({ opacity: 1 }, 600, 'linear', () => {
-                    console.log('MIDDLE hide about')
-                    $('div#logoLeft ').animate(this.animations[this.a].fore, 1800, 'swing')
-                    $('div#logoRight').animate(this.animations[this.a].back, 1800, 'swing', () => {
-                        $('div#logoLeft').hide()
-                        $('div#logoRight').hide()
-                        $('body').removeClass('about')
+                document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'visible')
+                document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.opacity = '1')
+                animejs({
+                    targets: ['#gridContainerCol', '#playerWrapper'],
+                    opacity: 1,
+                    speed: 600,
+                    easing: 'linear',
+                    complete: e => {
+                        console.log('back ok')
+                    }
+                })
+                animejs({
+                    targets: ['div#logoLeft'],
+                    left: this.animations[this.a].fore.left,
+                    top: this.animations[this.a].fore.top,
+                    speed: 1800,
+                    easing: 'easeInOutQuad',
+                    complete: e => {
+                        console.log('left ok')
+                    }
+                })
+                animejs({
+                    targets: ['div#logoRight'],
+                    left: this.animations[this.a].back.left,
+                    top: this.animations[this.a].back.top,
+                    speed: 1800,
+                    easing: 'easeInOutQuad',
+                    complete: e => {
+                        console.log('right ok')
+                        document.querySelector('div#logoLeft').style.display = 'none'
+                        document.querySelector('div#logoRight').style.display = 'none'
+                        document.querySelector('body').classList.remove('about')
                         console.log('FIN hide about')
-                    })
+                    }
                 })
             })
             this.about = false
         }
         const _this = this
-        $('a#about').on('click', (e) => {
+        document.querySelector('a#about').addEventListener('click', e => {
             if (_this.about) {
                 _this.hideAbout()
             } else {
                 _this.showAbout()
             }
         })
-        $('#close-about').on('click', (e) => {
+        document.querySelector('#close-about').addEventListener('click', e => {
             _this.hideAbout()
         })
     },
@@ -143,70 +189,62 @@ const Ω = {
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
-        $("#gb-ciaccona .magnificent-card").on("click", function (e) {
-        })
-        
-        $("#gb-bwv1004 .magnificent-card").on("click", function (e) {
-            window.location = '/artists.html'
-            // window.location = '/puzzle.html'
+        document.querySelectorAll("#gb-bwv1004 .magnificent-card").forEach(elem => {
+            elem.addEventListener('click', () => window.location = '/artists.html');
         })
 
-        document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((e) => {
-            const nameNoSpaceLowercaseNoDiacritics = e.dataset.nameNoSpaceLowercaseNoDiacritics
+        document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((elem) => {
+            const nameNoSpaceLowercaseNoDiacritics = elem.dataset.nameNoSpaceLowercaseNoDiacritics
             if (nameNoSpaceLowercaseNoDiacritics === '') {
-                e.setAttribute('href', url.pathname)
+                elem.setAttribute('href', url.pathname)
             } else {
-                e.setAttribute('href', `${url.pathname}video/${nameNoSpaceLowercaseNoDiacritics}.html`)
+                elem.setAttribute('href', `${url.pathname}video/${nameNoSpaceLowercaseNoDiacritics}.html`)
             }
         })
 
-        $("#firstBarChecked, #fullScoreChecked").on("click", function (e) {
-            const scoreDisplay = e.currentTarget.dataset.scoreDisplay
-            config.scoreDisplay = scoreDisplay
-            Ω.showScoreDisplay(iso)
+        document.querySelectorAll('#firstBarChecked, #fullScoreChecked').forEach((elem) => {
+            elem.addEventListener('click', (e) => {
+                const scoreDisplay = e.currentTarget.dataset.scoreDisplay
+                config.scoreDisplay = scoreDisplay
+                Ω.showScoreDisplay(iso)
+            })
         })
 
-        $("#allBricksChecked, #selectedBrickChecked").on("click", function (e) {
-            const scoreInBricks = e.currentTarget.dataset.scoreInBricks
-            config.scoreInBricks = scoreInBricks
-            Ω.showScoreInBricks()
+        document.querySelectorAll('#allBricksChecked, #selectedBrickChecked').forEach((elem) => {
+            elem.addEventListener('click', (e) => {
+                const scoreInBricks = e.currentTarget.dataset.scoreInBricks
+                config.scoreInBricks = scoreInBricks
+                Ω.showScoreInBricks()
+            })
         })
 
-        $("#autoplayChecked").on("click", function (e) {
-            config.autoplay = !config.autoplay
-        })
-
-        $("#incognitoChecked").on("click", function (e) {
-            config.incognito = !config.incognito
-        })
+        document.getElementById('autoplayChecked').addEventListener('click', e => config.autoplay = !config.autoplay)
+        document.getElementById('incognitoChecked').addEventListener('click', e => config.incognito = !config.incognito)
 
     },
 
     showArtist: (artist) => {
-        const $artist = $('.grid-brick.artist#gb-artist');
+        const artistE = document.querySelector('.grid-brick.artist#gb-artist')
+        if (!artistE) return
 
         const fullname = artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname;
 
-        $('#loading #message').html(fullname);
-        $artist.css({ visibility: "inherit" })
-        $artist.find('.fullname').html(fullname)
-        $artist.find('a#youtube-url').attr({
-            href: artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl,
-            target: artist['▶'].id
-        })
-        $artist.find('a#social').attr({
-            href: artist.social
-        })
+        document.querySelector('#loading #message').innerHTML = fullname
+        artistE.style.visibility = 'inherit'
+        artistE.querySelector('.fullname').innerHTML = fullname
+        artistE.querySelector('a#youtube-url').setAttribute('href', artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl)
+        artistE.querySelector('a#youtube-url').setAttribute('target', artist['▶'].id)
+        artistE.querySelector('a#social').setAttribute('href', artist.social)
     },
 
     beforeCreatePlayer: (videoId) => {
-        const idPlayer = "blah2"
+        const idPlayer = "thePlayer"
 
-        $('#loading').css({ "background-color": "#00000080" })
+        document.querySelector('#loading').style.backgroundColor = '#00000080'
 
-        const $blah2 = $(`<div id="${idPlayer}" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`)
+        const thePlayer = generateElement(`<div id="${idPlayer}" data-plyr-provider="youtube" data-plyr-embed-id="${videoId}">`)
 
-        $("#playerWrapper").append($blah2)
+        document.querySelector('#playerWrapper').appendChild(thePlayer)
 
         return '#' + idPlayer
     },
@@ -215,21 +253,22 @@ const Ω = {
 
         Ω.setClickHandlers(iso)
 
-        $(".brick.hasScore").click(function (e) {
-            const hadClass = $(e.currentTarget).parent().hasClass('selected')
-            $('.grid-brick.selected .score').scrollLeft(0)
-            $('.grid-brick.selected').removeClass('selected')
-            $('.grid-brick.goodbye').removeClass('goodbye')
-            $('.grid-brick.hello').removeClass('hello')
+        document.querySelectorAll('.brick.hasScore').forEach(score => score.addEventListener('click', e => {
+            const hadClass = e.currentTarget.parentNode.classList.contains('selected')
+            document.querySelectorAll('.grid-brick.selected .score').forEach(score => score.scrollLeft = 0)
+            document.querySelectorAll('.grid-brick.selected').forEach(selected => selected.classList.remove('selected'))
+            document.querySelectorAll('.grid-brick.goodbye').forEach(goodbye => goodbye.classList.remove('goodbye'))
+            document.querySelectorAll('.grid-brick.hello').forEach(hello => hello.classList.remove('hello'))
             if (!hadClass) {
                 e.currentTarget.parentNode.classList.add('selected')
                 const variation = e.currentTarget.parentNode.dataset.variation
                 const startBar = codec.variation2bar(variation)
                 config.startBarOfLastSelectedVariation = startBar
             }
-        });
+        }))
 
-        $('.grid-brick .score').scroll((event) => {
+        document.querySelectorAll('.grid-brick .score').forEach(score => score.addEventListener("scroll", (event) => {
+
             const score = event.currentTarget;
             const obj = event.currentTarget.parentNode;
             if (score.scrollLeft <= 0) {
@@ -239,7 +278,7 @@ const Ω = {
             } else {
                 score.style['border-radius'] = "3rem 3rem 3rem 3rem"
             }
-        })
+        }))
     }
 }
 

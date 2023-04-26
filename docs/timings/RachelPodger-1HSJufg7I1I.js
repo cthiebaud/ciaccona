@@ -1,4 +1,4 @@
-const _1HSJufg7I1I = {
+var _1HSJufg7I1I = {
   offset:{ minutes: 15, seconds: 43 },
   adjust: { seconds: 0, milliseconds: 200 },
   start: "2023-03-21T17:59:15.239Z",

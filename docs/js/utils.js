@@ -153,4 +153,14 @@ function theTrickToViewportUnitsOnMobile(log, otherFunction) {
 
 }
 
-export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, normalizeVraiment, logFunc, theTrickToViewportUnitsOnMobile };
+// https://youmightnotneedjquery.com/
+function generateElement(html) {
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+    if (template.content.children.length != 1) {
+        throw Error('more or less than 1 element !!!!')
+    }
+    return template.content.children[0];
+  }
+
+export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, normalizeVraiment, logFunc, theTrickToViewportUnitsOnMobile, generateElement};
