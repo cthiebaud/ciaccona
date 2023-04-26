@@ -5,7 +5,7 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></script>
     <script type="module">
-        import config from "/js/config.js?v=0.9.6"
+        import config from "/js/config.js?v=0.9.7"
 
         if (!config.incognito) {
             window.dataLayer = window.dataLayer || [];
@@ -70,7 +70,7 @@
             window.location = document.referrer
         });
 
-        jquery("code#thanks").load("/_thanks.yaml?v=0.9.6", function (response, status, xhr) {
+        jquery("code#thanks").load("/_thanks.yaml?v=0.9.7", function (response, status, xhr) {
             if (status == "success") {
                 Prism.highlightElement(this)
                 jquery('#credits').show()
