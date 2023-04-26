@@ -5,13 +5,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></script>
     <script>
-        {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-            gtag('config', 'G-DJBNRY1Z9M');
-        }
+        gtag('config', 'G-DJBNRY1Z9M');
     </script>
     <meta charset="utf-8">
     <!-- meta name="viewport" content="width=device-width, initial-scale=1" -->
@@ -310,7 +308,7 @@
             const bodyContent = template(sorted)
             theBody.innerHTML = bodyContent
             artists.artists.forEach((a) => {
-                if (!fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics,` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]` )) {
+                if (!fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics, ` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]`)) {
                     document.querySelectorAll('.count').forEach(e => e.style.display = 'none')
                 }
             })

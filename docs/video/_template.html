@@ -20,7 +20,7 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-DJBNRY1Z9M');
+        gtag('config', 'G-DJBNRY1Z9M');    
     </scr{{!}}ipt>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -65,7 +65,7 @@
     {{#if twitter}}@{{twitter}}{{else}}#{{fullnameNoSpace}}{{/if}}
 -->
 
-<script id="twitter-template" type="text/x-handlebars-template">
+    <script id="twitter-template" type="text/x-handlebars-template">
 Listen to {{fullname}}{{#if twitter}} ({{twitter}}){{/if}} performing the #Ciaccona from #JSBach's partita in D minor for solo violin #BWV1004, collated with 32+ other performers:
 
 #Chaconne #Bach {{hashtag}}
@@ -75,7 +75,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
 -------------
 </script>
 
-<script id="youtube-template" type="text/x-handlebars-template">{{fullname}}:
+    <script id="youtube-template" type="text/x-handlebars-template">{{fullname}}:
 https://ciaccona.cthiebaud.com/video/{{filename}} 
 </script>
 
@@ -95,7 +95,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
             const sorted = artists.artists.sort((a, b) => b.fullname - a.fullname)
             const instances = []
             sorted.forEach((artist) => {
-                if (artist.fullnameNoSpaceLowercaseNoDiacritics !==  'ksenijakomljenovic') {
+                if (artist.fullnameNoSpaceLowercaseNoDiacritics !== 'ksenijakomljenovic') {
                     return
                 }
                 /*
@@ -112,7 +112,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
                 /*
                 */
                 // if (1 < i++) throw BreakException;
-                
+
                 console.log(artist.fullname, artist['▶'].viewsPerMonth, artist['▶'].youtubeUrl)
                 const key = artist.fullnameNoSpaceLowercaseNoDiacritics
                 const results = template({
@@ -135,7 +135,7 @@ https://ciaccona.cthiebaud.com/video/{{filename}}
                 /*     
                 */
                 // throw BreakException;
-            }) 
+            })
             /*
             var blob = new Blob(instances, { type: "text/plain;charset=utf-8" });
             saveAs(blob, `__qwe.txt`);
