@@ -226,8 +226,8 @@
 
     <script id="artist-template" type="text/x-handlebars-template">{{#each this}}        
 <tr>
-<td class="count     text-center" data-number="" data-qwe="{{fullnameNoSpaceLowercaseNoDiacritics}}"></td>
-<th class="name" data-lastname="{{qwe}}"><a href={{thisUrl}}>{{hideMe qwe}}</a></th>
+<td class="count     text-center" data-number="" data-fnnslnd="{{fullnameNoSpaceLowercaseNoDiacritics}}"></td>
+<th class="name" data-lastname="{{reverseFullname}}"><a href={{thisUrl}}>{{hideMe reverseFullname}}</a></th>
 <td class="flag text-center">{{flag}}</td>
 <td class="published text-end" data-timestamp="{{dateFormat v.publishedMoment "YYMM"}}">{{dateFormat v.publishedMoment "MMMM YYYY"}}</td>
 <td class="since">{{humanize v.durationMoment}}</td>
@@ -252,8 +252,8 @@
     <script>
         const sortMoiAlwaysLast = (a, b) => {
             let ret
-            if (typeof a.qwe !== 'undefined') a = a.qwe
-            if (typeof b.qwe !== 'undefined') b = b.qwe
+            if (typeof a.reverseFullname !== 'undefined') a = a.reverseFullname
+            if (typeof b.reverseFullname !== 'undefined') b = b.reverseFullname
             if (a.startsWith("Moi")) ret = -1
             else if (b.startsWith("Moi")) ret = 1
             else ret = a.localeCompare(b)
@@ -262,8 +262,8 @@
         }
         const sortMoiAlwaysFirst = (a, b) => {
             let ret
-            if (typeof a.qwe !== 'undefined') a = a.qwe
-            if (typeof b.qwe !== 'undefined') b = b.qwe
+            if (typeof a.reverseFullname !== 'undefined') a = a.reverseFullname
+            if (typeof b.reverseFullname !== 'undefined') b = b.reverseFullname
             if (a.startsWith("Moi")) ret = 1
             else if (b.startsWith("Moi")) ret = -1
             else ret = a.localeCompare(b)
@@ -275,7 +275,7 @@
 
     <script async type="module">
         import { loadArtists, theDayWhenIReadTheVideoMeters } from "/js/artists.js?v=0.9.6"
-        import countapi from 'https://cdn.jsdelivr.net/npm/countapi-js@1.0.2/+esm'
+        import { fetchCountForKeyToSelector } from "/js/count.js?v=0.9.6"
 
         document.getElementById("go-back").addEventListener("click", () => {
             window.location = document.referrer
@@ -306,20 +306,23 @@
 
         loadArtists().then((artists) => {
             artists.artists.forEach(a => {
-                a.qwe = [a.lastname, a.firstname].filter(Boolean).join(', ');
+                a.reverseFullname = [a.lastname, a.firstname].filter(Boolean).join(', ');
             })
             const sorted = artists.artists.sort(sortMoiAlwaysFirst)
             const bodyContent = template(sorted)
             theBody.innerHTML = bodyContent
             artists.artists.forEach((a) => {
+                fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics,` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]` )
+                /*
                 const countAPIurl = `https://api.countapi.xyz/get/ciaccona.cthiebaud.com/${a.fullnameNoSpaceLowercaseNoDiacritics}`
                 fetch(countAPIurl).then(response => {
                     return response.json()
                 }).then(text => {
-                    const asd = document.querySelector(`.count[data-qwe="${a.fullnameNoSpaceLowercaseNoDiacritics}"]`)
+                    const asd = document.querySelector(`.count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]`)
                     asd.innerHTML = text.value
                     asd.dataset.number = parseInt(text.value)
                 })
+                */
             })
             // document.querySelector('#theTable > thead > tr > th:last-child').classList.add('sorted_asc')
         })

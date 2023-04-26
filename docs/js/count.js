@@ -13,6 +13,7 @@ import config from "/js/config.js?v=0.9.6"
 // https://api.countapi.xyz/set/ciaccona.cthiebaud.com/artists?value=0
 
 function count(key, id, test) {
+    if (!config.countViews) return 
     let action = 'hit'
     if (config.incognito) {
         action = 'get'
@@ -26,6 +27,9 @@ function count(key, id, test) {
     }
     const countAPIURL = `https://api.countapi.xyz/${action}/ciaccona.cthiebaud.com/${key}`
     fetch(countAPIURL).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }        
         return response.json()
     }).then(json => {
         console.log(countAPIURL, json)
@@ -34,7 +38,31 @@ function count(key, id, test) {
             const element = document.getElementById(id)
             if (element) element.innerHTML = config.views
         }
+    }).catch(error => {
+        config.countViews = false
+        console.log(error)
+    }) 
+}
+
+function fetchCountForKeyToSelector(key, selector) {
+    if (!config.countViews) {
+        const element = document.querySelector(selector)
+        if (element) {
+            element.innerHTML = ''
+            element.dataset.number = -1
+        }
+        return
+    }
+    const countAPIurl = `https://api.countapi.xyz/get/ciaccona.cthiebaud.com/${key}`
+    fetch(countAPIurl).then(response => {
+        return response.json()
+    }).then(text => {
+        const element = document.querySelector(selector) 
+        if (element) {
+            element.innerHTML = text.value
+            element.dataset.number = parseInt(text.value)
+        }
     })
 }
 
-export default count
+export {count, fetchCountForKeyToSelector }

@@ -8,8 +8,7 @@ class Config {
     #startBarOfLastSelectedVariation = 0
     #autoplay = false
     #incognito = false
-
-    #views = 0
+    #countViews = { active: true, views: 0 }
 
     #inConstructor = true
 
@@ -31,6 +30,10 @@ class Config {
 
         // 
         this.incognito = getCookie('incognito')
+
+        // 
+        this.countViews = getCookie('countViews')
+
 
         this.#inConstructor = false
     }
@@ -173,17 +176,40 @@ class Config {
                 if (this.#incognito === false) {
                     removeCookie('incognito')
                 } else {
-                    setCookie('incognito', 'true', { expires: 365 })
+                    setCookie('incognito', 'true', 365 )
                 }
             }
         }
     }
 
+    // 
+    get countViews() {
+        return this.#countViews.active
+    }
+
+    set countViews(isCountViewsActive) {
+        if (typeof isCountViewsActive !== 'undefined' && (isCountViewsActive === null || isCountViewsActive === 'false' || isCountViewsActive === false)) {
+            isCountViewsActive = false
+        } else {
+            isCountViewsActive = true
+        }
+
+        if (isCountViewsActive !== this.#countViews.active) {
+            this.#countViews.active = isCountViewsActive
+            if (!this.#inConstructor) {
+                if (this.#countViews.isCountViewsActive === true) {
+                    removeCookie('countViews')
+                } else {
+                    setCookie('countViews', 'false', 365)
+                }
+            }
+        }
+    }
     get views() {
-        return this.#views
+        return this.#countViews.active ? this.#countViews.views : -1;
     }
     set views(views) {
-        this.#views = views
+        this.#countViews.views = views
     }
 }
 
