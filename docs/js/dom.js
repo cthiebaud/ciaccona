@@ -267,7 +267,7 @@ const Ω = {
                 const variation = e.currentTarget.parentNode.dataset.variation
                 const startBar = codec.variation2bar(variation)
                 config.startBarOfLastSelectedVariation = startBar
-                document.querySelector("#gb-bwv1004 a").dataset.v = variation
+                ;((e,v) => {if (e) e.dataset.v = v})(document.querySelector("#gb-bwv1004 a"), variation)
             }
         }))
 
