@@ -52,6 +52,7 @@ function selectAndScrollToVariation(source, variation, options) {
         el.classList.remove('goodbye');
         el.classList.remove('hello');
         el.querySelector('.score').pageXOffset = 0
+        el.querySelector('.score').scrollLeft = 0
     })
     document.querySelector(selector)?.classList.add('selected')
 

@@ -4,7 +4,7 @@ import codec from "/js/structure.js?v=0.10.0"
 import createColoredBadges from "/js/colors.js?v=0.10.0"
 import createTimings from "/js/timings.js?v=0.10.0"
 import resizeSVGs from "/js/resizeSVGs.js?v=0.10.0"
-import createPlayer from "/js/player.js?v=0.10.0"
+import createPlayer from "/js/player.js?v=0.10.0.1"
 import Ω from "/js/jquery.js?v=0.10.0"
 
 // transform windows loaded event to promise
