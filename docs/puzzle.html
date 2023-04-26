@@ -66,6 +66,7 @@
             /* margin: 50px auto; */
             min-height: 628px;
             z-index: 2;
+            transform-origin: top center;
         }
 
         .tile {
@@ -325,13 +326,21 @@
         import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.9.7'
         function scaleGrid() {
             const vw = window.innerWidth
-            if (vw < 1200) {
-                const qwe = `scale(${window.innerWidth / 1200})`
+            const vh = window.innerHeight
+
+            const scaleX = window.innerWidth / 1200
+            const scaleY = window.innerHeight / 628
+            const min = Math.min(scaleX, scaleY) * .9
+            if (min < 1) { // only zoom out, never zoom in
+                const qwe = `scale(${min})`
+
                 console.log(qwe)
                 document.getElementById('grid').style.transform = qwe
             }
-        } 
-        scaleGrid()
+        }
+        window.addEventListener("DOMContentLoaded", (event) => {
+            scaleGrid()
+        }, { once: true });
 
         theTrickToViewportUnitsOnMobile(true, scaleGrid)
     </script>
