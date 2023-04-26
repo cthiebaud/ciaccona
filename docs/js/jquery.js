@@ -1,7 +1,7 @@
 import animejs from 'https://cdn.jsdelivr.net/npm/animejs@3.2.1/+esm'
-import config from "/js/config.js?v=0.9.7"
-import codec from "/js/structure.js?v=0.9.7"
-import { shuffleArray, generateElement } from "/js/utils.js?v=0.9.7"
+import config from "/js/config.js?v=0.10.0"
+import codec from "/js/structure.js?v=0.10.0"
+import { shuffleArray, generateElement } from "/js/utils.js?v=0.10.0"
 
 const Ω = {
     boot: () => {
