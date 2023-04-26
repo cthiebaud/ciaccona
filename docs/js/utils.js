@@ -131,4 +131,26 @@ function logFunc(f, xMin, xMax, yTicks) {
     }
 }
 
-export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, normalizeVraiment, logFunc };
+function theTrickToViewportUnitsOnMobile(log, otherFunction) {
+    // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+    function theTrickToViewportUnitsOnMobile(log) {
+        if (log) console.log('window.innerWidth', window.innerWidth, 'window.innerHeight', window.innerHeight)
+
+        const vh = window.innerHeight * 0.01
+        const vw = window.innerWidth * 0.01
+
+        // set the value in custom properties to the root of the document
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+        document.documentElement.style.setProperty('--vw', `${vw}px`)
+    }
+
+    theTrickToViewportUnitsOnMobile(log)
+
+    window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with isotope own debounce
+        theTrickToViewportUnitsOnMobile()
+        if (otherFunction) otherFunction()
+    }/* , 750) */)
+
+}
+
+export { getCookie, setCookie, removeCookie, shuffleArray, binaryRangeSearch, normalizeVraiment, logFunc, theTrickToViewportUnitsOnMobile };

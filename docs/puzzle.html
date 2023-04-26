@@ -16,8 +16,8 @@
         }
     </script>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" -->
+    <!-- meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" -->
     <meta name="keywords" content="Bach, JSBach, J.S. Bach, BWV1004, BWV 1004, Partita, 2nd Partita, Ciaconna, Chaconne, Puzzle">
     <meta name="author" content="Christophe Thiebaud">
 
@@ -39,11 +39,6 @@
             box-sizing: border-box;
         }
 
-        /* force scroll bar */
-        html {
-            overflow-y: scroll;
-        }
-
         body#body {
             font-family: sans-serif;
             /* background: #DDD; */
@@ -53,6 +48,7 @@
             padding-bottom: 50px;
             margin: 0;
             padding: 0;
+            width: 100%;
         }
 
         a {
@@ -288,7 +284,7 @@
                 </div>
                 <button type="button" class="btn btn-primary shuffle-button" style="margin-right: 40px;">Shuffle</button>
             </div>
-            <div class="grid" style="margin:auto;">
+            <div id="grid" class="grid" style="margin:auto;">
                 <div data-tile="a" class="tile     "></div>
                 <div data-tile="b" class="tile bgx1"></div>
                 <div data-tile="c" class="tile bgx2"></div>
@@ -324,6 +320,21 @@
             </div>
         </div>
     </main>
+
+    <script type="module">
+        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.9.7'
+        function scaleGrid() {
+            const vw = window.innerWidth
+            if (vw < 1200) {
+                const qwe = `scale(${window.innerWidth / 1200})`
+                console.log(qwe)
+                document.getElementById('grid').style.transform = qwe
+            }
+        } 
+        scaleGrid()
+
+        theTrickToViewportUnitsOnMobile(true, scaleGrid)
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script async type="module">

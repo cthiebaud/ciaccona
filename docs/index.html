@@ -137,6 +137,21 @@
         } else if (fullameNoSpaceLowercaseNoDiacritics === 'christophethiebaud') {
             fullameNoSpaceLowercaseNoDiacritics = 'moi'
         }
+    </script>
+    <script type="module">
+        import {theTrickToViewportUnitsOnMobile} from '/js/utils.js?v=0.9.7'
+
+        // brick width
+        function calcBrickWidth() {
+            const containerWidth = document.getElementById('grid').getBoundingClientRect().width
+            const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
+            const gridBrickPercentageWidth = 100 / gridBricksPerRow
+            document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
+        }
+
+        theTrickToViewportUnitsOnMobile(true, calcBrickWidth)
+
+        /*
 
         // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
         function theTrickToViewportUnitsOnMobile(log) {
@@ -152,22 +167,15 @@
 
         theTrickToViewportUnitsOnMobile(true)
 
-        // brick width
-        function calcBrickWidth() {
-            const containerWidth = document.getElementById('grid').getBoundingClientRect().width
-            const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
-            const gridBrickPercentageWidth = 100 / gridBricksPerRow
-            document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
-        }
-
         window.addEventListener("DOMContentLoaded", (event) => {
             calcBrickWidth()
         }, { once: true });
 
-        window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with isotope own debounce
+        window.addEventListener('resize', lodash.debounce(() => { // debounce conflicts with isotope own debounce
             theTrickToViewportUnitsOnMobile()
             calcBrickWidth()
-        }/* , 750) */)
+        }, 750) )
+        */
     </script>
 
     <script type="module">
