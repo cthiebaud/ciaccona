@@ -424,6 +424,7 @@ li a.dropdown-item img#keyboard {
 }
 
 li a.dropdown-item div {
+  display: block;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
