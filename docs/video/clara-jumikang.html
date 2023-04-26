@@ -4,10 +4,8 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></script>
-    <script type="module">
-        import config from "/js/config.js?v=0.10.0"
-
-        if (!config.incognito) {
+    <script>
+        {
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());

@@ -15,16 +15,12 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <scr{{!}}ipt async src="https://www.googletagmanager.com/gtag/js?id=G-DJBNRY1Z9M"></scr{{!}}ipt>
-    <scr{{!}}ipt type="module">
-        import config from "/js/config.js?v=0.10.0"
+    <scr{{!}}ipt>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-        if (!config.incognito) {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-
-            gtag('config', 'G-DJBNRY1Z9M');
-        }
+        gtag('config', 'G-DJBNRY1Z9M');
     </scr{{!}}ipt>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">

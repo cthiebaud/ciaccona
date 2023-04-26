@@ -4,11 +4,6 @@ import codec from "/js/structure.js?v=0.10.0"
 import { shuffleArray, generateElement } from "/js/utils.js?v=0.10.0"
 
 const Ω = {
-    boot: () => {
-        console.log('jquery is not here anymore')
-        return true
-    },
-
     animateUnveilScores: () => {
         const speed = 50 //  (1700/34)
         // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
@@ -41,13 +36,13 @@ const Ω = {
     showScoreDisplay: function (iso) {
         document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
-            document.getElementById('gridContainer').classList.remove('container-xxl')
-            document.getElementById('gridContainer').classList.add('container-fluid')
+            document.getElementById('gridContainer').classList.remove('container-fluid')
+            document.getElementById('gridContainer').classList.add('container-xxl')
             document.getElementById('gridContainerCol').classList.remove('fullwidth')
             document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.remove('fullwidth'))
         } else if (config.scoreDisplay === 'fullScore') {
-            document.getElementById('gridContainer').classList.remove('container-fluid')
-            document.getElementById('gridContainer').classList.add('container-xxl')
+            document.getElementById('gridContainer').classList.remove('container-xxl')
+            document.getElementById('gridContainer').classList.add('container-fluid')
             document.getElementById('gridContainerCol').classList.add('fullwidth')
             document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.add('fullwidth'))
         }
