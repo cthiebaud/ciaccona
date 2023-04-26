@@ -312,7 +312,9 @@
             const bodyContent = template(sorted)
             theBody.innerHTML = bodyContent
             artists.artists.forEach((a) => {
-                fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics,` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]` )
+                if (!fetchCountForKeyToSelector(a.fullnameNoSpaceLowercaseNoDiacritics,` .count[data-fnnslnd="${a.fullnameNoSpaceLowercaseNoDiacritics}"]` )) {
+                    document.querySelectorAll('.count').forEach(e => e.style.display = 'none')
+                }
                 /*
                 const countAPIurl = `https://api.countapi.xyz/get/ciaccona.cthiebaud.com/${a.fullnameNoSpaceLowercaseNoDiacritics}`
                 fetch(countAPIurl).then(response => {

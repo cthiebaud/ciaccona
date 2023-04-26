@@ -12,7 +12,7 @@ import config from "/js/config.js?v=0.9.6"
 // set 
 // https://api.countapi.xyz/set/ciaccona.cthiebaud.com/artists?value=0
 
-function count(key, id, test) {
+function count(key, elementId, test) {
     if (!config.countViews) return 
     let action = 'hit'
     if (config.incognito) {
@@ -34,8 +34,8 @@ function count(key, id, test) {
     }).then(json => {
         console.log(countAPIURL, json)
         config.views = json.value
-        if (id) {
-            const element = document.getElementById(id)
+        if (elementId) {
+            const element = document.getElementById(elementId)
             if (element) element.innerHTML = config.views
         }
     }).catch(error => {
@@ -51,7 +51,7 @@ function fetchCountForKeyToSelector(key, selector) {
             element.innerHTML = ''
             element.dataset.number = -1
         }
-        return
+        return false
     }
     const countAPIurl = `https://api.countapi.xyz/get/ciaccona.cthiebaud.com/${key}`
     fetch(countAPIurl).then(response => {
@@ -63,6 +63,7 @@ function fetchCountForKeyToSelector(key, selector) {
             element.dataset.number = parseInt(text.value)
         }
     })
+    return true
 }
 
 export {count, fetchCountForKeyToSelector }
