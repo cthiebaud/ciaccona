@@ -86,7 +86,21 @@ const Ω = {
         }
         this.animations = shuffleArray(this.animations)
         this.a = 0;
+        this.handleEsc = (event) => {
+            if (event.key === 'Escape') {
+             //if esc key was not pressed in combination with ctrl or alt or shift
+                const isNotCombinedKey = !(event.ctrlKey || event.altKey || event.shiftKey);
+                if (isNotCombinedKey) {
+                    this.hideAbout()
+                }
+            }
+        }
+        this.currentlyShowing = undefined
         this.showAbout = async () => {
+            this.about = true
+
+            document.addEventListener('keydown', this.handleEsc );
+
             console.log('BEGIN show about')
             document.querySelector('#config-menu a#about > label').innerHTML = "&check; About&hellip;"
 
@@ -98,7 +112,7 @@ const Ω = {
             document.querySelector('div#logoRight').style.display = 'inherit'
 
             window.requestAnimationFrame((chrono) => {
-                animejs({
+                this.currentlyShowing = animejs({
                     targets: ['div#logoLeft', 'div#logoRight'],
                     left: 0,
                     top: 0,
@@ -109,7 +123,7 @@ const Ω = {
                         document.querySelector('header.header').style.display = 'flex'
                         document.querySelector('#close-about').style.display = 'block'
                         document.querySelector('footer.footer').style.display = 'flex'
-                        animejs({
+                        this.currentlyShowing = animejs({
                             targets: ['#gridContainerCol', '#playerWrapper'],
                             opacity: 0,
                             speed: 600,
@@ -117,15 +131,20 @@ const Ω = {
                             complete: () => {
                                 document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'hidden')
                                 this.a = (this.a + 1) % this.animations.length
+                                this.currentlyShowing = undefined
                                 console.log('FIN show about')
                             }
                         })
                     }
                 })
             });
-            this.about = true
         }
         this.hideAbout = async () => {
+            this.about = false
+            if (this.currentlyShowing) this.currentlyShowing.remove('*')
+
+            document.removeEventListener('keydown', this.handleEsc );
+
             console.log('BEGIN hide about')
             document.querySelector('#config-menu a#about > label').innerHTML = "About&hellip;"
 
@@ -170,7 +189,6 @@ const Ω = {
                     }
                 })
             })
-            this.about = false
         }
         const _this = this
         document.querySelectorAll('a#about').forEach( e => e.addEventListener('click', e => {
