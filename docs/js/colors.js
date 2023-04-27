@@ -1,7 +1,7 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import codec from "/js/structure.js?v=0.10.1"
-import { shuffleArray, normalizeVraiment, logFunc, generateElement} from "/js/utils.js?v=0.10.1"
+import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.10.1"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -244,11 +244,14 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     $bricksTemporaryContainer.appendChild(generateElement(oblivion))
 
     const $bricks = $bricksTemporaryContainer.children
+    if ($bricks?.length) {
+        let $gridById = document.getElementById("grid")
+        if ($gridById) {
+            ;[...$gridById.children].forEach(e => e.remove())
+            ;[...$bricks].forEach(b => $gridById.appendChild(b))
+        }
+    }
 
-    let $gridById = document.getElementById("grid")
-    Array.from($gridById.children).forEach( e => e.remove())
-    Array.from($bricks).forEach(b => $gridById.appendChild(b))
-    
 
     return {}
 }

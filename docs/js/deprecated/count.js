@@ -1,4 +1,4 @@
-import config from "/js/config.js?v=0.10.1"
+import { getCookie, setCookie, removeCookie } from "/js/utils.js?v=0.10.1"
 
 // https://countapi.xyz/
 // https://medium.com/@mignunez/how-to-count-the-number-of-visits-on-your-website-with-html-css-javascript-and-the-count-api-2f99b42b5990
@@ -11,6 +11,50 @@ import config from "/js/config.js?v=0.10.1"
 // https://api.countapi.xyz/hit/ciaccona.cthiebaud.com/artists
 // set 
 // https://api.countapi.xyz/set/ciaccona.cthiebaud.com/artists?value=0
+
+class Config {
+    #countViews = { active: true, views: 0 }
+
+    #inConstructor = true
+
+    constructor() {
+        this.countViews = getCookie('countViews')
+
+        this.#inConstructor = false
+    }
+
+    // 
+    get countViews() {
+        return this.#countViews.active
+    }
+
+    set countViews(isCountViewsActive) {
+        if (typeof isCountViewsActive !== 'undefined' && (isCountViewsActive === null || isCountViewsActive === 'false' || isCountViewsActive === false)) {
+            isCountViewsActive = false
+        } else {
+            isCountViewsActive = true
+        }
+
+        if (isCountViewsActive !== this.#countViews.active) {
+            this.#countViews.active = isCountViewsActive
+            if (!this.#inConstructor) {
+                if (this.#countViews.isCountViewsActive === true) {
+                    removeCookie('countViews')
+                } else {
+                    setCookie('countViews', 'false', 365)
+                }
+            }
+        }
+    }
+    get views() {
+        return this.#countViews.active ? this.#countViews.views : -1;
+    }
+    set views(views) {
+        this.#countViews.views = views
+    }
+}
+
+const config = new Config()
 
 function count(key, elementId, test) {
     if (!config.countViews) return 

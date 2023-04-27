@@ -139,10 +139,13 @@
 
         // brick width
         function calcBrickWidth() {
-            const containerWidth = document.getElementById('grid').getBoundingClientRect().width
-            const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
-            const gridBrickPercentageWidth = 100 / gridBricksPerRow
-            document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
+            const gridE = document.getElementById('grid')
+            if (gridE) {
+                const containerWidth = gridE.getBoundingClientRect().width
+                const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
+                const gridBrickPercentageWidth = 100 / gridBricksPerRow
+                document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
+            }
         }
 
         window.addEventListener("DOMContentLoaded", (event) => {
@@ -174,7 +177,7 @@
 <body id="body" class="d-flex flex-column">
     <script>
         if (fullameNoSpaceLowercaseNoDiacritics == null) {
-            document.getElementById('body').classList.add('no-vid')
+            [...document.getElementsByTagName('body')].forEach(e => e.classList.add('no-vid'))
         }
     </script>
 
@@ -511,20 +514,20 @@
                             </label>
                         </div>
                         <hr>
-                        <div class="form-check">
+                        <!--div class="form-check">
                             <input type="checkbox" class="form-check-input" id="incognitoChecked">
                             <label class="form-check-label align-top" style="width: 100%;" for="incognitoChecked">
                                 Incognito
                             </label>
-                        </div>
-                        <hr>
+                        </!--div>
+                        <hr -->
                         <div class="dropdown-item d-flex p-0">
-                            <a id="credits" class="ms-auto" href="credits.html" style="text-decoration: none;">
+                            <a id="credits" class="ms-auto" href="credits.html" style="text-decoration: none; margin-bottom:.3rem;">
                                 <label>Credits&hellip;</label>
                             </a>
                         </div>
                         <div class="dropdown-item d-flex p-0">
-                            <div id="views" class="float-start font-monospace badge rounded-pill bg-light text-dark">0</div>
+                            <!-- div id="views" class="float-start font-monospace badge rounded-pill bg-light text-dark">0</!-->
                             <a id="about" class="ms-auto" href="#" style="text-decoration: none;">
                                 <label>About&hellip;</label>
                             </a>

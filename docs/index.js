@@ -24,14 +24,15 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
         menuItem.classList.add('disabled')
         menuItem.querySelector(`span.c`).innerHTML = "&#10004;&nbsp;"
     }
-    document.getElementById('gridContainerCol').classList.add('push2right')
+    const gridContainerCol = document.getElementById('gridContainerCol')
+    if (gridContainerCol) gridContainerCol.classList.add('push2right')
 } else {
     const menuItem = document.querySelector(`#videos-menu a[data-name-no-space-lowercase-no-diacritics=""]`)
     if (menuItem) {
         menuItem.classList.add('disabled')
         menuItem.querySelector('span.c').innerHTML = "&#10004;&nbsp;"
     }
-    document.getElementById('body').style['background-color'] = 'transparent'
+    [...document.getElementsByTagName('body')].forEach(e => e.style['background-color'] = 'transparent')
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -40,33 +41,42 @@ createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
 Ω.showScoreInBricks()
 
 // elaborate a bit some config values 
-let autoplayChecked = config.autoplay
+const autoplayChecked = document.getElementById('autoplayChecked')
 if (autoplayChecked) {
-    document.getElementById('autoplayChecked').checked = true
+    if (config.autoplay) autoplayChecked.checked = true
 }
 
-let incognitoChecked = config.incognito
+const incognitoChecked = document.getElementById('incognitoChecked')
 if (incognitoChecked) {
-    document.getElementById('incognitoChecked').checked = true
+    if (config.incognito) incognitoChecked.checked = true
 }
 
-document.getElementById('views').innerHTML = config.views
+; (e => { if (e) e.innerHTML = config.views })(document.getElementById('views'));
 
-const gridradioId = `${config.scoreDisplay}Checked`
-document.getElementById(gridradioId).checked = true
-document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
+; (grid => {
+    if (grid) {
+        const gridradioId = `${config.scoreDisplay}Checked`
+        document.getElementById(gridradioId).checked = true
+        grid.dataset.scoreDisplay = config.scoreDisplay
 
-const gridradioId2 = `${config.scoreInBricks}Checked`
-document.getElementById(gridradioId2).checked = true
-document.getElementById('grid').dataset.scoreInBricks = config.scoreInBricks
+        const gridradioId2 = `${config.scoreInBricks}Checked`
+        document.getElementById(gridradioId2).checked = true
+        grid.dataset.scoreInBricks = config.scoreInBricks
+
+    }
+})(document.getElementById('grid'));
+
 
 // loading 
 const hideLoading = (hasPlayer) => {
     if (hasPlayer) document.getElementById('playerWrapper').style.visibility = 'visible'
-    document.getElementById('config-menu').style.display = 'flex'
-    document.getElementById('videos-menu').style.display = 'flex'
-    document.getElementById('loading').style.display = 'none'
-    console.log('loading dismissed')
+    const loadingE = document.getElementById('loading')
+    if (loadingE) {
+        document.getElementById('config-menu').style.display = 'flex'
+        document.getElementById('videos-menu').style.display = 'flex'
+        loadingE.style.display = 'none'
+        console.log('loading dismissed')
+    }
 }
 
 // everything
@@ -80,8 +90,7 @@ allPromises.set(
     windowLoaded.then((result) => {
         const SVGs = document.querySelectorAll('#grid .brick > .score > object')
         if (SVGs.length === 0) {
-            console.log('no SVG to resize')
-            return this
+            throw new Error('no SVG to resize')
         }
         document.getElementById('resizeScores').addEventListener('click', () => {
             resizeSVGs(
@@ -117,8 +126,6 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
             // we have more info bout the artist
             Ω.showArtist(artist)
 
-            document.querySelector('head title').innerHTML = `Ciaccona - ${artist.fullname}`
-
             const selectorPlyr = Ω.beforeCreatePlayer(artist['▶'].id) // big buffer of everything that needs to be done BEFORE creating the player
 
             return createPlayer(selectorPlyr, artist, no_plyr_event)
@@ -134,22 +141,26 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
 allPromises.set(
     ISOTOPE,
     new Promise((resolve, reject) => {
-        const theIsotope = new isotopeLayout('#grid', {
-            itemSelector: ".grid-brick",
-            sortBy: 'id',
-            getSortData: {
-                id: '[data-sort]'
-            },
-            percentPosition: true,
-        })
-        theIsotope.on('layoutComplete', function () {
-            console.log("isotope layout complete");
-        })
+        if (!document.querySelector('#grid')) {
+            reject('no grid')
+        } else {
+            const theIsotope = new isotopeLayout('#grid', {
+                itemSelector: ".grid-brick",
+                sortBy: 'id',
+                getSortData: {
+                    id: '[data-sort]'
+                },
+                percentPosition: true,
+            })
+            theIsotope.on('layoutComplete', function () {
+                console.log("isotope layout complete");
+            })
 
-        // big buffer of everything that needs to be done AFTER bricks are ready
-        Ω.afterIsotope(theIsotope)
+            // big buffer of everything that needs to be done AFTER bricks are ready
+            Ω.afterIsotope(theIsotope)
 
-        resolve({ key: ISOTOPE, value: theIsotope })
+            resolve({ key: ISOTOPE, value: theIsotope })
+        }
     })
 )
 
@@ -195,7 +206,7 @@ Promise.allSettled([...allPromises.values()]).then((results) => {
                 e.scrollIntoView({ behavior: "smooth", block: "center" })
             }
         } else {
-            ;((e,a) => {if (e) e.dataset.a = a})(document.querySelector("#gb-bwv1004 a"), fullameNoSpaceLowercaseNoDiacritics)
+            ; ((e, a) => { if (e) e.dataset.a = a })(document.querySelector("#gb-bwv1004 a"), fullameNoSpaceLowercaseNoDiacritics)
             console.log("change isotope filter to show artist name")
             isotopeResult.arrange({ filter: '*' })
         }

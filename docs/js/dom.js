@@ -34,7 +34,9 @@ const Ω = {
     },
 
     showScoreDisplay: function (iso) {
-        document.getElementById('grid').dataset.scoreDisplay = config.scoreDisplay
+        const grid = document.getElementById('grid')
+        if (!grid) return
+        grid.dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
             document.getElementById('gridContainer').classList.remove('container-fluid')
             document.getElementById('gridContainer').classList.add('container-xxl')
@@ -51,7 +53,9 @@ const Ω = {
     },
 
     showScoreInBricks: function () {
-        document.getElementById('grid').dataset.scoreInBricks = config.scoreInBricks
+        const grid = document.getElementById('grid')
+        if (!grid) return
+        grid.dataset.scoreInBricks = config.scoreInBricks
         if (config.scoreInBricks === 'allBricks') {
             document.getElementById('grid').classList.remove('selectedBrick')
         } else if (config.scoreInBricks === 'selectedBrick') {
@@ -169,22 +173,23 @@ const Ω = {
             this.about = false
         }
         const _this = this
-        document.querySelector('a#about').addEventListener('click', e => {
+        document.querySelectorAll('a#about').forEach( e => e.addEventListener('click', e => {
             if (_this.about) {
                 _this.hideAbout()
             } else {
                 _this.showAbout()
             }
-        })
-        document.querySelector('#close-about').addEventListener('click', e => {
+        }))
+        document.querySelectorAll('#close-about').forEach( e => e.addEventListener('click', e => {
             _this.hideAbout()
-        })
+        }))
     },
 
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
-        document.querySelector("#gb-bwv1004 a").addEventListener('click', (e) => {
+        const gridBrick_bwv1004 = document.querySelector("#gb-bwv1004 a")
+        if (gridBrick_bwv1004) gridBrick_bwv1004.addEventListener('click', (e) => {
             const a = e.currentTarget.dataset.a
             const v = e.currentTarget.dataset.v 
             if (a && v) {
@@ -221,9 +226,8 @@ const Ω = {
             })
         })
 
-        document.getElementById('autoplayChecked').addEventListener('click', e => config.autoplay = !config.autoplay)
-        document.getElementById('incognitoChecked').addEventListener('click', e => config.incognito = !config.incognito)
-
+        ;(e => {if (e) e.addEventListener('click', () => config.autoplay = !config.autoplay)})(document?.getElementById('autoplayChecked'));
+        ;(e => {if (e) e.addEventListener('click', () => config.incognito = !config.incognito)})(document?.getElementById('incognitoChecked'));
     },
 
     showArtist: (artist) => {
@@ -232,6 +236,7 @@ const Ω = {
 
         const fullname = artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname;
 
+        document.querySelector('head title').innerHTML = `Ciaccona - ${artist.fullname}`
         document.querySelector('#loading #message').innerHTML = fullname
         artistE.style.visibility = 'inherit'
         artistE.querySelector('.fullname').innerHTML = fullname
@@ -241,6 +246,9 @@ const Ω = {
     },
 
     beforeCreatePlayer: (videoId) => {
+        const thePlayerWrapper = document.querySelector('#playerWrapper')
+        if (!thePlayerWrapper) return null
+
         const idPlayer = "thePlayer"
 
         document.querySelector('#loading').style.backgroundColor = '#00000080'
