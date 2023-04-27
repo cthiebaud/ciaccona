@@ -168,7 +168,12 @@
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <!-- link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet"-->
+    <!-- https://stackoverflow.com/a/59482838/1070215 -->
+    <link rel="preload" 
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      as="style"
+      onload="this.onload=null; this.rel='stylesheet'; document.body.classList.add('fontLoaded')">
 
     <!-- my styles -->
     <link href="index.css?v=0.10.1" rel="stylesheet">
