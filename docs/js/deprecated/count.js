@@ -13,14 +13,39 @@ import { getCookie, setCookie, removeCookie } from "/js/utils.js?v=0.10.1"
 // https://api.countapi.xyz/set/ciaccona.cthiebaud.com/artists?value=0
 
 class Config {
+    #incognito = false
     #countViews = { active: true, views: 0 }
 
     #inConstructor = true
 
     constructor() {
         this.countViews = getCookie('countViews')
+        this.incognito = getCookie('incognito')
 
         this.#inConstructor = false
+    }
+
+    // 
+    get incognito() {
+        return this.#incognito
+    }
+    set incognito(incognito) {
+        if (incognito && (incognito === 'true' || incognito === true)) {
+            incognito = true
+        } else {
+            incognito = false
+        }
+
+        if (incognito !== this.#incognito) {
+            this.#incognito = incognito
+            if (!this.#inConstructor) {
+                if (this.#incognito === false) {
+                    removeCookie('incognito')
+                } else {
+                    setCookie('incognito', 'true', 365 )
+                }
+            }
+        }
     }
 
     // 

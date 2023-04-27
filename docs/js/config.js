@@ -7,7 +7,6 @@ class Config {
     #playing = false
     #startBarOfLastSelectedVariation = 0
     #autoplay = false
-    #incognito = false
     #countViews = { active: true, views: 0 }
 
     #inConstructor = true
@@ -27,9 +26,6 @@ class Config {
 
         // 
         this.autoplay = getCookie('autoplay')
-
-        // 
-        this.incognito = getCookie('incognito')
 
         // 
         this.countViews = getCookie('countViews')
@@ -154,29 +150,6 @@ class Config {
                     removeCookie('autoplay')
                 } else {
                     setCookie('autoplay', 'true')
-                }
-            }
-        }
-    }
-
-    // 
-    get incognito() {
-        return this.#incognito
-    }
-    set incognito(incognito) {
-        if (incognito && (incognito === 'true' || incognito === true)) {
-            incognito = true
-        } else {
-            incognito = false
-        }
-
-        if (incognito !== this.#incognito) {
-            this.#incognito = incognito
-            if (!this.#inConstructor) {
-                if (this.#incognito === false) {
-                    removeCookie('incognito')
-                } else {
-                    setCookie('incognito', 'true', 365 )
                 }
             }
         }

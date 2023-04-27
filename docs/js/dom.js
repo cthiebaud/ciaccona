@@ -245,7 +245,6 @@ const Ω = {
         })
 
         ;(e => {if (e) e.addEventListener('click', () => config.autoplay = !config.autoplay)})(document?.getElementById('autoplayChecked'));
-        ;(e => {if (e) e.addEventListener('click', () => config.incognito = !config.incognito)})(document?.getElementById('incognitoChecked'));
     },
 
     showArtist: (artist) => {

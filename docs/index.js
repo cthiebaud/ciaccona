@@ -46,11 +46,6 @@ if (autoplayChecked) {
     if (config.autoplay) autoplayChecked.checked = true
 }
 
-const incognitoChecked = document.getElementById('incognitoChecked')
-if (incognitoChecked) {
-    if (config.incognito) incognitoChecked.checked = true
-}
-
 ; (e => { if (e) e.innerHTML = config.views })(document.getElementById('views'));
 
 ; (grid => {

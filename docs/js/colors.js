@@ -124,7 +124,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         }
     }
 
-    const $bricksTemporaryContainer = generateElement("<template>");
+    const temporaryContainer = generateElement("<template>");
     const templateForTheme =
         `
 <div id="gb-ciaccona" data-sort="-1" class="grid-brick" >
@@ -135,7 +135,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         </div>
     </div>
 </div>`
-    $bricksTemporaryContainer.appendChild(generateElement(templateForTheme));
+    temporaryContainer.appendChild(generateElement(templateForTheme));
 
     const templateForArtist =
         `
@@ -156,7 +156,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         </div>
     </div>
 </div>`
-    $bricksTemporaryContainer.appendChild(generateElement(templateForArtist));
+    temporaryContainer.appendChild(generateElement(templateForArtist));
 
     const twoZeroPad = (num) => String(num).padStart(2, '0')
     let i = 0;
@@ -221,7 +221,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     </div>
 </div>
 `
-        $bricksTemporaryContainer.appendChild(generateElement(templateVariations));
+        temporaryContainer.appendChild(generateElement(templateVariations));
 
         // bumpers
         {
@@ -241,17 +241,16 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     </div>
 </div>
 `
-    $bricksTemporaryContainer.appendChild(generateElement(oblivion))
+    temporaryContainer.appendChild(generateElement(oblivion))
 
-    const $bricks = $bricksTemporaryContainer.children
-    if ($bricks?.length) {
-        let $gridById = document.getElementById("grid")
-        if ($gridById) {
-            ;[...$gridById.children].forEach(e => e.remove())
-            ;[...$bricks].forEach(b => $gridById.appendChild(b))
+    const bricks = temporaryContainer.children
+    if (bricks?.length) {
+        let gridE = document.getElementById("grid")
+        if (gridE) {
+            ;[...gridE.children].forEach(gb => gb.remove())
+            ;[...bricks].forEach(gb => gridE.appendChild(gb))
         }
     }
-
 
     return {}
 }
