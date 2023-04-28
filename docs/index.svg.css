@@ -2,8 +2,10 @@
   display: inline-block;
   width: 32px;
   height: 32px;
+  aspect-ratio: 1;
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   margin: 0;
   padding: 0;
 }
@@ -11,22 +13,24 @@
 .icon-close-circle {
   background-image: url("index.svg-test.svg#close-circle-view");
 }
-
 .icon-twitter {
   background-image: url("index.svg-test.svg#twitter-view");
 }
-
 .icon-instagram {
   background-image: url("index.svg-test.svg#instagram-view");
 }
-
 .icon-facebook {
   background-image: url("index.svg-test.svg#facebook-view");
 }
-
 .icon-cthiebaud {
   background-image: url("index.svg-test.svg#cthiebaud-view");
 }
 .icon-github {
   background-image: url("index.svg-test.svg#github-view");
+}
+.icon-youtube {
+  background-image: url("index.svg-test.svg#youtube-view");
+}
+.icon-treble_clef {
+  background-image: url("index.svg-test.svg#treble_clef-view");
 }
