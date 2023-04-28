@@ -1,7 +1,7 @@
 import animejs from 'https://cdn.jsdelivr.net/npm/animejs@3.2.1/+esm'
-import config from "/js/config.js?v=0.10.2"
-import codec from "/js/structure.js?v=0.10.2"
-import { shuffleArray, generateElement } from "/js/utils.js?v=0.10.2"
+import config from "/js/config.js?v=0.10.3"
+import codec from "/js/structure.js?v=0.10.3"
+import { shuffleArray, generateElement } from "/js/utils.js?v=0.10.3"
 
 const Ω = {
     animateUnveilScores: () => {
