@@ -34,3 +34,13 @@
 .icon-treble_clef {
   background-image: url("index.svg-test.svg#treble_clef-view");
 }
+.icon-bach_siel_full_left {
+  background-image: url("index.svg-test.svg#bach_siel_full_left-view");
+}
+.icon-bach_siel_full_right {
+  background-image: url("index.svg-test.svg#bach_siel_full_right-view");
+}
+.icon-bach_signature {
+  background-image: url("index.svg-test.svg#bach_signature-view");
+}
+

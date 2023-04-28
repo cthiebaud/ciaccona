@@ -50,14 +50,6 @@ body.about {
   color: #57728b; /* https://hexcolorpedia.com/color/57728B/  Arrowhead Lake Color | 58728a */
   border-width: 0.5rem;
 }
-#loading #signature {
-  width: 360px;
-  height: 80px;
-  background-image: url("svg/Johann_Sebastian_Bach_signature-aliceblue.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
 
 .container-fluid {
   height: 100vh;
@@ -166,8 +158,8 @@ body:not(.no-vid) #gridContainer {
 }
 
 .grid-brick#gb33 .brick {
-  background-image: url(/svg/Johann_Sebastian_Bach_signature.svg);
-  background-size: 240px 38px;
+  background-image: url(index.svg-test.svg#bach_signature-view);
+  background-size: 200px 200px;
   background-position-y: center;
   background-position-x: right;
   background-repeat: no-repeat;
@@ -263,7 +255,7 @@ div#logoLeft div#backgroundLeft {
 }
 
 div#logoLeft div.siegel#foregroundLeft {
-  background-image: url("svg/Bach_Seal_full_left_120x120.svg");
+  background-image: url("index.svg-test.svg#bach_siel_full_left-view");
   position: absolute;
   top: 0;
   left: 0;
@@ -286,7 +278,7 @@ div#logoRight div#backgroundRight {
 }
 
 div#logoRight div.siegel#foregroundRight {
-  background-image: url("svg/Bach_Seal_full_right_120x120.svg");
+  background-image: url("index.svg-test.svg#bach_siel_full_right-view");
   position: absolute;
   top: 0;
   left: 0;
