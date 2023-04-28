@@ -119,7 +119,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.10.1"
+        const ver = "v0.10.2"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -135,7 +135,7 @@
         }
     </script>
     <script type="module">
-        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.10.1'
+        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.10.2'
 
         // brick width
         function calcBrickWidth() {
@@ -157,7 +157,7 @@
     </script>
 
     <script type="module">
-        import config from "/js/config.js?v=0.10.1"
+        import config from "/js/config.js?v=0.10.2"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -174,7 +174,8 @@
         onload="this.onload=null; this.rel='stylesheet'; document.body.classList.add('fontLoaded')">
 
     <!-- my styles -->
-    <link href="index.css?v=0.10.1" rel="stylesheet">
+    <link href="index.css?v=0.10.2" rel="stylesheet">
+    <link href="index.svg.css?v=0.10.2" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -184,7 +185,6 @@
         }
     </script>
 
-    <link rel="stylesheet" href="index.svg.css">
     <header style="display: none !important; padding: 0.6rem!important; z-index: 10; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top d-flex flex-wrap justify-content-evenly align-items-center">
         <ul class="nav justify-content-center flex-shrink-1 list-unstyled d-flex" style="display: inline-block;"><!-- style="background: #57728b40;" -->
@@ -509,7 +509,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script async type="module" src="index.js?v=0.10.1"></script>
+    <script async type="module" src="index.js?v=0.10.2"></script>
 
 </body>
 
