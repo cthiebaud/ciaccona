@@ -121,7 +121,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.10.3"
+        const ver = "v0.10.4"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -137,7 +137,7 @@
         }
     </script>
     <script type="module">
-        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.10.3'
+        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.10.4'
 
         // brick width
         function calcBrickWidth() {
@@ -159,7 +159,7 @@
     </script>
 
     <script type="module">
-        import config from "/js/config.js?v=0.10.3"
+        import config from "/js/config.js?v=0.10.4"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
@@ -176,8 +176,8 @@
         onload="this.onload=null; this.rel='stylesheet'; document.body.classList.add('fontLoaded')">
 
     <!-- my styles -->
-    <link href="index.css?v=0.10.3" rel="stylesheet">
-    <link href="index.svg.css?v=0.10.3" rel="stylesheet">
+    <link href="index.css?v=0.10.4" rel="stylesheet">
+    <link href="index.svg.css?v=0.10.4" rel="stylesheet">
 </head>
 
 <body id="body" class="d-flex flex-column">
@@ -521,7 +521,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script async type="module" src="index.js?v=0.10.3"></script>
+    <script async type="module" src="index.js?v=0.10.4"></script>
 
 </body>
 
