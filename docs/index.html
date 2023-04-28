@@ -170,10 +170,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet"-->
     <!-- https://stackoverflow.com/a/59482838/1070215 -->
-    <link rel="preload" 
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
-      as="style"
-      onload="this.onload=null; this.rel='stylesheet'; document.body.classList.add('fontLoaded')">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" as="style"
+        onload="this.onload=null; this.rel='stylesheet'; document.body.classList.add('fontLoaded')">
 
     <!-- my styles -->
     <link href="index.css?v=0.10.1" rel="stylesheet">
@@ -186,50 +184,24 @@
         }
     </script>
 
+    <link rel="stylesheet" href="index.svg.css">
     <header style="display: none !important; padding: 0.6rem!important; z-index: 10; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top d-flex flex-wrap justify-content-evenly align-items-center">
         <ul class="nav justify-content-center flex-shrink-1 list-unstyled d-flex" style="display: inline-block;"><!-- style="background: #57728b40;" -->
-            <li class="" style="display: none;">
-                <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
-                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="index.svg?v=0.10.1#github"></use>
-                    </svg>
+            <li class="ms-2">
+                <a class="btn btn-light text-muted icon-base icon-twitter" target="twitter" href="https://twitter.com/ciacconabwv1004">
                 </a>
             </li>
             <li class="ms-2">
-                <a class="text-muted" target="twitter" href="https://twitter.com/ciacconabwv1004">
-                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="index.svg?v=0.10.1#twitterInc"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="ms-2" style="display: none;">
-                <a class="text-muted" target="linkedin" href="https://www.linkedin.com/in/cthiebaud">
-                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="index.svg?v=0.10.1#linkedin"></use>
-                    </svg>
+                <a class="btn btn-light text-muted icon-base icon-instagram" target="instagram" href="https://www.instagram.com/chaconnebwv1004/">
                 </a>
             </li>
             <li class="ms-2">
-                <a class="text-muted" target="instagram" href="https://www.instagram.com/chaconnebwv1004/">
-                    <img width="24" height="24" preserveAspectRatio="xMidYMid meet" src="svg/Instagram.svg">
-                </a>
-            </li>
-            <li class="ms-2"> <!---->
-                <a class="text-muted" target="facebook" href="https://www.facebook.com/ciacconabwv004/">
-                    <img width="24" height="24" preserveAspectRatio="xMidYMid meet" src="svg/2021_Facebook_icon.svg">
-                </a>
-            </li>
-            <li class="ms-2" style="display: none;">
-                <a class="text-muted" target="youtube" href="https://www.youtube.com/channel/UCxt1pFJkKS3LlhmSsHCrZkg">
-                    <svg width="34.286" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="index.svg?v=0.10.1#youtubeBlack"></use>
-                    </svg>
+                <a class="btn btn-light text-muted icon-base icon-facebook" target="facebook" href="https://www.facebook.com/ciacconabwv004/">
                 </a>
             </li>
         </ul>
-        <button id="close-about" type="button" class="btn btn-light m-0 p-0" style="display: none; z-index: 10;">
-            <img src="svg/close-circle-svgrepo-com.svg" style="width: 32px; height:32px;">
+        <button id="close-about" type="button" class="btn btn-light icon-base icon-close-circle" style="width: 32px; z-index: 10;">
         </button>
     </header>
 
@@ -248,10 +220,7 @@
     <footer style="display: none !important; z-index: 10; background-color: #ffffff80; border-top: 1px solid #a0a0a080;"
         class="footer fixed-bottom mt-auto py-2 d-flex flex-wrap justify-content-evenly">
         <div class="d-flex">
-            <a class="text-muted" target="cthiebaud" href="https://cthiebaud.com/">
-                <svg width="32" height="32" preserveAspectRatio="xMidYMid meet">
-                    <use xlink:href="index.svg?v=0.10.1#cthiebaud"></use>
-                </svg>
+            <a class="btn btn-light text-muted icon-base icon-cthiebaud" target="cthiebaud" href="https://cthiebaud.com/">
             </a>
         </div>
         <div class="ms-2" style="margin: auto 0;"><!--  background: #57728b40; -->
@@ -263,10 +232,7 @@
                 <script>
                     document.getElementById('version').innerHTML = ver
                 </script>
-                <a class="text-muted" target="github" href="https://github.com/cthiebaud/ciaccona">
-                    <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
-                        <use xlink:href="index.svg?v=0.10.1#github"></use>
-                    </svg>
+                <a class="btn btn-light text-muted icon-base icon-github" target="github" href="https://github.com/cthiebaud/ciaccona">
                 </a>
             </span>
         </div>

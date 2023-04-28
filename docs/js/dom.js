@@ -121,7 +121,6 @@ const Ω = {
                     complete: () => {
                         console.log('MIDDLE show about')
                         document.querySelector('header.header').style.display = 'flex'
-                        document.querySelector('#close-about').style.display = 'block'
                         document.querySelector('footer.footer').style.display = 'flex'
                         this.currentlyShowing = animejs({
                             targets: ['#gridContainerCol', '#playerWrapper'],
@@ -149,7 +148,6 @@ const Ω = {
             document.querySelector('#config-menu a#about > label').innerHTML = "About&hellip;"
 
             document.querySelector('header.header').style.display = 'none'
-            document.querySelector('#close-about').style.display = 'none'
             document.querySelector('footer.footer').style.display = 'none'
 
             window.requestAnimationFrame((chrono) => {
