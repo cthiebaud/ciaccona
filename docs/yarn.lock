@@ -6,3 +6,44 @@ animejs@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/animejs/-/animejs-3.2.1.tgz#de9fe2e792f44a777a7fdf6ae160e26604b0cdda"
   integrity sha512-sWno3ugFryK5nhiDm/2BKeFCpZv7vzerWUcUPyAZLDhMek3+S/p418ldZJbJXo5ZUOpfm2kP2XRO4NJcULMy9A==
+
+bootstrap@^5.2.3:
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.3.tgz#54739f4414de121b9785c5da3c87b37ff008322b"
+  integrity sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ==
+
+core-js@^3.26.1:
+  version "3.30.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.30.1.tgz#fc9c5adcc541d8e9fa3e381179433cbf795628ba"
+  integrity sha512-ZNS5nbiSwDTq4hFosEDqm65izl2CWmLz0hARJMyNQBgkUZMIF51cQiMvIQKA6hvuaeWxQDP3hEedM1JZIgTldQ==
+
+custom-event-polyfill@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/custom-event-polyfill/-/custom-event-polyfill-1.0.7.tgz#9bc993ddda937c1a30ccd335614c6c58c4f87aee"
+  integrity sha512-TDDkd5DkaZxZFM8p+1I3yAlvM3rSr1wbrOliG4yJiwinMZN8z/iGL7BTlDkrJcYTmgUSb4ywVCc3ZaUtOtC76w==
+
+loadjs@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-4.2.0.tgz#2a0336376397a6a43edf98c9ec3229ddd5abb6f6"
+  integrity sha512-AgQGZisAlTPbTEzrHPb6q+NYBMD+DP9uvGSIjSUM5uG+0jG15cb8axWpxuOIqrmQjn6scaaH8JwloiP27b2KXA==
+
+plyr@^3.7.8:
+  version "3.7.8"
+  resolved "https://registry.yarnpkg.com/plyr/-/plyr-3.7.8.tgz#b79bccc23687705b5d9a283b2a88c124bf7471ed"
+  integrity sha512-yG/EHDobwbB/uP+4Bm6eUpJ93f8xxHjjk2dYcD1Oqpe1EcuQl5tzzw9Oq+uVAzd2lkM11qZfydSiyIpiB8pgdA==
+  dependencies:
+    core-js "^3.26.1"
+    custom-event-polyfill "^1.0.7"
+    loadjs "^4.2.0"
+    rangetouch "^2.0.1"
+    url-polyfill "^1.1.12"
+
+rangetouch@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/rangetouch/-/rangetouch-2.0.1.tgz#c01105110fd3afca2adcb1a580692837d883cb70"
+  integrity sha512-sln+pNSc8NGaHoLzwNBssFSf/rSYkqeBXzX1AtJlkJiUaVSJSbRAWJk+4omsXkN+EJalzkZhWQ3th1m0FpR5xA==
+
+url-polyfill@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.12.tgz#6cdaa17f6b022841b3aec0bf8dbd87ac0cd33331"
+  integrity sha512-mYFmBHCapZjtcNHW0MDq9967t+z4Dmg5CJ0KqysK3+ZbyoNOWQHksGCTWwDhxGXllkWlOc10Xfko6v4a3ucM6A==
