@@ -1,4 +1,4 @@
-import { getCookie, setCookie, removeCookie } from "/js/utils.js?v=0.10.4"
+import { getCookie, setCookie, removeCookie } from "/js/utils.js?v=0.10.5"
 
 // https://countapi.xyz/
 // https://medium.com/@mignunez/how-to-count-the-number-of-visits-on-your-website-with-html-css-javascript-and-the-count-api-2f99b42b5990
