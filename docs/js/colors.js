@@ -233,11 +233,11 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     const oblivion =
         `
 <div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
-    <!-- style="background-image: url(svg/facsimile.jpg);" -->
     <div class="brick d-flex align-items-center justify-content-center">
         <a class="magnificent-card p-2">
             &nbsp;BWV&nbsp;1004&nbsp;
         </a>
+        <div>signature</div>
     </div>
 </div>
 `

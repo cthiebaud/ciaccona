@@ -159,7 +159,7 @@ body:not(.no-vid) #gridContainer {
 
 .grid-brick#gb33 .brick {
   background-image: url(index.svg-test.svg#bach_signature-view);
-  background-size: 200px 200px;
+  /* background-size: 200px 200px; */
   background-position-y: center;
   background-position-x: right;
   background-repeat: no-repeat;
