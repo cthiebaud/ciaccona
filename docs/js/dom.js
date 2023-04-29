@@ -5,32 +5,47 @@ import { shuffleArray, generateElement } from "/js/utils.js?v=0.10.6"
 
 const Ω = {
     animateUnveilScores: () => {
-        const speed = 50 //  (1700/34)
-        // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
-        function methodThatReturnsAPromise(id) {
-            return new Promise((resolve) => {
-                id.classList.remove('init')
-                // console.log( 'id.dataset.width', id.dataset.width )
-                id.style.visibility = 'inherit'
-                id.style.width = 0
-                animejs({
-                    targets: id,
-                    width: `${id.dataset.width}px`,
-                    duration: speed,
-                    easing: 'linear',
-                    complete: () => resolve(id)
-                });
-            })
+        function hasTouchSupport() {
+            return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         }
-        const result = Array.from(document.querySelectorAll('.score')).reduce((accumulatorPromise, nextID) => {
-            return accumulatorPromise.then(() => {
-                return methodThatReturnsAPromise(nextID);
-            });
-        }, Promise.resolve());
 
-        result.then(e => {
-            console.log("'unveil scores' animation complete")
-        });
+        if (hasTouchSupport()) {
+            console.log("Mobile device detected");
+            document.querySelectorAll('.score').forEach(id => {
+                id.style.width = id.dataset.width
+                id.classList.remove('init')
+                id.style.visibility = 'inherit'
+            })
+        } else {
+            console.log("Desktop device detected");
+
+            const speed = 50 //  (1700/34)
+            // https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/
+            function methodThatReturnsAPromise(id) {
+                return new Promise((resolve) => {
+                    id.classList.remove('init')
+                    // console.log( 'id.dataset.width', id.dataset.width )
+                    id.style.visibility = 'inherit'
+                    id.style.width = 0
+                    animejs({
+                        targets: id,
+                        width: `${id.dataset.width}px`,
+                        duration: speed,
+                        easing: 'linear',
+                        complete: () => resolve(id)
+                    });
+                })
+            }
+            const result = Array.from(document.querySelectorAll('.score')).reduce((accumulatorPromise, nextID) => {
+                return accumulatorPromise.then(() => {
+                    return methodThatReturnsAPromise(nextID);
+                });
+            }, Promise.resolve());
+
+            result.then(e => {
+                console.log("'unveil scores' animation complete")
+            });
+        }
     },
 
     showScoreDisplay: function (iso) {
@@ -88,7 +103,7 @@ const Ω = {
         this.a = 0;
         this.handleEsc = (event) => {
             if (event.key === 'Escape') {
-             //if esc key was not pressed in combination with ctrl or alt or shift
+                //if esc key was not pressed in combination with ctrl or alt or shift
                 const isNotCombinedKey = !(event.ctrlKey || event.altKey || event.shiftKey);
                 if (isNotCombinedKey) {
                     this.hideAbout()
@@ -99,7 +114,7 @@ const Ω = {
         this.showAbout = async () => {
             this.about = true
 
-            document.addEventListener('keydown', this.handleEsc );
+            document.addEventListener('keydown', this.handleEsc);
 
             console.log('BEGIN show about')
             document.querySelector('#config-menu a#about > label').innerHTML = "&check; About&hellip;"
@@ -142,7 +157,7 @@ const Ω = {
             this.about = false
             if (this.currentlyShowing) this.currentlyShowing.remove('*')
 
-            document.removeEventListener('keydown', this.handleEsc );
+            document.removeEventListener('keydown', this.handleEsc);
 
             console.log('BEGIN hide about')
             document.querySelector('#config-menu a#about > label').innerHTML = "About&hellip;"
@@ -189,14 +204,14 @@ const Ω = {
             })
         }
         const _this = this
-        document.querySelectorAll('a#about').forEach( e => e.addEventListener('click', e => {
+        document.querySelectorAll('a#about').forEach(e => e.addEventListener('click', e => {
             if (_this.about) {
                 _this.hideAbout()
             } else {
                 _this.showAbout()
             }
         }))
-        document.querySelectorAll('#close-about').forEach( e => e.addEventListener('click', e => {
+        document.querySelectorAll('#close-about').forEach(e => e.addEventListener('click', e => {
             _this.hideAbout()
         }))
     },
@@ -207,7 +222,7 @@ const Ω = {
         const gridBrick_bwv1004 = document.querySelector("#gb-bwv1004 a")
         if (gridBrick_bwv1004) gridBrick_bwv1004.addEventListener('click', (e) => {
             const a = e.currentTarget.dataset.a
-            const v = e.currentTarget.dataset.v 
+            const v = e.currentTarget.dataset.v
             if (a && v) {
                 window.location = `puzzle.html?a=${a}&v=${v}`
             } else if (a) {
@@ -216,7 +231,7 @@ const Ω = {
                 window.location = '/artists.html'
             }
         })
-        
+
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((elem) => {
             const nameNoSpaceLowercaseNoDiacritics = elem.dataset.nameNoSpaceLowercaseNoDiacritics
             if (nameNoSpaceLowercaseNoDiacritics === '') {
@@ -242,7 +257,7 @@ const Ω = {
             })
         })
 
-        ;(e => {if (e) e.addEventListener('click', () => config.autoplay = !config.autoplay)})(document?.getElementById('autoplayChecked'));
+            ; (e => { if (e) e.addEventListener('click', () => config.autoplay = !config.autoplay) })(document?.getElementById('autoplayChecked'));
     },
 
     showArtist: (artist) => {
@@ -290,7 +305,7 @@ const Ω = {
                 const variation = e.currentTarget.parentNode.dataset.variation
                 const startBar = codec.variation2bar(variation)
                 config.startBarOfLastSelectedVariation = startBar
-                ;((e,v) => {if (e) e.dataset.v = v})(document.querySelector("#gb-bwv1004 a"), variation)
+                    ; ((e, v) => { if (e) e.dataset.v = v })(document.querySelector("#gb-bwv1004 a"), variation)
             }
         }))
 
