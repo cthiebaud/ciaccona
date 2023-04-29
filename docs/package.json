@@ -1,0 +1,12 @@
+{
+  "name": "ciaccona",
+  "version": "0.10.4",
+  "description": "super app",
+  "main": "index.js",
+  "repository": "https://github.com/cthiebaud/ciaccona",
+  "author": "Christophe Thiebaud",
+  "license": "MIT",
+  "dependencies": {
+    "animejs": "^3.2.1"
+  }
+}
