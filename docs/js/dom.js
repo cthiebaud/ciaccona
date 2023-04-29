@@ -9,7 +9,7 @@ const Ω = {
             return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         }
 
-        if (hasTouchSupport()) {
+        if (true /*hasTouchSupport()*/) {
             console.log("Mobile device detected");
             document.querySelectorAll('.score').forEach(id => {
                 id.style.width = id.dataset.width
