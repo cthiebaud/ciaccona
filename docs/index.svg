@@ -51,9 +51,19 @@
             <path fill="#F0F8FF" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
             <path fill="red"
                 d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
-
         </symbol>
-
+        <symbol id="youtube_external_link-symbol" viewBox="0 -256 1850 1844">
+            <!-- path fill="#fff" d="M359.178 432.56h758.551v721.444H359.178Z"/ -->
+            <path fill="#7f7f7f"
+                d="M924.446 11.249s-563.028 0-704.328 38.141c-75.665 21.962-137.97 86.681-159.113 166.424-36.718 146.784-36.718 450.769-36.718 450.769s0 305.132 36.718 449.603c21.143 79.743 82.335 143.306 159.113 165.267 142.422 39.298 704.328 39.298 704.328 39.298s564.133 0 705.433-38.141c76.778-21.953 137.97-84.368 157.99-165.267 37.841-145.628 37.841-449.604 37.841-449.604s1.113-305.141-37.832-451.925c-20.038-79.743-81.221-143.306-157.99-164.111-141.309-40.454-705.442-40.454-705.442-40.454Zm-179.15 374.476 468.448 280.858-468.448 279.692Z" />
+            <path fill="#afafaf"
+                d="M1849.12-193.36v501.124q0 25.447-18.462 44.044-18.461 18.596-43.725 18.596-25.264 0-43.725-18.596l-171.015-172.262-633.532 638.15q-9.717 9.787-22.349 9.787-12.631 0-22.348-9.788L783.193 706.117q-9.717-9.787-9.717-22.511 0-12.724 9.717-22.511l633.532-638.15-171.015-172.26q-18.462-18.597-18.462-44.045 0-25.447 18.462-44.044Q1264.172-256 1289.436-256h497.497q25.264 0 43.725 18.596 18.462 18.597 18.462 44.044z" />
+            <path fill="#ffffff" d="m745.296 385.725 468.448 280.858-468.448 279.692z" />
+        </symbol>
+        <symbol id="share-symbol" viewBox="0 0 227.216 227.216">
+            <path fill="#d0d0d0"
+                d="M175.897 141.476c-13.249 0-25.11 6.044-32.98 15.518l-51.194-29.066a42.671 42.671 0 0 0 2.467-14.317 42.67 42.67 0 0 0-2.467-14.316l51.19-29.073c7.869 9.477 19.732 15.523 32.982 15.523 23.634 0 42.862-19.235 42.862-42.879C218.759 19.229 199.531 0 175.897 0 152.26 0 133.03 19.229 133.03 42.865c0 5.02.874 9.838 2.467 14.319L84.304 86.258c-7.869-9.472-19.729-15.514-32.975-15.514-23.64 0-42.873 19.229-42.873 42.866 0 23.636 19.233 42.865 42.873 42.865 13.246 0 25.105-6.042 32.974-15.513l51.194 29.067a42.67 42.67 0 0 0-2.468 14.321c0 23.636 19.23 42.865 42.867 42.865 23.634 0 42.862-19.23 42.862-42.865.001-23.64-19.227-42.874-42.861-42.874zm0-126.476c15.363 0 27.862 12.5 27.862 27.865 0 15.373-12.499 27.879-27.862 27.879-15.366 0-27.867-12.506-27.867-27.879C148.03 27.5 160.531 15 175.897 15zM51.33 141.476c-15.369 0-27.873-12.501-27.873-27.865 0-15.366 12.504-27.866 27.873-27.866 15.363 0 27.861 12.5 27.861 27.866 0 15.364-12.499 27.865-27.861 27.865zm124.567 70.74c-15.366 0-27.867-12.501-27.867-27.865 0-15.37 12.501-27.875 27.867-27.875 15.363 0 27.862 12.505 27.862 27.875 0 15.364-12.499 27.865-27.862 27.865z" />
+        </symbol>
         <symbol id="home-symbol" viewBox="0 0 1920 1920">
             <path fill-rule="evenodd"
                 d="M960.16 0 28 932.16l79 78.777 853.16-853.16 853.16 853.16 78.889-78.777L960.16 0Zm613.693 1027.34v781.078h-334.86v-557.913h-557.8v557.912H346.445V1027.34H234.751V1920h1450.684v-892.66h-111.582Zm-446.33 334.748v446.441H792.775v-446.441h334.748ZM960.127 692.604c61.593 0 111.582 49.989 111.582 111.582 0 61.594-49.989 111.583-111.582 111.583-61.594 0-111.583-49.99-111.583-111.583 0-61.593 49.99-111.582 111.583-111.582Zm223.165 111.582c0-123.075-100.09-223.165-223.165-223.165-123.076 0-223.165 100.09-223.165 223.165 0 123.076 100.09 223.165 223.165 223.165 123.075 0 223.165-100.09 223.165-223.165" />
@@ -176,27 +186,33 @@
 
     </defs>
 
+    <!-- row 0 -->
     <view viewBox="   0   0 100 100" id="close-circle-view" />
     <view viewBox=" 200   0 100 100" id="twitter-view" />
     <view viewBox=" 400   0 100 100" id="instagram-view" />
     <view viewBox=" 600   0 100 100" id="facebook-view" />
     <view viewBox=" 800   0 100 100" id="cthiebaud-view" />
     <view viewBox="1000   0 100 100" id="github-view" />
-    <view preserveAspectRatio="xMidYMid meet" viewBox="1200   0 100 100" id="youtube-view" />
-    <view preserveAspectRatio="xMidYMid meet" viewBox="1400   0 100 100" id="home-view" />
-    <view preserveAspectRatio="xMidYMid slice" viewBox="1625  25  50  50" id="treble_clef-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox="1200   0 100 100" id="youtube-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox="1400   0 100 100" id="youtube_external_link-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox="1600   0 100 100" id="share-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox="1800   0 100 100" id="home-view" />
+    <!-- row 1 -->
+    <view preserveAspectRatio="xMidYMid slice" viewBox="  25 225  50  50" id="treble_clef-view" />
+    <!-- row 2 -->
+    <view preserveAspectRatio="xMidYMid meet " viewBox="   0 400 100 100" id="bach_siel_full_left-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox=" 200 400 100 100" id="bach_siel_full_right-view" />
+    <!-- row 3 -->
+    <view preserveAspectRatio="xMidYMax meet " viewBox="-200 600 700 100" id="bach_signature-view" />
+    <!-- row 4 -->
+    <view preserveAspectRatio="xMinYMid meet " viewBox="   0 800 100 100" id="violin-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox=" 200 800 100 100" id="ukulele-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox=" 400 800 100 100" id="keyboard-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox=" 600 800 100 100" id="harp-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox=" 800 800 100 100" id="xylophone-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox="1000 800 100 100" id="flute-view" />
 
-    <view preserveAspectRatio="xMidYMid meet" viewBox="   0 200 100 100" id="bach_siel_full_left-view" />
-    <view preserveAspectRatio="xMidYMid meet" viewBox=" 200 200 100 100" id="bach_siel_full_right-view" />
-    <view preserveAspectRatio="xMidYMax meet" viewBox="-200 400 700 100" id="bach_signature-view" />
-
-    <view preserveAspectRatio="xMinYMid meet" viewBox="   0 600 100 100" id="violin-view" />
-    <view preserveAspectRatio="xMinYMid meet" viewBox=" 200 600 100 100" id="ukulele-view" />
-    <view preserveAspectRatio="xMinYMid meet" viewBox=" 400 600 100 100" id="keyboard-view" />
-    <view preserveAspectRatio="xMinYMid meet" viewBox=" 600 600 100 100" id="harp-view" />
-    <view preserveAspectRatio="xMinYMid meet" viewBox=" 800 600 100 100" id="xylophone-view" />
-    <view preserveAspectRatio="xMinYMid meet" viewBox="1000 600 100 100" id="flute-view" />
-
+    <!-- row 0 -->
     <use x="   0" y="  0" width="100" height="100" id="close-circle" xlink:href="#close-circle-symbol"></use>
     <use x=" 200" y="  0" width="100" height="100" id="twitter" xlink:href="#twitter-symbol"></use>
     <use x=" 400" y="  0" width="100" height="100" id="instagram" xlink:href="#instagram-symbol"></use>
@@ -204,18 +220,22 @@
     <use x=" 800" y="  0" width="100" height="100" id="cthiebaud" xlink:href="#cthiebaud-symbol"></use>
     <use x="1000" y="  0" width="100" height="100" id="github" xlink:href="#github-symbol"></use>
     <use x="1200" y="  0" width="100" height="100" id="youtube" xlink:href="#youtube-symbol"></use>
-    <use x="1400" y="  0" width="100" height="100" id="home" xlink:href="#home-symbol"></use>
-    <use x="1600" y="  0" width="100" height="100" id="treble_clef" xlink:href="#treble_clef-symbol"></use>
-
-    <use x="   0" y="200" width="100" height="100" id="bach_siel_full_left" xlink:href="#bach_siel_full_left-symbol"></use>
-    <use x=" 200" y="200" width="100" height="100" id="bach_siel_full_right" xlink:href="#bach_siel_full_right-symbol"></use>
-    <use x="   0" y="400" width="500" height="100" id="bach_signature" xlink:href="#bach_signature-symbol"></use>
-
-    <use x="   0" y="600" width="100" height="100" id="violin" xlink:href="#violin-symbol"></use>
-    <use x=" 200" y="600" width="100" height="100" id="ukulele" xlink:href="#ukulele-symbol"></use>
-    <use x=" 400" y="600" width="100" height="100" id="ukulele" xlink:href="#keyboard-symbol"></use>
-    <use x=" 600" y="600" width="100" height="100" id="harp" xlink:href="#harp-symbol"></use>
-    <use x=" 800" y="600" width="100" height="100" id="xylophone" xlink:href="#xylophone-symbol"></use>
-    <use x="1000" y="600" width="100" height="100" id="flute" xlink:href="#flute-symbol"></use>
+    <use x="1400" y="  0" width="100" height="100" id="youtube_external_link" xlink:href="#youtube_external_link-symbol"></use>
+    <use x="1600" y="  0" width="100" height="100" id="share" xlink:href="#share-symbol"></use>
+    <use x="1800" y="  0" width="100" height="100" id="home" xlink:href="#home-symbol"></use>
+    <!-- row 1 -->
+    <use x="   0" y="200" width="100" height="100" id="treble_clef" xlink:href="#treble_clef-symbol"></use>
+    <!-- row 2 -->
+    <use x="   0" y="400" width="100" height="100" id="bach_siel_full_left" xlink:href="#bach_siel_full_left-symbol"></use>
+    <use x=" 200" y="400" width="100" height="100" id="bach_siel_full_right" xlink:href="#bach_siel_full_right-symbol"></use>
+    <!-- row 3 -->
+    <use x="   0" y="600" width="500" height="100" id="bach_signature" xlink:href="#bach_signature-symbol"></use>
+    <!-- row 4 -->
+    <use x="   0" y="800" width="100" height="100" id="violin" xlink:href="#violin-symbol"></use>
+    <use x=" 200" y="800" width="100" height="100" id="ukulele" xlink:href="#ukulele-symbol"></use>
+    <use x=" 400" y="800" width="100" height="100" id="ukulele" xlink:href="#keyboard-symbol"></use>
+    <use x=" 600" y="800" width="100" height="100" id="harp" xlink:href="#harp-symbol"></use>
+    <use x=" 800" y="800" width="100" height="100" id="xylophone" xlink:href="#xylophone-symbol"></use>
+    <use x="1000" y="800" width="100" height="100" id="flute" xlink:href="#flute-symbol"></use>
 
 </svg>
