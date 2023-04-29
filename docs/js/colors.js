@@ -237,7 +237,6 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         <a class="magnificent-card p-2">
             &nbsp;BWV&nbsp;1004&nbsp;
         </a>
-        <div>signature</div>
     </div>
 </div>
 `
