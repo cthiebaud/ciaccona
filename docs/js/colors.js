@@ -143,12 +143,12 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
         <div class="p-2" style="white-space: nowrap;">
             <span class="fullname" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
-            <a id="youtube-url" class="text-muted" target="_youtube" href="#">
+            <a id="youtube-url" class="text-muted" target="_youtube" href="#" aria-label="Original Video...">
                 <svg width="28" height="28" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="index.svg?v=0.10.6#youtube-external-link"></use>
                 </svg>
             </a>
-            <a id="social" class="share text-muted" target="_facebook" href="#">
+            <a id="social" class="share text-muted" target="_facebook" href="#" aria-label="Share...">
                 <svg width="24" height="24" preserveAspectRatio="xMidYMid meet">
                     <use xlink:href="index.svg?v=0.10.6#share"></use>
                 </svg>
@@ -199,7 +199,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                     data="scores/bwv-1004_5_for_PNGs-${i + 1}.svg" 
                     type="image/svg+xml"
                     style="pointer-events: none;" 
-                    data-svg-offset-x = ${svgOffsetX}> 
+                    data-svg-offset-x = ${svgOffsetX}
+                    aria-label="variation ${i}"> 
             </object>
 
             <span class="Δ" style="${bg}">
@@ -234,7 +235,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         `
 <div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center">
-        <a class="magnificent-card p-2">
+        <a class="magnificent-card p-2" aria-label="Artists or Puzzle...">
             &nbsp;BWV&nbsp;1004&nbsp;
         </a>
     </div>
