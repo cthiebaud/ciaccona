@@ -229,7 +229,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         `
 <div id="gb-bwv1004" data-sort="${twoZeroPad(i)}" class="grid-brick">
     <div class="brick d-flex align-items-center justify-content-center">
-        <a class="magnificent-card p-2" aria-label="Artists or Puzzle...">
+        <a class="magnificent-card p-2" href="artists.html" aria-label="Artists or Puzzle...">
             &nbsp;BWV&nbsp;1004&nbsp;
         </a>
     </div>

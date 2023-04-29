@@ -201,7 +201,7 @@ Promise.allSettled([...allPromises.values()]).then((results) => {
                 e.scrollIntoView({ behavior: "smooth", block: "center" })
             }
         } else {
-            ; ((e, a) => { if (e) e.dataset.a = a })(document.querySelector("#gb-bwv1004 a"), fullameNoSpaceLowercaseNoDiacritics)
+            ; ((e, a) => { if (e) {e.dataset.a = a; e.href="#"} })(document.querySelector("#gb-bwv1004 a"), fullameNoSpaceLowercaseNoDiacritics)
             console.log("change isotope filter to show artist name")
             isotopeResult.arrange({ filter: '*' })
         }
