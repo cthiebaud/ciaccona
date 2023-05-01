@@ -78,19 +78,27 @@
          xn = parseInt($("xn").value);
          yn = parseInt($("yn").value);
          map = new Map();
-         document.querySelectorAll('#puzzle_items svg').forEach(e => e.remove())
          var svg = document.createElementNS(svgNS, "svg");
-         for (let x = 0; x < xn; x++) {
-            for (let y = 0; y < yn; y++) {
+         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg")
+         svg.setAttribute('width', 720)
+         svg.setAttribute('height', 1920)
+         svg.setAttribute('id', "pieces_container")
+         for (let y = 0; y < yn; y++) {
+            for (let x = 0; x < xn; x++) {
                const k = key(x, y)
                map.set(k, {})
                var sym = document.createElementNS(svgNS, "symbol");
-               sym.setAttributeNS(null, "id", k);
+               sym.setAttribute("id", k);
                var path = document.createElementNS(sym, 'path');
                sym.appendChild(path);
                svg.appendChild(sym);
-               const sel = `table#puzzle_items tr:nth-child(${y + 1}) td:nth-child(${x + 1})`
-               document.querySelector(sel).appendChild(svg);
+               var use = document.createElementNS(svgNS, "use");
+               use.setAttribute("id", `use${k}`);
+               use.setAttribute('href', `#${k}`);
+               svg.appendChild(use);
+               var view = document.createElementNS(svgNS, "view");
+               view.setAttribute("id", `view${k}`);
+               svg.appendChild(view);
             }
          }
          document.body.appendChild(svg);
@@ -116,10 +124,22 @@
 
                var startPoint = "M " + p9l() + "," + p9w() + " ";
                next();
-               // break;
             }
-            // break;
          }
+         for (xi=0; xi < xn; ++xi) {
+            function line(Y) {
+               const x1 = offset + xi * width / xn
+               const y1 = offset + Y
+               const x2 = x1 + width / xn
+               const y2 = y1
+               var startPoint = `M ${x1} ${y1} `
+               let lineto = `L ${x2} ${y2} `
+               return startPoint + lineto
+            }
+            map.get(key(xi, 0))._3top = line(0)
+            map.get(key(xi, yn-1))._1bottom = line(height)
+         }
+
          return str;
       }
 
@@ -146,6 +166,19 @@
             }
             // break;
          }
+         for (yi=0; yi < yn; ++yi) {
+            function line(X) {
+               const x1 = offset + X
+               const y1 = offset + yi * height / yn
+               const x2 = x1
+               const y2 = y1 + height / yn
+               var startPoint = `M ${x1} ${y1} `
+               let lineto = `L ${x2} ${y2} `
+               return startPoint + lineto
+            }
+            map.get(key(0, yi))._4left = line(0)
+            map.get(key(xn-1, yi))._2right = line(width)
+         }
          return str;
       }
 
@@ -165,7 +198,7 @@
       }
 
       function cut(path) {
-         return path.replaceAll(/M [0-9\.]+ [0-9\.]+ /gi, '')
+         return path.replaceAll(/M [0-9\.]+[\s,]+[0-9\.]+ /gi, '')
       }
 
       function reverse(path) {
@@ -189,7 +222,7 @@
          }
          $("puzzlecontainer").setAttribute("width", width + 30);
          $("puzzlecontainer").setAttribute("height", height + 30);
-         offset = 25;
+         offset = 0;
          parse_input();
          $("puzzlepath_h").setAttribute("d", SVGPathEditor.reverse(gen_dh()));
          $("puzzlepath_v").setAttribute("d", gen_dv());
@@ -197,21 +230,37 @@
 
          ; ((offset, w, h) => {
 
-            for (let yi = 1; yi < yn - 1; yi++) {
-               for (let xi = 1; xi < xn - 1; xi++) {
+            for (let yi = 0; yi < yn; yi++) {
+               for (let xi = 0; xi < xn; xi++) {
+                  // console.log(xi, yi)
                   const k = key(xi, yi)
-                  const svgE = document.getElementById(k);
+                  const sym = document.getElementById(k);
+                  const use = document.getElementById(`use${k}`);
+                  const view = document.getElementById(`view${k}`);
                   const d = map.get(k)
                   const bottom = d._1bottom || ''
                   const right = d._2right || ''
                   const top = d._3top || ''
                   const left = d._4left || ''
-                  // const path = bottom + ' ' + right + ' ' + top + ' ' + left + ' z'
-                  path = top + ' ' + cut(right) + cut(reverse(bottom)) + ' ' + cut(reverse(left))
-                  svgE.querySelector('path').setAttributeNS(null, 'd', path)
-                  const bb2 = `${offset - 25 + xi * w} ${offset - 30 + yi * h} ${w + 50} ${h + 60}`
-                  svgE.setAttributeNS(null, 'viewBox', bb2)
-                  // const bb = svgE.getBBox()
+                  const path = top + ' ' + cut(right) + cut(reverse(bottom)) + ' ' + cut(reverse(left))
+                  sym.querySelector('path').setAttribute('d', path)
+                  const x = offset - 50 + xi * w / xn
+                  const y = offset - 60 + yi * h / yn
+                  const width = w / xn + 100
+                  const height = h / yn + 120
+                  const viewBox = `${x} ${y} ${width} ${height}`
+                  sym.setAttribute('viewBox', viewBox)
+                  const x2 = offset + xi * width
+                  const y2 = offset + yi * height
+                  use.setAttribute('x', `${x2}`)
+                  use.setAttribute('y', `${y2}`)
+                  use.setAttribute('width', `${width}`)
+                  use.setAttribute('height', `${height}`)
+                  use.setAttribute('id', `bonhomme${xi+yi*xn}`)
+                  view.setAttribute('viewBox', `${x2} ${y2} ${width} ${height}`)
+                  view.setAttribute('id', `bonhomme${xi+yi*xn}-view`)
+
+                  // const bb = sym.getBBox()
                   // `${bb.x} ${bb.y} ${bb.width - 10} ${bb.height - 10}`
                   // console.log(bb) 
                   /*
@@ -222,7 +271,13 @@
 
                }
             }
-         })(offset, width / xn, height / yn)
+            const svg = document.getElementById('pieces_container');
+            const bb = svg.getBBox()
+            const bb2 = `${offset - bb.x} ${offset - bb.y} ${w * 2} ${h * 2}`
+            svg.setAttribute('viewBox', bb2)
+
+
+         })(offset, width, height)
       }
 
       function generate() {
@@ -274,12 +329,12 @@
       </tr>
       <tr>
          <td>Tiles:</td>
-         <td><input id="xn" type="text" value="11" size="4" onchange="update()" /> x <input id="yn" type="text" value="6" size="4" onchange="update()" /></td>
+         <td><input id="xn" type="text" value="4" size="4" onchange="update()" /> x <input id="yn" type="text" value="9" size="4" onchange="update()" /></td>
          <td></td>
       </tr>
       <tr>
          <td>Size:</td>
-         <td><input id="width" type="text" value="1200" size="4" onchange="update()" /> x <input id="height" type="text" value="628" size="4" onchange="update()" /> mm</td>
+         <td><input id="width" type="text" value="628" size="4" onchange="update()" /> x <input id="height" type="text" value="1200" size="4" onchange="update()" /> mm</td>
          <td><button onclick="generate()">Download SVG</button></td>
       </tr>
    </table>
@@ -288,96 +343,7 @@
       <path id="puzzlepath_v" fill="none" stroke="DarkRed"></path>
       <path id="puzzlepath_b" fill="none" stroke="Black"></path>
    </svg>
-   <style>
-      #puzzle_items td {
-         border: 1px solid gray;
-         max-width: 6rem;
-      }
-   </style>
-
-   <table id="puzzle_items">
-      <tbody>
-
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-         </tr>
-      </tbody>
-   </table>
+   <img src="puzzle.svg" alt="">
 </body>
 
 </html>

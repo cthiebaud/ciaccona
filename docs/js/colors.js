@@ -219,14 +219,15 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             </div>
             <div class="pb-1">${barTo}</div>
         </div>
-        <div class="" style="width: 3rem; height: 5rem; position:relative;">
+        <div class="" style="width: 3rem; height: 5rem; position:relative;overflow: hidden;">
             <object id="gb-puzzle${i}-background"
                     class="gb-puzzle-background" 
                     type="image/svg+xml"
-                    style="object-fit: cover; height: 50%; width: 100%; visibility: hidden; transform: scale(.667); " 
-                    data="index.svg?v=0.11.0#puzzle-filled-view"
+                    style="object-fit: cover; height: 50%; width: 100%; visibility: hidden; transform: scale(1.2); overflow:hidden;" 
+                    data-sel="#bonhomme${i+1}"
+                    data="puzzle.svg?v=0.11.0#bonhomme${i+1}-view"
                     data-color="#${c.puzzleColor}"
-                    > <!--  -->
+                    > <!-- data="index.svg?v=0.11.0#puzzle-filled-view" -->
             </object>
             <div id="gb-puzzle${i}" 
                 class="gb-puzzle fw-bold text-center" 
@@ -242,8 +243,9 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         const qwe = generateElement(templateVariations)
         qwe.querySelector('.gb-puzzle-background').addEventListener("load", e => {
             e.target.style.visibility = 'visible'
-            const svgItem = e.target.contentDocument.querySelector('#puzzle-filled-symbol')
-            svgItem.style.fill = e.target.dataset.color
+            const svgItem = e.target.contentDocument.querySelector(e.target.dataset.sel)
+            const ref = e.target.contentDocument.querySelector(svgItem.getAttribute('href'))
+            ref.style.fill = e.target.dataset.color
         });
         temporaryContainer.appendChild(qwe);
 
