@@ -173,7 +173,7 @@ body:not(.no-vid) #gridContainer {
   height: 100%;
 }
 
-#gridContainerCol #grid .grid-brick.hasScore .brick {
+#gridContainerCol #grid .grid-brick.hasScore .brick .score {
   cursor: pointer;
 }
 

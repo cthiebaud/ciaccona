@@ -211,7 +211,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             </span>
         </div>
         <!-- div class="flex-grow-1"></!-->
-        
+
         <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i === codec.variationsCount - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
             <div class="pt-1">${barFrom + 1}</div>
             <div style="${i === codec.variationsCount - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
@@ -223,16 +223,16 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             <object id="gb-puzzle${i}-background"
                     class="gb-puzzle-background" 
                     type="image/svg+xml"
-                    style="object-fit: cover; height: 100%; width: 100%; transform: scale(.8); visibility: hidden;" 
+                    style="object-fit: cover; height: 50%; width: 100%; visibility: hidden; transform: scale(.667); " 
                     data="index.svg?v=0.11.0#puzzle-filled-view"
                     data-color="#${c.puzzleColor}"
-                    >
+                    > <!--  -->
             </object>
             <div id="gb-puzzle${i}" 
                 class="gb-puzzle fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                 data-v="${i}"
-                style="position:absolute; top:0; bottom: 0; right:0; left: 0; line-height: 5rem; color: #${c.textColor};">
+                style="position:absolute; bottom: 0.5rem; right:0; left: 0; color: #${c.textColor};">
                 ${i === 0 || i === codec.variationsCount - 1 ? "&nbsp;" : i}
             </div>
         </div>
