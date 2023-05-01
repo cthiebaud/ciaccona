@@ -1,5 +1,5 @@
 
-\version "2.18.2"
+\version "2.25.2"
 
 %% https://superuser.com/a/1717604/261669
 %% #(ly:set-option 'crop #t)
@@ -1137,10 +1137,12 @@ breaks = {
 	\repeat unfold 7 {
     	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
     }
-	%% var 8 
+	%% var 8
 	\repeat unfold 11 { s2. \noBreak } s2. \pageBreak
-	%% var 9
-	\repeat unfold 7 { s2. \noBreak } s2. \pageBreak
+	%% var 9.1
+	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
+	%% var 9.2
+	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
 	%% var 10 
 	\repeat unfold 3 { s2. \noBreak } s2. \pageBreak
 	%% var 11 - 14 (4)
