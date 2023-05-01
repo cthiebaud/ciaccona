@@ -104,14 +104,16 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     for (let s of _colors_) {
         const k0_1normalized = normalizeVraiment(k++, 0, _colors_.length, 0, 1)
         const contrastChange = (1 - easingVanishingContrast(k0_1normalized)) * 100
-        if (tinycolor(s.p_rgb).isLight()) {
+        // console.log(s.p_rgb, tinycolor(s.p_rgb).isLight(), tinycolor(s.p_rgb).getLuminance())
+        const lum = tinycolor(s.p_rgb).getLuminance() 
+        if (lum > .333) { // tinycolor(s.p_rgb).isLight()
             s.textColor = tinycolor(s.p_rgb).darken(contrastChange).toString("hex6").slice(1)
-            s.puzzleColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
+            s.puzzleColor = tinycolor(s.p_rgb).darken(15).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).darken(5).toString("hex6").slice(1)
             s.stripeColorAlpha = tinycolor(s.p_rgb).darken(5).setAlpha(transparency).toString("hex8").slice(1)
         } else {
             s.textColor = tinycolor(s.p_rgb).lighten(contrastChange).toString("hex6").slice(1)
-            s.puzzleColor = tinycolor(s.p_rgb).darken(10).toString("hex6").slice(1)
+            s.puzzleColor = tinycolor(s.p_rgb).lighten(12).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).lighten(5).toString("hex6").slice(1)
             s.stripeColorAlpha = tinycolor(s.p_rgb).lighten(5).setAlpha(transparency).toString("hex8").slice(1)
         }
@@ -223,7 +225,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             <object id="gb-puzzle${i}-background"
                     class="gb-puzzle-background" 
                     type="image/svg+xml"
-                    style="object-fit: cover; height: 50%; width: 100%; visibility: hidden; transform: scale(1.2); overflow:hidden;" 
+                    style="object-fit: cover; height: 60%; width: 80%; visibility: hidden; transform: scale(1.4); overflow:hidden;" 
                     data-sel="#bonhomme${i+1}"
                     data="puzzle.svg?v=0.11.0#bonhomme${i+1}-view"
                     data-color="#${c.puzzleColor}"
@@ -233,7 +235,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                 class="gb-puzzle fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                 data-v="${i}"
-                style="position:absolute; bottom: 0.5rem; right:0; left: 0; color: #${c.textColor};">
+                style="position:absolute; bottom: 0.5rem; right:0; left: -.667rem; color: #${c.textColor};">
                 ${i === 0 || i === codec.variationsCount - 1 ? "&nbsp;" : i}
             </div>
         </div>
