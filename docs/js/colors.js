@@ -220,16 +220,16 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             <div class="pb-1">${barTo}</div>
         </div>
         <div class="" style="width: 3rem; height: 5rem; position:relative;">
-            <object 
+            <object id="gb-puzzle${i}-background"
+                    class="gb-puzzle-background" 
                     type="image/svg+xml"
                     style="object-fit: cover; height: 100%; width: 100%; transform: scale(.8); visibility: hidden;" 
-                    
+                    data="index.svg?v=0.11.0#puzzle-filled-view"
                     data-color="#${c.puzzleColor}"
                     >
             </object>
             <div id="gb-puzzle${i}" 
                 class="gb-puzzle fw-bold text-center" 
-                data="index.svg?v=0.11.0#puzzle-filled-view"
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                 data-v="${i}"
                 style="position:absolute; top:0; bottom: 0; right:0; left: 0; line-height: 5rem; color: #${c.textColor};">
@@ -240,7 +240,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 </div>
 `
         const qwe = generateElement(templateVariations)
-        qwe.querySelector('.gb-puzzle').addEventListener("load", e => {
+        qwe.querySelector('.gb-puzzle-background').addEventListener("load", e => {
             e.target.style.visibility = 'visible'
             const svgItem = e.target.contentDocument.querySelector('#puzzle-filled-symbol')
             svgItem.style.fill = e.target.dataset.color

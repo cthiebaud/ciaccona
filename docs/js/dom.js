@@ -219,6 +219,7 @@ const Ω = {
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
+        /*
         document.querySelectorAll('.gb-puzzle').forEach(e => e.addEventListener('click', e => {
             let a = e.currentTarget.dataset.a
             if (a === 'undefined') a = undefined
@@ -233,7 +234,7 @@ const Ω = {
                 window.location = 'artists.html'
             }
         }))
-
+        */
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((elem) => {
             const nameNoSpaceLowercaseNoDiacritics = elem.dataset.nameNoSpaceLowercaseNoDiacritics
             if (nameNoSpaceLowercaseNoDiacritics === '') {
