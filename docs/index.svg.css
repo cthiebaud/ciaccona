@@ -36,6 +36,12 @@
 .icon-share {
   background-image: url("index.svg?v=0.10.6#share-view");
 }
+.icon-puzzle {
+  background-image: url("index.svg?v=0.10.6#puzzle-view");
+}
+.icon-puzzle-filled {
+  background-image: url("index.svg?v=0.10.6#puzzle-filled-view");
+}
 .icon-home {
   background-image: url("index.svg?v=0.10.6#home-view");
 }
