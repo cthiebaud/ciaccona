@@ -22,41 +22,41 @@ const puppeteer = require('puppeteer');
     ]
     const performers = [
         // 'adolfbusch',
-        // 'amandinebeyer',
-        // 'andreadevitis',
-        // 'anneleenlenaerts',
-        // 'bellahristova',
-        // 'chiaramassini',
-        // 'christiantetzlaff',
-        // 'clara-jumikang',
-        // 'moi',
-        // 'florentinginot',
-        // 'genzohtakehisa',
-        // 'hilaryhahn',
-        // 'isabellefaust',
-        // 'jeannelamon',
-        // 'juliafischer',
+        'amandinebeyer',
+        'andreadevitis',
+        'anneleenlenaerts',
+        'bellahristova',
+        'chiaramassini',
+        'christiantetzlaff',
+        'clara-jumikang',
+        'moi',
+        'florentinginot',
+        'genzohtakehisa',
+        'hilaryhahn',
+        'isabellefaust',
+        'jeannelamon',
+        'juliafischer',
         'ksenijakomljenovic',
-        // 'lisajacobs',
-        // 'lizaferschtman',
-        // 'martafemenia',
-        // 'martinbaker',
-        // 'michaelleontchik',
-        // 'midorigoto',
-        // 'miguelrincon',
-        // 'mikastoltzman',
-        // 'moranwasser',
-        // 'petrapolackova',
-        // 'polinaosetinskaya',
-        // 'rachellellenwong',
-        // 'rachelpodger',
-        // 'raphaellasmits',
-        // 'sigiswaldkuijken',
-        // 'veronikaeberle',
-        // 'veroniquederaedemaeker',
-        // 'virginierobilliard',
-        // 'vonhansen',
-        // 'yunpark',
+        'lisajacobs',
+        'lizaferschtman',
+        'martafemenia',
+        'martinbaker',
+        'michaelleontchik',
+        'midorigoto',
+        'miguelrincon',
+        'mikastoltzman',
+        'moranwasser',
+        'petrapolackova',
+        'polinaosetinskaya',
+        'rachellellenwong',
+        'rachelpodger',
+        'raphaellasmits',
+        'sigiswaldkuijken',
+        'veronikaeberle',
+        'veroniquederaedemaeker',
+        'virginierobilliard',
+        'vonhansen',
+        'yunpark',
     ]
 
     const cookies = [{
@@ -65,9 +65,41 @@ const puppeteer = require('puppeteer');
         domain: 'localhost'
     }, {
         name: 'scoreInBricks',
-        value: 'selectedBrick',
+        value: 'allBricks',
         domain: 'localhost'
     }]
+
+    /**
+     * Wait for the browser to fire an event (including custom events)
+     * @param {string} eventName - Event name
+     * @param {integer} seconds - number of seconds to wait.
+     * @returns {Promise} resolves when event fires or timeout is reached
+     */
+    async function waitForEvent(eventName, seconds) {
+
+        seconds = seconds || 30;
+
+        // use race to implement a timeout
+        return Promise.race([
+
+            // add event listener and wait for event to fire before returning
+            page.evaluate(function (eventName) {
+                return new Promise(function (resolve, reject) {
+                    document.addEventListener(eventName, function (e) {
+                        resolve(); // resolves when the event fires
+                    });
+                });
+            }, eventName),
+
+            // if the event does not fire within n seconds, exit
+            // page.waitForTimeout(seconds * 1000)
+            new Promise(r => setTimeout(r, seconds * 1000))
+        ]);
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     await page.setCookie(...cookies);
 
@@ -91,88 +123,89 @@ const puppeteer = require('puppeteer');
 
             // Open URL in current page  
             await page.goto(website_url, { waitUntil: 'networkidle0' });
-            /*
-            await page.evaluate(() => document.body.style.zoom = 0.666  );
 
-            const path = `artists-${p}.jpg`
-            console.log(`saving screenshot to ${path}`)
-            await page.screenshot({
-                path: path
-            });
-            */
-            
-            let i = 0
-            let intervalObj
-            const promiseVariations = new Promise(async (resolveVariation, rejectVariation) => {
+            for (let v = 0; v < 35; v++) {
+                const variation = v.toString()
 
-                async function myFunc(performer) {
-                    const variation = i.toString()
-                    i++
+                // https://stackoverflow.com/a/50869650/1070215
+                console.log('set visible')
+                await page.evaluate((sel) => {
+                    console.log(`await page.evaluate((${sel}) to set visible`)
+                    document.querySelectorAll(sel).forEach(
+                        e => e.style.visibility = 'visible'
+                    )
+                }, '#videos-menu, #config-menu, #gridContainerCol')
 
-                    // https://stackoverflow.com/a/50869650/1070215
-                    await page.evaluate((sel) => {
-                        var elements = document.querySelectorAll(sel);
-                        for(var i=0; i< elements.length; i++){
-                            elements[i].style.visibility = 'visible'
-                        }
-                    }, '#gridContainerCol')
+                // Query for an element handle.
+                console.log(`await page.waitForSelector('#gb${variation} .score')`)
+                const element = await page.waitForSelector(`#gb${variation} .score`);
 
-                    // Query for an element handle.
-                    const element = await page.waitForSelector(`#gb${variation} > div > div.score`);
+                console.log(`seeking to variation ${variation}`)
 
-                    console.log(`seeking to variation ${variation}`)
+                let max = 35;
+                // Do something with element...
+                /* if (!novid.includes(performer)) { */
+                console.log('click')
+                await element.click();
+                /* } else {
+                    max = 1
+                } */
+                /*
+                */
+                console.log('hide')
+                await page.evaluate((sel) => {
+                    console.log(`await page.evaluate((${sel}) to hide`)
+                    document.querySelectorAll(sel).forEach(
+                        e => e.style.visibility = 'hidden'
+                    )
+                }, '#videos-menu, #config-menu, #gridContainerCol')
 
-                    let max = 34;
-                    // Do something with element...
-                    /* if (!novid.includes(performer)) { */
-                    await element.click();
-                    /* } else {
-                        max = 1
+                const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
+                for (let playerControl of playerControls) {
+                    //hover on each element handle
+                    // await playerControl.hover();
+
+                    console.log('waiting for çaJoue event')
+                    await waitForEvent('çaJoue', 2)
+
+                    /* if (v < 1) {
+                        console.log('çaJoue! waiting for 2 seconds ...')
+                        sleep(2000)
                     } */
-                    /*
-                    */
-                    await page.evaluate((sel) => {
-                        var elements = document.querySelectorAll(sel);
-                        for(var i=0; i< elements.length; i++){
-                            elements[i].style.visibility = 'hidden'
-                        }
-                    }, '#videos-menu, #config-menu, #gridContainerCol')
-                    const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
-                    for (let playerControl of playerControls) {
-                        //hover on each element handle
-                        // await playerControl.hover();
-                        setTimeout(async () => {
-                            // Capture screenshot
-                            const path = `artists/${performer}/${performer}-${variation}.jpg`
-                            console.log(`saving screenshot to ${path}`)
-                            await page.screenshot({
-                                path: path
-                            });
 
-                            // Dispose of handle
-                            await element.dispose();
+                    // Capture screenshot
+                    const path = `artists/${performer}/${performer}-${variation}.jpg`
+                    console.log(`saving screenshot to ${path}`)
+                    await page.screenshot({
+                        path: path
+                    });
 
-                            if (max <= i) {
-                                console.log('resolving promiseVariations')
-                                console.log('clearInterval')
-                                clearInterval(intervalObj);
-                                resolveVariation()
-                            }
-                        }, 1500, performer, variation)
-                        break;
-                    }
+                    // Dispose of handle
+                    await element.dispose();
+
+                    // resolveVariation(true)
                 }
-                console.log('setinterval')
-                intervalObj = setInterval(myFunc, 3000, performer)
-            });
-            await promiseVariations.then(async (result) => {
-                console.log('promiseVariations then', p)
-                return result
-            }).catch(error => {
-                console.log(error)
-                throw error
-            })
-            
+            }
+            /*
+        }
+        let i = 0
+        const promiseVariations = new Promise(async (resolveVariation, rejectVariation) => {
+
+            async function myFunc(performer) {
+
+            console.log(`myFunc(${performer})`)
+
+            myFunc(performer)
+        });
+        await promiseVariations.then(async (result) => {
+            console.log('promiseVariations then', p)
+            return result
+        }).catch(error => {
+            console.log(error)
+            throw error
+        })
+        */
+
             console.log('now we should go to next performer, or no ?', p)
         }
         console.log('finito with performers. resolving promisePerformers')
