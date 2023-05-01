@@ -1,7 +1,7 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import codec from "/js/structure.js?v=0.10.6"
-import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.10.6"
+import codec from "/js/structure.js?v=0.11.0"
+import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.11.0"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -224,7 +224,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                     type="image/svg+xml"
                     style="object-fit: cover; height: 100%; width: 100%; transform: scale(.8); visibility: hidden;" 
                     class="gb-puzzle"
-                    data="index.svg?v=0.10.6#puzzle-filled-view"
+                    data="index.svg?v=0.11.0#puzzle-filled-view"
                     data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                     data-v="${i}"
                     data-color="#${c.puzzleColor}"
