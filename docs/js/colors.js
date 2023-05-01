@@ -1,8 +1,8 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import codec from "/js/structure.js?v=0.11.0"
-import Jigsaw from '/js/jigsaw.js?v=0.11.0'
-import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.11.0"
+import codec from "/js/structure.js?v=0.11.1"
+import Jigsaw from '/js/jigsaw.js?v=0.11.1'
+import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.11.1"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
@@ -266,7 +266,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                     type="image/svg+xml"
                     style="display: none; object-fit: cover; height: 60%; width: 80%; visibility: hidden; transform: scale(1.4); overflow:hidden;" 
                     data-sel="#bonhomme${i + 1}"
-                    data="puzzle.svg?v=0.11.0#bonhomme${i + 1}-view"
+                    data="puzzle.svg?v=0.11.1#bonhomme${i + 1}-view"
                     data-color="#${c.puzzleColor}"
                     > 
             </object>
