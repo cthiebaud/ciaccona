@@ -153,11 +153,11 @@ body:not(.no-vid) #gridContainer {
 }
 
 /* last, signature .grid_brick */
-.grid-brick#gb33 {
+.grid-brick:last-child {
   background-color: transparent !important;
 }
 
-.grid-brick#gb33 .brick {
+.grid-brick:last-child .brick {
   background-image: url(index.svg?v=0.10.6#bach_signature-view);
   /* background-size: 200px 200px; */
   background-position-y: center;
