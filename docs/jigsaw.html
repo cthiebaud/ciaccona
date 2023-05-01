@@ -5,16 +5,27 @@
 <head>
    <meta charset="UTF-8">
    <title>Jigsaw puzzle</title>
+   <style>
+      #pieces_container {
+         display: none;
+      }
+   </style>
    <script src="https://cdn.jsdelivr.net/npm/svg-path-reverse@1.7.0/reverse.min.js"></script>
    <script type="text/javascript">
-      // save function pieced together from here: https://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link
+      'use strict'
+      const svgNS = "http://www.w3.org/2000/svg"
+
+      /* let a, b, c, d, e, t, j, flip, xi, yi, xn, yn, vertical, offset , width, height, radius; */
+      let seed = 1;
+
+      function $(id) { return document.getElementById(id); }
       function save(filename, data) {
-         var blob = new Blob([data], { type: "image/svg+xml" });
+         let blob = new Blob([data], { type: "image/svg+xml" });
          if (window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveBlob(blob, filename);
          }
          else {
-            var elem = window.document.createElement('a');
+            let elem = window.document.createElement('a');
             elem.href = window.URL.createObjectURL(blob);
             elem.download = filename;
             document.body.appendChild(elem);
@@ -22,194 +33,13 @@
             document.body.removeChild(elem);
          }
       }
-
-      var seed = 1;
-      function random() { var x = Math.sin(seed) * 10000; seed += 1; return x - Math.floor(x); }
-      function uniform(min, max) { var r = random(); return min + r * (max - min); }
-      function rbool() { return random() > 0.5; }
-
-      function $(id) { return document.getElementById(id); }
-
-      function updateseed() { $("_seed").value = $("seed").value; update(); }
-      function updatetabsize() { $("_tabsize").value = $("tabsize").value + "%"; update(); }
-      function updatejitter() { $("_jitter").value = $("jitter").value + "%"; update(); }
-      function update_seed() { var val = parseFloat($("_seed").value); if (!isNaN(val)) { $("seed").value = val; } updateseed(); }
-      function update_tabsize() { var val = parseFloat($("_tabsize").value); if (!isNaN(val)) { $("tabsize").value = val; } updatetabsize(); }
-      function update_jitter() { var val = parseFloat($("_jitter").value); if (!isNaN(val)) { $("jitter").value = val; } updatejitter(); }
-
-      var a, b, c, d, e, t, j, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
-      function first() { e = uniform(-j, j); next(); }
-      function next() { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e : e); b = uniform(-j, j); c = uniform(-j, j); d = uniform(-j, j); e = uniform(-j, j); }
-      function sl() { return vertical ? height / yn : width / xn; }
-      function sw() { return vertical ? width / xn : height / yn; }
-      function ol() { return offset + sl() * (vertical ? yi : xi); }
-      function ow() { return offset + sw() * (vertical ? xi : yi); }
-      function l(v) { var ret = ol() + sl() * v; return Math.round(ret * 100) / 100; }
-      function w(v) { var ret = ow() + sw() * v * (flip ? -1.0 : 1.0); return Math.round(ret * 100) / 100; }
-      function p0l() { return l(0.0); }
-      function p0w() { return w(0.0); }
-      function p1l() { return l(0.2); }
-      function p1w() { return w(a); }
-      function p2l() { return l(0.5 + b + d); }
-      function p2w() { return w(-t + c); }
-      function p3l() { return l(0.5 - t + b); }
-      function p3w() { return w(t + c); }
-      function p4l() { return l(0.5 - 2.0 * t + b - d); }
-      function p4w() { return w(3.0 * t + c); }
-      function p5l() { return l(0.5 + 2.0 * t + b - d); }
-      function p5w() { return w(3.0 * t + c); }
-      function p6l() { return l(0.5 + t + b); }
-      function p6w() { return w(t + c); }
-      function p7l() { return l(0.5 + b + d); }
-      function p7w() { return w(-t + c); }
-      function p8l() { return l(0.8); }
-      function p8w() { return w(e); }
-      function p9l() { return l(1.0); }
-      function p9w() { return w(0.0); }
-
-      const svgNS = "http://www.w3.org/2000/svg"
-      let map = new Map();
-
-      const key = (x, y) => `_${x.toString()}x${y.toString()}`
-      function parse_input() {
-         seed = parseInt($("seed").value);
-         t = parseFloat($("tabsize").value) / 200.0;
-         j = parseFloat($("jitter").value) / 100.0;
-         xn = parseInt($("xn").value);
-         yn = parseInt($("yn").value);
-         map = new Map();
-         var svg = document.createElementNS(svgNS, "svg");
-         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg")
-         svg.setAttribute('width', 720)
-         svg.setAttribute('height', 1920)
-         svg.setAttribute('id', "pieces_container")
-         for (let y = 0; y < yn; y++) {
-            for (let x = 0; x < xn; x++) {
-               const k = key(x, y)
-               map.set(k, {})
-               var sym = document.createElementNS(svgNS, "symbol");
-               sym.setAttribute("id", k);
-               var path = document.createElementNS(sym, 'path');
-               sym.appendChild(path);
-               svg.appendChild(sym);
-               var use = document.createElementNS(svgNS, "use");
-               use.setAttribute("id", `use${k}`);
-               use.setAttribute('href', `#${k}`);
-               svg.appendChild(use);
-               var view = document.createElementNS(svgNS, "view");
-               view.setAttribute("id", `view${k}`);
-               svg.appendChild(view);
-            }
-         }
-         document.body.appendChild(svg);
-      }
-
-      function gen_dh() {
-         var str = "";
-         vertical = 0;
-
-         for (yi = 1; yi < yn; ++yi) {
-            xi = 0;
-            first();
-            var startPoint = "M " + p0l() + "," + p0w() + " ";
-            str += startPoint;
-            for (; xi < xn; ++xi) {
-               let curve;
-               curve = "C " + p1l() + " " + p1w() + " " + p2l() + " " + p2w() + " " + p3l() + " " + p3w() + " ";
-               curve += "C " + p4l() + " " + p4w() + " " + p5l() + " " + p5w() + " " + p6l() + " " + p6w() + " ";
-               curve += "C " + p7l() + " " + p7w() + " " + p8l() + " " + p8w() + " " + p9l() + " " + p9w() + " ";
-               str += curve
-               map.get(key(xi, yi - 1))._1bottom = startPoint + curve
-               map.get(key(xi, yi))._3top = startPoint + curve
-
-               var startPoint = "M " + p9l() + "," + p9w() + " ";
-               next();
-            }
-         }
-         for (xi=0; xi < xn; ++xi) {
-            function line(Y) {
-               const x1 = offset + xi * width / xn
-               const y1 = offset + Y
-               const x2 = x1 + width / xn
-               const y2 = y1
-               var startPoint = `M ${x1} ${y1} `
-               let lineto = `L ${x2} ${y2} `
-               return startPoint + lineto
-            }
-            map.get(key(xi, 0))._3top = line(0)
-            map.get(key(xi, yn-1))._1bottom = line(height)
-         }
-
-         return str;
-      }
-
-      function gen_dv() {
-         var str = "";
-         vertical = 1;
-
-         for (xi = 1; xi < xn; ++xi) {
-            yi = 0;
-            first();
-            var startPoint = "M " + p0w() + "," + p0l() + " ";
-            str += startPoint;
-            for (; yi < yn; ++yi) {
-               let curve;
-               curve = "C " + p1w() + " " + p1l() + " " + p2w() + " " + p2l() + " " + p3w() + " " + p3l() + " ";
-               curve += "C " + p4w() + " " + p4l() + " " + p5w() + " " + p5l() + " " + p6w() + " " + p6l() + " ";
-               curve += "C " + p7w() + " " + p7l() + " " + p8w() + " " + p8l() + " " + p9w() + " " + p9l() + " ";
-               str += curve
-               map.get(key(xi - 1, yi))._2right = startPoint + curve
-               map.get(key(xi, yi))._4left = startPoint + curve
-               var startPoint = "M " + p9w() + "," + p9l() + " ";
-               next();
-               // break;
-            }
-            // break;
-         }
-         for (yi=0; yi < yn; ++yi) {
-            function line(X) {
-               const x1 = offset + X
-               const y1 = offset + yi * height / yn
-               const x2 = x1
-               const y2 = y1 + height / yn
-               var startPoint = `M ${x1} ${y1} `
-               let lineto = `L ${x2} ${y2} `
-               return startPoint + lineto
-            }
-            map.get(key(0, yi))._4left = line(0)
-            map.get(key(xn-1, yi))._2right = line(width)
-         }
-         return str;
-      }
-
-      function gen_db() {
-         var str = "";
-
-         str += "M " + (offset + radius) + " " + (offset) + " ";
-         str += "L " + (offset + width - radius) + " " + (offset) + " ";
-         str += "A " + (radius) + " " + (radius) + " 0 0 1 " + (offset + width) + " " + (offset + radius) + " ";
-         str += "L " + (offset + width) + " " + (offset + height - radius) + " ";
-         str += "A " + (radius) + " " + (radius) + " 0 0 1 " + (offset + width - radius) + " " + (offset + height) + " ";
-         str += "L " + (offset + radius) + " " + (offset + height) + " ";
-         str += "A " + (radius) + " " + (radius) + " 0 0 1 " + (offset) + " " + (offset + height - radius) + " ";
-         str += "L " + (offset) + " " + (offset + radius) + " ";
-         str += "A " + (radius) + " " + (radius) + " 0 0 1 " + (offset + radius) + " " + (offset) + " ";
-         return str;
-      }
-
-      function cut(path) {
-         return path.replaceAll(/M [0-9\.]+[\s,]+[0-9\.]+ /gi, '')
-      }
-
-      function reverse(path) {
-         return SVGPathEditor.reverse(path)
-      }
-
+      function updateseed() { $("_seed").value = $("seed").value; /* update(); */ }
+      /*
       function update() {
          width = parseInt($("width").value);
          height = parseInt($("height").value);
          radius = parseFloat($("radius").value);
-         var ratio = 1.0 * width / height;
+         let ratio = 1.0 * width / height;
          if (ratio > 1.5) {
             radius = radius * 900 / width;
             width = 900;
@@ -224,84 +54,133 @@
          $("puzzlecontainer").setAttribute("height", height + 30);
          offset = 0;
          parse_input();
-         $("puzzlepath_h").setAttribute("d", SVGPathEditor.reverse(gen_dh()));
+         $("puzzlepath_h").setAttribute("d", gen_dh());
          $("puzzlepath_v").setAttribute("d", gen_dv());
          $("puzzlepath_b").setAttribute("d", gen_db());
+      }
+      */
 
-         ; ((offset, w, h) => {
-
-            for (let yi = 0; yi < yn; yi++) {
-               for (let xi = 0; xi < xn; xi++) {
-                  // console.log(xi, yi)
-                  const k = key(xi, yi)
-                  const sym = document.getElementById(k);
-                  const use = document.getElementById(`use${k}`);
-                  const view = document.getElementById(`view${k}`);
-                  const d = map.get(k)
-                  const bottom = d._1bottom || ''
-                  const right = d._2right || ''
-                  const top = d._3top || ''
-                  const left = d._4left || ''
-                  const path = top + ' ' + cut(right) + cut(reverse(bottom)) + ' ' + cut(reverse(left))
-                  sym.querySelector('path').setAttribute('d', path)
-                  const x = offset - 50 + xi * w / xn
-                  const y = offset - 60 + yi * h / yn
-                  const width = w / xn + 100
-                  const height = h / yn + 120
-                  const viewBox = `${x} ${y} ${width} ${height}`
-                  sym.setAttribute('viewBox', viewBox)
-                  const x2 = offset + xi * width
-                  const y2 = offset + yi * height
-                  use.setAttribute('x', `${x2}`)
-                  use.setAttribute('y', `${y2}`)
-                  use.setAttribute('width', `${width}`)
-                  use.setAttribute('height', `${height}`)
-                  use.setAttribute('id', `bonhomme${xi+yi*xn}`)
-                  view.setAttribute('viewBox', `${x2} ${y2} ${width} ${height}`)
-                  view.setAttribute('id', `bonhomme${xi+yi*xn}-view`)
-
-                  // const bb = sym.getBBox()
-                  // `${bb.x} ${bb.y} ${bb.width - 10} ${bb.height - 10}`
-                  // console.log(bb) 
-                  /*
-                  const bb0 = `${offset - bb.x} ${offset - bb.y} ${bb.width} ${bb.height}`
-                  console.log(xi, yi, bb2, bb0)
-                  if (yi < yn - 1)
-                  */
-
-               }
+      function parse_input() {
+         seed = parseInt($("seed").value);
+         t = parseFloat($("tabsize").value) / 200.0;
+         j = parseFloat($("jitter").value) / 100.0;
+         xn = parseInt($("xn").value);
+         yn = parseInt($("yn").value);
+         /*
+         map = new Map();
+         let svg = document.createElementNS(svgNS, "svg");
+         svg.setAttribute('xmlns', "http://www.w3.org/2000/svg")
+         svg.setAttribute('width', 720)
+         svg.setAttribute('height', 1920)
+         svg.setAttribute('id', "pieces_container")
+         for (let y = 0; y < yn; y++) {
+            for (let x = 0; x < xn; x++) {
+               const k = key(x, y)
+               map.set(k, {})
+               let sym = document.createElementNS(svgNS, "symbol");
+               sym.setAttribute("id", k);
+               let path = document.createElementNS(sym, 'path');
+               sym.appendChild(path);
+               svg.appendChild(sym);
+               let use = document.createElementNS(svgNS, "use");
+               use.setAttribute("id", `use${k}`);
+               use.setAttribute('href', `#${k}`);
+               svg.appendChild(use);
+               let view = document.createElementNS(svgNS, "view");
+               view.setAttribute("id", `view${k}`);
+               svg.appendChild(view);
             }
-            const svg = document.getElementById('pieces_container');
-            const bb = svg.getBBox()
-            const bb2 = `${offset - bb.x} ${offset - bb.y} ${w * 2} ${h * 2}`
-            svg.setAttribute('viewBox', bb2)
-
-
-         })(offset, width, height)
+         }
+         document.body.appendChild(svg);
+         */
       }
 
-      function generate() {
-         width = parseInt($("width").value);
-         height = parseInt($("height").value);
-         radius = parseFloat($("radius").value);
-         offset = 0.0;
-         parse_input();
+   </script>
+   <script type="module">
+      import Jigsaw from '/jigsaw.js'
 
-         var data = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\" ";
-         data += "width=\"" + width + "mm\" height=\"" + height + "mm\" viewBox=\"0 0 " + width + " " + height + "\">";
-         data += "<path fill=\"none\" stroke=\"DarkBlue\" stroke-width=\"0.1\" d=\"";
-         data += gen_dh();
-         data += "\"></path>";
-         data += "<path fill=\"none\" stroke=\"DarkRed\" stroke-width=\"0.1\" d=\"";
-         data += gen_dv();
-         data += "\"></path>";
-         data += "<path fill=\"none\" stroke=\"Black\" stroke-width=\"0.1\" d=\"";
-         data += gen_db();
-         data += "\"></path>";
-         data += "</svg>";
+      let width = parseInt($("width").value)
+      let height = parseInt($("height").value)
+      const jig = new Jigsaw({
+         width: width,
+         height: height,
+         radius: parseFloat($("radius").value),
+         seed: parseInt($("seed").value),
+         tabsize: parseFloat($("tabsize").value) / 200.0,
+         jitter: parseFloat($("jitter").value) / 100.0,
+         xn: parseInt($("xn").value),
+         yn: parseInt($("yn").value),
+      })
 
-         save("jigsaw.svg", data);
+      $("puzzlecontainer").setAttribute("width", width + 30);
+      $("puzzlecontainer").setAttribute("height", height + 30);
+      jig.everything()
+      $("puzzlepath_h").setAttribute("d", jig.dh);
+      $("puzzlepath_v").setAttribute("d", jig.dv);
+      $("puzzlepath_b").setAttribute("d", jig.db);
+
+      function parse_input_then_update() {
+         let width = parseInt($("width").value)
+         let height = parseInt($("height").value)
+         $("puzzlecontainer").setAttribute("width", width + 30);
+         $("puzzlecontainer").setAttribute("height", height + 30);
+         jig.update({
+            width: width,
+            height: height,
+            radius: parseFloat($("radius").value),
+            seed: parseInt($("seed").value),
+            tabsize: parseFloat($("tabsize").value) / 200.0,
+            jitter: parseFloat($("jitter").value) / 100.0,
+            xn: parseInt($("xn").value),
+            yn: parseInt($("yn").value),
+         })
+         $("puzzlepath_h").setAttribute("d", jig.dh);
+         $("puzzlepath_v").setAttribute("d", jig.dv);
+         $("puzzlepath_b").setAttribute("d", jig.db);
+
       }
+
+      function updateseed() { $("_seed").value = $("seed").value; parse_input_then_update(); }
+      function updatetabsize() { $("_tabsize").value = $("tabsize").value + "%"; parse_input_then_update(); }
+      function updatejitter() { $("_jitter").value = $("jitter").value + "%"; parse_input_then_update(); }
+      function update_seed() { let val = parseFloat($("_seed").value); if (!isNaN(val)) { $("seed").value = val; } updateseed(); }
+      function update_tabsize() { let val = parseFloat($("_tabsize").value); if (!isNaN(val)) { $("tabsize").value = val; } updatetabsize(); }
+      function update_jitter() { let val = parseFloat($("_jitter").value); if (!isNaN(val)) { $("jitter").value = val; } updatejitter(); }
+
+      document.getElementById('radius').addEventListener("change", (event) => {
+         parse_input_then_update()
+      });
+      document.getElementById('xn').addEventListener("change", (event) => {
+         parse_input_then_update()
+      });
+      document.getElementById('yn').addEventListener("change", (event) => {
+         parse_input_then_update()
+      });
+      document.getElementById('width').addEventListener("change", (event) => {
+         parse_input_then_update()
+      });
+      document.getElementById('height').addEventListener("change", (event) => {
+         parse_input_then_update()
+      });
+
+      document.getElementById('_seed').addEventListener("change", (event) => {
+         update_seed()
+      });
+      document.getElementById('seed').addEventListener("change", (event) => {
+         updateseed()
+      });
+      document.getElementById('_tabsize').addEventListener("change", (event) => {
+         update_tabsize()
+      });
+      document.getElementById('tabsize').addEventListener("change", (event) => {
+         updatetabsize()
+      });
+      document.getElementById('_jitter').addEventListener("change", (event) => {
+         update_jitter()
+      });
+      document.getElementById('jitter').addEventListener("change", (event) => {
+         updatejitter()
+      });
    </script>
 </head>
 
@@ -309,32 +188,32 @@
    <table>
       <tr>
          <td>Seed:</td>
-         <td><input id="_seed" type="text" value="0" onchange="update_seed()" /></td>
-         <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" onchange="updateseed()" /></td>
+         <td><input id="_seed" type="text" value="0" /></td>
+         <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" /></td>
       </tr>
       <tr>
          <td>Tab Size:</td>
-         <td><input id="_tabsize" type="text" value="20%" onchange="update_tabsize()" /></td>
-         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" onchange="updatetabsize()" /></td>
+         <td><input id="_tabsize" type="text" value="20%" /></td>
+         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" /></td>
       </tr>
       <tr>
          <td>Jitter:</td>
          <td><input id="_jitter" type="text" value="4%" onchange="update_jitter()" /></td>
-         <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" onchange="updatejitter()" /></td>
+         <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" /></td>
       </tr>
       <tr>
          <td>Corner Radius:</td>
-         <td><input id="radius" type="text" value="48.0" size="4" onchange="update()" /> mm</td>
+         <td><input id="radius" type="text" value="48.0" size="4" /> mm</td>
          <td></td>
       </tr>
       <tr>
          <td>Tiles:</td>
-         <td><input id="xn" type="text" value="4" size="4" onchange="update()" /> x <input id="yn" type="text" value="9" size="4" onchange="update()" /></td>
+         <td><input id="xn" type="text" value="4" size="4" /> x <input id="yn" type="text" value="9" size="4" /></td>
          <td></td>
       </tr>
       <tr>
          <td>Size:</td>
-         <td><input id="width" type="text" value="628" size="4" onchange="update()" /> x <input id="height" type="text" value="1200" size="4" onchange="update()" /> mm</td>
+         <td><input id="width" type="text" value="628" size="4" /> x <input id="height" type="text" value="1200" size="4" /> mm</td>
          <td><button onclick="generate()">Download SVG</button></td>
       </tr>
    </table>
@@ -343,7 +222,6 @@
       <path id="puzzlepath_v" fill="none" stroke="DarkRed"></path>
       <path id="puzzlepath_b" fill="none" stroke="Black"></path>
    </svg>
-   <img src="puzzle.svg" alt="">
 </body>
 
 </html>
