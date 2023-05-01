@@ -1,10 +1,47 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import codec from "/js/structure.js?v=0.11.0"
+import Jigsaw from '/js/jigsaw.js?v=0.11.0'
 import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.11.0"
 
 
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
+
+    let jigsawSVGOK = false
+    let jigsawSVG = () => ''
+
+    if (true) {
+        try {
+            const xn = document.documentElement.style.getPropertyValue('--bpr')
+            const yn = 36 / xn
+
+            const jig = new Jigsaw({
+                seed: 12,
+                width: xn * 120,
+                height: yn * 120,
+                radius: 0,
+                seed: 12,
+                tabsize: .11,
+                jitter: .048,
+                xn: xn,
+                yn: yn,
+            })
+
+            jig.everything()
+
+            jigsawSVG = (i, id, w, h, style) => {
+                try {
+                    return jig.getJigsawPieceAsSVG(i, id, w, h, style)
+                } catch (e) {
+                    console.error(e);
+                    return ''
+                }
+            }
+            jigsawSVGOK = true
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     const _widths_ = [
         { w: 268 }, // 00
@@ -105,7 +142,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         const k0_1normalized = normalizeVraiment(k++, 0, _colors_.length, 0, 1)
         const contrastChange = (1 - easingVanishingContrast(k0_1normalized)) * 100
         // console.log(s.p_rgb, tinycolor(s.p_rgb).isLight(), tinycolor(s.p_rgb).getLuminance())
-        const lum = tinycolor(s.p_rgb).getLuminance() 
+        const lum = tinycolor(s.p_rgb).getLuminance()
         if (lum > .333) { // tinycolor(s.p_rgb).isLight()
             s.textColor = tinycolor(s.p_rgb).darken(contrastChange).toString("hex6").slice(1)
             s.puzzleColor = tinycolor(s.p_rgb).darken(15).toString("hex6").slice(1)
@@ -222,15 +259,18 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             <div class="pb-1">${barTo}</div>
         </div>
         <div class="" style="width: 3rem; height: 5rem; position:relative;overflow: hidden;">
+            ${jigsawSVG(i + 1, `gb-puzzle${i}-svg`, '80%', '60%', 'visibility: hidden')}
+            <!--
             <object id="gb-puzzle${i}-background"
                     class="gb-puzzle-background" 
                     type="image/svg+xml"
-                    style="object-fit: cover; height: 60%; width: 80%; visibility: hidden; transform: scale(1.4); overflow:hidden;" 
-                    data-sel="#bonhomme${i+1}"
-                    data="puzzle.svg?v=0.11.0#bonhomme${i+1}-view"
+                    style="display: none; object-fit: cover; height: 60%; width: 80%; visibility: hidden; transform: scale(1.4); overflow:hidden;" 
+                    data-sel="#bonhomme${i + 1}"
+                    data="puzzle.svg?v=0.11.0#bonhomme${i + 1}-view"
                     data-color="#${c.puzzleColor}"
-                    > <!-- data="index.svg?v=0.11.0#puzzle-filled-view" -->
+                    > 
             </object>
+            -->
             <div id="gb-puzzle${i}" 
                 class="gb-puzzle fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
@@ -242,15 +282,17 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     </div>
 </div>
 `
-        const qwe = generateElement(templateVariations)
-        qwe.querySelector('.gb-puzzle-background').addEventListener("load", e => {
-            e.target.style.visibility = 'visible'
-            const svgItem = e.target.contentDocument.querySelector(e.target.dataset.sel)
-            const ref = e.target.contentDocument.querySelector(svgItem.getAttribute('href'))
-            ref.style.fill = e.target.dataset.color
-        });
-        temporaryContainer.appendChild(qwe);
-
+        const instanciatedVariation = generateElement(templateVariations)
+        if (jigsawSVGOK) {
+            const jigsawPiece = instanciatedVariation.querySelector(`#gb-puzzle${i}-svg`)
+            if (jigsawPiece) {
+                jigsawPiece.addEventListener("load", e => {
+                    e.target.style.visibility = 'visible'
+                    e.target.style.fill = `#${c.puzzleColor}`
+                })
+            }
+        }
+        temporaryContainer.appendChild(instanciatedVariation);
 
         // bumpers
         {

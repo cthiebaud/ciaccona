@@ -146,6 +146,7 @@
                 const containerWidth = gridE.getBoundingClientRect().width
                 const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
                 const gridBrickPercentageWidth = 100 / gridBricksPerRow
+                document.documentElement.style.setProperty('--bpr', `${gridBricksPerRow}`)
                 document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
             }
         }
