@@ -75,7 +75,7 @@ class Timings {
             if (256 <= this.bars.length) {
                 // get duration of first variation 
                 console.log('var 0', this.bars[0].m.format())
-                const lastvarbar = codec.variation2bar(33)
+                const lastvarbar = codec.variation2bar(codec.variationsCount - 1)
                 console.log('var 0', this.bars[0].m.format(), 'last var bar', lastvarbar, this.bars[lastvarbar].m.format())
                 // from 0 to 256 bar :
                 const from0to256 = this.bars[lastvarbar].m.diff(this.bars[0].m)

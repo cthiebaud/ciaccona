@@ -219,18 +219,20 @@ const Ω = {
     setClickHandlers: (iso) => {
         const url = new URL(window.location)
 
-        const gridBrick_bwv1004 = document.querySelector("#gb-bwv1004 a")
-        if (gridBrick_bwv1004) gridBrick_bwv1004.addEventListener('click', (e) => {
-            const a = e.currentTarget.dataset.a
+        document.querySelectorAll('.gb-puzzle').forEach(e => e.addEventListener('click', e => {
+            let a = e.currentTarget.dataset.a
+            if (a === 'undefined') a = undefined
             const v = e.currentTarget.dataset.v
             if (a && v) {
                 window.location = `puzzle.html?a=${a}&v=${v}`
             } else if (a) {
-                window.location = `puzzle.html?a=${a}`
+                window.location = `artists.html?a=${a}`
+            } else if (v) {
+                window.location = `artists.html?v=${v}`
             } else {
-                window.location = '/artists.html'
+                window.location = 'artists.html'
             }
-        })
+        }))
 
         document.querySelectorAll('a[data-name-no-space-lowercase-no-diacritics]').forEach((elem) => {
             const nameNoSpaceLowercaseNoDiacritics = elem.dataset.nameNoSpaceLowercaseNoDiacritics
@@ -273,6 +275,7 @@ const Ω = {
         artistE.querySelector('a#youtube-url').setAttribute('href', artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl)
         artistE.querySelector('a#youtube-url').setAttribute('target', artist['▶'].id)
         artistE.querySelector('a#social').setAttribute('href', artist.social)
+        artistE.querySelectorAll('a#puzzle').forEach(e => e.setAttribute('href', `artists.html?a=${e.dataset.a}`))
     },
 
     beforeCreatePlayer: (videoId) => {
@@ -294,18 +297,18 @@ const Ω = {
 
         Ω.setClickHandlers(iso)
 
-        document.querySelectorAll('.brick.hasScore').forEach(score => score.addEventListener('click', e => {
-            const hadClass = e.currentTarget.parentNode.classList.contains('selected')
+        document.querySelectorAll('.brick.hasScore .score').forEach(score => score.addEventListener('click', e => {
+            const brick = e.currentTarget.parentNode
+            const hadClass = brick.parentNode.classList.contains('selected')
             document.querySelectorAll('.grid-brick.selected .score').forEach(score => score.scrollLeft = 0)
             document.querySelectorAll('.grid-brick.selected').forEach(selected => selected.classList.remove('selected'))
             document.querySelectorAll('.grid-brick.goodbye').forEach(goodbye => goodbye.classList.remove('goodbye'))
             document.querySelectorAll('.grid-brick.hello').forEach(hello => hello.classList.remove('hello'))
             if (!hadClass) {
-                e.currentTarget.parentNode.classList.add('selected')
-                const variation = e.currentTarget.parentNode.dataset.variation
+                brick.parentNode.classList.add('selected')
+                const variation = brick.parentNode.dataset.variation
                 const startBar = codec.variation2bar(variation)
                 config.startBarOfLastSelectedVariation = startBar
-                    ; ((e, v) => { if (e) e.dataset.v = v })(document.querySelector("#gb-bwv1004 a"), variation)
             }
         }))
 

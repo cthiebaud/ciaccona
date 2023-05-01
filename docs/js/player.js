@@ -6,8 +6,8 @@ import { normalizeVraiment } from "/js/utils.js?v=0.10.6"
 let begin = true
 
 function horzScrollScore(timings, variation, currentTime) {
-    if (variation === 33) return -1
-    const selector = `#gb${variation} > div > div.score`
+    if (variation === codec.variationsCount - 1) return -1
+    const selector = `#gb${variation} .score`
     const sco = document.querySelector(selector)
     if (sco == null) return -1
     const obj = sco.firstElementChild
@@ -43,7 +43,7 @@ function selectAndScrollToVariation(source, variation, options) {
     let scrollToSelector = selector
     if (variation === 0) {
         scrollToSelector = '.grid-brick#gb-ciaccona'
-    } else if (33 <= variation) {
+    } else if (codec.variationsCount - 1 <= variation) {
         scrollToSelector = '.grid-brick#gb-bwv1004'
     }
 
@@ -165,7 +165,7 @@ const setBrickClickEvent = (_plyer, timings) => {
         const isPlaying = _plyer.playing
 
         // DOM element has bar index in data
-        const thisBar = parseInt(this.dataset.bar)
+        const thisBar = parseInt(this.parentNode.dataset.bar)
 
         if (config.startBarOfLastSelectedVariation === thisBar) {
             // just toggle play state
@@ -199,7 +199,7 @@ const setBrickClickEvent = (_plyer, timings) => {
 
     }
 
-    document.querySelectorAll(".brick.hasScore").forEach((b) => b.addEventListener('click', handleBrickClick, true))
+    document.querySelectorAll(".brick.hasScore .score").forEach((b) => b.addEventListener('click', handleBrickClick, true))
 }
 
 export default function createPlayer(selector, timings, ignore_all_events) {
@@ -254,6 +254,8 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                 } else {
                     // console.log("Plyr timeupdate event while plying")
                     feedbackOnCurrentTime('timeupdate', event.detail.plyr.currentTime, timings, undefined /* save variation */, _plyer.playing, true, { behavior: "smooth", block: "nearest" })
+                    const çaJoue = new Event('çaJoue');
+                    document.dispatchEvent(çaJoue)
                 }
             })
             _plyer.on('seeking', (event) => {

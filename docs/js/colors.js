@@ -15,8 +15,10 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         { w: 320 }, // 05
         { w: 320 }, // 06
         { w: 287 }, // 07
-        { w: 277 }, // 08
-        { w: 326 }, // 09
+        { w: 345 }, // 08.1
+        { w: 380 }, // 08.1
+        { w: 330 }, // 09.1
+        { w: 334 }, // 09.1
         { w: 407 }, // 10
         { w: 280 }, // 11
         { w: 250 }, // 12
@@ -81,6 +83,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         { rgb: "e3ac72", p_rgb: "e2a770", sim: 98, pantone: "721 CP", name: "Viva Gold" },
         { rgb: "4b57db", p_rgb: "275ea3", sim: 89, pantone: "10261 C", name: "Warm Blue" },
         { rgb: "bfd6d9", p_rgb: "bcd5d6", sim: 99, pantone: "5523 U", name: "Wind Speed" },
+        { rgb: "889911", p_rgb: "9b9912", sim: 95, pantone: "391 CP", name: "Densetsu Green" },
+        /* { rgb: "123456", p_rgb: "183859", sim: 99, pantone: "P 108-16 C", name: "Incremental Blue" }, */
     ];
 
     let _last_color_ = [
@@ -102,10 +106,12 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         const contrastChange = (1 - easingVanishingContrast(k0_1normalized)) * 100
         if (tinycolor(s.p_rgb).isLight()) {
             s.textColor = tinycolor(s.p_rgb).darken(contrastChange).toString("hex6").slice(1)
+            s.puzzleColor = tinycolor(s.p_rgb).lighten(10).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).darken(5).toString("hex6").slice(1)
             s.stripeColorAlpha = tinycolor(s.p_rgb).darken(5).setAlpha(transparency).toString("hex8").slice(1)
         } else {
             s.textColor = tinycolor(s.p_rgb).lighten(contrastChange).toString("hex6").slice(1)
+            s.puzzleColor = tinycolor(s.p_rgb).darken(10).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).lighten(5).toString("hex6").slice(1)
             s.stripeColorAlpha = tinycolor(s.p_rgb).lighten(5).setAlpha(transparency).toString("hex8").slice(1)
         }
@@ -119,6 +125,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         if (fullameNoSpaceLowercaseNoDiacritics) {
             s.p_rgb = tinycolor(s.p_rgb_original).setAlpha(transparency).toString("hex8").slice(1)
             s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
+            s.puzzleColor = tinycolor(s.puzzleColor).setAlpha(transparency).toString("hex8").slice(1)
             s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
             s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
         }
@@ -147,6 +154,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             </a>
             <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
             </a>
+            <a id="puzzle" class="share btn btn-lihjt icon-base icon-puzzle text-muted" data-a="${fullameNoSpaceLowercaseNoDiacritics}" target="_puzzle" href="#" aria-label="Puzzle...">
+            </a>
         </div>
     </div>
 </div>`
@@ -156,7 +165,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     let i = 0;
     let barFrom = 0
     _colors_.forEach(function (c) {
-        const tonality = (17 <= i && i < 27) ? "Δ" : "";
+        const tonality = codec.isMajor(i) ? "Δ" : "";
         const barsCount = codec.variation2barsCount(i)
         const warning = barsCount != 8 ? `(${barsCount})` : "";
         const barTo = barFrom + barsCount
@@ -181,16 +190,16 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                 #${c.p_rgbAlpha} 100%); 
                 background-size: 16.97px 16.97px;`
 
-        const svgOffsetX = (i == 0 || i == 17 || i == 27 || i == 33 ? "0" : "6.5")
+        const svgOffsetX = codec.svgOffsetX(i)
 
         const templateVariations =
             `
 <div id="gb${i}" data-sort="${twoZeroPad(i)}" data-variation="${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripeAlpha}; border-color: #${c.borderColor};">
-    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe};" data-bar="${barFrom}" data-variation="${i}" >
+    <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe}; ${i === codec.variationsCount - 1 ? 'border-radius: 0;' : ''} " data-bar="${barFrom}" data-variation="${i}" >
         <div class="score init" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 
-                    data="scores/bwv-1004_5_for_PNGs-${i + 1}.svg" 
+                    data="scores3/bwv-1004_5_for_SVGs-${i + 1}.svg" 
                     type="image/svg+xml"
                     style="pointer-events: none;" 
                     data-svg-offset-x = ${svgOffsetX}
@@ -203,20 +212,40 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         </div>
         <!-- div class="flex-grow-1"></!-->
         
-        <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i == _colors_.length - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
+        <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i === codec.variationsCount - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
             <div class="pt-1">${barFrom + 1}</div>
-            <div style="${i == _colors_.length - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
+            <div style="${i === codec.variationsCount - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
                 ${warning}
             </div>
             <div class="pb-1">${barTo}</div>
         </div>
-        <div class="fw-bold text-center" style="${i == _colors_.length - 1 ? "display:none;" : ""}margin-top: auto; margin-bottom: .5rem; min-width: 3rem; color: #${c.textColor};">
-            ${i == 0 ? "" : i}
+        <div class="" style="width: 3rem; height: 5rem; position:relative;">
+            <object id="gb-puzzle${i}" 
+                    type="image/svg+xml"
+                    style="object-fit: cover; height: 100%; width: 100%; transform: scale(.8); visibility: hidden;" 
+                    class="gb-puzzle"
+                    data="index.svg?v=0.10.6#puzzle-filled-view"
+                    data-a="${fullameNoSpaceLowercaseNoDiacritics}"
+                    data-v="${i}"
+                    data-color="#${c.puzzleColor}"
+                    >
+            </object>
+            <div class="fw-bold text-center" 
+                style="position:absolute; top:0; bottom: 0; right:0; left: 0; line-height: 5rem; color: #${c.textColor};">
+                ${i === 0 || i === codec.variationsCount - 1 ? "&nbsp;" : i}
+            </div>
         </div>
     </div>
 </div>
 `
-        temporaryContainer.appendChild(generateElement(templateVariations));
+        const qwe = generateElement(templateVariations)
+        qwe.querySelector('.gb-puzzle').addEventListener("load", e => {
+            e.target.style.visibility = 'visible'
+            const svgItem = e.target.contentDocument.querySelector('#puzzle-filled-symbol')
+            svgItem.style.fill = e.target.dataset.color
+        });
+        temporaryContainer.appendChild(qwe);
+
 
         // bumpers
         {
@@ -235,14 +264,14 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     </div>
 </div>
 `
-    temporaryContainer.appendChild(generateElement(oblivion))
+    // temporaryContainer.appendChild(generateElement(oblivion))
 
     const bricks = temporaryContainer.children
     if (bricks?.length) {
         let gridE = document.getElementById("grid")
         if (gridE) {
             ;[...gridE.children].forEach(gb => gb.remove())
-            ;[...bricks].forEach(gb => gridE.appendChild(gb))
+                ;[...bricks].forEach(gb => gridE.appendChild(gb))
         }
     }
 
