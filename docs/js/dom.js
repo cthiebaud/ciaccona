@@ -225,7 +225,7 @@ const Ω = {
             if (a === 'undefined') a = undefined
             const v = e.currentTarget.dataset.v
             if (a && v) {
-                window.location = `puzzle.html?a=${a}&v=${v}`
+                window.location = `1000puzzles.html?a=${a}&v=${v}`
             } else if (a) {
                 window.location = `artists.html?a=${a}`
             } else if (v) {
