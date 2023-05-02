@@ -158,8 +158,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             </a>
             <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
             </a>
-            <a id="puzzle" class="share btn btn-lihjt icon-base icon-puzzle text-muted" data-a="${fullameNoSpaceLowercaseNoDiacritics}" target="_puzzle" href="#" aria-label="Puzzle...">
-            </a>
+            <!-- a id="puzzle" class="share btn btn-lihjt icon-base icon-puzzle text-muted" data-a="${fullameNoSpaceLowercaseNoDiacritics}" target="_puzzle" href="#" aria-label="Puzzle...">
+            </!-->
         </div>
     </div>
 </div>`

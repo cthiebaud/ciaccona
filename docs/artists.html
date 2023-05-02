@@ -150,8 +150,8 @@
             /* padding: 0.4rem; */
             text-align: center;
             visibility: inherit;
-            width: var(--gbw, 100%); 
-            height: var(--gbh, 12rem); 
+            width: var(--gbw, 100%);
+            height: var(--gbh, 12rem);
             /* width: 12rem;
             height: 12rem;*/
             padding: 0;
@@ -184,6 +184,18 @@
             border-radius: 0 2rem 0 0;
             padding: .4rem .6rem 0 .3rem;
             */
+        }
+
+        .note {
+            cursor: pointer;
+            font-family: var(--bs-font-monospace) !important;
+            background-image: url(svg/music-note-svgrepo-com2.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #d3d3d3;
+            padding-right: .3rem;
         }
 
         .puzzle {
@@ -265,7 +277,7 @@
             const grid = document.getElementById('grid')
             let v = 0
             if (coerceArtist) {
-                for (let v = 0; v < codec.variationsCount ; v++) {
+                for (let v = 0; v < codec.variationsCount; v++) {
                     const _v = v % codec.variationsCount
                     // console.log(coerceArtist, v)
                     grid.innerHTML += `
@@ -302,7 +314,7 @@
                     grid.innerHTML += `
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
   <defs>
-    <clipPath id="cp-${v}" style=""> <!-- clipPathUnits="objectBoundingBox" scale(1.2)  translate(${-transX-10} ${-transY-20}) -->
+    <clipPath id="cp-${v}" style=""> <!-- clipPathUnits="objectBoundingBox" scale(1.2)  translate(${-transX - 10} ${-transY - 20}) -->
       <path d="${jigsawGenerator.getJigsawPath(v)}" transform="translate(${-transX} ${-transY})" /> 
     </clipPath>
   </defs>
@@ -312,8 +324,11 @@
      data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" 
      data-v="${coerceVariation || _v}" 
      style="${bgFull};"> <!--  clip-path: url(#cp-${v});  -->
-     <div style="color: #d3d3d3e0; line-height: 48px;">&nbsp;</div>
-     <svg xmlns="http://www.w3.org/2000/svg" 
+
+     <div class="d-flex justify-content-between" style="width: 100%;">
+        <div class="note">&nbsp;</div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" 
          id="gb-puzzle${v}-svg" 
          class="puzzle flex-shrink-1"
          style="overflow: visible;"
@@ -387,6 +402,12 @@
             });
 
             // https://codepen.io/desandro/pen/WxjJJW/
+            $grid.on('click', '.grid-artist .note', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
+                const target = event.currentTarget.parentNode.parentNode;
+                window.location = `/?a=${target.dataset.a}&v=${target.dataset.v}`
+            })
             $grid.on('click', '.grid-artist .puzzle', function (event) {
                 event.stopPropagation()
                 event.preventDefault()

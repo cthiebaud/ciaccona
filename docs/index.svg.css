@@ -48,6 +48,9 @@
 .icon-treble_clef {
   background-image: url("index.svg?v=0.11.1#treble_clef-view");  
 }
+.icon-ear {
+  background-image: url("index.svg?v=0.11.1#ear-view");  
+}
 .icon-bach_siel_full_left {
   background-image: url("index.svg?v=0.11.1#bach_siel_full_left-view");
 }
