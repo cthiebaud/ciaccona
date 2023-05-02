@@ -227,7 +227,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             <svg xmlns="http://www.w3.org/2000/svg" 
                  id="gb-puzzle${i}-svg" 
                  width="80%" height="60%" 
-                 style="visibility: hidden" 
+                 style="visibility: hidden; overflow: visible; transform: scale(.667);" 
                  viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}">
                 <path d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>
