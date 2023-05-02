@@ -348,6 +348,7 @@
         import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm'
         import { shuffleArray } from "/js/utils.js?v=0.11.1"
         import { loadArtists } from "/js/artists.js?v=0.11.1"
+        import codec from "/js/structure.js?v=0.11.1"
 
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
@@ -387,8 +388,8 @@
 
             const artistsWithVid = shuffleArray(artists.artists.filter(a => !a.v.still))
             const artistsWithVidCount = artistsWithVid.length
-            const variationsCount = 34
-            const puzzlesCount = 34 * artistsWithVid.length
+            const variationsCount = codec.variationsCount
+            const puzzlesCount = codec.variationsCount * artistsWithVid.length
 
             document.getElementById('artistsWithVidCount').innerHTML = artistsWithVidCount
             document.getElementById('variationsCount').innerHTML = variationsCount
@@ -426,10 +427,10 @@
                         a = (a + 1) % artistsWithVid.length
                         break;
                     case 'left':
-                        v = (v + 33) % 34
+                        v = (v + variationsCount - 1) % variationsCount
                         break;
                     case 'right':
-                        v = (v + 1) % 34
+                        v = (v + 1) % variationsCount
                         break;
                     default:
                         console.log(`Sorry, we are out of ${e.id}.`);
@@ -444,7 +445,7 @@
                 pckry.items.forEach(function (item, i) {
                     setTimeout(function () {
                         pckry.layoutItems([item]);
-                    }, i++ * 34);
+                    }, i++ * variationsCount);
                 });
             }
 
