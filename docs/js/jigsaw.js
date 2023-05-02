@@ -57,34 +57,43 @@ class Config {
 }
 
 export default class Jigsaw {
-   update = function (config) {
-      this.config.merge(config)
-      this.everything()
-   }
    get dh() { return this.config.dh }
    get dv() { return this.config.dv }
    get db() { return this.config.db }
-   /*
+   /* NO setters
    set dh(dh) { this.#dh = dh }
    set dv(dv) { this.#dv = dv }
    set db(db) { this.#db = db }
    */
    getJigsawPieceAsSVG(i, id, w, h, style) {
       const data = this.config.map2.get(i)
-      let d = data.path
-      let viewBox = data.viewBox
+      const d = data?.path ?? ""
+      const viewBox = data?.viewBox ?? "0 0 100 100"
 
       return `<svg xmlns="http://www.w3.org/2000/svg" id="${id}" width="${w}" height="${h}" style="${style}" viewBox="${viewBox}">
    <path d="${d}"></path>
 </svg>
 `
    }
+   getJigsawPiecePath(i) {
+      const data = this.config.map2.get(i)
+      return data?.path ?? ""
+   }
+   getJigsawPieceViewBox(i) {
+      const data = this.config.map2.get(i)
+      return data?.viewBox ?? "0 0 100 100"
+   }
    constructor(config) {
       this.config = new Config(config ?? {}, this.update)
       this.config.map = new Map()
+      this.#everything()
    }
-   everything = function () {
-      console.log('everything')
+   update = function (config) {
+      this.config.merge(config)
+      this.#everything()
+   }
+   #everything = function () {
+      console.log('[jigsaw] everything')
 
       const _ = this.config
 
@@ -270,10 +279,9 @@ export default class Jigsaw {
       }
 
       function update() {
-         console.log('do update =>')
+         console.log('[jigsaw] generate')
 
          let ratio = 1.0 * _.width / _.height
-         let rad
          let wid
          let hei
          if (ratio > 1.5) {
@@ -302,16 +310,12 @@ export default class Jigsaw {
             for (let xi = 0; xi < _.xn; xi++) {
                // console.log(xi, yi)
                const k = key(xi, yi)
-               const sym = document.getElementById(k)
-               const use = document.getElementById(`use${k}`)
-               const view = document.getElementById(`view${k}`)
                const d = _.map.get(k)
                const bottom = d._1bottom || ''
                const right = d._2right || ''
                const top = d._3top || ''
                const left = d._4left || ''
                d.path = top + ' ' + cut(right) + cut(reverse(bottom)) + ' ' + cut(reverse(left))
-               // sym.querySelector('path').setAttribute('d', d.path)
                const x = _.offset - 50 + xi * _.width / _.xn
                const y = _.offset - 60 + yi * _.height / _.yn
                const width = _.width / _.xn + 100
@@ -319,8 +323,12 @@ export default class Jigsaw {
                d.viewBox = `${x} ${y} ${width} ${height}`
                _.map2.set(ind++, d)
 
-               // sym.setAttribute('viewBox', d.viewBox)
                /*
+               const sym = document.getElementById(k)
+               const use = document.getElementById(`use${k}`)
+               const view = document.getElementById(`view${k}`)
+               sym.querySelector('path').setAttribute('d', d.path)
+               sym.setAttribute('viewBox', d.viewBox)
                const x2 = _.offset + xi * width
                const y2 = _.offset + yi * height
                use.setAttribute('x', `${x2}`)
@@ -329,7 +337,8 @@ export default class Jigsaw {
                use.setAttribute('height', `${height}`)
                use.setAttribute('id', `bonhomme${xi + yi * _.xn}`)
                view.setAttribute('viewBox', `${x2} ${y2} ${width} ${height}`)
-               view.setAttribute('id', `bonhomme${xi + yi * _.xn}-view`)*/
+               view.setAttribute('id', `bonhomme${xi + yi * _.xn}-view`)
+               */
             }
          }
          /*

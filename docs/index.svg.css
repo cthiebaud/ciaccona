@@ -39,8 +39,8 @@
 .icon-puzzle {
   background-image: url("index.svg?v=0.11.1#puzzle-view");
 }
-.icon-puzzle-filled {
-  background-image: url("index.svg?v=0.11.1#puzzle-filled-view");
+.icon-puzzle_filled {
+  background-image: url("index.svg?v=0.11.1#puzzle_filled-view");
 }
 .icon-home {
   background-image: url("index.svg?v=0.11.1#home-view");

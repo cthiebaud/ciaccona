@@ -114,7 +114,7 @@
 
       $("puzzlecontainer").setAttribute("width", width + 30);
       $("puzzlecontainer").setAttribute("height", height + 30);
-      jig.everything()
+      // jig.everything()
       $("puzzlepath_h").setAttribute("d", jig.dh);
       $("puzzlepath_v").setAttribute("d", jig.dv);
       $("puzzlepath_b").setAttribute("d", jig.db);
@@ -214,7 +214,7 @@
       <tr>
          <td>Size:</td>
          <td><input id="width" type="text" value="628" size="4" /> x <input id="height" type="text" value="1200" size="4" /> mm</td>
-         <td><button onclick="generate()">Download SVG</button></td>
+         <td><!-- button onclick="generate()">Download SVG</!--></td>
       </tr>
    </table>
    <svg id="puzzlecontainer">
