@@ -276,42 +276,23 @@
 
             const grid = document.getElementById('grid')
             let v = 0
-            if (coerceArtist) {
-                for (let v = 0; v < codec.variationsCount; v++) {
-                    const _v = v % codec.variationsCount
-                    // console.log(coerceArtist, v)
-                    grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || _v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
-  <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname}</!-->
-  <div class="handle"></div>
-  <!-- div class="puzzle flex-shrink-1"></!-->
-  <svg xmlns="http://www.w3.org/2000/svg" 
-       id="gb-puzzle${v}-svg" 
-       class="puzzle flex-shrink-1"
-       width="111" height="111"
-       viewBox="${jigsawGenerator.getJigsawViewBox(_v)}">
-       <path d="${jigsawGenerator.getJigsawPath(_v)}"></path>
-    </svg>
-</div>`
+
+            const qwe = shuffle && !coerceArtist ? shuffleArray(artists.artists) : artists.artists
+            qwe.forEach(a => {
+                const _v = v % codec.variationsCount
+
+                let bgFull
+                if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
+                    bgFull = `background-color: #28282b`
+                } else {
+                    bgFull = `background-image: ${bg(coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || _v)}`
                 }
-            } else {
-                const qwe = shuffle ? shuffleArray(artists.artists) : artists.artists
-                qwe.forEach(a => {
-                    const _v = v % codec.variationsCount
-                    // if (a.v.still || a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
-                    // console.log(a)
-                    let bgFull
-                    if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
-                        bgFull = `background-color: #28282b`
-                    } else {
-                        bgFull = `background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || _v)}`
-                    }
-                    // console.log(a)
-                    const vb = jigsawGenerator.getJigsawViewBox(v)
-                    const transX = parseInt(vb.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
-                    const transY = parseInt(vb.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
-                    console.log('transX', transX, 'transY', transY)
-                    grid.innerHTML += `
+                // console.log(a)
+                const vb = jigsawGenerator.getJigsawViewBox(v)
+                const transX = parseInt(vb.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
+                const transY = parseInt(vb.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
+                console.log('transX', transX, 'transY', transY)
+                grid.innerHTML += `
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
   <defs>
     <clipPath id="cp-${v}" style=""> <!-- clipPathUnits="objectBoundingBox" scale(1.2)  translate(${-transX - 10} ${-transY - 20}) -->
@@ -321,7 +302,7 @@
 </svg>                    
 <div id="gb-artist${v}" 
      class="grid-artist draggable flex-column"  
-     data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" 
+     data-a="${coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics}" 
      data-v="${coerceVariation || _v}" 
      style="${bgFull};"> <!--  clip-path: url(#cp-${v});  -->
 
@@ -339,14 +320,12 @@
     <div class="d-flex justify-content-between" style="width: 100%;">
         <div class="handle"></div>
         <div class="flex-grow-1">&nbsp;</div>
-        <div style="color: #d3d3d3e0; display: flex;"><span style="align-self: flex-end;">${a.fullname}</span></div>
+        <div style="color: #d3d3d3e0; display: flex;"><span style="align-self: flex-end;">${coerceArtist ? '' : a.fullname}</span></div>
     <div>
 </div>`
 
-                    console.log('before [', grid.querySelector(`#gb-artist${v}`).style.clipPath, ']')
-                    v++
-                })
-            }
+                v++
+            })
 
             var $grid = $('#grid').packery({
                 itemSelector: ".grid-artist",
