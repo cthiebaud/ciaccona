@@ -31,7 +31,7 @@
             width: 200px;
             height: 105px;
             background-repeat: no-repeat;
-            background-size: cover;
+            /* background-size: cover; */
         }
     </style>
 </head>
@@ -49,9 +49,14 @@
 
         const bg = (a, v) => `url('artists/${a}/${a}-${v}.jpg')`
 
-        const jigsawGenerator = new JigsawShield()
+        const jigsawGenerator = new JigsawShield({
+            xn: 9,
+            yn: 4,
+            width: 1200,
+            height: 630,
+        })
 
-        const xn = 4, yn = 9;
+        const xn = 6, yn = 6;
         for (let yi = 0; yi < yn; yi++) {
             const row = generateElement(`<div id="row${yi}" class="ligne d-flex"></div>`)
             thePuzzle.append(row)
@@ -69,12 +74,15 @@
                 const cell = document.getElementById(id)
                 console.log(yi, xi, cell)
                 if (i < 35) {
-                    cell.style.backgroundImage = `url(/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${i}.jpg)`
-                    // cell.style.backgroundImage = `url(/artists/moi/moi-${0}.jpg)`
-                    // cell.style.backgroundPosition = `${20*xi}% ${20*yi}%`
-                }
-                i++
-            })
+                    if ([0,1,1,2,3,5,8,13,21,34].includes(i+1)) {
+                        cell.style.backgroundImage = `url(/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${i}.jpg)`
+                        cell.style.backgroundSize = 'cover'
+                    } else {
+                        cell.style.backgroundImage = `url(/artists/moi/moi-${0}.jpg)`
+                        cell.style.backgroundPosition = `${20*xi}% ${20*yi}%`}
+                    }
+                    i++
+                })
         })
     </script>
 </body>
