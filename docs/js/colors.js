@@ -223,7 +223,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             </div>
             <div class="pb-1">${barTo}</div>
         </div>
-        <div class="" style="width: 3rem; height: 5rem; position:relative;overflow: hidden;">
+        <div class="" style="width: 3rem; height: 5rem; position:relative; overflow: visible;">
             <svg xmlns="http://www.w3.org/2000/svg" 
                  id="gb-puzzle${i}-svg" 
                  width="80%" height="60%" 
