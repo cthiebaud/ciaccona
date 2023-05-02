@@ -185,9 +185,11 @@
 
         .puzzle {
             cursor: pointer;
+            /*
             background-image: url(svg/puzzle-svgrepo-com.svg);
             background-repeat: no-repeat;
             background-size: cover;
+            */
             width: 3rem;
             height: 3rem;
             position: relative;
@@ -196,6 +198,10 @@
             bottom: 0;
             margin-top: auto;
             margin-bottom: auto;
+
+            fill: none;
+            stroke: aliceblue;
+            stroke-width: 4px;
         }
 
         .large {
@@ -244,8 +250,11 @@
         import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm' */
         import { loadArtists } from "/js/artists.js?v=0.11.1"
         import { shuffleArray } from "/js/utils.js?v=0.11.1"
+        import JigsawShield from '/js/jigsawShield.js?v=0.11.1'
 
         const bg = (a, v) => `url('artists/${a}/${a}-${v}.jpg')`
+
+        const jigsawGenerator = new JigsawShield()
 
         loadArtists().then((artists) => {
 
@@ -258,7 +267,14 @@
 <div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
   <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname}</!-->
   <div class="handle"></div>
-  <div class="puzzle flex-shrink-1"></div>
+  <!-- div class="puzzle flex-shrink-1"></!-->
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       id="gb-puzzle${v}-svg" 
+       class="puzzle flex-shrink-1"
+       width="111" height="111"
+       viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
+       <path d="${jigsawGenerator.getJigsawPath(v)}"></path>
+    </svg>
 </div>`
                 }
             } else {
@@ -277,7 +293,14 @@
 <div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" data-v="${coerceVariation || v}" style="${bgFull}">
     <div class="handle"></div>
     <div style="visibility:hidden">${a.fullname}</div>
-    <div class="puzzle flex-shring-0"></div>
+    <!-- div class="puzzle flex-shrink-1"></!-->
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         id="gb-puzzle${v}-svg" 
+         class="puzzle flex-shrink-1"
+         width="111" height="111"
+         viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
+        <path d="${jigsawGenerator.getJigsawPath(v)}"></path>
+    </svg>
 </div>`
                     v++
                 })

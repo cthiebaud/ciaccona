@@ -7,11 +7,13 @@
   - bezier-easing: "https://github.com/gre/bezier-easing"
   - bootstrap: "https://getbootstrap.com/"
   - isotope: "https://isotope.metafizzy.co/"
+  - jigsaw: "https://github.com/Draradech/jigsaw"
   - js-cookies: "https://github.com/js-cookie/js-cookie"
   - js-yaml: "https://github.com/nodeca/js-yaml"
   - lodash: "https://lodash.com/"
   - moment: "https://momentjs.com/"
   - plyr: "https://plyr.io/"
+  - svgPathReverse: "https://github.com/Pomax/svg-path-reverse"
   - tinycolor2: "https://github.com/TinyCommunity/tinycolor2"
 🖼: 
   - "https://www.svgrepo.com/"
