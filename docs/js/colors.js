@@ -14,15 +14,18 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         try {
             const xn = document.documentElement.style.getPropertyValue('--bpr')
             const yn = 36 / xn
+            const randomSeed = normalizeVraiment(Math.random(), 0, 1, 0, 10000)
+            const randomTabsize = normalizeVraiment(Math.random(), 0, 1, 0.1, .3)
+            const randomJitter = normalizeVraiment(Math.random(), 0, 1, .05, .2)
 
             const jig = new Jigsaw({
-                seed: 12,
+                seed: randomSeed,
                 width: xn * 120,
                 height: yn * 120,
                 radius: 0,
                 seed: 12,
-                tabsize: .11,
-                jitter: .048,
+                tabsize: randomTabsize,
+                jitter: randomJitter,
                 xn: xn,
                 yn: yn,
             })
