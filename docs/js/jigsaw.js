@@ -316,10 +316,10 @@ export default class Jigsaw {
                const top = d._3top || ''
                const left = d._4left || ''
                d.path = top + ' ' + cut(right) + cut(reverse(bottom)) + ' ' + cut(reverse(left))
-               const x = _.offset - 50 + xi * _.width / _.xn
-               const y = _.offset - 60 + yi * _.height / _.yn
-               const width = _.width / _.xn + 100
-               const height = _.height / _.yn + 120
+               const x = _.offset /* - 50 */ + xi * _.width / _.xn
+               const y = _.offset /* - 60 */ + yi * _.height / _.yn
+               const width = _.width / _.xn /* + 100 */
+               const height = _.height / _.yn /* + 120 */
                d.viewBox = `${x} ${y} ${width} ${height}`
                _.map2.set(ind++, d)
 

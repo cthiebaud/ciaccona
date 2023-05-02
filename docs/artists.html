@@ -119,6 +119,7 @@
             const gridBricksHeight = gridBricksWidth / 1.91;
             const gridBricksDoubleHeight = gridBricksHeight * 2 + gutter_size - .2
 
+            document.documentElement.style.setProperty('--bpr', `${gridBricksPerRow}`)
             document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
             document.documentElement.style.setProperty('--gbh', `${gridBricksHeight}px`)
             document.documentElement.style.setProperty('--2gbw', `${gridBrickDoublPercentageWidth}%`)
@@ -145,18 +146,20 @@
             /*border-style: solid;
             border-width: 1.5px !important; */
             display: flex;
-            font-size: 1.4rem;
             justify-content: space-between;
-            padding: 0.4rem;
+            /* padding: 0.4rem; */
             text-align: center;
             visibility: inherit;
-            width: var(--gbw, 100%);
-            height: var(--gbh, 12rem);
+            width: var(--gbw, 100%); 
+            height: var(--gbh, 12rem); 
+            /* width: 12rem;
+            height: 12rem;*/
             padding: 0;
             margin: 0;
-            border: 1px white solid;
+            /* border: 1px white solid; */
             border-radius: 0 6rem 6rem 0;
             position: absolute;
+            overflow: visible;
         }
 
         .large .handle {
@@ -169,7 +172,7 @@
             font-family: var(--bs-font-monospace) !important;
             background-image: url(svg/cursor-hand-grab-svgrepo-com.svg);
             background-repeat: no-repeat;
-            background-size: cover;
+            /* background-size: cover; */
             width: 3rem;
             height: 3rem;
             color: #d3d3d3;
@@ -224,7 +227,7 @@
     <link href="index.css?v=0.11.1" rel="stylesheet">
 </head>
 
-<body id="body" class="artists no-vid d-flex flex-column">
+<body id="body" class="artists no-vid d-flex flex-column" style="background-color: gray !important;">
     <main id="gridContainer" class="container-xxl flex-shrink-0">
         <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="gridContainerCol" class="col">
@@ -248,6 +251,7 @@
         /* import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
         import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
         import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm' */
+        import codec from "/js/structure.js?v=0.11.1"
         import { loadArtists } from "/js/artists.js?v=0.11.1"
         import { shuffleArray } from "/js/utils.js?v=0.11.1"
         import JigsawShield from '/js/jigsawShield.js?v=0.11.1'
@@ -261,10 +265,11 @@
             const grid = document.getElementById('grid')
             let v = 0
             if (coerceArtist) {
-                for (let v = 0; v <= 1 + 32 + 1; v++) {
-                    console.log(coerceArtist, v)
+                for (let v = 0; v < codec.variationsCount ; v++) {
+                    const _v = v % codec.variationsCount
+                    // console.log(coerceArtist, v)
                     grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
+<div class="grid-artist draggable" data-a="${coerceArtist}" data-v="${coerceVariation || _v}" style="background-image: ${bg(coerceArtist, coerceVariation || v)}">
   <!-- div>${artists.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname}</!-->
   <div class="handle"></div>
   <!-- div class="puzzle flex-shrink-1"></!-->
@@ -272,41 +277,61 @@
        id="gb-puzzle${v}-svg" 
        class="puzzle flex-shrink-1"
        width="111" height="111"
-       viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
-       <path d="${jigsawGenerator.getJigsawPath(v)}"></path>
+       viewBox="${jigsawGenerator.getJigsawViewBox(_v)}">
+       <path d="${jigsawGenerator.getJigsawPath(_v)}"></path>
     </svg>
 </div>`
                 }
             } else {
                 const qwe = shuffle ? shuffleArray(artists.artists) : artists.artists
                 qwe.forEach(a => {
-                    if (a.v.still || a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
-                    console.log(a)
+                    const _v = v % codec.variationsCount
+                    // if (a.v.still || a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') return
+                    // console.log(a)
                     let bgFull
                     if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
-                        bgFull = `background-color: #28282b;`
+                        bgFull = `background-color: #28282b`
                     } else {
-                        bgFull = `background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || v)};`
+                        bgFull = `background-image: ${bg(a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || _v)}`
                     }
                     // console.log(a)
+                    const vb = jigsawGenerator.getJigsawViewBox(v)
+                    const transX = parseInt(vb.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
+                    const transY = parseInt(vb.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
+                    console.log('transX', transX, 'transY', transY)
                     grid.innerHTML += `
-<div class="grid-artist draggable" data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" data-v="${coerceVariation || v}" style="${bgFull}">
-    <div class="handle"></div>
-    <div style="visibility:hidden">${a.fullname}</div>
-    <!-- div class="puzzle flex-shrink-1"></!-->
-    <svg xmlns="http://www.w3.org/2000/svg" 
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
+  <defs>
+    <clipPath id="cp-${v}" style=""> <!-- clipPathUnits="objectBoundingBox" scale(1.2)  translate(${-transX-10} ${-transY-20}) -->
+      <path d="${jigsawGenerator.getJigsawPath(v)}" transform="translate(${-transX} ${-transY})" /> 
+    </clipPath>
+  </defs>
+</svg>                    
+<div id="gb-artist${v}" 
+     class="grid-artist draggable flex-column"  
+     data-a="${a.fullnameNoSpaceLowercaseNoDiacritics}" 
+     data-v="${coerceVariation || _v}" 
+     style="${bgFull};"> <!--  clip-path: url(#cp-${v});  -->
+     <div style="color: #d3d3d3e0; line-height: 48px;">&nbsp;</div>
+     <svg xmlns="http://www.w3.org/2000/svg" 
          id="gb-puzzle${v}-svg" 
          class="puzzle flex-shrink-1"
+         style="overflow: visible;"
          width="111" height="111"
          viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
-        <path d="${jigsawGenerator.getJigsawPath(v)}"></path>
+        <path stroke="#d3d3d3" stroke-width="2" fill="#404040a0" d="${jigsawGenerator.getJigsawPath(v)}"></path>
     </svg>
+    <div class="d-flex justify-content-between" style="width: 100%;">
+        <div class="handle"></div>
+        <div class="flex-grow-1">&nbsp;</div>
+        <div style="color: #d3d3d3e0; display: flex;"><span style="align-self: flex-end;">${a.fullname}</span></div>
+    <div>
 </div>`
+
+                    console.log('before [', grid.querySelector(`#gb-artist${v}`).style.clipPath, ']')
                     v++
                 })
             }
-
-            /* setTimeout(() => { */
 
             var $grid = $('#grid').packery({
                 itemSelector: ".grid-artist",
@@ -405,10 +430,7 @@
                     $grid.packery('fit', target);
                 }
             });
-
-
         })
-        /* }, 1000) */
 
     </script>
 
