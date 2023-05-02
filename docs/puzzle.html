@@ -58,7 +58,7 @@
 
         const xn = 6, yn = 6;
         for (let yi = 0; yi < yn; yi++) {
-            const row = generateElement(`<div id="row${yi}" class="ligne d-flex"></div>`)
+            const row = generateElement(`<div id="row${yi}" class="ligne _${yi} d-flex"></div>`)
             thePuzzle.append(row)
             for (let xi = 0; xi < xn; xi++) {
                 const col = generateElement(`<div id="row${yi}col${xi}" class="colonne"></div>`)
@@ -74,15 +74,16 @@
                 const cell = document.getElementById(id)
                 console.log(yi, xi, cell)
                 if (i < 35) {
-                    if ([0,1,1,2,3,5,8,13,21,34].includes(i+1)) {
+                    if (true) {
                         cell.style.backgroundImage = `url(/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${i}.jpg)`
                         cell.style.backgroundSize = 'cover'
                     } else {
                         cell.style.backgroundImage = `url(/artists/moi/moi-${0}.jpg)`
-                        cell.style.backgroundPosition = `${20*xi}% ${20*yi}%`}
+                        cell.style.backgroundPosition = `${20 * xi}% ${20 * yi}%`
                     }
-                    i++
-                })
+                }
+                i++
+            })
         })
     </script>
 </body>
