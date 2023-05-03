@@ -13,14 +13,14 @@
         body {
             width: 100vw;
             height: 100vh;
-            margin: 2rem;
+            margin: 4rem 0;
         }
 
         #thePuzzle {
             width: var(--width);
             height: var(--height);
             margin: auto;
-            background-color: lightgray;
+            background-color: white;
         }
 
         .ligne {
@@ -31,7 +31,7 @@
 
         .colonne {
             width: calc(var(--width) / var(--xn));
-            height: 100%;
+            height: calc(var(--height) / var(--yn));
             position: relative;
             background-color: transparent;
             overflow: visible;
@@ -75,7 +75,10 @@
 
         </div>
     </div>
+
     <script type="module">
+        import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
+        import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm'
         import { shuffleArray, generateElement, normalizeVraiment } from '/js/utils.js'
         import { loadArtists } from "/js/artists.js?v=0.11.1"
         import JigsawShield from '/js/jigsawShield.js?v=0.11.1'
@@ -101,6 +104,13 @@
             width: 1200,
             height: 630,
         }
+        const _manot = {
+            xn: 6,
+            yn: 6,
+            width: 480,
+            height: 480,
+        }
+        _.scale = .99
         _.total = _.xn * _.yn
         const marginX = _.width / (_.xn * 2)
         const marginY = _.height / (_.yn * 2)
@@ -129,8 +139,8 @@
                 const right = xi === (_.xn - 1) ? 'right' : ''
                 const bottom = yi === (_.yn - 1) ? 'bottom' : ''
                 const left = xi === 0 ? 'left' : ''
-                const col = generateElement(
-                    `<div id="row${yi}col${xi}" class="colonne">
+                const col = generateElement(`
+<div id="row${yi}col${xi}" class="colonne draggable" data-index="${v}">
     <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
         <defs>
             <clipPath id="cp-${v}" >
@@ -138,8 +148,9 @@
             </clipPath>
         </defs>
     </svg>                    
-   <div id="_row${yi}col${xi}" class="background ${top} ${right} ${bottom} ${left}" style="clip-path: url(#cp-${v}); transform: scale(.99)">
-   </div>`)
+    <div id="_row${yi}col${xi}" class="background ${top} ${right} ${bottom} ${left} " style="clip-path: url(#cp-${v}); transform: scale(${_.scale})">
+    </div>
+</div>`)
                 row.append(col)
                 v++
             } // <!--  -->
@@ -168,6 +179,52 @@
                 }
                 i++
             })
+
+            var grid = document.querySelector('#thePuzzle');
+            var pckry = new packeryLayout(grid, {
+                itemSelector: '.colonne',
+            });
+
+            pckry.getItemElements().forEach(function (itemElem) {
+                var draggie = new Draggabilly(itemElem);
+                pckry.bindDraggabillyEvents(draggie);
+            });
+
+            let shuffled = false
+            function shuffleTiles() {
+                // shuffle items
+                if (!shuffled) {
+                    pckry.items = shuffleArray(pckry.items)
+                    shuffled = true
+                } else {
+                    pckry.items = pckry.items.sort((a, b) => a.element.getAttribute('data-index') - b.element.getAttribute('data-index'))
+                    shuffled = false
+                }
+                /*
+                var order = pckry.items.map(function (item) {
+                    return item.element.getAttribute('data-tile');
+                }).join('');
+                */
+                // stagger transition
+                pckry._resetLayout();
+                pckry.items.forEach(function (item, i) {
+                    setTimeout(function () {
+                        pckry.layoutItems([item]);
+                    }, i++ * 36);
+                });
+            }
+
+            const handleEsc = (event) => {
+                if (event.key === 'Escape') {
+                    // if esc key was not pressed in combination with ctrl or alt or shift
+                    const isNotCombinedKey = !(event.ctrlKey || event.altKey || event.shiftKey);
+                    if (isNotCombinedKey) {
+                        shuffleTiles()
+                    }
+                }
+            }
+            document.addEventListener('keydown', handleEsc);
+
         })
     </script>
 </body>
