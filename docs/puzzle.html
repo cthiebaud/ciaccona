@@ -17,8 +17,8 @@
         }
 
         #thePuzzle {
-            width: var(--width);
-            height: var(--height);
+            width: calc(var(--width) + var(--xn) * var(--gutter));
+            height: calc(var(--height) + var(--yn) * var(--gutter));
             margin: auto;
             background-color: white;
         }
@@ -70,9 +70,9 @@
 </head>
 
 <body>
-    <div class="container-xxl">
+    <div class="container-fluid">
         <div id="thePuzzle" class="d-flex flex-column">
-
+            <div id="gutter-sizer" class="gutter-sizer" style="width: 2px"></div>
         </div>
     </div>
 
@@ -97,6 +97,7 @@
         }
 
         const bg = (a, v) => `url('artists/${a}/${a}-${v}.jpg')`
+        const gutter = 2
 
         const _ = {
             xn: 8,
@@ -110,11 +111,12 @@
             width: 480,
             height: 480,
         }
-        _.scale = .99
+        _.scale = 1
         _.total = _.xn * _.yn
         const marginX = _.width / (_.xn * 2)
         const marginY = _.height / (_.yn * 2)
 
+        document.documentElement.style.setProperty('--gutter', `${gutter}px`)
         document.documentElement.style.setProperty('--width', `${_.width}px`)
         document.documentElement.style.setProperty('--height', `${_.height}px`)
         document.documentElement.style.setProperty('--xn', `${_.xn}`)
@@ -148,7 +150,7 @@
             </clipPath>
         </defs>
     </svg>                    
-    <div id="_row${yi}col${xi}" class="background ${top} ${right} ${bottom} ${left} " style="clip-path: url(#cp-${v}); transform: scale(${_.scale})">
+    <div id="_row${yi}col${xi}" class="background ${top} ${right} ${bottom} ${left} " style="clip-path: url(#cp-${v}); transform: scale(${_.scale});"> <!-- -->
     </div>
 </div>`)
                 row.append(col)
@@ -183,6 +185,7 @@
             var grid = document.querySelector('#thePuzzle');
             var pckry = new packeryLayout(grid, {
                 itemSelector: '.colonne',
+                gutter: '.gutter-sizer',
             });
 
             pckry.getItemElements().forEach(function (itemElem) {
@@ -194,9 +197,17 @@
             function shuffleTiles() {
                 // shuffle items
                 if (!shuffled) {
+                    /*
+                    document.getElementById('gutter-sizer').style.width = '100px'
+                    document.getElementById('thePuzzle').style.width = `${100 * _.xn + 1200}px`
+                    */
                     pckry.items = shuffleArray(pckry.items)
                     shuffled = true
                 } else {
+                    /*
+                    document.getElementById('gutter-sizer').style.width = '0'
+                    document.getElementById('thePuzzle').style.width = `${1200}px`
+                    */
                     pckry.items = pckry.items.sort((a, b) => a.element.getAttribute('data-index') - b.element.getAttribute('data-index'))
                     shuffled = false
                 }
