@@ -14,18 +14,20 @@
             width: 100vw;
             height: 100vh;
             margin: 4rem 0;
+            background-color: transparent;
         }
 
         #thePuzzle {
             width: calc(var(--width) + var(--xn) * var(--gutter));
             height: calc(var(--height) + var(--yn) * var(--gutter));
             margin: auto;
-            background-color: white;
+            background-color: lightgray;
         }
 
         .ligne {
             width: 100%;
             height: calc(var(--height) / var(--yn));
+            background-color: transparent;
             overflow: visible;
         }
 
@@ -43,12 +45,14 @@
             right: var(--marginX);
             bottom: var(--marginY);
             left: var(--marginX);
+            background-color: transparent;
             background-repeat: no-repeat;
             overflow: visible;
         }
 
         .background:hover {
-            filter: grayscale(1)
+            filter: grayscale(1);
+            z-index: 123;
         }
 
         .background.top {
@@ -96,10 +100,10 @@
             shuffle = true
         }
 
-        const bg = (a, v) => `url('artists/${a}/${a}-${v}.jpg')`
-        const gutter = 2
+        const gutter = 0
+        document.getElementById('gutter-sizer').style.width = `${gutter}px`
 
-        const _ = {
+        const _  = {
             xn: 8,
             yn: 4,
             width: 1200,
@@ -126,35 +130,45 @@
 
         const jigsawGenerator = new JigsawShield(_)
 
-        let v = 0
+        let vi = 0
         for (let yi = 0; yi < _.yn; yi++) {
             const row = generateElement(`<div id="row${yi}" class="ligne _${yi} d-flex"></div>`)
             thePuzzle.append(row)
             for (let xi = 0; xi < _.xn; xi++) {
 
-                const vb = jigsawGenerator.getJigsawViewBox(v)
-                const topT = yi === 0 ? 0 : marginY
-                const leftT = xi === 0 ? 0 : marginX
-                const transX = parseInt(vb.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
-                const transY = parseInt(vb.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
-                const top = yi === 0 ? 'top' : ''
-                const right = xi === (_.xn - 1) ? 'right' : ''
-                const bottom = yi === (_.yn - 1) ? 'bottom' : ''
-                const left = xi === 0 ? 'left' : ''
+                const topTrans = yi === 0 ? 0 : marginY
+                const leftTrans = xi === 0 ? 0 : marginX
+                const viewBox = jigsawGenerator.getJigsawViewBox(vi)
+                const xTrans = parseInt(viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
+                const yTrans = parseInt(viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
+                const topClass = yi === 0 ? 'top' : ''
+                const rightClass = xi === (_.xn - 1) ? 'right' : ''
+                const bottomClass = yi === (_.yn - 1) ? 'bottom' : ''
+                const leftClass = xi === 0 ? 'left' : ''
+
                 const col = generateElement(`
-<div id="row${yi}col${xi}" class="colonne draggable" data-index="${v}">
-    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
+<div id="row${yi}col${xi}" class="colonne draggable" data-index="${vi}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(vi)}">
         <defs>
-            <clipPath id="cp-${v}" >
-                <path id="path-${v}" transform="translate(${-transX + leftT} ${-transY + topT})" d="${jigsawGenerator.getJigsawPath(v)}"/> 
+            <clipPath id="cp-${vi}" >
+                <path id="path-${vi}" transform="translate(${-xTrans + leftTrans} ${-yTrans + topTrans})" d="${jigsawGenerator.getJigsawPath(vi)}"/> 
             </clipPath>
         </defs>
     </svg>                    
-    <div id="_row${yi}col${xi}" class="background ${top} ${right} ${bottom} ${left} " style="clip-path: url(#cp-${v}); transform: scale(${_.scale});"> <!-- -->
+    <div id="_row${yi}col${xi}" class="background ${topClass} ${rightClass} ${bottomClass} ${leftClass} " style="clip-path: url(#cp-${vi}); transform: scale(${_.scale});"> <!-- -->
     </div>
+    <svg class="background" transform="translate(${marginX} ${marginY})" xmlns="http://www.w3.org/2000/svg" 
+            width="${_.width / _.xn}" height="${_.height / _.yn}" 
+            viewBox="${jigsawGenerator.getJigsawViewBox(vi)}">
+            <path stroke="#C8B273" stroke-width="1" fill='currentColor' fill-opacity="0" id="path-${vi}" d="${jigsawGenerator.getJigsawPath(vi)}"/> 
+            <!-- stroke-dasharray="5" -->
+    </svg>                    
 </div>`)
+
+/*
+*/
                 row.append(col)
-                v++
+                vi++
             } // <!--  -->
         }
         let shuffledV = shuffleArray(Array.from(Array(_.xn * _.yn), (_, index) => index + 1))
