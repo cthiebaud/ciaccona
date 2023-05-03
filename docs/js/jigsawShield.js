@@ -10,25 +10,26 @@ export default class JigsawShield {
     getJigsawPath = () => this.#jigsawPathDefault
     getJigsawViewBox = () => this.#jigsawViewBox
 
-    constructor(itemsPerRow) {
+    constructor(config) {
         try {
-            let xn = parseInt(itemsPerRow ?? document.documentElement.style.getPropertyValue('--bpr') ?? 4)
-            if (isNaN(xn) || xn < 0 ) xn = 4
-            const yn = 36 / xn
             const randomSeed = normalizeVraiment(Math.random(), 0, 1, 0, 10000)
             const randomTabsize = normalizeVraiment(Math.random(), 0, 1, .07, .15)
             const randomJitter = normalizeVraiment(Math.random(), 0, 1, .03, .15)
+
+            let xn = parseInt(config?.xn ?? document.documentElement.style.getPropertyValue('--bpr') ?? 4)
+            if (isNaN(xn) || xn < 0 ) xn = 4
+            let yn = parseInt(config?.yn ?? document.documentElement.style.getPropertyValue('--bpc') ?? 9)
+            if (isNaN(yn) || yn < 0 ) yn = 9
 
             console.log('[jigsaw] seed', randomSeed, 'tabsize', randomTabsize, 'jitter', randomJitter)
 
             const jig = new Jigsaw({
                 seed: randomSeed,
-                width: xn * 120,
-                height: yn * 120,
+                tabsize: config?.tabsize ?? randomTabsize,
+                jitter: config?.jitter ?? randomJitter,
+                width: config?.width ? config.width : xn * 120,
+                height: config?.height ? config.height : yn * 120,
                 radius: 0,
-                seed: 12,
-                tabsize: randomTabsize,
-                jitter: randomJitter,
                 xn: xn,
                 yn: yn,
             })

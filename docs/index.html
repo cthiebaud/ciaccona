@@ -148,6 +148,7 @@
                 const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
                 const gridBrickPercentageWidth = 100 / gridBricksPerRow
                 document.documentElement.style.setProperty('--bpr', `${gridBricksPerRow}`)
+                document.documentElement.style.setProperty('--bpc', `${Math.ceil(36 / gridBricksPerRow)}`)
                 document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
             }
         }

@@ -120,6 +120,7 @@
             const gridBricksDoubleHeight = gridBricksHeight * 2 + gutter_size - .2
 
             document.documentElement.style.setProperty('--bpr', `${gridBricksPerRow}`)
+            document.documentElement.style.setProperty('--bpc', `${Math.ceil(36 / gridBricksPerRow)}`)
             document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
             document.documentElement.style.setProperty('--gbh', `${gridBricksHeight}px`)
             document.documentElement.style.setProperty('--2gbw', `${gridBrickDoublPercentageWidth}%`)

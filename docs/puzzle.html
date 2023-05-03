@@ -13,25 +13,58 @@
         body {
             width: 100vw;
             height: 100vh;
+            margin: 2rem;
         }
 
         #thePuzzle {
-            width: 1200px;
-            height: 630px;
+            width: var(--width);
+            height: var(--height);
             margin: auto;
-            background-color: gray;
+            background-color: lightgray;
         }
 
         .ligne {
-            width: 1200px;
-            height: 105px;
+            width: 100%;
+            height: calc(var(--height) / var(--yn));
+            overflow: visible;
         }
 
         .colonne {
-            width: 200px;
-            height: 105px;
+            width: calc(var(--width) / var(--xn));
+            height: 100%;
+            position: relative;
+            background-color: transparent;
+            overflow: visible;
+        }
+
+        .background {
+            position: absolute;
+            top: var(--marginY);
+            right: var(--marginX);
+            bottom: var(--marginY);
+            left: var(--marginX);
             background-repeat: no-repeat;
-            /* background-size: cover; */
+            overflow: visible;
+        }
+
+        .background:hover {
+            filter: grayscale(1)
+        }
+
+        .background.top {
+            top: 0;
+        }
+
+        .background.right {
+            right: 0;
+        }
+
+        .background.bottom {
+            bottom: 0;
+        }
+
+        .background.left {
+            left: 0;
         }
     </style>
 </head>
@@ -43,44 +76,95 @@
         </div>
     </div>
     <script type="module">
-        import { generateElement } from '/js/utils.js'
+        import { shuffleArray, generateElement, normalizeVraiment } from '/js/utils.js'
         import { loadArtists } from "/js/artists.js?v=0.11.1"
         import JigsawShield from '/js/jigsawShield.js?v=0.11.1'
 
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop)
+        })
+        let test = params.test ?? undefined
+        let coerceArtist = params.a ?? undefined
+        let coerceVariation = params.v ?? undefined
+        let shuffle = params.shuffle ?? undefined
+        if (typeof shuffle !== 'undefined' && (shuffle === 'false' || shuffle === '0' || !shuffle)) {
+            shuffle = false
+        } else {
+            shuffle = true
+        }
+
         const bg = (a, v) => `url('artists/${a}/${a}-${v}.jpg')`
 
-        const jigsawGenerator = new JigsawShield({
-            xn: 9,
+        const _ = {
+            xn: 8,
             yn: 4,
             width: 1200,
             height: 630,
-        })
+        }
+        _.total = _.xn * _.yn
+        const marginX = _.width / (_.xn * 2)
+        const marginY = _.height / (_.yn * 2)
 
-        const xn = 6, yn = 6;
-        for (let yi = 0; yi < yn; yi++) {
+        document.documentElement.style.setProperty('--width', `${_.width}px`)
+        document.documentElement.style.setProperty('--height', `${_.height}px`)
+        document.documentElement.style.setProperty('--xn', `${_.xn}`)
+        document.documentElement.style.setProperty('--yn', `${_.yn}`)
+        document.documentElement.style.setProperty('--marginX', `${-marginX}px`)
+        document.documentElement.style.setProperty('--marginY', `${-marginY}px`)
+
+        const jigsawGenerator = new JigsawShield(_)
+
+        let v = 0
+        for (let yi = 0; yi < _.yn; yi++) {
             const row = generateElement(`<div id="row${yi}" class="ligne _${yi} d-flex"></div>`)
             thePuzzle.append(row)
-            for (let xi = 0; xi < xn; xi++) {
-                const col = generateElement(`<div id="row${yi}col${xi}" class="colonne"></div>`)
+            for (let xi = 0; xi < _.xn; xi++) {
+
+                const vb = jigsawGenerator.getJigsawViewBox(v)
+                const topT = yi === 0 ? 0 : marginY
+                const leftT = xi === 0 ? 0 : marginX
+                const transX = parseInt(vb.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
+                const transY = parseInt(vb.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
+                const top = yi === 0 ? 'top' : ''
+                const right = xi === (_.xn - 1) ? 'right' : ''
+                const bottom = yi === (_.yn - 1) ? 'bottom' : ''
+                const left = xi === 0 ? 'left' : ''
+                const col = generateElement(
+                    `<div id="row${yi}col${xi}" class="colonne">
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(v)}">
+        <defs>
+            <clipPath id="cp-${v}" >
+                <path id="path-${v}" transform="translate(${-transX + leftT} ${-transY + topT})" d="${jigsawGenerator.getJigsawPath(v)}"/> 
+            </clipPath>
+        </defs>
+    </svg>                    
+   <div id="_row${yi}col${xi}" class="background ${top} ${right} ${bottom} ${left}" style="clip-path: url(#cp-${v}); transform: scale(.99)">
+   </div>`)
                 row.append(col)
-            }
+                v++
+            } // <!--  -->
         }
-        let i = 0
+        let shuffledV = shuffleArray(Array.from(Array(_.xn * _.yn), (_, index) => index + 1))
+
         loadArtists().then((artists) => {
-            artists.artists.forEach(a => {
-                let xi = i % xn
-                let yi = Math.floor(i / xn)
-                const id = `row${yi}col${xi}`
-                const cell = document.getElementById(id)
-                console.log(yi, xi, cell)
-                if (i < 35) {
-                    if (true) {
-                        cell.style.backgroundImage = `url(/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${i}.jpg)`
-                        cell.style.backgroundSize = 'cover'
-                    } else {
-                        cell.style.backgroundImage = `url(/artists/moi/moi-${0}.jpg)`
-                        cell.style.backgroundPosition = `${20 * xi}% ${20 * yi}%`
-                    }
+            const array = coerceArtist ? artists.artists : shuffleArray(artists.artists)
+            let i = 0
+            array.forEach(a => {
+                if (i < _.xn * _.yn) {
+                    let xi = i % _.xn
+                    let yi = Math.floor(i / _.xn)
+                    const id = `_row${yi}col${xi}`
+                    const cell = document.getElementById(id)
+                    const offsetX = Math.round(normalizeVraiment(xi, 0, _.xn - 1, 0, _.width * (_.xn - 1) / _.xn))
+                    const offsetY = Math.round(normalizeVraiment(yi, 0, _.yn - 1, 0, _.height * (_.yn - 1) / _.yn))
+                    const borderX = xi === 0 ? 0 : marginX;
+                    const borderY = yi === 0 ? 0 : marginY;
+                    const artist = coerceArtist ?? a.fullnameNoSpaceLowercaseNoDiacritics
+                    const variation = coerceVariation ?? shuffledV[i]
+
+                    cell.style.backgroundImage = `url(/artists/${artist}/${artist}-${variation}.jpg)`
+                    // cell.style.backgroundImage = `url(/manot.jpg)`
+                    cell.style.backgroundPosition = `-${offsetX - borderX}px -${offsetY - borderY}px`
                 }
                 i++
             })
