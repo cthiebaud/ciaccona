@@ -9,6 +9,12 @@ export default class JigsawShield {
 
     getJigsawPath = () => this.#jigsawPathDefault
     getJigsawViewBox = () => this.#jigsawViewBox
+    getJigsawItem = (i) => {
+        return {
+            viewBox: this.getJigsawViewBox(i),
+            path: this.getJigsawPath(i),
+        }
+    }
 
     constructor(config) {
         try {

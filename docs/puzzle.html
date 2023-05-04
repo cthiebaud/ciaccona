@@ -52,7 +52,7 @@
 
         .background:hover {
             filter: grayscale(1);
-            z-index: 123;
+            z-index: 12;
         }
 
         .background.top {
@@ -103,7 +103,7 @@
         const gutter = 0
         document.getElementById('gutter-sizer').style.width = `${gutter}px`
 
-        const _  = {
+        const _ = {
             xn: 8,
             yn: 4,
             width: 1200,
@@ -136,11 +136,11 @@
             thePuzzle.append(row)
             for (let xi = 0; xi < _.xn; xi++) {
 
+                const j = jigsawGenerator.getJigsawItem(vi)
                 const topTrans = yi === 0 ? 0 : marginY
                 const leftTrans = xi === 0 ? 0 : marginX
-                const viewBox = jigsawGenerator.getJigsawViewBox(vi)
-                const xTrans = parseInt(viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
-                const yTrans = parseInt(viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
+                const xTrans = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
+                const yTrans = parseInt(j.viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
                 const topClass = yi === 0 ? 'top' : ''
                 const rightClass = xi === (_.xn - 1) ? 'right' : ''
                 const bottomClass = yi === (_.yn - 1) ? 'bottom' : ''
@@ -148,29 +148,38 @@
 
                 const col = generateElement(`
 <div id="row${yi}col${xi}" class="colonne draggable" data-index="${vi}">
-    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="${jigsawGenerator.getJigsawViewBox(vi)}">
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         width="0" height="0" 
+         viewBox="${j.viewBox}">
         <defs>
-            <clipPath id="cp-${vi}" >
-                <path id="path-${vi}" transform="translate(${-xTrans + leftTrans} ${-yTrans + topTrans})" d="${jigsawGenerator.getJigsawPath(vi)}"/> 
+            <clipPath id="clipPath-${vi}" >
+                <path id="path-${vi}" 
+                      transform="translate(${-xTrans + leftTrans} ${-yTrans + topTrans})" 
+                      d="${j.path}"/> 
             </clipPath>
         </defs>
     </svg>                    
-    <div id="_row${yi}col${xi}" class="background ${topClass} ${rightClass} ${bottomClass} ${leftClass} " style="clip-path: url(#cp-${vi}); transform: scale(${_.scale});"> <!-- -->
-    </div>
-    <svg class="background" transform="translate(${marginX} ${marginY})" xmlns="http://www.w3.org/2000/svg" 
-            width="${_.width / _.xn}" height="${_.height / _.yn}" 
-            viewBox="${jigsawGenerator.getJigsawViewBox(vi)}">
-            <path id="path2-${vi}" stroke="#C8B273" stroke-width="1" fill='none' fill-opacity="0" d="${jigsawGenerator.getJigsawPath(vi)}"/> 
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="background" 
+         width="${_.width / _.xn}" height="${_.height / _.yn}" 
+         transform="translate(${marginX} ${marginY})" 
+         viewBox="${j.viewBox}">
+            <path id="path2-${vi}" 
+                  stroke="#C8B273" stroke-width="2" fill='none' fill-opacity="0" 
+                  d="${j.path}"/> 
             <!-- stroke-dasharray="5" -->
     </svg>                    
+    <div id="_row${yi}col${xi}" 
+         class="background ${topClass} ${rightClass} ${bottomClass} ${leftClass}" 
+         style="clip-path: url(#clipPath-${vi}); transform: scale(${_.scale});">
+    </div>
 </div>`)
 
-/*
-*/
                 row.append(col)
                 vi++
-            } // <!--  -->
+            } 
         }
+        
         let shuffledV = shuffleArray(Array.from(Array(_.xn * _.yn), (_, index) => index + 1))
 
         loadArtists().then((artists) => {
@@ -211,25 +220,12 @@
             function shuffleTiles() {
                 // shuffle items
                 if (!shuffled) {
-                    /*
-                    document.getElementById('gutter-sizer').style.width = '100px'
-                    document.getElementById('thePuzzle').style.width = `${100 * _.xn + 1200}px`
-                    */
                     pckry.items = shuffleArray(pckry.items)
                     shuffled = true
                 } else {
-                    /*
-                    document.getElementById('gutter-sizer').style.width = '0'
-                    document.getElementById('thePuzzle').style.width = `${1200}px`
-                    */
                     pckry.items = pckry.items.sort((a, b) => a.element.getAttribute('data-index') - b.element.getAttribute('data-index'))
                     shuffled = false
                 }
-                /*
-                var order = pckry.items.map(function (item) {
-                    return item.element.getAttribute('data-tile');
-                }).join('');
-                */
                 // stagger transition
                 pckry._resetLayout();
                 pckry.items.forEach(function (item, i) {
