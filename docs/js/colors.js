@@ -203,7 +203,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         <div class="score init" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 
-                    data="scores3/bwv-1004_5_for_SVGs-${i + 1}.svg" 
+                    data="scores/bwv-1004_5_for_SVGs-${i + 1}.svg" 
                     type="image/svg+xml"
                     style="pointer-events: none;" 
                     data-svg-offset-x = ${svgOffsetX}
