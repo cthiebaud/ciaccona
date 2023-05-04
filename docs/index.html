@@ -126,7 +126,7 @@
             get: (searchParams, prop) => searchParams.get(prop)
         })
         let fullameNoSpaceLowercaseNoDiacritics = params.a ?? undefined
-        let variationParam = params.v ?? undefined
+        let variationParam = params.v ? parseInt(params.v) : undefined
         let no_plyr_event = params.no_plyr_event ?? undefined
         let test = params.test ?? undefined
 
@@ -135,6 +135,15 @@
             fullameNoSpaceLowercaseNoDiacritics = undefined
         } else if (fullameNoSpaceLowercaseNoDiacritics === 'christophethiebaud') {
             fullameNoSpaceLowercaseNoDiacritics = 'moi'
+        }
+    </script>
+    <script type="module">
+        import codec from "/js/structure.js?v=0.11.1"
+        import config from "/js/config.js?v=0.11.1"
+
+        if (variationParam < 0 || codec.variationsCount <= variationParam) variationParam = undefined
+        if (variationParam) {
+            config.startBarOfLastSelectedVariation = codec.variation2bar(variationParam)
         }
     </script>
     <script type="module">
@@ -158,7 +167,6 @@
         }, { once: true });
 
         theTrickToViewportUnitsOnMobile(true, calcBrickWidth)
-
     </script>
 
     <script type="module">
