@@ -225,13 +225,13 @@ const Ω = {
             if (a === 'undefined') a = undefined
             const v = e.currentTarget.dataset.v
             if (a && v) {
-                window.location = `1000puzzles.html?a=${a}&v=${v}`
+                window.location = `/puzzle/puzzles.html?a=${a}&v=${v}`
             } else if (a) {
-                window.location = `artists.html?a=${a}`
+                window.location = `/puzzle/artists.html?a=${a}`
             } else if (v) {
-                window.location = `artists.html?v=${v}`
+                window.location = `/puzzle/artists.html?v=${v}`
             } else {
-                window.location = 'artists.html'
+                window.location = '/puzzle/artists.html'
             }
         }))
         */
