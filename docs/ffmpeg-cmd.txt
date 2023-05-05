@@ -4,7 +4,7 @@ ffmpeg -i ventoux5.mov -vcodec h264 -acodec mp2 ventoux5.mp4
 
 
 ffmpeg \
-    -i ventoux5.mp4 -i aintno.wav \
+    -i video.mp4 -i audio.wav \
     -c:v copy \
     -map 0:v -map 1:a \
-    -y ventoux5ciaccona.mp4 
+    -y video_et_audio.mp4 

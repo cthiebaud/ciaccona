@@ -3,6 +3,7 @@
 🎵:
   - mutopia: "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1426"
   - lilypond: "http://lilypond.org/"
+  - manuscript: https://www.bach-digital.de/receive/BachDigitalSource_source_00001955 
 ≺/≻:
   - bezier-easing: "https://github.com/gre/bezier-easing"
   - bootstrap: "https://getbootstrap.com/"
@@ -16,5 +17,6 @@
   - svgPathReverse: "https://github.com/Pomax/svg-path-reverse"
   - tinycolor2: "https://github.com/TinyCommunity/tinycolor2"
 🖼: 
-  - "https://www.svgrepo.com/"
-  - "https://it.wikipedia.org/wiki/File:Johann_Sebastian_Bach_signature.svg"
+  - SVGs: "https://www.svgrepo.com/"
+  - Bach's signature: "https://it.wikipedia.org/wiki/File:Johann_Sebastian_Bach_signature.svg"
+  - CSS: "https://www.youtube.com/watch?v=TAA89nkEuhw"

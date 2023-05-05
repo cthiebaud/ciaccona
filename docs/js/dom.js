@@ -240,7 +240,7 @@ const Ω = {
             if (nameNoSpaceLowercaseNoDiacritics === '') {
                 elem.setAttribute('href', url.pathname)
             } else {
-                elem.setAttribute('href', `${url.pathname}video/${nameNoSpaceLowercaseNoDiacritics}.html`)
+                elem.setAttribute('href', `/video/${nameNoSpaceLowercaseNoDiacritics}.html`)
             }
         })
 
