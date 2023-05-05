@@ -130,6 +130,7 @@
             yn: 4,
             width: 1200,
             height: 630,
+            transitionDuration: '0.667s',
         }
         const _manot = {
             xn: 6,
@@ -151,8 +152,9 @@
             image: "/images/ventoux2.png",
             backgroundColor: 'white',
             stroke: '#d5a392',
+            transitionDuration: '0.4s',
             delayShuffle: i => 0,
-            delayOrder: (i, count) => Math.round(bez(normalizeVraiment(i, 0, count-1, 0, 1)) * 24000)
+            delayOrder: (i, count) => Math.round(bez(normalizeVraiment(i, 0, count - 1, 0, 1)) * 24000)
         }
         const _ = _default
         _.scale = 1
@@ -183,27 +185,29 @@
         document.documentElement.style.setProperty('--toXleft', `${_toXleft}px`)
         document.documentElement.style.setProperty('--toYtop', `${_toYtop}px`)
 
-        const jigsawGenerator = new JigsawShield(_)
+        let jigsawGenerator = new JigsawShield(_)
 
-        thePuzzle.querySelectorAll(':not(#gutter-sizer)').forEach(e => e.remove())
-        let vi = 0
-        for (let yi = 0; yi < _.yn; yi++) {
-            const row = generateElement(`<div id="row${yi}" class="ligne _${yi} d-flex"></div>`)
-            thePuzzle.append(row)
-            for (let xi = 0; xi < _.xn; xi++) {
+        const changeIt = () => {
+            jigsawGenerator = new JigsawShield(_)
+            thePuzzle.querySelectorAll(':not(#gutter-sizer)').forEach(e => e.remove())
+            let vi = 0
+            for (let yi = 0; yi < _.yn; yi++) {
+                const row = generateElement(`<div id="row${yi}" class="ligne _${yi} d-flex"></div>`)
+                thePuzzle.append(row)
+                for (let xi = 0; xi < _.xn; xi++) {
 
-                const j = jigsawGenerator.getJigsawItem(vi)
-                const topTrans = yi === 0 ? 0 : marginY
-                const leftTrans = xi === 0 ? 0 : marginX
-                const xTrans = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
-                const yTrans = parseInt(j.viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
-                const topClass = yi === 0 ? 'top' : ''
-                const rightClass = xi === (_.xn - 1) ? 'right' : ''
-                const bottomClass = yi === (_.yn - 1) ? 'bottom' : ''
-                const leftClass = xi === 0 ? 'left' : ''
+                    const j = jigsawGenerator.getJigsawItem(vi)
+                    const topTrans = yi === 0 ? 0 : marginY
+                    const leftTrans = xi === 0 ? 0 : marginX
+                    const xTrans = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
+                    const yTrans = parseInt(j.viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
+                    const topClass = yi === 0 ? 'top' : ''
+                    const rightClass = xi === (_.xn - 1) ? 'right' : ''
+                    const bottomClass = yi === (_.yn - 1) ? 'bottom' : ''
+                    const leftClass = xi === 0 ? 'left' : ''
 
 
-                const col = generateElement(`
+                    const col = generateElement(`
 <div id="row${yi}col${xi}" class="colonne draggable" data-index="${vi}">
     <svg xmlns="http://www.w3.org/2000/svg" 
          width="0" height="0" 
@@ -232,10 +236,13 @@
     </svg>                    
 </div>`)
 
-                row.append(col)
-                vi++
+                    row.append(col)
+                    vi++
+                }
             }
         }
+        
+        changeIt()
 
         let shuffledV = shuffleArray(Array.from(Array(_.xn * _.yn), (_, index) => index + 1))
         let theArtists
@@ -273,6 +280,7 @@
         var pckry = new packeryLayout(thePuzzle, {
             itemSelector: '.colonne',
             gutter: '.gutter-sizer',
+            transitionDuration: _.transitionDuration ?? '0.4s'
         });
 
         pckry.getItemElements().forEach(function (itemElem) {
@@ -314,6 +322,9 @@
                 if (typeof coerceVariation !== 'undefined') {
                     coerceVariation = (coerceVariation + 1) % codec.variationsCount
                 }
+                changeIt()
+                pckry.reloadItems()
+                pckry.layout()
                 doIt(theArtists)
             }
         }
