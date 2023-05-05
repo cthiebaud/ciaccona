@@ -472,3 +472,7 @@ span.d {
   padding-top: 0;
   padding-bottom: 0;
 }
+
+.clipboard-puzzle {
+  cursor: pointer;
+}

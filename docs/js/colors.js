@@ -1,5 +1,6 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
+import clipboard from 'https://cdn.jsdelivr.net/npm/clipboard@2.0.11/+esm'
 import codec from "/js/structure.js?v=0.11.1"
 import JigsawShield from '/js/jigsawShield.js?v=0.11.1'
 import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.11.1"
@@ -7,6 +8,7 @@ import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/u
 export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
 
     const jigsawGenerator = new JigsawShield()
+    const thisURL = new URL(window.location)
 
     const _widths_ = [
         { w: 268 }, // 00
@@ -226,24 +228,17 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         <div class="" style="width: 3rem; height: 5rem; position:relative; overflow: visible;">
             <svg xmlns="http://www.w3.org/2000/svg" 
                  id="gb-puzzle${i}-svg" 
+                 class="clipboard-puzzle"
                  width="80%" height="60%" 
+                 title="copy link to clipboard"
                  style="visibility: hidden; overflow: visible; transform: scale(.667);" 
-                 viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}">
-                <path d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
+                 viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}"
+                 data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics}&v=${i}">
+                <path stroke="#${c.textColor}" stroke-width="3" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>
-            <!--
-            <object id="gb-puzzle${i}-background"
-                    class="gb-puzzle-background" 
-                    type="image/svg+xml"
-                    style="display: none; object-fit: cover; height: 60%; width: 80%; visibility: hidden; transform: scale(1.4); overflow:hidden;" 
-                    data-sel="#bonhomme${i + 1}"
-                    data="puzzle.svg?v=0.11.1#bonhomme${i + 1}-view"
-                    data-color="#${c.puzzleColor}"
-                    > 
-            </object>
-            -->
-            <div id="gb-puzzle${i}" 
-                class="gb-puzzle fw-bold text-center" 
+            <!-- data-clipboard-text -->
+            <div id="gb-variation${i}" 
+                class="fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                 data-v="${i}"
                 style="position:absolute; bottom: 0.5rem; right:0; left: -.667rem; color: #${c.textColor};">
@@ -260,6 +255,16 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                 e.target.style.visibility = 'visible'
                 e.target.style.fill = `#${c.puzzleColor}`
             })
+
+            var clip = new clipboard(`#gb-puzzle${i}-svg`);
+
+            clip.on('success', function (e) {
+                console.info('Action:', e.action);
+                console.info('Text:', e.text);
+                console.info('Trigger:', e.trigger);
+
+                e.clearSelection();
+            });
         }
         temporaryContainer.appendChild(instanciatedVariation);
 
