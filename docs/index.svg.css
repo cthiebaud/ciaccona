@@ -54,6 +54,12 @@
 .icon-note {
   background-image: url("index.svg?v=0.12.0#note-view");  
 }
+.icon-arrow_in_left {
+  background-image: url("index.svg?v=0.12.0#arrow_in_left-view");  
+}
+.icon-arrow_in_right {
+  background-image: url("index.svg?v=0.12.0#arrow_in_right-view");  
+}
 .icon-bach_siel_full_left {
   background-image: url("index.svg?v=0.12.0#bach_siel_full_left-view");
 }

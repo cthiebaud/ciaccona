@@ -143,9 +143,13 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 <div id="gb-ciaccona" data-sort="-1" class="grid-brick" >
     <div class="d-flex brick align-items-center justify-content-center mb-3" >
         <!-- style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; background-position-y: center; height: 100%;" -->
-        <div class="magnificent-card p-2" style="backdrop-filter: blur(1px);">
-            &nbsp;Ciaccona&nbsp;
-        </div>
+        <a class="magnificent-card p-2" href="/">
+            &nbsp;
+            <span class="icon-base icon-arrow_in_left"></span>
+            &nbsp;
+            <div>Ciaccona</div>
+            &nbsp;
+        </a>
     </div>
 </div>`
     temporaryContainer.appendChild(generateElement(templateForTheme));

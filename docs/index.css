@@ -312,6 +312,8 @@ div#logoRight div.siegel#foregroundRight {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
   color: #121212;
+  backdrop-filter: blur(1px);
+  display: flex;
 }
 
 div#gb-artist > div > div {

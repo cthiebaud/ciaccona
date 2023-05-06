@@ -131,25 +131,25 @@
             background-repeat: no-repeat;
             background-position: center center;
             transition: background-image 0.5s linear;
-            /*border-style: solid;
-            border-width: 1.5px !important; */
+            border-style: solid;
+            border-width: .333px;
             display: flex;
             justify-content: space-between;
-            /* padding: 0.4rem;
-            text-align: center; */
             visibility: inherit;
-            width: var(--gbw, 100%);
-            height: var(--gbh, 12rem);
-            /* width: 12rem;
-            height: 12rem;*/
+            width: var(--gbw, 400px);
+            height: var(--gbh, 200px);
             padding: 0;
             margin: 0;
-            /* border: 1px white solid; */
             border-radius: 0 6rem 6rem 0;
             position: absolute;
             overflow: visible;
             cursor: pointer;
+        }
 
+        #gridContainerCol #grid .grid-artist#gb-artist0 {
+            background-color: transparent;
+            border: none;
+            overflow: hidden;
         }
 
         .large .grabber {
@@ -162,18 +162,12 @@
             font-family: var(--bs-font-monospace) !important;
             background-image: url(/svg/cursor-hand-grab-svgrepo-com.svg);
             background-repeat: no-repeat;
-            /* background-size: cover; */
             width: 3rem;
             height: 3rem;
             color: #d3d3d3;
             font-size: 12px;
             line-height: 4rem;
             padding-left: .3rem;
-            /* 
-            background-color: black;
-            border-radius: 0 2rem 0 0;
-            padding: .4rem .6rem 0 .3rem;
-            */
         }
 
         .note {
@@ -190,11 +184,6 @@
 
         .puzzle {
             cursor: pointer;
-            /*
-            background-image: url(/svg/puzzle-svgrepo-com.svg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            */
             width: 3rem;
             height: 3rem;
             position: relative;
@@ -203,15 +192,14 @@
             bottom: 0;
             margin-top: auto;
             margin-bottom: auto;
-
             fill: none;
             stroke: aliceblue;
             stroke-width: 4px;
         }
 
         .large {
-            width: var(--2gbw, 200%) !important;
-            height: var(--2gbh, 24rem) !important;
+            width: var(--2gbw, 800px) !important;
+            height: var(--2gbh, 400px) !important;
             border-radius: 0 12rem 12rem 0 !important;
         }
 
@@ -219,7 +207,7 @@
             width: 1.25%;
         }
 
-        /* */
+        /* https://youtu.be/TAA89nkEuhw */
         .hero {
             color: #C8B273;
             display: flex;
@@ -232,13 +220,20 @@
             padding: 0px 0.333rem;
         }
 
+        .hero-intro.vert {
+            writing-mode: vertical-lr;
+            text-orientation: upright;
+            line-height: 10.672px;
+            width: fit-content;
+            height: 100%;
+        }
+
         .hero-intro::after {
             content: "";
             position: absolute;
             inset: 0;
             z-index: -1;
             background: #57728b;
-            /* opacity: .5;  */
             mix-blend-mode: multiply;
         }
     </style>
@@ -250,6 +245,8 @@
 
     <!-- my styles -->
     <link href="/index.css?v=0.12.0" rel="stylesheet">
+    <link href="index.svg.css?v=0.12.0" rel="stylesheet">
+
 </head>
 
 <body id="body" class="artists no-vid d-flex flex-column" style="background-color: #4e493e !important;"> <!-- #787160 -->
@@ -291,10 +288,52 @@
         loadArtists().then((artists) => {
 
             const grid = document.getElementById('grid')
-            let v = 0
 
+            grid.innerHTML += `
+            <div id="gb-artist0" 
+                class="grid-artist mb-3 d-flex align-items-center justify-content-center" 
+                data-a="" 
+                data-v="" 
+                <div>
+                    <a class="magnificent-card p-2" href="artists.html" aria-label="Artists or Puzzle...">
+                        &nbsp;
+                        <div>Ciaccona</div>
+                        &nbsp;
+                        <span class="icon-base icon-arrow_in_right" style="margin:auto;"></span>
+                        &nbsp;
+                    </a>
+                </div>
+            </div>`
+
+            const template = (data) => `
+<div id="gb-artist${data.v}" 
+     class="grid-artist hero"  
+     data-a="${data.a}" 
+     data-v="${data.moduloV}" 
+     style="${data.bgFull}; overflow:hidden;">
+    <div class="d-flex flex-column justify-content-start" style="height:100%; ">
+        <div class="hero-intro flex-shrink-1; align-self-start;" style="">
+            ${data.firstname}
+        </div>
+        <div class="hero-intro vert flex-grow-1;" style="">
+            ${data.lastname}
+        </div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" 
+        id="gb-puzzle${data.v}-svg" 
+        class="puzzle flex-shrink-1"
+        style="overflow: visible; transform: scale(.667);"
+        viewBox="${data.jigsaw.viewBox}">
+        <path stroke="#C8B273" stroke-width="2" fill="#57728ba0" d="${data.jigsaw.path}" style=""></path>
+    </svg>
+</div>`
+
+            let v = 1
             const qwe = shuffle && !coerceArtist ? shuffleArray(artists.artists) : artists.artists
             qwe.forEach(a => {
+                if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
+                    return;
+                }
                 const moduloV = v % codec.variationsCount
 
                 let bgFull
@@ -308,28 +347,22 @@
                 const transX = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
                 const transY = parseInt(j.viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
                 console.log('transX', transX, 'transY', transY)
-                const artistLastNameOnBeakkingSpaces = a.lastname.replaceAll(/\s/gi, '&nbsp;');
-                grid.innerHTML += `
-<div id="gb-artist${v}" 
-     class="grid-artist hero"  
-     data-a="${coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics}" 
-     data-v="${coerceVariation || moduloV}" 
-     style="${bgFull}; overflow:hidden;">
-    <div class="d-flex flex-column justify-content-start" style="height:100%; ">
-        <div class="hero-intro flex-shrink-1; align-self-start;" style="">${coerceArtist ? '' : a.firstname}</div>
-        <div class="hero-intro flex-grow-1;" style="writing-mode: vertical-lr; text-orientation: upright;line-height: 0; width: fit-content; height: 100%; padding: 0 .8rem 0 .667rem; ">
-            ${coerceArtist ? '' : artistLastNameOnBeakkingSpaces}
-        </div>
-    </div>
-    <svg xmlns="http://www.w3.org/2000/svg" 
-        id="gb-puzzle${v}-svg" 
-        class="puzzle flex-shrink-1"
-        style="overflow: visible; transform: scale(.667);"
-        viewBox="${j.viewBox}">
-        <path stroke="#C8B273" stroke-width="2" fill="#57728ba0" d="${j.path}" style=""></path>
-    </svg>
-</div>`
 
+                const artistLastNameNoBreakingSpaces = a.lastname.replaceAll(/\s/gi, '&nbsp;');
+                const artistTirstNameInvisible = Array.from(Array(a.firstname.length), (i) => '&nbsp;').join('')
+                const artistLastNameInvisible = Array.from(Array(a.lastname.length), (i) => '&nbsp;').join('')
+
+                const data = {
+                    a: coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics,
+                    v: v,
+                    moduloV: coerceVariation || moduloV,
+                    firstname: coerceArtist ? '' : a.firstname,
+                    lastname: coerceArtist ? artistLastNameInvisible : artistLastNameNoBreakingSpaces,
+                    bgFull: bgFull,
+                    jigsaw: j,
+                }
+
+                grid.innerHTML += template(data)
                 v++
             })
 
@@ -377,7 +410,7 @@
             /* document.getElementById("go-home").addEventListener("click", () => {
                 window.location = '/'
             }); */
- 
+
             // https://codepen.io/desandro/pen/WxjJJW/
             $grid.on('click', '.grid-artist', function (event) {
                 event.stopPropagation()
