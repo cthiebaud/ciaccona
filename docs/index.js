@@ -5,7 +5,7 @@ import createColoredBadges from "/js/colors.js?v=0.12.1"
 import createTimings from "/js/timings.js?v=0.12.1"
 import resizeSVGs from "/js/resizeSVGs.js?v=0.12.1"
 import createPlayer from "/js/player.js?v=0.12.1"
-import Ω from "/js/dom.js?v=0.12.1"
+import Ω from "/js/dom.js?v=0.12.1.1"
 
 // transform windows loaded event into promise
 const windowLoaded = new Promise((resolve) => {

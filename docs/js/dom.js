@@ -270,7 +270,7 @@ const Ω = {
         const fullname = artist.fullname === "Christophe Thiebaud" ? "Moi" : artist.fullname;
 
         document.querySelector('head title').innerHTML = `Ciaccona - ${artist.fullname}`
-        document.querySelector('#loading #message').innerHTML = fullname
+        // document.querySelector('#loading #message').innerHTML = fullname
         artistE.style.visibility = 'inherit'
         artistE.querySelector('.fullname').innerHTML = fullname
         artistE.querySelector('a#youtube-url').setAttribute('href', artist['▶'].youtubeTrueUrl ? artist['▶'].youtubeTrueUrl : artist['▶'].youtubeUrl)
