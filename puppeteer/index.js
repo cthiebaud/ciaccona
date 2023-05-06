@@ -21,7 +21,7 @@ const puppeteer = require('puppeteer');
         'rachelpodger',
     ]
     const performers = [
-        // 'adolfbusch',
+        'adolfbusch',
         'amandinebeyer',
         'andreadevitis',
         'anneleenlenaerts',
@@ -174,7 +174,7 @@ const puppeteer = require('puppeteer');
                     } */
 
                     // Capture screenshot
-                    const path = `artists/${performer}/${performer}-${variation}.jpg`
+                    const path = `artists/${performer}/${performer}-${variation}.png`
                     console.log(`saving screenshot to ${path}`)
                     await page.screenshot({
                         path: path
