@@ -253,7 +253,7 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         const jigsawPiece = instanciatedVariation.querySelector(`#gb-puzzle${i}-svg`)
         if (jigsawPiece) {
             jigsawPiece.addEventListener("load", e => {
-                e.target.style.visibility = 'visible'
+                e.target.style.visibility = 'inherit'
                 e.target.style.fill = `#${c.puzzleColor}`
             })
 
