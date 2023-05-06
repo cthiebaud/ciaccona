@@ -7,8 +7,12 @@
   "author": "Christophe Thiebaud",
   "license": "MIT",
   "dependencies": {
+    "@popperjs/core": "^2.11.7",
     "animejs": "^3.2.1",
     "bootstrap": "^5.2.3",
+    "draggabilly": "^3.0.0",
+    "jquery": "^3.6.4",
+    "packery": "^2.1.2",
     "plyr": "^3.7.8"
   }
 }

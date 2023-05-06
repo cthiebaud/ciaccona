@@ -1,3 +1,4 @@
+import * as bootstrap from '@bootstrap'
 import isotopeLayout from 'https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/+esm'
 import config from "/js/config.js?v=0.12.1"
 import codec from "/js/structure.js?v=0.12.1"
