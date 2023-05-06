@@ -140,8 +140,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
     const temporaryContainer = generateElement("<template>");
     const templateForTheme =
         `
-<div id="gb-ciaccona" data-sort="-1" class="grid-brick" >
-    <div class="d-flex brick align-items-center justify-content-center mb-3" >
+<div id="gb-ciaccona" data-sort="-1" class="grid-brick" style="height:96px; margin:0;">
+    <div class="d-flex brick align-items-center justify-content-center" >
         <!-- style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; background-position-y: center; height: 100%;" -->
         <a class="magnificent-card p-2" href="/">
             &nbsp;
@@ -156,8 +156,8 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
 
     const templateForArtist =
         `
-<div id="gb-artist" data-sort="-2" class="grid-brick artist" style="${!fullameNoSpaceLowercaseNoDiacritics ? 'display: none;' : ''}">
-    <div class="d-flex brick align-items-center justify-content-center mb-3" style="border-radius: 0; height: 100%;">
+<div id="gb-artist" data-sort="-2" class="grid-brick artist" style="${!fullameNoSpaceLowercaseNoDiacritics ? 'display: none;' : ''}; height:96px; margin:0;">
+    <div class="d-flex brick align-items-center justify-content-center" style="border-radius: 0; height: 100%;">
         <div class="p-2" style="white-space: nowrap;">
             <span class="fullname" style="color: #d0d0d0">${fullameNoSpaceLowercaseNoDiacritics}</span>
             <a id="youtube-url" class="btn btn-lihjt icon-base icon-youtube_external_link text-muted" target="_youtube" href="#" aria-label="Original Video...">
