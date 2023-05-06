@@ -297,7 +297,7 @@
                 <div>
                     <a class="magnificent-card p-2" href="artists.html" aria-label="Artists or Puzzle...">
                         &nbsp;
-                        <div>Ciaccona</div>
+                        <div style="margin: auto; font-size: 28px;">Ciaccona</div>
                         &nbsp;
                         <span class="icon-base icon-arrow_in_right" style="margin:auto;"></span>
                         &nbsp;
@@ -418,13 +418,13 @@
                 const target = event.currentTarget;
                 window.location = `/ciaccona.html?a=${target.dataset.a}&v=${target.dataset.v}`
             })
+            /*
             $grid.on('click', '.grid-artist .puzzle', function (event) {
                 event.stopPropagation()
                 event.preventDefault()
                 const target = event.currentTarget.parentNode;
                 window.location = `/puzzle/?a=${target.dataset.a}&v=${target.dataset.v}`
             })
-            /*
             function removeLarges() {
                 const $wereLarges = $('.grid-artist.large');
                 $wereLarges.each((index, wasLarge) => {

@@ -117,7 +117,7 @@ const Ω = {
             document.addEventListener('keydown', this.handleEsc);
 
             console.log('BEGIN show about')
-            document.querySelector('#config-menu a#about > label').innerHTML = "&check; About&hellip;"
+            document.querySelector('#config-menu a#about > label').innerHTML = "&check; About"
 
             document.querySelector('body').classList.add('about')
 
@@ -160,7 +160,7 @@ const Ω = {
             document.removeEventListener('keydown', this.handleEsc);
 
             console.log('BEGIN hide about')
-            document.querySelector('#config-menu a#about > label').innerHTML = "About&hellip;"
+            document.querySelector('#config-menu a#about > label').innerHTML = "About"
 
             document.querySelector('header.header').style.display = 'none'
             document.querySelector('footer.footer').style.display = 'none'

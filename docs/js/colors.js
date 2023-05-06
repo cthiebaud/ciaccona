@@ -145,9 +145,9 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
         <!-- style="border-radius: 0; background-image: url('/manuscriptFirstLine.jpg'); background-repeat: no-repeat; background-size: cover; background-position-y: center; height: 100%;" -->
         <a class="magnificent-card p-2" href="/">
             &nbsp;
-            <span class="icon-base icon-arrow_in_left"></span>
+            <span class="icon-base icon-arrow_out_left"></span>
             &nbsp;
-            <div>Ciaccona</div>
+            <div style="margin: auto;">Ciaccona</div>
             &nbsp;
         </a>
     </div>
@@ -164,8 +164,6 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
             </a>
             <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
             </a>
-            <!-- a id="puzzle" class="share btn btn-lihjt icon-base icon-puzzle text-muted" data-a="${fullameNoSpaceLowercaseNoDiacritics}" target="_puzzle" href="#" aria-label="Puzzle...">
-            </!-->
         </div>
     </div>
 </div>`
@@ -237,10 +235,9 @@ export default function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics)
                  title="copy link to clipboard"
                  style="visibility: hidden; overflow: visible; transform: scale(.667);" 
                  viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}"
-                 data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics}&v=${i}">
+                 data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics ? fullameNoSpaceLowercaseNoDiacritics : ''}&v=${i}">
                 <path stroke="#${c.textColor}" stroke-width="3" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>
-            <!-- data-clipboard-text -->
             <div id="gb-variation${i}" 
                 class="fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
