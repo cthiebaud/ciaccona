@@ -230,7 +230,7 @@
             color: #C8B273;
             display: flex;
             isolation: isolate;
-            filter: grayscale(.25)
+            filter: grayscale(.1667)
         }
 
         .hero-intro {
@@ -287,6 +287,7 @@
         import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
         // import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm'
         import codec from "/js/structure.js?v=0.12.1"
+        import { getColorArray } from "/js/colors.js?v=0.12.1.4"
         import { loadArtists } from "/js/artists.js?v=0.12.1"
         import { shuffleArray } from "/js/utils.js?v=0.12.1"
         import JigsawShield from '/js/jigsawShield.js?v=0.12.1'
@@ -337,12 +338,15 @@
         class="puzzle flex-shrink-1"
         style="overflow: visible; transform: scale(.667);"
         viewBox="${data.jigsaw.viewBox}">
-        <path stroke="#C8B273" stroke-width="2" fill="#57728ba0" d="${data.jigsaw.path}" style=""></path>
+        <path stroke="#${data.stroke ? data.stroke : 'C8B273'}" stroke-width="3" fill="#${data.fill ? data.fill : '57728ba0'}" d="${data.jigsaw.path}" style=""></path>
     </svg>
 </div>`
 
             let v = 1
             const qwe = shuffle && !coerceArtist ? shuffleArray(artists.artists) : artists.artists
+
+            const colors = getColorArray(.67);
+
             qwe.forEach(a => {
                 if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
                     return;
@@ -365,6 +369,8 @@
                 const artistTirstNameInvisible = Array.from(Array(a.firstname.length), (i) => '&nbsp;').join('')
                 const artistLastNameInvisible = Array.from(Array(a.lastname.length), (i) => '&nbsp;').join('')
 
+                console.log(colors[moduloV].puzzleColor)
+
                 const data = {
                     a: coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics,
                     v: v,
@@ -373,15 +379,16 @@
                     lastname: coerceArtist ? artistLastNameInvisible : artistLastNameNoBreakingSpaces,
                     bgFull: bgFull,
                     jigsaw: j,
+                    fill: colors[moduloV].puzzleColor,
+                    stroke: colors[moduloV].textColor,
                 }
 
                 grid.innerHTML += template(data)
+
                 v++
             })
 
             const thePackery = new packeryLayout('#grid', {
-
-                /* var $grid = $('#grid').packery({ */
                 itemSelector: ".grid-artist",
                 percentPosition: true,
                 initLayout: false,
@@ -390,7 +397,7 @@
             })
 
             function orderItems(reorder) {
-                var itemElems = thePackery.getItemElements() // $grid.packery('getItemElements');
+                var itemElems = thePackery.getItemElements() 
                 let vi = 0
                 itemElems.forEach(function (itemElem) {
                     // console.log(i, itemElem)
