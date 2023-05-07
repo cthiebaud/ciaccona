@@ -248,7 +248,7 @@ function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
                 class="fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                 data-v="${i}"
-                style="position:absolute; bottom: 0.5rem; right:0; left: -.667rem; color: #${c.textColor};">
+                style="position:absolute; bottom: 0.125rem; right:0; left: -0.667rem; color: #${c.textColor};">
                 ${i === 0 || i === codec.variationsCount - 1 ? "&nbsp;" : i}
             </div>
         </div>
