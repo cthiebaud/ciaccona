@@ -125,6 +125,24 @@
     </script>
 
     <style>
+        a {
+            text-decoration: none;
+        }
+
+        .magnificent-card {
+            font-family: "Cinzel", serif;
+            font-size: 24px;
+            outline: 1px solid gray;
+            outline-offset: -2px;
+            background-clip: content-box;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 1rem;
+            color: #121212;
+            backdrop-filter: blur(1px);
+            display: flex;
+        }
+
         #gridContainerCol #grid .grid-artist {
             align-items: flex-end;
             background-size: cover;
@@ -243,10 +261,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
-    <!-- my styles -->
-    <link href="/index.css?v=0.12.1" rel="stylesheet">
-    <link href="/index.svg.css?v=0.12.1" rel="stylesheet">
-
 </head>
 
 <body id="body" class="artists no-vid d-flex flex-column" style="background-color: #4e493e !important;"> <!-- #787160 -->
@@ -261,16 +275,17 @@
     </main>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/packery@2.1.2/sandbox/css/basics.min.css">
-
-    <!-- script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></!-->
+    <!-- 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></!>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/dist/draggabilly.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/packery@2.1.2/dist/packery.pkgd.min.js"></script>
+    -->
 
     <script async type="module">
-        /* import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm'
+        /* import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm' */
         import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
-        import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm' */
+        // import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm'
         import codec from "/js/structure.js?v=0.12.1"
         import { loadArtists } from "/js/artists.js?v=0.12.1"
         import { shuffleArray } from "/js/utils.js?v=0.12.1"
@@ -294,7 +309,10 @@
                         &nbsp;
                         <div style="margin: auto; font-size: 28px;">Ciaccona</div>
                         &nbsp;
-                        <span class="icon-base icon-arrow_in_right" style="margin:auto;"></span>
+                        <svg id="arrow_in_right" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
+                            <path fill="#00000060" fill-rule="evenodd"
+                                d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
+                        </svg>
                         &nbsp;
                     </a>
                 </div>
@@ -361,36 +379,53 @@
                 v++
             })
 
-            var $grid = $('#grid').packery({
+            const thePackery = new packeryLayout('#grid', {
+
+                /* var $grid = $('#grid').packery({ */
                 itemSelector: ".grid-artist",
                 percentPosition: true,
                 initLayout: false,
                 gutter: '.gutter-sizer',
                 resize: true
             })
+
             function orderItems(reorder) {
-                var itemElems = $grid.packery('getItemElements');
-                $(itemElems).each(function (i, itemElem) {
+                var itemElems = thePackery.getItemElements() // $grid.packery('getItemElements');
+                let vi = 0
+                itemElems.forEach(function (itemElem) {
                     // console.log(i, itemElem)
-                    const v = reorder || typeof itemElem.dataset.v === 'undefined' ? i : itemElem.dataset.v
+                    const v = reorder || typeof itemElem.dataset.v === 'undefined' ? vi : itemElem.dataset.v
                     if (itemElem.dataset.a) {
                         let bgFull
                         const a = itemElem.dataset.a
                         if (a === 'moi') {
-                            bgFull = { 'background-color': '#28282b' }
+                            // bgFull = { 'background-color': '#28282b' }
+                            itemElem.style.backgroundColor = '#28282b'
                         } else {
-                            bgFull = { 'background-image': bg(itemElem.dataset.a, v) }
+                            // bgFull = { 'background-image': bg(itemElem.dataset.a, v) }
+                            itemElem.style.backgroundImage = bg(itemElem.dataset.a, v)
                         }
-                        $(itemElem).css(bgFull).find('.grabber').text(v)
-                    } else {
-                        $(itemElem).find('.grabber').text(v)
                     }
+                    vi++
                 });
             }
             orderItems()
-            $grid.on('layoutComplete', function () {
+
+            thePackery.on('layoutComplete', function () {
                 console.log("Packery layout complete");
             })
+
+            // https://codepen.io/desandro/pen/WxjJJW/
+            document.querySelectorAll('.grid-artist').forEach(E => E.addEventListener('click', (e) => {
+                event.stopPropagation()
+                event.preventDefault()
+                const target = event.currentTarget;
+                window.location = `/ciaccona.html?a=${target.dataset.a}&v=${target.dataset.v}`
+            }))
+
+            thePackery.layout()
+
+            /*
             $grid.on('dragItemPositioned', function () {
                 orderItems(true)
             });
@@ -399,21 +434,6 @@
                 orderItems()
                 $grid.packery('shiftLayout');
             })
-
-            $grid.packery()
-
-            /* document.getElementById("go-home").addEventListener("click", () => {
-                window.location = '/'
-            }); */
-
-            // https://codepen.io/desandro/pen/WxjJJW/
-            $grid.on('click', '.grid-artist', function (event) {
-                event.stopPropagation()
-                event.preventDefault()
-                const target = event.currentTarget;
-                window.location = `/ciaccona.html?a=${target.dataset.a}&v=${target.dataset.v}`
-            })
-            /*
             $grid.on('click', '.grid-artist .puzzle', function (event) {
                 event.stopPropagation()
                 event.preventDefault()
