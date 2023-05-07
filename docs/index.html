@@ -208,7 +208,10 @@
             padding-right: .3rem;
         }
 
-        .puzzle {
+        a.puzzle {
+            /*
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            */
             cursor: pointer;
             width: 3rem;
             height: 3rem;
@@ -343,7 +346,7 @@
                 if (a.fullnameNoSpaceLowercaseNoDiacritics === 'moi') {
                     return;
                 }
-                const j = jigsawGenerator.getJigsawItem(vi+1)
+                const j = jigsawGenerator.getJigsawItem(vi + 1)
                 const transX = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
                 const transY = parseInt(j.viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
                 const artistLastnameNoBreakingSpaces = a.lastname.replaceAll(/\s/gi, '&nbsp;');
@@ -414,7 +417,7 @@
                 document.querySelectorAll('.grid-brick:not(#gb-ciaccona)').forEach(E => {
                     const i = E.children[0].dataset.index
                     const newChild = generateElement(template(data[i]))
-                    E.replaceChild(newChild,  E.children[0])
+                    E.replaceChild(newChild, E.children[0])
                 })
                 setListener()
             }
