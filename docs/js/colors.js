@@ -1,9 +1,9 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import clipboard from 'https://cdn.jsdelivr.net/npm/clipboard@2.0.11/+esm'
-import codec from "/js/structure.js?v=0.12.1"
-import JigsawShield from '/js/jigsawShield.js?v=0.12.1'
-import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.12.1"
+import codec from "/js/structure.js?v=0.12.2"
+import JigsawShield from '/js/jigsawShield.js?v=0.12.2'
+import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.12.2"
 
 function getColorArray(transparencyParam) {
     let _first_color_ = [
