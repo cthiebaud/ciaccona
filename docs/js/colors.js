@@ -65,8 +65,8 @@ function getColorArray(transparencyParam) {
         const k0_1normalized = normalizeVraiment(k++, 0, _colors_.length, 0, 1)
         const contrastChange = (1 - easingVanishingContrast(k0_1normalized)) * 100
         // console.log(s.p_rgb, tinycolor(s.p_rgb).isLight(), tinycolor(s.p_rgb).getLuminance())
-        const lum = tinycolor(s.p_rgb).getLuminance()
-        if (lum > .333) { // tinycolor(s.p_rgb).isLight()
+        const luminance = tinycolor(s.p_rgb).getLuminance();
+        if (luminance > .333) { // tinycolor(s.p_rgb).isLight()
             s.textColor = tinycolor(s.p_rgb).darken(contrastChange).toString("hex6").slice(1)
             s.puzzleColor = tinycolor(s.p_rgb).darken(15).toString("hex6").slice(1)
             s.stripeColor = tinycolor(s.p_rgb).darken(5).toString("hex6").slice(1)
@@ -77,7 +77,6 @@ function getColorArray(transparencyParam) {
             s.stripeColor = tinycolor(s.p_rgb).lighten(5).toString("hex6").slice(1)
             s.stripeColorAlpha = tinycolor(s.p_rgb).lighten(5).setAlpha(transparency).toString("hex8").slice(1)
         }
-        const luminance = tinycolor(s.p_rgb).getLuminance();
         const theDarkerTheLighter = easingTheDarkerTheLighter(luminance) * 100
         s.borderColor = tinycolor(s.p_rgb).lighten(theDarkerTheLighter).toString("hex6").slice(1)
         s.p_rgbAlpha = tinycolor(s.p_rgb).setAlpha(transparency).toString("hex8").slice(1)
@@ -85,11 +84,11 @@ function getColorArray(transparencyParam) {
         // some transparency to show video behind
         s.p_rgb_original = new tinycolor(s.p_rgb)
         if (transparencyParam) {
-            s.p_rgb = tinycolor(s.p_rgb_original).setAlpha(transparency).toString("hex8").slice(1)
-            s.textColor = tinycolor(s.textColor).setAlpha(transparency).toString("hex8").slice(1)
-            s.puzzleColor = tinycolor(s.puzzleColor).setAlpha(transparency).toString("hex8").slice(1)
-            s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparency).toString("hex8").slice(1)
-            s.borderColor = tinycolor(s.borderColor).setAlpha(transparency).toString("hex8").slice(1)
+            s.p_rgb = tinycolor(s.p_rgb_original).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.textColor = tinycolor(s.textColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.puzzleColor = tinycolor(s.puzzleColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.borderColor = tinycolor(s.borderColor).setAlpha(transparencyParam).toString("hex8").slice(1)
         }
     }
     return _colors_
@@ -140,7 +139,7 @@ function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
         { w: 0 }  // 35 ?
     ]
 
-    const _colors_ = getColorArray(!!fullameNoSpaceLowercaseNoDiacritics ? .400 : undefined)
+    const _colors_ = getColorArray(fullameNoSpaceLowercaseNoDiacritics ? .400 : undefined)
 
     const temporaryContainer = generateElement("<template>");
     const templateForTheme =
@@ -239,10 +238,10 @@ function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
                  class="clipboard-puzzle"
                  width="80%" height="60%" 
                  title="copy link to clipboard"
-                 style="visibility: hidden; overflow: visible; transform: scale(.667);" 
+                 style="visibility: inherit; overflow: visible; transform: scale(.667);" 
                  viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}"
                  data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics ? fullameNoSpaceLowercaseNoDiacritics : ''}&v=${i}">
-                <path stroke="#${c.textColor}" stroke-width="3" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
+                <path stroke="#${c.textColor}" stroke-width="3" fill="#${c.puzzleColor}" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>
             <div id="gb-variation${i}" 
                 class="fw-bold text-center" 
@@ -258,18 +257,14 @@ function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
         const instanciatedVariation = generateElement(templateVariations)
         const jigsawPiece = instanciatedVariation.querySelector(`#gb-puzzle${i}-svg`)
         if (jigsawPiece) {
-            jigsawPiece.addEventListener("load", e => {
-                e.target.style.visibility = 'inherit'
-                e.target.style.fill = `#${c.puzzleColor}`
-            })
-
             var clip = new clipboard(`#gb-puzzle${i}-svg`);
 
             clip.on('success', function (e) {
+                /*
                 console.info('Action:', e.action);
                 console.info('Text:', e.text);
                 console.info('Trigger:', e.trigger);
-
+                */
                 e.clearSelection();
             });
         }
