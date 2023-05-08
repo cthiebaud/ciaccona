@@ -1,12 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- meta name="viewport" content="width=device-width, initial-scale=1.0" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Ciaccona - Swipe</title>
+
+    <style>
+        body,
+        #left,
+        #right {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #left {
+            background-color: red;
+        }
+
+        #right {
+            background-color: blue;
+        }
+    </style>
 </head>
-<body>
+
+<body id="body">
+
+    <div id="left"></div>
+    <div id="right"></div>
+
+    <!-- script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></!-->
+
+
+    https://css-tricks.com/simple-swipe-with-vanilla-javascript/
     
+    <script type="module">
+        import hammerjs from "https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/+esm"
+        var hammertime = new Hammer(document.getElementById('body'), {});
+        hammertime.on('swipeleft', function (ev) {
+            const rightBR = document.getElementById('right').getBoundingClientRect()
+            console.log(rightBR)
+            document.getElementById('body').style.transform = `translate(-${rightBR.x}px, -${rightBR.y}px)`
+        });
+        hammertime.on('swiperight', function (ev) {
+            const leftBR = document.getElementById('left').getBoundingClientRect()
+            console.log(leftBR)
+            document.getElementById('body').style.transform = `translate(-${leftBR.x}px, -${leftBR.y}px)`
+        });
+        const leftBR = document.getElementById('left').getBoundingClientRect()
+        console.log(leftBR)
+        const rightBR = document.getElementById('right').getBoundingClientRect()
+        console.log(rightBR)
+    </script>
 </body>
+
 </html>
