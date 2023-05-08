@@ -244,6 +244,11 @@
             filter: grayscale(.1667)
         }
 
+        .hero div.hide-name:first-child {
+            color: #57728b;
+            mix-blend-mode: multiply;
+        }
+
         .hero-intro {
             position: relative;
             padding: 0px 0.333rem;
@@ -253,8 +258,12 @@
             writing-mode: vertical-lr;
             text-orientation: upright;
             line-height: 10.672px;
-            width: fit-content;
+            width: 1.667rem;
             height: 100%;
+        }
+
+        .hero-intro.vert::after {
+            border-radius: 0;
         }
 
         .hero-intro::after {
@@ -264,6 +273,7 @@
             z-index: -1;
             background: #57728b;
             mix-blend-mode: multiply;
+            border-radius: 0 0 1rem 0;
         }
 
         .force-redraw::before {
@@ -316,20 +326,26 @@
      data-a="${data.a}" 
      data-v="${data.v}" 
      style="background-image: ${data.bg}; overflow:hidden;">
-    <div class="d-flex flex-column justify-content-start" style="height:100%; ">
-        <div class="hero-intro flex-shrink-1; align-self-start;" style="">
+    <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%;" >
+        <div class="hero-intro flex-shrink-1; align-self-start;" 
+            title="Pin / Unpin ${data.firstname} ${data.lastname}"
+            style="padding-right: 0.5rem;">
             ${data.firstname}
         </div>
-        <div class="hero-intro vert flex-grow-1;" style="">
+        <div class="hero-intro vert flex-grow-1;" 
+            title="Pin / Unpin ${data.firstname} ${data.lastname}">
             ${data.lastname}
         </div>
     </div>
-    <a class="puzzle flex-shrink-1">
+    <a class="puzzle flex-shrink-1" href="#" title="Pin / Unpin Variation N°${data.v}">
         <svg xmlns="http://www.w3.org/2000/svg" 
             id="gb-puzzle${data.v}-svg" 
             style="overflow: visible; transform: scale(.667);"
             viewBox="${data.jigsaw.viewBox}">
-            <path stroke="#${data.stroke ? data.stroke : 'C8B273'}" stroke-width="3" fill="#${data.fill ? data.fill : '57728ba0'}" d="${data.jigsaw.path}" style=""></path>
+            <path stroke="#${data.stroke ? data.stroke : 'C8B273'}" 
+                stroke-width="3" 
+                fill="#${data.fill ? data.fill : '57728ba0'}" 
+                d="${data.jigsaw.path}" style=""></path>
         </svg>
     </a>
 </div>`
@@ -350,16 +366,16 @@
                 const transX = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
                 const transY = parseInt(j.viewBox.replaceAll(/^[\.\d\-]+\s+([\.\d\-]+).*$/g, "$1"))
                 const artistLastnameNoBreakingSpaces = a.lastname.replaceAll(/\s/gi, '&nbsp;');
-                const artistLastnameInvisible = Array.from(Array(a.lastname.length), (i) => '&nbsp;').join('')
                 const datum = {
                     index: vi,
                     a: coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics,
                     v: coerceVariation || vi % codec.variationsCount,
                     puzzleHRef: coerceVariation ? '/' : `?v=${vi % codec.variationsCount}`,
-                    firstname: coerceArtist ? '' : a.firstname,
-                    lastname: coerceArtist ? artistLastnameInvisible : artistLastnameNoBreakingSpaces,
+                    firstname: a.firstname,
+                    lastname: artistLastnameNoBreakingSpaces,
                     bg: bg(coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || vi % codec.variationsCount),
                     jigsaw: j,
+                    hideName: coerceArtist ? ' hide-name' : '',
                     fill: colors[coerceVariation || vi % codec.variationsCount].puzzleColor,
                     stroke: colors[coerceVariation || vi % codec.variationsCount].textColor,
                 }
