@@ -79,7 +79,7 @@
             <path fill="#00000060" fill-rule="evenodd"
                 d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
         </symbol>
-        <symbol id="arrow_out_left-symbol" viewBox=" 0 0 20 20">
+        <symbol id="arrow_out_left-symbol" viewBox= "0 0 20 20">
             <path fill="#00000060" d="m4.671 5.06 1.454 1.348L3.697 9h8.366v2H3.697l2.428 2.544-1.454 1.362L0 9.958ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0Z"/>
         </symbol>
 
@@ -223,11 +223,11 @@
     </defs>
 
     <!-- row 0 -->
-    <view viewBox="   0   0 100 100" id="close-circle-view" />
-    <view viewBox=" 200   0 100 100" id="twitter-view" />
-    <view viewBox=" 400   0 100 100" id="instagram-view" />
-    <view viewBox=" 600   0 100 100" id="facebook-view" />
-    <view viewBox=" 800   0 100 100" id="cthiebaud-view" />
+    <view viewBox=   "0   0 100 100" id="close-circle-view" />
+    <view viewBox= "200   0 100 100" id="twitter-view" />
+    <view viewBox= "400   0 100 100" id="instagram-view" />
+    <view viewBox= "600   0 100 100" id="facebook-view" />
+    <view viewBox= "800   0 100 100" id="cthiebaud-view" />
     <view viewBox="1000   0 100 100" id="github-view" />
     <view preserveAspectRatio="xMidYMid meet " viewBox="1200   0 100 100" id="youtube-view" />
     <view preserveAspectRatio="xMidYMid meet " viewBox="1400   0 100 100" id="youtube_external_link-view" />
@@ -236,56 +236,56 @@
     <view preserveAspectRatio="xMidYMid meet " viewBox="2000   0 100 100" id="puzzle_filled-view" />
     <view preserveAspectRatio="xMidYMid meet " viewBox="2200   0 100 100" id="home-view" />
     <!-- row 1 -->
-    <view preserveAspectRatio="xMidYMid slice" viewBox="  25 225  50  50" id="treble_clef-view" />
-    <view preserveAspectRatio="xMidYMid slice" viewBox=" 200 200 100 100" id="ear-view" />
-    <view preserveAspectRatio="xMidYMid slice" viewBox=" 400 200 100 100" id="note-view" />
-    <view preserveAspectRatio="xMidYMid meet " viewBox=" 600 200 100 100" id="arrow_in_left-view" />
-    <view preserveAspectRatio="xMidYMid meet " viewBox=" 800 200 100 100" id="arrow_in_right-view" />
+    <view preserveAspectRatio="xMidYMid slice" viewBox=  "25 225  50  50" id="treble_clef-view" />
+    <view preserveAspectRatio="xMidYMid slice" viewBox= "200 200 100 100" id="ear-view" />
+    <view preserveAspectRatio="xMidYMid slice" viewBox= "400 200 100 100" id="note-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox= "600 200 100 100" id="arrow_in_left-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox= "800 200 100 100" id="arrow_in_right-view" />
     <view preserveAspectRatio="xMidYMid meet " viewBox="1000 200 100 100" id="arrow_out_left-view" />
     <!-- row 2 -->
-    <view preserveAspectRatio="xMidYMid meet " viewBox="   0 400 100 100" id="bach_siel_full_left-view" />
-    <view preserveAspectRatio="xMidYMid meet " viewBox=" 200 400 100 100" id="bach_siel_full_right-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox=   "0 400 100 100" id="bach_siel_full_left-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox= "200 400 100 100" id="bach_siel_full_right-view" />
     <!-- row 3 -->
     <view preserveAspectRatio="xMidYMax meet " viewBox="-200 600 700 100" id="bach_signature-view" />
     <!-- row 4 -->
-    <view preserveAspectRatio="xMinYMid meet " viewBox="   0 800 100 100" id="violin-view" />
-    <view preserveAspectRatio="xMinYMid meet " viewBox=" 200 800 100 100" id="ukulele-view" />
-    <view preserveAspectRatio="xMinYMid meet " viewBox=" 400 800 100 100" id="keyboard-view" />
-    <view preserveAspectRatio="xMinYMid meet " viewBox=" 600 800 100 100" id="harp-view" />
-    <view preserveAspectRatio="xMinYMid meet " viewBox=" 800 800 100 100" id="xylophone-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox=   "0 800 100 100" id="violin-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox= "200 800 100 100" id="ukulele-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox= "400 800 100 100" id="keyboard-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox= "600 800 100 100" id="harp-view" />
+    <view preserveAspectRatio="xMinYMid meet " viewBox= "800 800 100 100" id="xylophone-view" />
     <view preserveAspectRatio="xMinYMid meet " viewBox="1000 800 100 100" id="flute-view" />
 
     <!-- row 0 -->
-    <use x="   0" y="  0" width="100" height="100" id="close-circle" xlink:href="#close-circle-symbol"></use>
-    <use x=" 200" y="  0" width="100" height="100" id="twitter" xlink:href="#twitter-symbol"></use>
-    <use x=" 400" y="  0" width="100" height="100" id="instagram" xlink:href="#instagram-symbol"></use>
-    <use x=" 600" y="  0" width="100" height="100" id="facebook" xlink:href="#facebook-symbol"></use>
-    <use x=" 800" y="  0" width="100" height="100" id="cthiebaud" xlink:href="#cthiebaud-symbol"></use>
-    <use x="1000" y="  0" width="100" height="100" id="github" xlink:href="#github-symbol"></use>
-    <use x="1200" y="  0" width="100" height="100" id="youtube" xlink:href="#youtube-symbol"></use>
-    <use x="1400" y="  0" width="100" height="100" id="youtube_external_link" xlink:href="#youtube_external_link-symbol"></use>
-    <use x="1600" y="  0" width="100" height="100" id="share" xlink:href="#share-symbol"></use>
-    <use x="1800" y="  0" width="100" height="100" id="puzzle" xlink:href="#puzzle-symbol"></use>
-    <use x="2000" y="  0" width="100" height="100" id="puzzle" xlink:href="#puzzle_filled-symbol"></use>
-    <use x="2200" y="  0" width="100" height="100" id="home" xlink:href="#home-symbol"></use>
+    <use x=   "0" y=  "0" width="100" height="100" id="close-circle" xlink:href="#close-circle-symbol"></use>
+    <use x= "200" y=  "0" width="100" height="100" id="twitter" xlink:href="#twitter-symbol"></use>
+    <use x= "400" y=  "0" width="100" height="100" id="instagram" xlink:href="#instagram-symbol"></use>
+    <use x= "600" y=  "0" width="100" height="100" id="facebook" xlink:href="#facebook-symbol"></use>
+    <use x= "800" y=  "0" width="100" height="100" id="cthiebaud" xlink:href="#cthiebaud-symbol"></use>
+    <use x="1000" y=  "0" width="100" height="100" id="github" xlink:href="#github-symbol"></use>
+    <use x="1200" y=  "0" width="100" height="100" id="youtube" xlink:href="#youtube-symbol"></use>
+    <use x="1400" y=  "0" width="100" height="100" id="youtube_external_link" xlink:href="#youtube_external_link-symbol"></use>
+    <use x="1600" y=  "0" width="100" height="100" id="share" xlink:href="#share-symbol"></use>
+    <use x="1800" y=  "0" width="100" height="100" id="puzzle" xlink:href="#puzzle-symbol"></use>
+    <use x="2000" y=  "0" width="100" height="100" id="puzzle" xlink:href="#puzzle_filled-symbol"></use>
+    <use x="2200" y=  "0" width="100" height="100" id="home" xlink:href="#home-symbol"></use>
     <!-- row 1 -->
-    <use x="   0" y="200" width="100" height="100" id="treble_clef" xlink:href="#treble_clef-symbol"></use>
-    <use x=" 200" y="200" width="100" height="100" id="ear" xlink:href="#ear-symbol"></use>
-    <use x=" 400" y="200" width="100" height="100" id="note" xlink:href="#note-symbol"></use>
-    <use x=" 600" y="200" width="100" height="100" id="arrow_in_left" xlink:href="#arrow_in_left-symbol"></use>
-    <use x=" 800" y="200" width="100" height="100" id="arrow_in_right" xlink:href="#arrow_in_right-symbol"></use>
+    <use x=   "0" y="200" width="100" height="100" id="treble_clef" xlink:href="#treble_clef-symbol"></use>
+    <use x= "200" y="200" width="100" height="100" id="ear" xlink:href="#ear-symbol"></use>
+    <use x= "400" y="200" width="100" height="100" id="note" xlink:href="#note-symbol"></use>
+    <use x= "600" y="200" width="100" height="100" id="arrow_in_left" xlink:href="#arrow_in_left-symbol"></use>
+    <use x= "800" y="200" width="100" height="100" id="arrow_in_right" xlink:href="#arrow_in_right-symbol"></use>
     <use x="1000" y="200" width="100" height="100" id="arrow_out_left" xlink:href="#arrow_out_left-symbol"></use>
     <!-- row 2 -->
-    <use x="   0" y="400" width="100" height="100" id="bach_siel_full_left" xlink:href="#bach_siel_full_left-symbol"></use>
-    <use x=" 200" y="400" width="100" height="100" id="bach_siel_full_right" xlink:href="#bach_siel_full_right-symbol"></use>
+    <use x=   "0" y="400" width="100" height="100" id="bach_siel_full_left" xlink:href="#bach_siel_full_left-symbol"></use>
+    <use x= "200" y="400" width="100" height="100" id="bach_siel_full_right" xlink:href="#bach_siel_full_right-symbol"></use>
     <!-- row 3 -->
-    <use x="   0" y="600" width="500" height="100" id="bach_signature" xlink:href="#bach_signature-symbol"></use>
+    <use x=   "0" y="600" width="500" height="100" id="bach_signature" xlink:href="#bach_signature-symbol"></use>
     <!-- row 4 -->
-    <use x="   0" y="800" width="100" height="100" id="violin" xlink:href="#violin-symbol"></use>
-    <use x=" 200" y="800" width="100" height="100" id="ukulele" xlink:href="#ukulele-symbol"></use>
-    <use x=" 400" y="800" width="100" height="100" id="ukulele" xlink:href="#keyboard-symbol"></use>
-    <use x=" 600" y="800" width="100" height="100" id="harp" xlink:href="#harp-symbol"></use>
-    <use x=" 800" y="800" width="100" height="100" id="xylophone" xlink:href="#xylophone-symbol"></use>
+    <use x=   "0" y="800" width="100" height="100" id="violin" xlink:href="#violin-symbol"></use>
+    <use x= "200" y="800" width="100" height="100" id="ukulele" xlink:href="#ukulele-symbol"></use>
+    <use x= "400" y="800" width="100" height="100" id="ukulele" xlink:href="#keyboard-symbol"></use>
+    <use x= "600" y="800" width="100" height="100" id="harp" xlink:href="#harp-symbol"></use>
+    <use x= "800" y="800" width="100" height="100" id="xylophone" xlink:href="#xylophone-symbol"></use>
     <use x="1000" y="800" width="100" height="100" id="flute" xlink:href="#flute-symbol"></use>
 
 </svg>
