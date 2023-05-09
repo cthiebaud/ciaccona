@@ -9,6 +9,7 @@
 
     <title>Ciaccona - Swipe</title>
 
+    <link href="/global.css?v=0.13.1" rel="stylesheet">
     <style>
         body {
             width: 100vw;
@@ -51,8 +52,8 @@
 <body id="body">
 
     <div class='both'>
-        <div id="left" class="artists"></div>
-        <div id="right" class="ciaccona no-vid"></div>
+        <div id="left" class="artists fullscreen"></div>
+        <div id="right" class="ciaccona fullscreen"></div>
     </div>
 
 
@@ -86,22 +87,23 @@
             }
             if (config.pane === 0) {
                 document.getElementById('right').style.visibility = 'hidden'
-                document.getElementById('right').style.display = 'none'
+                // document.getElementById('right').style.display = 'none'
                 document.getElementById('left').style.visibility = 'visible'
-                document.getElementById('left').style.display = 'inherit'
+                // document.getElementById('left').style.display = 'inherit'
             } else {
                 document.getElementById('right').style.visibility = 'visible'
-                document.getElementById('right').style.display = 'inherit'
+                // document.getElementById('right').style.display = 'inherit'
                 document.getElementById('left').style.visibility = 'hidden'
-                document.getElementById('left').style.display = 'none'
+                // document.getElementById('left').style.display = 'none'
             }
         }
 
-        const hammertime = new Hammer(document.getElementById('body'), {});
-        hammertime.on('swipeleft', function (ev) {
+        const hammerRight = new Hammer(document.getElementById('right'), {});
+        hammerRight.on('swipeleft', function (ev) {
             setOrTogglePane(1)
         });
-        hammertime.on('swiperight', function (ev) {
+        const hammerLeft = new Hammer(document.getElementById('left'), {});
+        hammerLeft.on('swiperight', function (ev) {
             setOrTogglePane(0)
         });
 

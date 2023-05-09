@@ -145,8 +145,9 @@ allPromises.set(
     new Promise((resolve, reject) => {
 
         readyToIsotope.then(result => {
+            console.log('about to create isotope ...')
             const theIsotope = new isotopeLayout('#grid', {
-                itemSelector: ".grid-brick",
+                itemSelector: ".ciaccona #gridContainer #gridContainerCol #grid .grid-brick",
                 sortBy: 'id',
                 getSortData: {
                     id: '[data-sort]'
@@ -210,6 +211,9 @@ Promise.allSettled([...allPromises.values()]).then((results) => {
             console.log("change isotope filter to show artist name")
             isotopeResult.arrange({ filter: '*' })
         }
+    } else {
+        console.log("some issue with isotope ?")
+        hideLoading();
     }
 
 }).catch((error) => {
