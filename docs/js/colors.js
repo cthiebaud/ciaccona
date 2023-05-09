@@ -219,7 +219,7 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
                     aria-label="variation ${i}"> 
             </object>
 
-            <span class="Δ" style="${bg}">
+            <span class="Δ" style="${bgstripe}">
                 ${tonality}
             </span>
         </div>
