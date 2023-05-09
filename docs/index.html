@@ -289,7 +289,7 @@
 
                 function setListener() {
                     // https://codepen.io/desandro/pen/WxjJJW/
-                    document.querySelectorAll('.list-artist').forEach(E => E.addEventListener('click', (e) => {
+                    document.querySelectorAll('.list-artist').forEach(E => E.addEventListener('click', (event) => {
                         console.log('currentTarget', event.currentTarget, 'target', event.target)
                         if (event.currentTarget === event.target) {
                             event.stopPropagation()
