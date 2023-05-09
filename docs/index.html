@@ -308,7 +308,7 @@
                         data = generateData(arrayOfArtists)
                         forceRedraw()
                     }))
-                    document.querySelectorAll('.list-artist .hero-intro').forEach(E => E.addEventListener('click', (e) => {
+                    document.querySelectorAll('.list-artist .hero-intro').forEach(E => E.addEventListener('click', (event) => {
                         event.stopPropagation()
                         event.preventDefault()
                         if (coerceArtist) {
