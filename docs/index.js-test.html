@@ -52,7 +52,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.12.3"
+        const ver = "v0.13.0"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -68,7 +68,7 @@
         }
     </script>
     <script type="module">
-        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.12.3'
+        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.13.0'
 
         // brick width
         function calcBrickWidth() {
@@ -90,7 +90,7 @@
     </script>
 
     <script type="module">
-        import config from "/js/config.js?v=0.12.3"
+        import config from "/js/config.js?v=0.13.0"
 
         if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and null are equal
             // r.à.z.
