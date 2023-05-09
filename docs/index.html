@@ -156,7 +156,7 @@
     <script async type="module">
         import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
         import codec from "/js/structure.js?v=0.13.1"
-        import { colorArray } from "/js/colors.js?v=0.13.1"
+        import { colorArray } from "/js/colors.js?v=0.13.1.1"
         import { loadArtists } from "/js/artists.js?v=0.13.1"
         import { shuffleArray, generateElement } from "/js/utils.js?v=0.13.1"
         import { jigsawGenerator } from '/js/jigsawShield.js?v=0.13.1'
@@ -219,8 +219,8 @@
                     bg: bg(coerceArtist || a.fullnameNoSpaceLowercaseNoDiacritics, coerceVariation || vi % codec.variationsCount),
                     jigsaw: j,
                     hideName: coerceArtist ? ' hide-name' : '',
-                    fill: colors[coerceVariation || vi % codec.variationsCount].puzzleColor,
-                    stroke: colors[coerceVariation || vi % codec.variationsCount].textColor,
+                    fill: colors[coerceVariation || vi % codec.variationsCount].puzzleColor_T,
+                    stroke: colors[coerceVariation || vi % codec.variationsCount].textColor_T,
                 }
                 data.push(datum)
                 vi++

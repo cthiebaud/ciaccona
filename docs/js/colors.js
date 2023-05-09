@@ -84,18 +84,17 @@ function getColorArray(transparencyParam) {
         // some transparency to show video behind
         s.p_rgb_original = new tinycolor(s.p_rgb)
         if (transparencyParam) {
-            s.p_rgb = tinycolor(s.p_rgb_original).setAlpha(transparencyParam).toString("hex8").slice(1)
-            s.textColor = tinycolor(s.textColor).setAlpha(transparencyParam).toString("hex8").slice(1)
-            s.puzzleColor = tinycolor(s.puzzleColor).setAlpha(transparencyParam).toString("hex8").slice(1)
-            s.stripeColor = tinycolor(s.stripeColor).setAlpha(transparencyParam).toString("hex8").slice(1)
-            s.borderColor = tinycolor(s.borderColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.p_rgb_T = tinycolor(s.p_rgb_original).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.textColor_T = tinycolor(s.textColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.puzzleColor_T = tinycolor(s.puzzleColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.stripeColor_T = tinycolor(s.stripeColor).setAlpha(transparencyParam).toString("hex8").slice(1)
+            s.borderColor_T = tinycolor(s.borderColor).setAlpha(transparencyParam).toString("hex8").slice(1)
         }
     }
     return _colors_
 }
 
-
-const colorArray = getColorArray(.67);
+const colorArray = getColorArray(.5);
 
 function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
 
@@ -180,41 +179,62 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
     let i = 0;
     let barFrom = 0
     _colors_.forEach(function (c) {
+
+        let c2
+        
+        if (fullameNoSpaceLowercaseNoDiacritics) {
+            c2 = {
+                p_rgb: c.p_rgb_T,
+                textColor: c.textColor_T,
+                puzzleColor: c.puzzleColor_T,
+                stripeColor: c.stripeColor_T,
+                borderColor: c.borderColor_T,
+            }
+        } else {
+            c2 = {
+                p_rgb: c.p_rgb,
+                textColor: c.textColor,
+                puzzleColor: c.puzzleColor,
+                stripeColor: c.stripeColor,
+                borderColor: c.borderColor_T,
+            }
+        }
+
         const tonality = codec.isMajor(i) ? "Δ" : "";
         const barsCount = codec.variation2barsCount(i)
         const warning = barsCount != 8 ? `(${barsCount})` : "";
         const barTo = barFrom + barsCount
-        const bg = `background-color: #${c.p_rgb}`
-        const bgAlpha = `background-color: #${c.p_rgbAlpha}`
+        const bg = `background-color: #${c2.p_rgb}`
+        const bgAlpha = `background-color: #${c2.p_rgbAlpha}`
         const bgstripe = !tonality ? bg : `background-image: linear-gradient(135deg, 
-                #${c.stripeColor} 25%, 
-                #${c.p_rgb} 25%, 
-                #${c.p_rgb} 50%, 
-                #${c.stripeColor} 50%, 
-                #${c.stripeColor} 75%, 
-                #${c.p_rgb} 75%, 
-                #${c.p_rgb} 100%); 
+                #${c2.stripeColor} 25%, 
+                #${c2.p_rgb} 25%, 
+                #${c2.p_rgb} 50%, 
+                #${c2.stripeColor} 50%, 
+                #${c2.stripeColor} 75%, 
+                #${c2.p_rgb} 75%, 
+                #${c2.p_rgb} 100%); 
                 background-size: 16.97px 16.97px;`
         const bgstripeAlpha = !tonality ? bgAlpha : `background-image: linear-gradient(135deg, 
-                #${c.stripeColorAlpha} 25%, 
-                #${c.p_rgbAlpha} 25%, 
-                #${c.p_rgbAlpha} 50%, 
-                #${c.stripeColorAlpha} 50%, 
-                #${c.stripeColorAlpha} 75%, 
-                #${c.p_rgbAlpha} 75%, 
-                #${c.p_rgbAlpha} 100%); 
+                #${c2.stripeColorAlpha} 25%, 
+                #${c2.p_rgbAlpha} 25%, 
+                #${c2.p_rgbAlpha} 50%, 
+                #${c2.stripeColorAlpha} 50%, 
+                #${c2.stripeColorAlpha} 75%, 
+                #${c2.p_rgbAlpha} 75%, 
+                #${c2.p_rgbAlpha} 100%); 
                 background-size: 16.97px 16.97px;`
 
         const svgOffsetX = codec.svgOffsetX(i)
 
         const templateVariations =
             `
-<div id="gb${i}" data-sort="${twoZeroPad(i)}" data-variation="${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripeAlpha}; border-color: #${c.borderColor};">
+<div id="gb${i}" data-sort="${twoZeroPad(i)}" data-variation="${i}" class="${tonality ? tonality + ' ' : ''}grid-brick hasScore" style="${bgstripeAlpha}; border-color: #${c2.borderColor};">
     <div class="brick hasScore font-monospace d-flex align-items-center justify-content-between" style="${bgstripe}; ${i === codec.variationsCount - 1 ? 'border-radius: 0;' : ''} " data-bar="${barFrom}" data-variation="${i}" >
         <div class="score init" style="width: ${(_widths_[i].w) - 120}px;" data-width="${(_widths_[i].w) - 120}">
 
             <object id="o${i}" 
-                    data="scores/bwv-1004_5_for_SVGs-${i + 1}.svg" 
+                    data="/scores/bwv-1004_5_for_SVGs-${i + 1}.svg" 
                     type="image/svg+xml"
                     style="pointer-events: none;" 
                     data-svg-offset-x = ${svgOffsetX}
@@ -227,9 +247,9 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
         </div>
         <!-- div class="flex-grow-1"></!-->
 
-        <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i === codec.variationsCount - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c.textColor}; color: #${c.textColor}">
+        <div class="d-flex flex-grow-1 flex-column justify-content-between" style="height:100%; text-align: right; ${i === codec.variationsCount - 1 ? "display:none;" : ""}font-size:1.1rem; padding: 0 .3rem; border-right: .5px solid #${c2.textColor}; color: #${c2.textColor}">
             <div class="pt-1">${barFrom + 1}</div>
-            <div style="${i === codec.variationsCount - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c.textColor};">
+            <div style="${i === codec.variationsCount - 1 ? "display:none;" : ""}font-style: italic; font-size:.8rem; color: #${c2.textColor};">
                 ${warning}
             </div>
             <div class="pb-1">${barTo}</div>
@@ -243,13 +263,13 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
                  style="visibility: inherit; overflow: visible; transform: scale(.667);" 
                  viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}"
                  data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics ? fullameNoSpaceLowercaseNoDiacritics : ''}&v=${i}">
-                <path stroke="#${c.textColor}" stroke-width="3" fill="#${c.puzzleColor}" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
+                <path stroke="#${c2.textColor}" stroke-width="3" fill="#${c2.puzzleColor}" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>
             <div id="gb-variation${i}" 
                 class="fw-bold text-center" 
                 data-a="${fullameNoSpaceLowercaseNoDiacritics}"
                 data-v="${i}"
-                style="position:absolute; bottom: 0.125rem; right:0; left: -0.667rem; color: #${c.textColor};">
+                style="position:absolute; bottom: 0.125rem; right:0; left: -0.667rem; color: #${c2.textColor};">
                 ${i === 0 || i === codec.variationsCount - 1 ? "&nbsp;" : i}
             </div>
         </div>
