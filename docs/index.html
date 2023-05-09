@@ -67,232 +67,66 @@
 
     <!-- early scripts -->
     <script>
-        const params = new Proxy(new URLSearchParams(window.location.search), {
+        const params2 = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
-        let coerceArtist = params.a ?? undefined
-        let coerceVariation = params.v ?? undefined
-        let shuffle = params.shuffle ?? undefined
+        let coerceArtist = params2.a ?? undefined
+        let coerceVariation = params2.v ?? undefined
+        let shuffle = params2.shuffle ?? undefined
         if (typeof shuffle !== 'undefined' && (shuffle === 'false' || shuffle === '0' || !shuffle)) {
             shuffle = false
         } else {
             shuffle = true
         }
+    </script>
+    <script type="module">
+        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.12.3'
 
-        // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-        function theTrickToViewportUnitsOnMobile(log) {
-            if (log) console.log('window.innerWidth', window.innerWidth, 'window.innerHeight', window.innerHeight)
+        // list item width
+        function calcItemWidth() {
+            const listE = document.querySelector('.artists #list')
+            console.log('.ARTISTS #LIST', listE)
+            if (listE) {
+                const containerWidth = listE.getBoundingClientRect().width
+                const gutter_size = containerWidth / 80;
+                const listItemsPerRow = 1 + Math.floor(containerWidth / 400)
+                const listItemsWidth = (containerWidth - (listItemsPerRow - 1) * gutter_size) / listItemsPerRow
+                const listItemsDoubleWidth = 2 * listItemsWidth + gutter_size - .2
+                const listItemPercentageWidth = 100 * listItemsWidth / containerWidth
+                const listItemDoublPercentageWidth = 100 * listItemsDoubleWidth / containerWidth
+                const listItemsHeight = listItemsWidth / 1.91;
+                const listItemsDoubleHeight = listItemsHeight * 2 + gutter_size - .2
 
-            const vh = window.innerHeight * 0.01
-            const vw = window.innerWidth * 0.01
-
-            // set the value in custom properties to the root of the document
-            document.documentElement.style.setProperty('--vh', `${vh}px`)
-            document.documentElement.style.setProperty('--vw', `${vw}px`)
-        }
-
-        theTrickToViewportUnitsOnMobile(true)
-
-        // brick width
-        function calcBrickWidth() {
-            const containerWidth = document.getElementById('grid').getBoundingClientRect().width
-            const gutter_size = containerWidth / 80;
-            const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
-            const gridBricksWidth = (containerWidth - (gridBricksPerRow - 1) * gutter_size) / gridBricksPerRow
-            const gridBricksDoubleWidth = 2 * gridBricksWidth + gutter_size - .2
-            const gridBrickPercentageWidth = 100 * gridBricksWidth / containerWidth
-            const gridBrickDoublPercentageWidth = 100 * gridBricksDoubleWidth / containerWidth
-            const gridBricksHeight = gridBricksWidth / 1.91;
-            const gridBricksDoubleHeight = gridBricksHeight * 2 + gutter_size - .2
-
-            document.documentElement.style.setProperty('--bpr', `${gridBricksPerRow}`)
-            document.documentElement.style.setProperty('--bpc', `${Math.ceil(36 / gridBricksPerRow)}`)
-            document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
-            document.documentElement.style.setProperty('--gbh', `${gridBricksHeight}px`)
-            document.documentElement.style.setProperty('--2gbw', `${gridBrickDoublPercentageWidth}%`)
-            document.documentElement.style.setProperty('--2gbh', `${gridBricksDoubleHeight}px`)
+                document.documentElement.style.setProperty('--lipr', `${listItemsPerRow}`)
+                document.documentElement.style.setProperty('--lipc', `${Math.ceil(36 / listItemsPerRow)}`)
+                document.documentElement.style.setProperty('--liw', `${listItemPercentageWidth}%`)
+                document.documentElement.style.setProperty('--lih', `${listItemsHeight}px`)
+                document.documentElement.style.setProperty('--2liw', `${listItemDoublPercentageWidth}%`)
+                document.documentElement.style.setProperty('--2lih', `${listItemsDoubleHeight}px`)
+            }
         }
 
         window.addEventListener("DOMContentLoaded", (event) => {
-            calcBrickWidth()
+            calcItemWidth()
         }, { once: true });
 
-        window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with Packery own debounce
-            theTrickToViewportUnitsOnMobile()
-            calcBrickWidth()
-        }/* , 750) */)
+        theTrickToViewportUnitsOnMobile(true, () => calcItemWidth())
     </script>
-
-    <style>
-        a {
-            text-decoration: none;
-        }
-
-        .magnificent-card {
-            font-family: "Cinzel", serif;
-            font-size: 24px;
-            outline: 1px solid gray;
-            outline-offset: -2px;
-            background-clip: content-box;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 1rem;
-            color: #121212;
-            backdrop-filter: blur(1px);
-            display: flex;
-        }
-
-        #gridContainerCol #grid .grid-brick {
-            position: relative;
-            width: var(--gbw, 400px);
-            height: var(--gbh, 200px);
-            padding: 0;
-            margin: 0;
-            overflow: visible;
-        }
-
-        #gridContainerCol #grid .grid-brick .grid-artist {
-            align-items: flex-end;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            transition: background-image 0.5s linear;
-            border-style: solid;
-            border-width: .333px;
-            display: flex;
-            justify-content: space-between;
-            visibility: inherit;
-            border-radius: 0 6rem 6rem 0;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            overflow: visible;
-            cursor: pointer;
-        }
-
-        #gridContainerCol #grid .grid-artist#gb-ciaccona {
-            background-color: transparent;
-            border: none;
-            overflow: hidden;
-        }
-
-        .large .grabber {
-            display: none;
-        }
-
-        .grabber {
-            cursor: grab;
-            font-size: 12pt;
-            font-family: var(--bs-font-monospace) !important;
-            background-image: url(/svg/cursor-hand-grab-svgrepo-com.svg);
-            background-repeat: no-repeat;
-            width: 3rem;
-            height: 3rem;
-            color: #d3d3d3;
-            font-size: 12px;
-            line-height: 4rem;
-            padding-left: .3rem;
-        }
-
-        .note {
-            cursor: pointer;
-            font-family: var(--bs-font-monospace) !important;
-            background-image: url(/svg/music-note-svgrepo-com2.svg);
-            background-repeat: no-repeat;
-            background-size: contain;
-            width: 2.5rem;
-            height: 2.5rem;
-            color: #d3d3d3;
-            padding-right: .3rem;
-        }
-
-        a.puzzle {
-            /*
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-            */
-            cursor: pointer;
-            width: 3rem;
-            height: 3rem;
-            position: relative;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            margin-top: auto;
-            margin-bottom: auto;
-            fill: none;
-            stroke: aliceblue;
-            stroke-width: 4px;
-        }
-
-        .large {
-            width: var(--2gbw, 800px) !important;
-            height: var(--2gbh, 400px) !important;
-            border-radius: 0 12rem 12rem 0 !important;
-        }
-
-        .gutter-sizer {
-            width: 1.25%;
-        }
-
-        /* https://youtu.be/TAA89nkEuhw */
-        .hero {
-            color: #C8B273;
-            display: flex;
-            isolation: isolate;
-            filter: grayscale(.1667)
-        }
-
-        .hero div.hide-name:first-child {
-            color: #57728b;
-            mix-blend-mode: multiply;
-        }
-
-        .hero-intro {
-            position: relative;
-            padding: 0px 0.333rem;
-        }
-
-        .hero-intro.vert {
-            writing-mode: vertical-lr;
-            text-orientation: upright;
-            line-height: 10.672px;
-            width: 1.667rem;
-            height: 100%;
-        }
-
-        .hero-intro.vert::after {
-            border-radius: 0;
-        }
-
-        .hero-intro::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: #57728b;
-            mix-blend-mode: multiply;
-            border-radius: 0 0 1rem 0;
-        }
-
-        .force-redraw::before {
-            content: ""
-        }
-    </style>
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
+    <link href="/index.css?v=0.12.3" rel="stylesheet">
+
 </head>
 
-<body id="body" class="artists no-vid d-flex flex-column" style="background-color: #4e493e !important;"> <!-- #787160 -->
-    <main id="gridContainer" class="container-xxl flex-shrink-0">
-        <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
-            <div id="gridContainerCol" class="col">
-                <div id="grid" style="color:white; margin: .5rem 0;">
+<body class="artists no-vid d-flex flex-column" > <!-- #787160 -->
+    <main id="listContainer" class="container-xxl flex-shrink-0">
+        <div id="listContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
+            <div id="listContainerCol" class="col">
+                <div id="list" style="color:white; margin: .5rem 0;">
                     <div class="gutter-sizer"></div>
                 </div>
             </div>
@@ -320,8 +154,8 @@
         const bg = (a, v) => `url('/artists/${a}/${a}-${v}.webp')`
 
         const template = (data) => `
-<div id="gb-artist${data.v}" 
-     class="grid-artist hero"  
+<div id="li-artist${data.v}" 
+     class="list-artist hero"  
      data-index="${data.index}" 
      data-a="${data.a}" 
      data-v="${data.v}" 
@@ -387,13 +221,13 @@
 
         loadArtists().then((artists) => {
 
-            const grid = document.getElementById('grid')
+            const list = document.getElementById('list')
 
-            grid.querySelectorAll('.grid-artist').forEach(E => E.remove())
+            list.querySelectorAll('.list-artist').forEach(E => E.remove())
 
-            grid.innerHTML += `
-            <div id="gb-ciaccona" 
-                class="grid-brick d-flex align-items-center justify-content-center" 
+            list.innerHTML += `
+            <div id="li-ciaccona" 
+                class="list-item d-flex align-items-center justify-content-center" 
                 <div>
                     <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
                         &nbsp;
@@ -411,11 +245,11 @@
             arrayOfArtists = shuffle ? shuffleArray(artists.artists) : artists.artists
             data = generateData(arrayOfArtists)
             data.forEach(d => {
-                grid.innerHTML += `<div class="grid-brick">${template(d)}</div>`
+                list.innerHTML += `<div class="list-item">${template(d)}</div>`
             })
 
-            const thePackery = new packeryLayout('#grid', {
-                itemSelector: ".grid-brick",
+            const thePackery = new packeryLayout('#list', {
+                itemSelector: ".list-item",
                 percentPosition: true,
                 initLayout: false,
                 gutter: '.gutter-sizer',
@@ -424,13 +258,15 @@
 
             thePackery.on('layoutComplete', function () {
                 console.log("Packery layout complete");
+                const event = new Event("artistsLoaded");
+                window.dispatchEvent(event);
             })
 
             thePackery.layout()
             setListener()
 
             function forceRedraw() {
-                document.querySelectorAll('.grid-brick:not(#gb-ciaccona)').forEach(E => {
+                document.querySelectorAll('.list-item:not(#li-ciaccona)').forEach(E => {
                     const i = E.children[0].dataset.index
                     const newChild = generateElement(template(data[i]))
                     E.replaceChild(newChild, E.children[0])
@@ -440,7 +276,7 @@
 
             function setListener() {
                 // https://codepen.io/desandro/pen/WxjJJW/
-                document.querySelectorAll('.grid-artist').forEach(E => E.addEventListener('click', (e) => {
+                document.querySelectorAll('.list-artist').forEach(E => E.addEventListener('click', (e) => {
                     console.log('currentTarget', event.currentTarget, 'target', event.target)
                     if (event.currentTarget === event.target) {
                         event.stopPropagation()
@@ -448,7 +284,7 @@
                         window.location = `/ciaccona.html?a=${event.target.dataset.a}&v=${event.target.dataset.v}`
                     }
                 }))
-                document.querySelectorAll('.grid-artist .puzzle').forEach(E => E.addEventListener('click', (event) => {
+                document.querySelectorAll('.list-artist .puzzle').forEach(E => E.addEventListener('click', (event) => {
                     event.stopPropagation()
                     event.preventDefault()
                     if (coerceVariation) {
@@ -459,7 +295,7 @@
                     data = generateData(arrayOfArtists)
                     forceRedraw()
                 }))
-                document.querySelectorAll('.grid-artist .hero-intro').forEach(E => E.addEventListener('click', (e) => {
+                document.querySelectorAll('.list-artist .hero-intro').forEach(E => E.addEventListener('click', (e) => {
                     event.stopPropagation()
                     event.preventDefault()
                     if (coerceArtist) {
@@ -494,29 +330,29 @@
                 });
             }
             orderItems()
-            $grid.on('dragItemPositioned', function () {
+            $list.on('dragItemPositioned', function () {
                 orderItems(true)
             });
 
-            $grid.on('fitComplete', function (item) {
+            $list.on('fitComplete', function (item) {
                 orderItems()
-                $grid.packery('shiftLayout');
+                $list.packery('shiftLayout');
             })
-            $grid.on('click', '.grid-artist .puzzle', function (event) {
+            $list.on('click', '.list-artist .puzzle', function (event) {
                 event.stopPropagation()
                 event.preventDefault()
                 const target = event.currentTarget.parentNode;
                 window.location = `/puzzle/?a=${target.dataset.a}&v=${target.dataset.v}`
             })
             function removeLarges() {
-                const $wereLarges = $('.grid-artist.large');
+                const $wereLarges = $('.list-artist.large');
                 $wereLarges.each((index, wasLarge) => {
                     wasLarge.classList.remove('large')
-                    let item = $grid.packery('getItem', wasLarge)
+                    let item = $list.packery('getItem', wasLarge)
                     if (item && item.previousPosition) {
                         // fit back in previous position
                         console.log('about to fit')
-                        $grid.packery('fit', wasLarge, item.previousPosition.x, item.previousPosition.y);
+                        $list.packery('fit', wasLarge, item.previousPosition.x, item.previousPosition.y);
                         // remove previous position
                         delete item.previousPosition;
                     }
@@ -527,10 +363,10 @@
                 event.preventDefault()
                 removeLarges()
             })
-            $grid.on('click', '.grid-artist .grabber', function (event) {
+            $list.on('click', '.list-artist .grabber', function (event) {
                 event.stopPropagation()
             })
-            $grid.on('click', '.grid-artist', function (event) {
+            $list.on('click', '.list-artist', function (event) {
                 event.stopPropagation()
                 event.preventDefault()
                 var target = event.currentTarget;
@@ -538,14 +374,14 @@
                 removeLarges()
                 if (!targetWasLarge) {
                     target.classList.add('large');
-                    var item = $grid.packery('getItem', target)
+                    var item = $list.packery('getItem', target)
                     // save previous position
                     item.previousPosition = {
                         x: item.position.x,
                         y: item.position.y
                     };
                     console.log('about to fit')
-                    $grid.packery('fit', target);
+                    $list.packery('fit', target);
                 }
             });
             */

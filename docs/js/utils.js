@@ -131,7 +131,7 @@ function logFunc(f, xMin, xMax, yTicks) {
     }
 }
 
-function theTrickToViewportUnitsOnMobile(log, otherFunction) {
+function theTrickToViewportUnitsOnMobile(log, onResizeCallback) {
     // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
     function theTrickToViewportUnitsOnMobile(log) {
         if (log) console.log('window.innerWidth', window.innerWidth, 'window.innerHeight', window.innerHeight)
@@ -148,7 +148,7 @@ function theTrickToViewportUnitsOnMobile(log, otherFunction) {
 
     window.addEventListener('resize', /*lodash.debounce(*/() => { // debounce conflicts with isotope own debounce
         theTrickToViewportUnitsOnMobile()
-        if (otherFunction) otherFunction()
+        if (onResizeCallback) onResizeCallback()
     }/* , 750) */)
 
 }

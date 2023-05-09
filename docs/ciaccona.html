@@ -19,7 +19,7 @@
     <meta name="author" content="Christophe Thiebaud">
 
     <!-- HTML Meta Tags -->
-    <title>Ciaccona</title>
+    <title>Ciaccona - </title>
     <meta name="description" content="32 + 1 performances of Johann Sebastian Bach's Ciaccona from Partita in D minor for solo violin BWV1004">
 
     <!-- try to convince browser to reload as much as possible -->
@@ -151,7 +151,8 @@
 
         // brick width
         function calcBrickWidth() {
-            const gridE = document.getElementById('grid')
+            const gridE = document.querySelector('.ciaccona #grid')
+            console.log('.CIACCONA #GRID', gridE)
             if (gridE) {
                 const containerWidth = gridE.getBoundingClientRect().width
                 const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
@@ -166,7 +167,7 @@
             calcBrickWidth()
         }, { once: true });
 
-        theTrickToViewportUnitsOnMobile(true, calcBrickWidth)
+        theTrickToViewportUnitsOnMobile(true, () => calcBrickWidth())
     </script>
 
     <script type="module">
@@ -187,11 +188,12 @@
         onload="this.onload=null; this.rel='stylesheet'; document.body.classList.add('fontLoaded')">
 
     <!-- my styles -->
-    <link href="/index.css?v=0.12.3" rel="stylesheet">
+    <link href="/global.css?v=0.12.3" rel="stylesheet">
+    <link href="/ciaccona.css?v=0.12.3" rel="stylesheet">
     <link href="/index.svg.css?v=0.12.3" rel="stylesheet">
 </head>
 
-<body id="body" class="d-flex flex-column">
+<body class="ciaccona d-flex flex-column">
     <script>
         if (fullameNoSpaceLowercaseNoDiacritics == null) {
             [...document.getElementsByTagName('body')].forEach(e => e.classList.add('no-vid'))

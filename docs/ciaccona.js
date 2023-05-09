@@ -36,7 +36,7 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-createColoredBadges(fullameNoSpaceLowercaseNoDiacritics);
+createColoredBadges('grid', fullameNoSpaceLowercaseNoDiacritics);
 Ω.showScoreDisplay()
 Ω.showScoreInBricks()
 
@@ -71,6 +71,8 @@ const hideLoading = (hasPlayer) => {
         document.getElementById('videos-menu').style.display = 'flex'
         loadingE.style.display = 'none'
         console.log('loading dismissed')
+        const event = new Event("ciacconaLoaded");
+        window.dispatchEvent(event);
     }
 }
 

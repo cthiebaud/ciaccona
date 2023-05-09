@@ -94,7 +94,7 @@ function getColorArray(transparencyParam) {
     return _colors_
 }
 
-function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
+function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
 
     const jigsawGenerator = new JigsawShield()
     const thisURL = new URL(window.location)
@@ -291,7 +291,7 @@ function createColoredBadges(fullameNoSpaceLowercaseNoDiacritics) {
 
     const bricks = temporaryContainer.children
     if (bricks?.length) {
-        let gridE = document.getElementById("grid")
+        let gridE = document.getElementById(idContainer)
         if (gridE) {
             ;[...gridE.children].forEach(gb => gb.remove())
                 ;[...bricks].forEach(gb => gridE.appendChild(gb))
