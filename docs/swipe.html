@@ -46,58 +46,6 @@
     <link rel="stylesheet" href="/lib/plyr-3.7.8.css">
     <!-- bootstrap -->
     <link rel="stylesheet" href="/lib/bootstrap-5.2.3.min.css">
-
-    <!-- early scripts 
-    <script type="module">
-        import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.13.0'
-
-        // list item width
-        function calcItemWidth() {
-            const listE = document.querySelector('.artists #list')
-            console.log('.ARTISTS #LIST', listE)
-            if (listE) {
-                const containerWidth = listE.getBoundingClientRect().width
-                const gutter_size = containerWidth / 80;
-                const listItemsPerRow = 1 + Math.floor(containerWidth / 400)
-                const listItemsWidth = (containerWidth - (listItemsPerRow - 1) * gutter_size) / listItemsPerRow
-                const listItemsDoubleWidth = 2 * listItemsWidth + gutter_size - .2
-                const listItemPercentageWidth = 100 * listItemsWidth / containerWidth
-                const listItemDoublPercentageWidth = 100 * listItemsDoubleWidth / containerWidth
-                const listItemsHeight = listItemsWidth / 1.91;
-                const listItemsDoubleHeight = listItemsHeight * 2 + gutter_size - .2
-
-                document.documentElement.style.setProperty('--lipr', `${listItemsPerRow}`)
-                document.documentElement.style.setProperty('--lipc', `${Math.ceil(36 / listItemsPerRow)}`)
-                document.documentElement.style.setProperty('--liw', `${listItemPercentageWidth}%`)
-                document.documentElement.style.setProperty('--lih', `${listItemsHeight}px`)
-                document.documentElement.style.setProperty('--2liw', `${listItemDoublPercentageWidth}%`)
-                document.documentElement.style.setProperty('--2lih', `${listItemsDoubleHeight}px`)
-            }
-        }
-
-        // brick width
-        function calcBrickWidth() {
-            const gridE = document.querySelector('.ciaccona #grid')
-            console.log('.CIACCONA #GRID', gridE)
-            if (gridE) {
-                const containerWidth = gridE.getBoundingClientRect().width
-                const gridBricksPerRow = 1 + Math.floor(containerWidth / 400)
-                const gridBrickPercentageWidth = 100 / gridBricksPerRow
-                document.documentElement.style.setProperty('--bpr', `${gridBricksPerRow}`)
-                document.documentElement.style.setProperty('--bpc', `${Math.ceil(36 / gridBricksPerRow)}`)
-                document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
-            }
-        }
-
-        window.addEventListener("DOMContentLoaded", (event) => {
-            calcItemWidth()
-            calcBrickWidth()
-        }, { once: true });
-
-        theTrickToViewportUnitsOnMobile(true, () => { calcItemWidth(); calcBrickWidth() })
-
-    </script>
-    -->
 </head>
 
 <body id="body">
@@ -118,24 +66,22 @@
         import hammerjs from "https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/+esm"
         var hammertime = new Hammer(document.getElementById('body'), {});
         hammertime.on('swipeleft', function (ev) {
-            const rightBR = document.getElementById('right').getBoundingClientRect()
-            console.log(rightBR)
-            document.getElementById('body').style.transform = `translate(-${rightBR.x}px, -${rightBR.y}px)`
+            document.getElementById('right').style.visibility = 'visible'
+            // document.getElementById('right').style.display = 'inherit'
+            document.getElementById('left').style.visibility = 'hidden'
+            // document.getElementById('left').style.display = 'none'
         });
         hammertime.on('swiperight', function (ev) {
-            const leftBR = document.getElementById('left').getBoundingClientRect()
-            console.log(leftBR)
-            document.getElementById('body').style.transform = `translate(-${leftBR.x}px, -${leftBR.y}px)`
+            document.getElementById('right').style.visibility = 'hidden'
+            // document.getElementById('right').style.display = 'none'
+            document.getElementById('left').style.visibility = 'visible'
+            // document.getElementById('left').style.display = 'inherit'
         });
-        const leftBR = document.getElementById('left').getBoundingClientRect()
-        console.log(leftBR)
-        const rightBR = document.getElementById('right').getBoundingClientRect()
-        console.log(rightBR)
-
 
         window.addEventListener("ciacconaLoaded", (event) => {
             console.log("ciaccona.html fully loaded and parsed");
-            window.dispatchEvent(new Event('resize'));
+            console.log('shout calcBrickWidth event ...')
+            window.dispatchEvent(new Event('calcBrickWidth'));
             document.querySelectorAll('#gb-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
@@ -148,7 +94,8 @@
         });
         window.addEventListener("artistsLoaded", (event) => {
             console.log("index.html fully loaded and parsed");
-            window.dispatchEvent(new Event('resize'));
+            console.log('shout calcItemWidth event ...')
+            window.dispatchEvent(new Event('calcItemWidth'));
             document.querySelectorAll('#li-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
@@ -159,26 +106,49 @@
                 })
             })
         });
-        fetch('index.html').then(function (response) {
-            return response.text()
-        }).then(function (html) {
-            loadData(html, '#left').then(function (html) {
-                fetch('ciaccona.html').then(function (response) {
-                    return response.text()
-                }).then(function (html) {
-                    loadData(html, '#right').then(function (html) {
-                        console.log('waiting for index.html and ciacconna.html to be fully loaded')
-                        document.getElementById('left').style.visibility = 'visible'
-                        document.getElementById('right').style.visibility = 'hidden'
-                    });
-                }).catch(function (err) {
-                    console.log('Failed to fetch page ciaccona.html: ', err);
-                });
-            });
 
-        }).catch(function (err) {
-            console.log('Failed to fetch page index.html: ', err);
-        });
+        const indexLoaded = new Promise((resolve, reject) => {
+            fetch('index.html').then(function (response) {
+                return response.text()
+            }).then(function (html) {
+                loadData(html, '#left').then(function (html) {
+                    resolve(true)
+                });
+            }).catch(function (err) {
+                console.log('Failed to fetch page index.html: ', err);
+                reject(err)
+            });
+        })
+
+        const ciacconaLoaded = new Promise((resolve, reject) => {
+            fetch('ciaccona.html').then(function (response) {
+                return response.text()
+            }).then(function (html) {
+                loadData(html, '#right').then(function (html) {
+                    resolve(true)
+                });
+            }).catch(function (err) {
+                console.log('Failed to fetch page ciaccona.html: ', err);
+                reject(err)
+            });
+        })
+
+        console.log('waiting for index.html and ciacconna.html to be fully loaded')
+        Promise.allSettled([indexLoaded, ciacconaLoaded]).then((results) => {
+            console.log('index.html and ciacconna.html fully loaded !')
+            if (true) {
+                document.getElementById('right').style.visibility = 'hidden'
+                // document.getElementById('right').style.display = 'none'
+                document.getElementById('left').style.visibility = 'visible'
+                // document.getElementById('left').style.display = 'inherit'
+            } else {
+                document.getElementById('right').style.visibility = 'visible'
+                // document.getElementById('right').style.display = 'inherit'
+                document.getElementById('left').style.visibility = 'hidden'
+                // document.getElementById('left').style.display = 'none'
+            }
+        })
+
     </script>
 </body>
 

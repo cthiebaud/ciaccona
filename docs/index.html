@@ -78,6 +78,14 @@
         } else {
             shuffle = true
         }
+
+        // transform packery event into promise
+        const readyToPack = new Promise((resolve) => {
+            window.addEventListener('readyToPack', (event) => {
+                console.log("... heard readyToPack event");
+                resolve(event)
+            }, { once: true })
+        })        
     </script>
     <script type="module">
         import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.13.0'
@@ -88,7 +96,8 @@
             console.log('.ARTISTS #LIST', listE)
             if (listE) {
                 const containerWidth = listE.getBoundingClientRect().width
-                const gutter_size = containerWidth / 80;
+                const gutter_sizer = 0.0125;
+                const gutter_size = containerWidth * gutter_sizer
                 const listItemsPerRow = 1 + Math.floor(containerWidth / 400)
                 const listItemsWidth = (containerWidth - (listItemsPerRow - 1) * gutter_size) / listItemsPerRow
                 const listItemsDoubleWidth = 2 * listItemsWidth + gutter_size - .2
@@ -97,6 +106,7 @@
                 const listItemsHeight = listItemsWidth / 1.91;
                 const listItemsDoubleHeight = listItemsHeight * 2 + gutter_size - .2
 
+                document.documentElement.style.setProperty('--gs', `${gutter_sizer * 100}%`)
                 document.documentElement.style.setProperty('--lipr', `${listItemsPerRow}`)
                 document.documentElement.style.setProperty('--lipc', `${Math.ceil(36 / listItemsPerRow)}`)
                 document.documentElement.style.setProperty('--liw', `${listItemPercentageWidth}%`)
@@ -104,7 +114,14 @@
                 document.documentElement.style.setProperty('--2liw', `${listItemDoublPercentageWidth}%`)
                 document.documentElement.style.setProperty('--2lih', `${listItemsDoubleHeight}px`)
             }
+            console.log('shout readyToPack event...')
+            window.dispatchEvent(new Event('readyToPack'));
         }
+
+        window.addEventListener("calcItemWidth", (event) => {
+            console.log('...heard calcItemWidth event')
+            calcItemWidth()
+        });
 
         window.addEventListener("DOMContentLoaded", (event) => {
             calcItemWidth()
@@ -118,12 +135,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/packery@2.1.2/sandbox/css/basics.min.css">
+
     <link href="/global.css?v=0.13.0" rel="stylesheet">
     <link href="/index.css?v=0.13.0" rel="stylesheet">
 
 </head>
 
-<body class="artists no-vid d-flex flex-column" > <!-- #787160 -->
+<body class="artists no-vid d-flex flex-column"> <!-- #787160 -->
     <main id="listContainer" class="container-xxl flex-shrink-0">
         <div id="listContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="listContainerCol" class="col">
@@ -134,23 +153,13 @@
         </div>
     </main>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/packery@2.1.2/sandbox/css/basics.min.css">
-    <!-- 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></!>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/dist/draggabilly.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/packery@2.1.2/dist/packery.pkgd.min.js"></script>
-    /* import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.6.4/+esm' */
-    // import Draggabilly from 'https://cdn.jsdelivr.net/npm/draggabilly@3.0.0/+esm'
-    -->
-
     <script async type="module">
         import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
         import codec from "/js/structure.js?v=0.13.0"
-        import { getColorArray } from "/js/colors.js?v=0.13.0"
+        import { colorArray } from "/js/colors.js?v=0.13.0"
         import { loadArtists } from "/js/artists.js?v=0.13.0"
         import { shuffleArray, generateElement } from "/js/utils.js?v=0.13.0"
-        import JigsawShield from '/js/jigsawShield.js?v=0.13.0'
+        import { jigsawGenerator } from '/js/jigsawShield.js?v=0.13.0'
 
         const bg = (a, v) => `url('/artists/${a}/${a}-${v}.webp')`
 
@@ -187,8 +196,7 @@
 
         let data = []
         let arrayOfArtists = []
-        const jigsawGenerator = new JigsawShield()
-        const colors = getColorArray(.67);
+        const colors = colorArray;
 
         function generateData() {
             data = []
@@ -249,65 +257,70 @@
                 list.innerHTML += `<div class="list-item">${template(d)}</div>`
             })
 
-            const thePackery = new packeryLayout('#list', {
-                itemSelector: ".list-item",
-                percentPosition: true,
-                initLayout: false,
-                gutter: '.gutter-sizer',
-                resize: true
-            })
+            const event = new Event("artistsLoaded");
+            window.dispatchEvent(event);
 
-            thePackery.on('layoutComplete', function () {
-                console.log("Packery layout complete");
-                const event = new Event("artistsLoaded");
-                window.dispatchEvent(event);
-            })
-
-            thePackery.layout()
-            setListener()
-
-            function forceRedraw() {
-                document.querySelectorAll('.list-item:not(#li-ciaccona)').forEach(E => {
-                    const i = E.children[0].dataset.index
-                    const newChild = generateElement(template(data[i]))
-                    E.replaceChild(newChild, E.children[0])
+            readyToPack.then((result) => {
+                console.log("let's pack")
+                const thePackery = new packeryLayout('#list', {
+                    itemSelector: ".list-item",
+                    percentPosition: false,
+                    initLayout: false,
+                    gutter: '.gutter-sizer',
+                    resize: true
                 })
-                setListener()
-            }
 
-            function setListener() {
-                // https://codepen.io/desandro/pen/WxjJJW/
-                document.querySelectorAll('.list-artist').forEach(E => E.addEventListener('click', (e) => {
-                    console.log('currentTarget', event.currentTarget, 'target', event.target)
-                    if (event.currentTarget === event.target) {
+                thePackery.on('layoutComplete', function () {
+                    console.log("Packery layout complete");
+                })
+
+                thePackery.layout()
+
+                setListener()
+
+                function forceRedraw() {
+                    document.querySelectorAll('.list-item:not(#li-ciaccona)').forEach(E => {
+                        const i = E.children[0].dataset.index
+                        const newChild = generateElement(template(data[i]))
+                        E.replaceChild(newChild, E.children[0])
+                    })
+                    setListener()
+                }
+
+                function setListener() {
+                    // https://codepen.io/desandro/pen/WxjJJW/
+                    document.querySelectorAll('.list-artist').forEach(E => E.addEventListener('click', (e) => {
+                        console.log('currentTarget', event.currentTarget, 'target', event.target)
+                        if (event.currentTarget === event.target) {
+                            event.stopPropagation()
+                            event.preventDefault()
+                            window.location = `/ciaccona.html?a=${event.target.dataset.a}&v=${event.target.dataset.v}`
+                        }
+                    }))
+                    document.querySelectorAll('.list-artist .puzzle').forEach(E => E.addEventListener('click', (event) => {
                         event.stopPropagation()
                         event.preventDefault()
-                        window.location = `/ciaccona.html?a=${event.target.dataset.a}&v=${event.target.dataset.v}`
-                    }
-                }))
-                document.querySelectorAll('.list-artist .puzzle').forEach(E => E.addEventListener('click', (event) => {
-                    event.stopPropagation()
-                    event.preventDefault()
-                    if (coerceVariation) {
-                        coerceVariation = undefined
-                    } else {
-                        coerceVariation = event.currentTarget.parentNode.dataset.v
-                    }
-                    data = generateData(arrayOfArtists)
-                    forceRedraw()
-                }))
-                document.querySelectorAll('.list-artist .hero-intro').forEach(E => E.addEventListener('click', (e) => {
-                    event.stopPropagation()
-                    event.preventDefault()
-                    if (coerceArtist) {
-                        coerceArtist = undefined
-                    } else {
-                        coerceArtist = event.currentTarget.parentNode.parentNode.dataset.a
-                    }
-                    data = generateData(arrayOfArtists)
-                    forceRedraw()
-                }))
-            }
+                        if (coerceVariation) {
+                            coerceVariation = undefined
+                        } else {
+                            coerceVariation = event.currentTarget.parentNode.dataset.v
+                        }
+                        data = generateData(arrayOfArtists)
+                        forceRedraw()
+                    }))
+                    document.querySelectorAll('.list-artist .hero-intro').forEach(E => E.addEventListener('click', (e) => {
+                        event.stopPropagation()
+                        event.preventDefault()
+                        if (coerceArtist) {
+                            coerceArtist = undefined
+                        } else {
+                            coerceArtist = event.currentTarget.parentNode.parentNode.dataset.a
+                        }
+                        data = generateData(arrayOfArtists)
+                        forceRedraw()
+                    }))
+                }
+            })
 
             /*
             function orderItems(reorder) {

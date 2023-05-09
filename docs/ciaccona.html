@@ -136,6 +136,15 @@
         } else if (fullameNoSpaceLowercaseNoDiacritics === 'christophethiebaud') {
             fullameNoSpaceLowercaseNoDiacritics = 'moi'
         }
+
+        // transform packery event into promise
+        const readyToIsotope = new Promise((resolve) => {
+            window.addEventListener('readyToIsotope', (event) => {
+                console.log("... heard readyToIsotope event");
+                resolve(event)
+            }, { once: true })
+        })        
+
     </script>
     <script type="module">
         import codec from "/js/structure.js?v=0.13.0"
@@ -161,7 +170,14 @@
                 document.documentElement.style.setProperty('--bpc', `${Math.ceil(36 / gridBricksPerRow)}`)
                 document.documentElement.style.setProperty('--gbw', `${gridBrickPercentageWidth}%`)
             }
+            console.log('shout readyToIsotope event...')
+            window.dispatchEvent(new Event('readyToIsotope'));
         }
+
+        window.addEventListener("calcBrickWidth", (event) => {
+            console.log('...heard calcBrickWidth event')
+            calcBrickWidth()
+        });
 
         window.addEventListener("DOMContentLoaded", (event) => {
             calcBrickWidth()
@@ -532,9 +548,6 @@
             </div>
         </div>
     </main>
-
-    
-    <script></script>
 
     <script src="/lib/bootstrap.bundle-5.2.3.min.js"></script>
     <script async type="module" src="/ciaccona.js?v=0.13.0"></script>

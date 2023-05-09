@@ -2,7 +2,7 @@ import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import clipboard from 'https://cdn.jsdelivr.net/npm/clipboard@2.0.11/+esm'
 import codec from "/js/structure.js?v=0.13.0"
-import JigsawShield from '/js/jigsawShield.js?v=0.13.0'
+import { jigsawGenerator } from '/js/jigsawShield.js?v=0.13.0'
 import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.13.0"
 
 function getColorArray(transparencyParam) {
@@ -94,9 +94,11 @@ function getColorArray(transparencyParam) {
     return _colors_
 }
 
+
+const colorArray = getColorArray(.67);
+
 function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
 
-    const jigsawGenerator = new JigsawShield()
     const thisURL = new URL(window.location)
 
     const _widths_ = [
@@ -139,7 +141,7 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
         { w: 0 }  // 35 ?
     ]
 
-    const _colors_ = getColorArray(fullameNoSpaceLowercaseNoDiacritics ? .400 : undefined)
+    const _colors_ = colorArray // getColorArray(fullameNoSpaceLowercaseNoDiacritics ? .400 : undefined)
 
     const temporaryContainer = generateElement("<template>");
     const templateForTheme =
@@ -301,4 +303,4 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
     return {}
 }
 
-export { getColorArray, createColoredBadges }
+export { colorArray, getColorArray, createColoredBadges }

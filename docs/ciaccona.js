@@ -71,10 +71,12 @@ const hideLoading = (hasPlayer) => {
         document.getElementById('videos-menu').style.display = 'flex'
         loadingE.style.display = 'none'
         console.log('loading dismissed')
-        const event = new Event("ciacconaLoaded");
-        window.dispatchEvent(event);
     }
 }
+
+
+const event = new Event("ciacconaLoaded");
+window.dispatchEvent(event);
 
 // everything
 const allPromises = new Map()
@@ -138,9 +140,8 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
 allPromises.set(
     ISOTOPE,
     new Promise((resolve, reject) => {
-        if (!document.querySelector('#grid')) {
-            reject('no grid')
-        } else {
+
+        readyToIsotope.then(result => {
             const theIsotope = new isotopeLayout('#grid', {
                 itemSelector: ".grid-brick",
                 sortBy: 'id',
@@ -150,14 +151,14 @@ allPromises.set(
                 percentPosition: true,
             })
             theIsotope.on('layoutComplete', function () {
-                console.log("isotope layout complete");
+                console.log("Isotope layout complete");
             })
 
             // big buffer of everything that needs to be done AFTER bricks are ready
             Ω.afterIsotope(theIsotope)
 
             resolve({ key: ISOTOPE, value: theIsotope })
-        }
+        })
     })
 )
 

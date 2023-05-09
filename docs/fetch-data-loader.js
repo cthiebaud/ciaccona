@@ -32,7 +32,7 @@ var _htmlToElements = function (html) {
  * @param {string} container
  * @return {boolean} true on success after recursion
  */
-var _loadContent = function (data, index, container, appendData) {
+var _loadContent = function (data, index, container, subset, appendData) {
     if (index === 0 && !appendData) {
         document.querySelector(container).innerHTML = '';
     }
@@ -61,7 +61,8 @@ var _loadContent = function (data, index, container, appendData) {
                 _loadContent(data, index + 1, container);
             }
         } else {
-            if (element !== undefined) {
+            if (element !== undefined || element.tagName !== 'META') {
+                console.log(element.tagName)
                 document.querySelector(container).appendChild(element);
             }
             _loadContent(data, index + 1, container);
@@ -80,6 +81,6 @@ var _loadContent = function (data, index, container, appendData) {
  * @param {boolean} appendData choose whether to add the content to the end of the container or to replace it
  * @return {boolean} true on success
  */
-var loadData = async function (data, container, appendData = false) {
-    return _loadContent(_htmlToElements(data), 0, container, appendData);
+var loadData = async function (data, container, subset, appendData = false) {
+    return _loadContent(_htmlToElements(data), 0, container, subset, appendData);
 }

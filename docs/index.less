@@ -25,6 +25,8 @@
           position: relative;
           width: var(--liw, 400px);
           height: var(--lih, 200px);
+          max-width: var(--liw, 400px);
+          max-height: var(--lih, 200px);
           padding: 0;
           margin: 0;
           overflow: visible;
@@ -103,7 +105,7 @@
       stroke-width: 4px;
     }
     .gutter-sizer {
-      width: 1.25%;
+      width: var(--gs);
     }
     .hero {
       color: #c8b273;

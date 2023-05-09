@@ -106,7 +106,7 @@
         import { shuffleArray, generateElement, normalizeVraiment } from '/js/utils.js'
         import codec from "/js/structure.js?v=0.13.0"
         import { loadArtists } from "/js/artists.js?v=0.13.0"
-        import JigsawShield from '/js/jigsawShield.js?v=0.13.0'
+        import { jigsawGenerator, JigsawShield} from '/js/jigsawShield.js?v=0.13.0'
 
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
@@ -185,10 +185,10 @@
         document.documentElement.style.setProperty('--toXleft', `${_toXleft}px`)
         document.documentElement.style.setProperty('--toYtop', `${_toYtop}px`)
 
-        let jigsawGenerator = new JigsawShield(_)
+        let jigsawGenerator2 = jigsawGenerator
 
         const changeIt = () => {
-            jigsawGenerator = new JigsawShield(_)
+            jigsawGenerator2 = new JigsawShield(_)
             thePuzzle.querySelectorAll(':not(#gutter-sizer)').forEach(e => e.remove())
             let vi = 0
             for (let yi = 0; yi < _.yn; yi++) {
@@ -196,7 +196,7 @@
                 thePuzzle.append(row)
                 for (let xi = 0; xi < _.xn; xi++) {
 
-                    const j = jigsawGenerator.getJigsawItem(vi)
+                    const j = jigsawGenerator2.getJigsawItem(vi)
                     const topTrans = yi === 0 ? 0 : marginY
                     const leftTrans = xi === 0 ? 0 : marginX
                     const xTrans = parseInt(j.viewBox.replaceAll(/^([\.\d\-]+).*$/g, "$1"))
@@ -241,7 +241,7 @@
                 }
             }
         }
-        
+
         changeIt()
 
         let shuffledV = shuffleArray(Array.from(Array(_.xn * _.yn), (_, index) => index + 1))
