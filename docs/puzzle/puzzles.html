@@ -73,7 +73,7 @@
 
             /*   border: 1px solid; */
             background-color: #333;
-            /* background-image: url('/artists/martinbaker/martinbaker-10.jpg'); */
+            /* background-image: url('https://musicollator.github.io/ciaccona-stationary/artists/martinbaker/martinbaker-10.jpg'); */
             cursor: move;
         }
 
@@ -412,7 +412,7 @@
                 document.getElementById('name').innerHTML = a.fullname
                 document.getElementById('vari').innerHTML = v
                 document.querySelectorAll('.tile').forEach(t => {
-                    t.style.backgroundImage = `url(/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${v}.jpg)`
+                    t.style.backgroundImage = `url(https://musicollator.github.io/ciaccona-stationary/artists/${a.fullnameNoSpaceLowercaseNoDiacritics}/${a.fullnameNoSpaceLowercaseNoDiacritics}-${v}.jpg)`
                 })
             }
             setImageAndName(artistsWithVid[a], v)
