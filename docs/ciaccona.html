@@ -540,7 +540,7 @@
     <script async type="module" src="/ciaccona.js?v=0.13.1"></script>
     <script>
         if (fullameNoSpaceLowercaseNoDiacritics == null) {
-            [...document.querySelectAll('.ciaccona')].forEach(e => e.classList.add('no-vid'))
+            [...document.querySelectorAll('.ciaccona')].forEach(e => e.classList.add('no-vid'))
         }
         document.getElementById('version').innerHTML = ver
     </script>
