@@ -108,7 +108,7 @@
         });
 
         const indexLoaded = new Promise((resolve, reject) => {
-            fetch('index.html').then(function (response) {
+            fetch('index.html?v=0.13.1').then(function (response) {
                 return response.text()
             }).then(function (html) {
                 loadData(html, '#left').then(function (html) {
@@ -121,7 +121,7 @@
         })
 
         const ciacconaLoaded = new Promise((resolve, reject) => {
-            fetch('ciaccona.html').then(function (response) {
+            fetch('ciaccona.html?v=0.13.1').then(function (response) {
                 return response.text()
             }).then(function (html) {
                 loadData(html, '#right').then(function (html) {
