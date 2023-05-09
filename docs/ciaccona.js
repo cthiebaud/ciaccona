@@ -71,6 +71,9 @@ const hideLoading = (hasPlayer) => {
         document.getElementById('videos-menu').style.display = 'flex'
         loadingE.style.display = 'none'
         console.log('loading dismissed')
+
+        console.log('shout allesistvollbracht event...')
+        window.dispatchEvent(new Event('allesistvollbracht'));
     }
 }
 

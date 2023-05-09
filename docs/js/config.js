@@ -8,6 +8,7 @@ class Config {
     #startBarOfLastSelectedVariation = 0
     #autoplay = false
     #countViews = { active: true, views: 0 }
+    #pane = 0
 
     #inConstructor = true
 
@@ -29,6 +30,9 @@ class Config {
 
         // 
         this.countViews = getCookie('countViews')
+
+        // 
+        this.pane = getCookie('pane')
 
 
         this.#inConstructor = false
@@ -183,6 +187,29 @@ class Config {
     }
     set views(views) {
         this.#countViews.views = views
+    }
+
+    // 
+    get pane() {
+        return this.#pane
+    }
+    set pane(pane) {
+        if (typeof pane === 'undefined') {
+            pane = 0
+        } else {
+            pane = parseInt(pane)
+            if (!(pane === 1 || pane === 0)) return
+        }
+        if (pane !== this.#pane) {
+            this.#pane = pane
+            if (!this.#inConstructor) {
+                if (!this.#pane || this.#pane === 0) {
+                    removeCookie('pane')
+                } else {
+                    setCookie('pane', this.#pane)
+                }
+            }
+        }
     }
 }
 

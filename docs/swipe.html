@@ -18,7 +18,7 @@
         .both {
             display: flex;
             align-items: center;
-            width: 200%;
+            width: 100%;
         }
 
         #left,
@@ -64,18 +64,45 @@
 
     <script type="module">
         import hammerjs from "https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/+esm"
-        var hammertime = new Hammer(document.getElementById('body'), {});
+        import config from "/js/config.js?v=0.13.1"
+
+        // transform packery event into promise
+        const allesIstVollbracht = new Promise((resolve) => {
+            window.addEventListener('allesistvollbracht', (event) => {
+                console.log("... heard allesistvollbracht event");
+                resolve(event)
+            }, { once: true })
+        })
+
+        function setOrTogglePane(newPane) {
+            if (typeof newPane === 'undefined' || !(newPane === 0 || newPane === 1)) {
+                if (config.pane === 0) {
+                    config.pane = 1
+                } else {
+                    config.pane = 0
+                }
+            } else {
+                config.pane = newPane % 2
+            }
+            if (config.pane === 0) {
+                document.getElementById('right').style.visibility = 'hidden'
+                document.getElementById('right').style.display = 'none'
+                document.getElementById('left').style.visibility = 'visible'
+                document.getElementById('left').style.display = 'inherit'
+            } else {
+                document.getElementById('right').style.visibility = 'visible'
+                document.getElementById('right').style.display = 'inherit'
+                document.getElementById('left').style.visibility = 'hidden'
+                document.getElementById('left').style.display = 'none'
+            }
+        }
+
+        const hammertime = new Hammer(document.getElementById('body'), {});
         hammertime.on('swipeleft', function (ev) {
-            document.getElementById('right').style.visibility = 'visible'
-            // document.getElementById('right').style.display = 'inherit'
-            document.getElementById('left').style.visibility = 'hidden'
-            // document.getElementById('left').style.display = 'none'
+            setOrTogglePane(1)
         });
         hammertime.on('swiperight', function (ev) {
-            document.getElementById('right').style.visibility = 'hidden'
-            // document.getElementById('right').style.display = 'none'
-            document.getElementById('left').style.visibility = 'visible'
-            // document.getElementById('left').style.display = 'inherit'
+            setOrTogglePane(0)
         });
 
         window.addEventListener("ciacconaLoaded", (event) => {
@@ -85,13 +112,11 @@
             document.querySelectorAll('#gb-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
-                    document.getElementById('right').style.visibility = 'hidden'
-                    document.getElementById('right').style.display = 'none'
-                    document.getElementById('left').style.visibility = 'visible'
-                    document.getElementById('left').style.display = 'inherit'
+                    setOrTogglePane(0)
                 })
             })
         });
+
         window.addEventListener("artistsLoaded", (event) => {
             console.log("index.html fully loaded and parsed");
             console.log('shout calcItemWidth event ...')
@@ -99,10 +124,7 @@
             document.querySelectorAll('#li-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
-                    document.getElementById('right').style.visibility = 'visible'
-                    document.getElementById('right').style.display = 'inherit'
-                    document.getElementById('left').style.visibility = 'hidden'
-                    document.getElementById('left').style.display = 'none'
+                    setOrTogglePane(1)
                 })
             })
         });
@@ -133,20 +155,10 @@
             });
         })
 
-        console.log('waiting for index.html and ciacconna.html to be fully loaded')
-        Promise.allSettled([indexLoaded, ciacconaLoaded]).then((results) => {
-            console.log('index.html and ciacconna.html fully loaded !')
-            if (true) {
-                document.getElementById('right').style.visibility = 'hidden'
-                // document.getElementById('right').style.display = 'none'
-                document.getElementById('left').style.visibility = 'visible'
-                // document.getElementById('left').style.display = 'inherit'
-            } else {
-                document.getElementById('right').style.visibility = 'visible'
-                // document.getElementById('right').style.display = 'inherit'
-                document.getElementById('left').style.visibility = 'hidden'
-                // document.getElementById('left').style.display = 'none'
-            }
+        console.log('waiting for index.html and ciacconna.html to be fully loaded, then waiting for allesIstVollbracht event')
+        Promise.allSettled([indexLoaded, ciacconaLoaded, allesIstVollbracht]).then((results) => {
+            console.log('ALLES IST VOLLBRACHT !!!')
+            setOrTogglePane(config.pane)
         })
 
     </script>
