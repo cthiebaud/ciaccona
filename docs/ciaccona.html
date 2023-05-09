@@ -121,7 +121,7 @@
             'vonhansen',
             'yunpark',
         ]
-        const ver = "v0.13.1.1"
+        const ver = "v0.13.1.2"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop)
         })
@@ -143,7 +143,7 @@
                 console.log("... heard readyToIsotope event");
                 resolve(event)
             }, { once: true })
-        })        
+        })
 
     </script>
     <script type="module">
@@ -210,11 +210,6 @@
 </head>
 
 <body class="ciaccona d-flex flex-column">
-    <script>
-        if (fullameNoSpaceLowercaseNoDiacritics == null) {
-            [...document.getElementsByTagName('body')].forEach(e => e.classList.add('no-vid'))
-        }
-    </script>
 
     <header style="display: none !important; padding: 0.6rem!important; z-index: 10; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top d-flex flex-wrap justify-content-evenly align-items-center">
@@ -261,9 +256,6 @@
         <div class="ms-2" style="margin: auto 0;">
             <span class="font-monospace badge rounded-pill bg-light text-dark">
                 <span id="version" class="font-monospace" style="font-size: 8pt;"></span>
-                <script>
-                    document.getElementById('version').innerHTML = ver
-                </script>
                 <a class="btn btn-light text-muted icon-base icon-github" target="github" href="https://github.com/cthiebaud/ciaccona" aria-label="Ciaccona on Github">
                 </a>
             </span>
@@ -274,11 +266,6 @@
         <div id="message">
             &nbsp;
         </div>
-        <!-- script>
-            if (fullameNoSpaceLowercaseNoDiacritics) {
-                document.getElementById('message').innerHTML = fullameNoSpaceLowercaseNoDiacritics
-            }
-        </!-->
         <div id="spinner" class="spinner-border m-2" role="status">
         </div>
         <!-- div id="spinner" class="m-2" style="width:150px; height: 150px;" role="status">
@@ -551,6 +538,13 @@
 
     <script src="/lib/bootstrap.bundle-5.2.3.min.js"></script>
     <script async type="module" src="/ciaccona.js?v=0.13.1"></script>
+    <script>
+        if (fullameNoSpaceLowercaseNoDiacritics == null) {
+            [...document.querySelectAll('.ciaccona')].forEach(e => e.classList.add('no-vid'))
+        }
+        document.getElementById('version').innerHTML = ver
+    </script>
+
 
 </body>
 

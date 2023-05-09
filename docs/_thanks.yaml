@@ -7,6 +7,7 @@
 ≺/≻:
   - bezier-easing: "https://github.com/gre/bezier-easing"
   - bootstrap: "https://getbootstrap.com/"
+  - fetch-data-loader: "https://github.com/migliori/ajax-fetch-data-loader"
   - isotope: "https://isotope.metafizzy.co/"
   - jigsaw: "https://github.com/Draradech/jigsaw"
   - js-cookies: "https://github.com/js-cookie/js-cookie"

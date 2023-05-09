@@ -61,9 +61,11 @@ var _loadContent = function (data, index, container, subset, appendData) {
                 _loadContent(data, index + 1, container);
             }
         } else {
-            if (element !== undefined || element.tagName !== 'META') {
-                console.log(element.tagName)
-                document.querySelector(container).appendChild(element);
+            if (typeof element !== 'undefined' && element !== null) {
+                if (element.tagName !== 'META') {
+                    console.log(element.tagName)
+                    document.querySelector(container).appendChild(element);
+                }
             }
             _loadContent(data, index + 1, container);
         }
