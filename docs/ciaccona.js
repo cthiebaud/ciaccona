@@ -18,6 +18,8 @@ if (fullameNoSpaceLowercaseNoDiacritics != null) {
     [...document.getElementsByTagName('body')].forEach(e => {
         e.classList.add('video-player')
     })
+    document.getElementById('theContainer').classList.remove('container-xxl')
+    document.getElementById('theContainer').classList.add('container-fluid')
 }
 document.getElementById('version').innerHTML = ver
 

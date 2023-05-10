@@ -52,14 +52,20 @@ const Ω = {
         const grid = document.getElementById('grid')
         if (!grid) return
         grid.dataset.scoreDisplay = config.scoreDisplay
+        const theContainer = document.getElementById('theContainer')
+        const theBody = document.getElementsByTagName('body')[0]
         if (config.scoreDisplay === 'firstBar') {
-            document.getElementById('theContainer').classList.remove('container-fluid')
-            document.getElementById('theContainer').classList.add('container-xxl')
+            if (!theBody.classList.contains('video-player')) {
+                theContainer.classList.remove('container-fluid')
+                theContainer.classList.add('container-xxl')
+            }
             document.getElementById('theContainerCol').classList.remove('fullwidth')
             document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.remove('fullwidth'))
         } else if (config.scoreDisplay === 'fullScore') {
-            document.getElementById('theContainer').classList.remove('container-xxl')
-            document.getElementById('theContainer').classList.add('container-fluid')
+            if (!theBody.classList.contains('video-player')) {
+                theContainer.classList.remove('container-xxl')
+                theContainer.classList.add('container-fluid')
+            }
             document.getElementById('theContainerCol').classList.add('fullwidth')
             document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.add('fullwidth'))
         }
