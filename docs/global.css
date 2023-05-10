@@ -2,7 +2,7 @@ body.structure:not(.video-player) {
   background-color: white;
 }
 body.performers:not(.video-player) {
-  background-color: #4e493e;
+  background-color: #3c2d29; 
 }
 body.video-player {
   background-color: black !important;
@@ -53,7 +53,7 @@ a {
 }
 
 .ciaccona .magnificent-card {
-  background-color: #4e493e;
+  background-color: #5f4741;
   color: white;
 }
 

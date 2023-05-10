@@ -84,7 +84,7 @@ loadArtists().then((artists) => {
     <div id="li-ciaccona" 
         class="list-item d-flex align-items-center justify-content-center flex-column" 
         <div>
-        <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
+        <a class="magnificent-card p-2" href="/" aria-label="Ciaccona...">
             &nbsp;
             <div style="margin: auto; font-size: 28px;">Ciaccona</div>
             &nbsp;
@@ -157,7 +157,7 @@ loadArtists().then((artists) => {
                 if (event.currentTarget === event.target) {
                     event.stopPropagation()
                     event.preventDefault()
-                    window.location = `/ciaccona.html?a=${event.target.dataset.a}&v=${event.target.dataset.v}`
+                    window.location = `/?a=${event.target.dataset.a}` // &v=${event.target.dataset.v}
                 }
             }))
             document.querySelectorAll('.list-artist .puzzle').forEach(E => E.addEventListener('click', (event) => {
