@@ -9,36 +9,37 @@ const bg = (a, v) => `url('https://musicollator.github.io/ciaccona-stationary/ar
 
 const template = (data) => `
 <div id="li-artist${data.v}" 
-class="list-artist hero"  
-data-index="${data.index}" 
-data-a="${data.a}" 
-data-v="${data.v}" 
-style="background-image: ${data.bg}; overflow:hidden;">
-<div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%;" >
-<div class="hero-intro flex-shrink-1; align-self-start;" 
-    title="Pin / Unpin ${data.firstname} ${data.lastname}"
-    style="padding-right: 0.5rem;">
-    ${data.firstname}
-</div>
-<div class="hero-intro vert flex-grow-1;" 
-    title="Pin / Unpin ${data.firstname} ${data.lastname}">
-    ${data.lastname}
-</div>
-</div>
-<a class="puzzle flex-shrink-1" href="#" title="Pin / Unpin Variation N°${data.v}">
-<svg xmlns="http://www.w3.org/2000/svg" 
-    id="gb-puzzle${data.v}-svg" 
-    style="overflow: visible; transform: scale(.667);"
-    viewBox="${data.jigsaw.viewBox}">
-    <path stroke="#${data.stroke ? data.stroke : 'C8B273'}" 
-        stroke-width="3" 
-        fill="#${data.fill ? data.fill : '57728ba0'}" 
-        d="${data.jigsaw.path}" style=""></path>
-</svg>
-</a>
+     class="list-artist hero"  
+     data-index="${data.index}" 
+     data-a="${data.a}" 
+     data-v="${data.v}" 
+     style="background-image: ${data.bg}; overflow:hidden;">
+    <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%;" >
+        <div class="hero-intro flex-shrink-1; align-self-start;" 
+             title="Pin / Unpin ${data.firstname} ${data.lastname}"
+             style="padding-right: 0.5rem;">
+             ${data.firstname}
+        </div>
+        <div class="hero-intro vert flex-grow-1;" 
+             title="Pin / Unpin ${data.firstname} ${data.lastname}">
+             ${data.lastname}
+        </div>
+    </div>
+    <a class="puzzle flex-shrink-1" href="#" title="Pin / Unpin Variation N°${data.v}">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            id="gb-puzzle${data.v}-svg" 
+            style="overflow: visible; transform: scale(.667);"
+            viewBox="${data.jigsaw.viewBox}">
+            <path stroke="#${data.stroke ? data.stroke : 'C8B273'}" 
+                stroke-width="3" 
+                fill="#${data.fill ? data.fill : '57728ba0'}" 
+                d="${data.jigsaw.path}" style=""></path>
+        </svg>
+    </a>
 </div>`
 
 let data = []
+let artists2
 let arrayOfArtists = []
 const colors = colorArray;
 
@@ -73,6 +74,7 @@ function generateData() {
 }
 
 loadArtists().then((artists) => {
+    artists2 = artists
 
     const list = document.getElementById('list')
 
@@ -80,18 +82,27 @@ loadArtists().then((artists) => {
 
     list.innerHTML += `
     <div id="li-ciaccona" 
-        class="list-item d-flex align-items-center justify-content-center" 
+        class="list-item d-flex align-items-center justify-content-center flex-column" 
         <div>
-            <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
-                &nbsp;
-                <div style="margin: auto; font-size: 28px;">Ciaccona</div>
-                &nbsp;
-                <svg id="arrow_in_right" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
-                    <path fill="#00000060" fill-rule="evenodd"
-                        d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
-                </svg>
-                &nbsp;
+        <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
+            &nbsp;
+            <div style="margin: auto; font-size: 28px;">Ciaccona</div>
+            &nbsp;
+            <svg id="arrow_in_right" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
+                <path fill="#00000060" fill-rule="evenodd"
+                    d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
+            </svg>
+            &nbsp;
+        </a>
+        <div id="li-artist" class="p-2" style="white-space: nowrap; display:none;">
+            <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;"></span>
+            <!--
+            <a id="youtube-url" class="btn btn-lihjt icon-base icon-youtube_external_link text-muted" target="_youtube" href="#" aria-label="Original Video...">
             </a>
+            <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
+            </a>
+            --!
+        </div>
         </div>
     </div>`
 
@@ -128,6 +139,14 @@ loadArtists().then((artists) => {
                 const newChild = generateElement(template(data[i]))
                 E.replaceChild(newChild, E.children[0])
             })
+            const artistBadge = document.getElementById('li-artist')
+            if (coerceArtist) {
+                artistBadge.style.display = 'block'
+                artistBadge.querySelector('.fullname').innerHTML = artists2.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname
+            } else {
+                artistBadge.style.display = 'none'
+                artistBadge.querySelector('.fullname').innerHTML = ''
+            }
             setListener()
         }
 
@@ -160,6 +179,13 @@ loadArtists().then((artists) => {
                 } else {
                     coerceArtist = event.currentTarget.parentNode.parentNode.dataset.a
                 }
+                data = generateData(arrayOfArtists)
+                forceRedraw()
+            }))
+            document.querySelectorAll('#li-artist').forEach(E => E.addEventListener('click', (event) => {
+                event.stopPropagation()
+                event.preventDefault()
+                coerceArtist = undefined
                 data = generateData(arrayOfArtists)
                 forceRedraw()
             }))

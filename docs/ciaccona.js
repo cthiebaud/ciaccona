@@ -14,13 +14,6 @@ const windowLoaded = new Promise((resolve) => {
     })
 })
 
-if (fullameNoSpaceLowercaseNoDiacritics != null) {
-    [...document.getElementsByTagName('body')].forEach(e => {
-        e.classList.add('video-player')
-    })
-    document.getElementById('theContainer').classList.remove('container-xxl')
-    document.getElementById('theContainer').classList.add('container-fluid')
-}
 document.getElementById('version').innerHTML = ver
 
 const about = new Ω.About()
@@ -129,6 +122,12 @@ allPromises.set(
 
 // 2. promises resolves when 1) timings for this artist have been loeaded, then 2) video player is ready
 if (fullameNoSpaceLowercaseNoDiacritics) {
+
+    [...document.getElementsByTagName('body')].forEach(e => {
+        e.classList.add('video-player')
+    })
+    document.getElementById('theContainer').classList.remove('container-xxl')
+    document.getElementById('theContainer').classList.add('container-fluid')
 
     allPromises.set(
         PLAYER,
