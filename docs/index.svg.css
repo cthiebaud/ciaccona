@@ -30,6 +30,9 @@
 .icon-youtube {
   background-image: url("index.svg?v=0.13.3#youtube-view");
 }
+.icon-youtube2 {
+  background-image: url("index.svg?v=0.13.3#youtube2-view");
+}
 .icon-youtube_external_link {
   background-image: url("index.svg?v=0.13.3#youtube_external_link-view");
 }

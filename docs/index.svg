@@ -52,6 +52,11 @@
             <path fill="red"
                 d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
         </symbol>
+        <symbol id="youtube2-symbol" preserveAspectRatio="xMidYMid meet" viewBox="48.863006591796875, 79.2229995727539, 202.2743682861328, 141.55401611328125">
+            <path fill="#1a1c1c" d="M97.437 98.708h102.584v93.685H97.437z" opacity="1" />
+            <path fill="#F0F8FF"
+                d="M149.938 79.223s-63.22 0-79.086 4.123c-8.496 2.374-15.492 9.37-17.866 17.99-4.123 15.867-4.123 48.727-4.123 48.727s0 32.984 4.123 48.601c2.374 8.62 9.245 15.491 17.866 17.865 15.992 4.248 79.086 4.248 79.086 4.248s63.344 0 79.21-4.123c8.621-2.373 15.492-9.12 17.74-17.865 4.249-15.742 4.249-48.601 4.249-48.601s.125-32.985-4.248-48.852c-2.25-8.62-9.12-15.491-17.74-17.74-15.867-4.373-79.211-4.373-79.211-4.373zm-20.116 40.48 52.6 30.36-52.6 30.234v-60.594z" />
+        </symbol>
         <symbol id="youtube_external_link-symbol" viewBox="0 -256 1850 1844">
             <!-- path fill="#fff" d="M359.178 432.56h758.551v721.444H359.178Z"/ -->
             <path fill="#7f7f7f"
@@ -245,6 +250,7 @@
     <!-- row 2 -->
     <view preserveAspectRatio="xMidYMid meet " viewBox=   "0 400 100 100" id="bach_siel_full_left-view" />
     <view preserveAspectRatio="xMidYMid meet " viewBox= "200 400 100 100" id="bach_siel_full_right-view" />
+    <view preserveAspectRatio="xMidYMid meet " viewBox= "400 400 100 100" id="youtube2-view" />
     <!-- row 3 -->
     <view preserveAspectRatio="xMidYMax meet " viewBox="-200 600 700 100" id="bach_signature-view" />
     <!-- row 4 -->
@@ -278,6 +284,7 @@
     <!-- row 2 -->
     <use x=   "0" y="400" width="100" height="100" id="bach_siel_full_left" xlink:href="#bach_siel_full_left-symbol"></use>
     <use x= "200" y="400" width="100" height="100" id="bach_siel_full_right" xlink:href="#bach_siel_full_right-symbol"></use>
+    <use x= "400" y="400" width="100" height="100" id="youtube2" xlink:href="#youtube2-symbol"></use>
     <!-- row 3 -->
     <use x=   "0" y="600" width="500" height="100" id="bach_signature" xlink:href="#bach_signature-symbol"></use>
     <!-- row 4 -->
