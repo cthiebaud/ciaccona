@@ -438,24 +438,28 @@
             console.log("ciaccona.html fully loaded and parsed");
             console.log('shout calcBrickWidth event ...')
             window.dispatchEvent(new Event('calcBrickWidth'));
+            /*
             document.querySelectorAll('#gb-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
                     setOrTogglePane(0)
                 })
             })
+            */
         });
 
         window.addEventListener("artistsLoaded", (event) => {
             console.log("index.html fully loaded and parsed");
             console.log('shout calcItemWidth event ...')
             window.dispatchEvent(new Event('calcItemWidth'));
+            /*
             document.querySelectorAll('#li-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
                     setOrTogglePane(1)
                 })
             })
+            */
         });
 
         console.log('waiting for allesIstVollbracht event ...')

@@ -84,16 +84,18 @@ loadArtists().then((artists) => {
     <div id="li-ciaccona" 
         class="list-item d-flex align-items-center justify-content-center flex-column" 
         <div>
-        <a class="magnificent-card p-2" href="/" aria-label="Ciaccona...">
+        <div class="magnificent-card p-2" aria-label="Ciaccona...">
             &nbsp;
             <div style="margin: auto; font-size: 28px;">Ciaccona</div>
             &nbsp;
+            <!--
             <svg id="arrow_in_right" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
                 <path fill="#00000060" fill-rule="evenodd"
                     d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
             </svg>
             &nbsp;
-        </a>
+            -->
+        </div>
         <div id="li-artist" class="p-2" style="white-space: nowrap; display:none;">
             <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;"></span>
             <!--
@@ -133,12 +135,7 @@ loadArtists().then((artists) => {
 
         setListener()
 
-        function forceRedraw() {
-            document.querySelectorAll('.list-item:not(#li-ciaccona)').forEach(E => {
-                const i = E.children[0].dataset.index
-                const newChild = generateElement(template(data[i]))
-                E.replaceChild(newChild, E.children[0])
-            })
+        function displayArtist() {
             const artistBadge = document.getElementById('li-artist')
             if (coerceArtist) {
                 artistBadge.style.display = 'block'
@@ -147,6 +144,17 @@ loadArtists().then((artists) => {
                 artistBadge.style.display = 'none'
                 artistBadge.querySelector('.fullname').innerHTML = ''
             }
+        }
+
+        displayArtist()
+
+        function forceRedraw() {
+            document.querySelectorAll('.list-item:not(#li-ciaccona)').forEach(E => {
+                const i = E.children[0].dataset.index
+                const newChild = generateElement(template(data[i]))
+                E.replaceChild(newChild, E.children[0])
+            })
+            displayArtist()
             setListener()
         }
 

@@ -147,15 +147,17 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
         `
 <div id="gb-ciaccona" data-sort="-1" class="grid-brick" style="height:96px; margin:0;">
     <div class="d-flex brick align-items-center justify-content-center" >
-        <a class="magnificent-card p-2" href="/" aria-label="Artists...">
+        <div class="magnificent-card p-2" aria-label="Artists...">
             &nbsp;
+            <!--
             <svg id="arrow_out_left" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
                 <path fill="#e0e0e0c0" d="m4.671 5.06 1.454 1.348L3.697 9h8.366v2H3.697l2.428 2.544-1.454 1.362L0 9.958ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0Z"/>
             </svg>
             &nbsp;
+            -->
             <div style="margin: auto; font-size: 28px;">Ciaccona</div>
             &nbsp;
-        </a>
+        </div>
     </div>
 </div>`
     temporaryContainer.appendChild(generateElement(templateForTheme));
