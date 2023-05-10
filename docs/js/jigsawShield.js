@@ -1,5 +1,5 @@
-import { normalizeVraiment } from "/js/utils.js?v=0.13.1"
-import Jigsaw from '/js/jigsaw.js?v=0.13.1'
+import { normalizeVraiment } from "/js/utils.js?v=0.13.3"
+import Jigsaw from '/js/jigsaw.js?v=0.13.3'
 
 class JigsawShield {
 
