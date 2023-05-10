@@ -14,6 +14,13 @@ const windowLoaded = new Promise((resolve) => {
     })
 })
 
+if (fullameNoSpaceLowercaseNoDiacritics != null) {
+    [...document.getElementsByTagName('body')].forEach(e => {
+        e.classList.add('video-player')
+    })
+}
+document.getElementById('version').innerHTML = ver
+
 const about = new Ω.About()
 
 // tidyfication of menu items
@@ -24,15 +31,15 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
         menuItem.classList.add('disabled')
         menuItem.querySelector(`span.c`).innerHTML = "&#10004;&nbsp;"
     }
-    const gridContainerCol = document.getElementById('gridContainerCol')
-    if (gridContainerCol) gridContainerCol.classList.add('push2right')
+    const theContainerCol = document.getElementById('theContainerCol')
+    if (theContainerCol) theContainerCol.classList.add('push2right')
 } else {
     const menuItem = document.querySelector(`#videos-menu a[data-name-no-space-lowercase-no-diacritics=""]`)
     if (menuItem) {
         menuItem.classList.add('disabled')
         menuItem.querySelector('span.c').innerHTML = "&#10004;&nbsp;"
     }
-    [...document.getElementsByTagName('body')].forEach(e => e.style['background-color'] = 'transparent')
+    // [...document.getElementsByTagName('body')].forEach(e => e.style['background-color'] = 'transparent')
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -133,7 +140,7 @@ if (fullameNoSpaceLowercaseNoDiacritics) {
             return createPlayer(selectorPlyr, artist, no_plyr_event)
         }).catch((error) => {
             console.log(error);
-            document.getElementById('gridContainerCol').classList.remove('push2right')
+            document.getElementById('theContainerCol').classList.remove('push2right')
             throw error
         })
     )
@@ -147,7 +154,7 @@ allPromises.set(
         readyToIsotope.then(result => {
             console.log('about to create isotope ...')
             const theIsotope = new isotopeLayout('#grid', {
-                itemSelector: ".ciaccona #gridContainer #gridContainerCol #grid .grid-brick",
+                itemSelector: "#theContainer #theContainerCol .ciaccona#grid .grid-brick",
                 sortBy: 'id',
                 getSortData: {
                     id: '[data-sort]'

@@ -96,7 +96,7 @@
     <link href="/index.svg.css?v=0.13.3" rel="stylesheet">
 </head>
 
-<body class="ciaccona d-flex flex-column">
+<body class="d-flex flex-column">
 
     <header style="display: none !important; padding: 0.6rem!important; z-index: 10; background-color: #ffffff80; border-bottom: 1px solid #a0a0a080;"
         class="header fixed-top d-flex flex-wrap justify-content-evenly align-items-center">
@@ -161,7 +161,7 @@
                 type="image/svg+xml"></object>
         </!-->
     </div>
-    <main id="gridContainer" class="container-xxl flex-shrink-0">
+    <main id="theContainer" class="container-xxl flex-shrink-0">
 
         <div id="videos-menu" class="btn-group dropend my-menu" style="display:none;">
             <span class="dropdown dropend">
@@ -413,11 +413,11 @@
             </span>
         </div>
 
-        <div id="gridContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
+        <div id="theContainerRow" class="row justify-content-end" style="margin:0"> <!--  -->
             <div id="playerWrapper" class="col video-container" data-plyr-provider="youtube" data-plyr-embed-id="" style="visibility: hidden">
             </div>
-            <div id="gridContainerCol" class="col">
-                <div id="grid">
+            <div id="theContainerCol" class="col">
+                <div id="grid" class="ciaccona">
                 </div>
             </div>
         </div>
@@ -425,12 +425,6 @@
 
     <script src="/lib/bootstrap.bundle-5.2.3.min.js"></script>
     <script async type="module" src="/ciaccona.js?v=0.13.3"></script>
-    <script>
-        if (fullameNoSpaceLowercaseNoDiacritics == null) {
-            [...document.querySelectorAll('.ciaccona')].forEach(e => e.classList.add('no-vid'))
-        }
-        document.getElementById('version').innerHTML = ver
-    </script>
 
 
 </body>

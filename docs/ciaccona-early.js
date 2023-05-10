@@ -13,7 +13,7 @@ if (fullameNoSpaceLowercaseNoDiacritics == null) { // using ==, undefined and nu
 
 // brick width
 function calcBrickWidth() {
-    const gridE = document.querySelector('.ciaccona #grid')
+    const gridE = document.querySelector('.ciaccona#grid')
     console.log('.CIACCONA #GRID', gridE)
     if (gridE) {
         const containerWidth = gridE.getBoundingClientRect().width

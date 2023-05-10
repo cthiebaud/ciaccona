@@ -22,7 +22,7 @@
   display: flex;
 }
 
-.artists #listContainerCol #list .list-item {
+.artists #theContainerCol #list .list-item {
   position: relative;
   width: var(--liw, 400px);
   height: var(--lih, 200px);
@@ -31,7 +31,7 @@
   overflow: visible;
 }
 
-.artists #listContainerCol #list .list-item .list-artist {
+.artists #theContainerCol #list .list-item .list-artist {
   align-items: flex-end;
   background-size: cover;
   background-repeat: no-repeat;
@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-.artists #listContainerCol #list .list-artist#li-ciaccona {
+.artists #theContainerCol #list .list-artist#li-ciaccona {
   background-color: transparent;
   border: none;
   overflow: hidden;

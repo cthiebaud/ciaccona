@@ -107,10 +107,10 @@ loadArtists().then((artists) => {
     readyToPack.then((result) => {
         console.log("let's pack")
         const thePackery = new packeryLayout('#list', {
-            itemSelector: ".artists #listContainer #listContainerCol #list .list-item",
+            itemSelector: ".list-item", // #theContainer #theContainerCol .artists#list 
             percentPosition: false,
             initLayout: false,
-            gutter: '.artists #listContainer #listContainerCol #list .gutter-sizer',
+            gutter: '#list .gutter-sizer',
             resize: true
         })
 

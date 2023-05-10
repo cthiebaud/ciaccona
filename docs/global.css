@@ -1,5 +1,23 @@
+body.structure:not(.video-player) {
+  background-color: white;
+}
+body.performers:not(.video-player) {
+  background-color: #4e493e;
+}
+body.video-player {
+  background-color: black !important;
+}
+
 a {
-  text-decoration: none;
+  text-decoration: none !important;
+}
+
+.fullparent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .fullscreen {
@@ -21,11 +39,22 @@ a {
   outline-offset: -2px;
   background-clip: content-box;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.5);
+  /* background-color: rgba(255, 255, 255, 0.5); 
+  background-color: white;
+  color: #121212;*/
   border-radius: 1rem;
-  color: #121212;
   backdrop-filter: blur(1px);
   display: flex;
+}
+
+.artists .magnificent-card {
+  background-color: white;
+  color: #121212;
+}
+
+.ciaccona .magnificent-card {
+  background-color: #4e493e;
+  color: white;
 }
 
 @media (min-aspect-ratio: 16/9) {

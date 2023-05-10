@@ -53,14 +53,14 @@ const Ω = {
         if (!grid) return
         grid.dataset.scoreDisplay = config.scoreDisplay
         if (config.scoreDisplay === 'firstBar') {
-            document.getElementById('gridContainer').classList.remove('container-fluid')
-            document.getElementById('gridContainer').classList.add('container-xxl')
-            document.getElementById('gridContainerCol').classList.remove('fullwidth')
+            document.getElementById('theContainer').classList.remove('container-fluid')
+            document.getElementById('theContainer').classList.add('container-xxl')
+            document.getElementById('theContainerCol').classList.remove('fullwidth')
             document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.remove('fullwidth'))
         } else if (config.scoreDisplay === 'fullScore') {
-            document.getElementById('gridContainer').classList.remove('container-xxl')
-            document.getElementById('gridContainer').classList.add('container-fluid')
-            document.getElementById('gridContainerCol').classList.add('fullwidth')
+            document.getElementById('theContainer').classList.remove('container-xxl')
+            document.getElementById('theContainer').classList.add('container-fluid')
+            document.getElementById('theContainerCol').classList.add('fullwidth')
             document.querySelectorAll('.grid-brick:not(.hasPerformer), .score').forEach(elem => elem.classList.add('fullwidth'))
         }
 
@@ -138,12 +138,12 @@ const Ω = {
                         document.querySelector('header.header').style.display = 'flex'
                         document.querySelector('footer.footer').style.display = 'flex'
                         this.currentlyShowing = animejs({
-                            targets: ['#gridContainerCol', '#playerWrapper'],
+                            targets: ['#theContainerCol', '#playerWrapper'],
                             opacity: 0,
                             speed: 600,
                             easing: 'linear',
                             complete: () => {
-                                document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'hidden')
+                                document.querySelectorAll('#theContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'hidden')
                                 this.a = (this.a + 1) % this.animations.length
                                 this.currentlyShowing = undefined
                                 console.log('FIN show about')
@@ -166,10 +166,10 @@ const Ω = {
             document.querySelector('footer.footer').style.display = 'none'
 
             window.requestAnimationFrame((chrono) => {
-                document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'visible')
-                document.querySelectorAll('#gridContainerCol, #playerWrapper').forEach(e => e.style.opacity = '1')
+                document.querySelectorAll('#theContainerCol, #playerWrapper').forEach(e => e.style.visibility = 'visible')
+                document.querySelectorAll('#theContainerCol, #playerWrapper').forEach(e => e.style.opacity = '1')
                 animejs({
-                    targets: ['#gridContainerCol', '#playerWrapper'],
+                    targets: ['#theContainerCol', '#playerWrapper'],
                     opacity: 1,
                     speed: 600,
                     easing: 'linear',

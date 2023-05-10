@@ -134,7 +134,7 @@ const puppeteer = require('puppeteer');
                     document.querySelectorAll(sel).forEach(
                         e => e.style.visibility = 'visible'
                     )
-                }, '#videos-menu, #config-menu, #gridContainerCol')
+                }, '#videos-menu, #config-menu, #theContainerCol')
 
                 // Query for an element handle.
                 console.log(`await page.waitForSelector('#gb${variation} .score')`)
@@ -158,7 +158,7 @@ const puppeteer = require('puppeteer');
                     document.querySelectorAll(sel).forEach(
                         e => e.style.visibility = 'hidden'
                     )
-                }, '#videos-menu, #config-menu, #gridContainerCol, div.plyr__controls')
+                }, '#videos-menu, #config-menu, #theContainerCol, div.plyr__controls')
                 /*
                 const playerControls = await page.$$('#playerWrapper > div > div.plyr__controls');
                 for (let playerControl of playerControls) {

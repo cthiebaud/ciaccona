@@ -2,7 +2,7 @@ import { theTrickToViewportUnitsOnMobile } from '/js/utils.js?v=0.13.3'
 
 // list item width
 function calcItemWidth() {
-    const listE = document.querySelector('.artists #list')
+    const listE = document.querySelector('.artists#list')
     console.log('.ARTISTS #LIST', listE)
     if (listE) {
         const containerWidth = listE.getBoundingClientRect().width

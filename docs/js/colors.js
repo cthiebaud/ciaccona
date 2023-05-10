@@ -150,7 +150,7 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
         <a class="magnificent-card p-2" href="/" aria-label="Artists...">
             &nbsp;
             <svg id="arrow_out_left" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
-                <path fill="#00000060" d="m4.671 5.06 1.454 1.348L3.697 9h8.366v2H3.697l2.428 2.544-1.454 1.362L0 9.958ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0Z"/>
+                <path fill="#ffffff60" d="m4.671 5.06 1.454 1.348L3.697 9h8.366v2H3.697l2.428 2.544-1.454 1.362L0 9.958ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0Z"/>
             </svg>
             &nbsp;
             <div style="margin: auto; font-size: 28px;">Ciaccona</div>

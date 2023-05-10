@@ -60,7 +60,7 @@ a {
   text-decoration: none;
 }
 
-.ciaccona #gridContainer {
+.ciaccona #theContainer {
   z-index: 1;
   position: absolute;
   top: 0;
@@ -73,16 +73,16 @@ a {
   height: 100%;
 }
 
-.ciaccona:not(.no-vid) #gridContainer {
+.ciaccona:not(.no-vid) #theContainer {
   max-width: none !important;
 }
 
-.ciaccona #gridContainer #gridContainerCol {
+.ciaccona #theContainer #theContainerCol {
   margin: 0;
   padding: 0;
 }
 
-.ciaccona #gridContainer #gridContainerCol.push2right {
+.ciaccona #theContainer #theContainerCol.push2right {
   max-width: min(var(--vw, 1vw) * 100, 24rem);
   height: calc(var(--vh, 1vh) * 100 - 57px) !important;
   overflow-y: scroll;
@@ -90,7 +90,7 @@ a {
   padding: 0;
 }
 
-.ciaccona #gridContainer #gridContainerCol.push2right #grid .grid-brick {
+.ciaccona #theContainer #theContainerCol.push2right #grid .grid-brick {
   width: 100% !important;
 }
 
@@ -101,13 +101,13 @@ a {
 
 /* % % % % % % % % % % % % % % % % */
 
-.ciaccona #gridContainer #gridContainerCol #grid {
+.ciaccona #theContainer #theContainerCol #grid {
   visibility: inherit;
 }
 
 /* -  -  -  -  -  -  -  -  -  -  -  */
 /* .grid-brick */
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick {
   font-size: 1.4rem;
   width: 24rem;
   width: min(var(--vw, 1vw) * 100, 24rem);
@@ -121,30 +121,30 @@ a {
 }
 
 /*
-.no-vid #gridContainerCol #grid .grid-brick {
+.no-vid #theContainerCol #grid .grid-brick {
   background-color: transparent !important;
   background-image: none !important;
 }
 */
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hasScore:not(.selected) {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hasScore:not(.selected) {
   background-color: transparent !important;
   background-image: none !important;
 }
 
-/* #gridContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
+/* #theContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
   background-color: rgba(192, 192, 192, 0.4) !important;
 } */
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick:not(.gbPlaying) {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick:not(.gbPlaying) {
   border-color: transparent !important;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hello {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hello {
   box-shadow: inset -1rem -1rem #ffffff80;
   transform: translate(5px, 5px);
 }
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.goodbye {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.goodbye {
   /* 
   filter: blur(1px); invert(100%);
   box-shadow: inset 1rem 1rem #ffffff80;
@@ -153,11 +153,11 @@ a {
 }
 
 /* last, signature .grid_brick */
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick:last-child {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick:last-child {
   background-color: transparent !important;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick:last-child .brick {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick:last-child .brick {
   background-image: url(index.svg?v=0.13.3#bach_signature-view);
   /* background-size: 200px 200px; */
   background-position-y: center;
@@ -167,27 +167,27 @@ a {
 
 /* -  -  -  -  -  -  -  -  -  -  -  */
 /* .brick */
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick .brick {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick .brick {
   border-radius: 0 3rem 3rem 0;
   width: 100%;
   height: 100%;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hasScore .brick .score {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hasScore .brick .score {
   cursor: pointer;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.selected .brick {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.selected .brick {
   border-radius: 0 !important;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hasScore.selected .brick :not(:first-child) {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hasScore.selected .brick :not(:first-child) {
   display: none !important;
 }
 
 /* -  -  -  -  -  -  -  -  -  -  -  */
 /* .score */
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick .brick .score {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick .brick .score {
   position: relative;
   height: 100%;
   border-radius: 0 3rem 3rem 0;
@@ -195,28 +195,28 @@ a {
   overflow-x: hidden;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hasScore.selected .brick .score {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hasScore.selected .brick .score {
   border-radius: 0 !important;
   background-color: #aaaaaa40 !important;
   width: 100% !important;
   overflow-x: scroll;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hasScore .brick .score {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hasScore .brick .score {
   visibility: inherit !important;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick.hasScore .brick .score.init {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick.hasScore .brick .score.init {
   visibility: hidden !important;
 }
 
-.ciaccona #gridContainer #gridContainerCol #grid.selectedBrick .grid-brick.hasScore:not(.selected) .brick .score {
+.ciaccona #theContainer #theContainerCol #grid.selectedBrick .grid-brick.hasScore:not(.selected) .brick .score {
   visibility: hidden !important;
 }
 
 /* -  -  -  -  -  -  -  -  -  -  -  */
 /* .object */
-.ciaccona #gridContainer #gridContainerCol #grid .grid-brick .brick .score object {
+.ciaccona #theContainer #theContainerCol #grid .grid-brick .brick .score object {
   background-color: rgba(255, 255, 255, 0.8);
   height: 100%;
   background-clip: padding-box;

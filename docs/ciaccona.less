@@ -2,12 +2,12 @@
 /* -  -  -  -  -  -  -  -  -  -  -  */
 /* .grid-brick */
 /*
-.no-vid #gridContainerCol #grid .grid-brick {
+.no-vid #theContainerCol #grid .grid-brick {
   background-color: transparent !important;
   background-image: none !important;
 }
 */
-/* #gridContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
+/* #theContainerCol #grid .grid-brick.hasScore.Δ:not(.selected) {
   background-color: rgba(192, 192, 192, 0.4) !important;
 } */
 /* last, signature .grid_brick */
@@ -21,12 +21,7 @@
 /* % % % % % % % % % % % % % % % % */
 /* https://stackoverflow.com/a/60192837/1070215 */
 /* --------------------------- */
-.ciaccona {
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
-  background-color: black !important;
-  overscroll-behavior: none;
-  #gridContainer {
+#theContainer {
     z-index: 1;
     position: absolute;
     top: 0;
@@ -38,7 +33,7 @@
     padding-bottom: 0.5rem;
     height: 100%;
     overflow-y: scroll;
-    #gridContainerCol {
+    #theContainerCol {
       margin: 0;
       padding: 0;
       #grid {
@@ -154,20 +149,25 @@
             }
           }
         }
-      }
-      #grid.selectedBrick {
-        .grid-brick.hasScore {
-          &:not(.selected) {
-            .brick {
-              .score {
-                visibility: hidden !important;
+        &.ciaccona {
+          height: 100vh;
+          height: calc(var(--vh, 1vh) * 100);
+          overscroll-behavior: none;
+        }
+        &.selectedBrick {
+          .grid-brick.hasScore {
+            &:not(.selected) {
+              .brick {
+                .score {
+                  visibility: hidden !important;
+                }
               }
             }
           }
         }
       }
     }
-    #gridContainerCol.push2right {
+    #theContainerCol.push2right {
       max-width: min(calc(var(--vw, 1vw) * 100), 24rem);
       height: calc(var(--vh, 1vh) * 100 - 57px) !important;
       overflow-y: scroll;
@@ -180,16 +180,18 @@
       }
     }
   }
+  /*
   &:not(.no-vid) {
-    #gridContainer {
+    #theContainer {
       max-width: none !important;
     }
-  }
-}
-.ciaccona.no-vid {
+  } */
+
+
+.no-vid {
   background-color: transparent !important;
 }
-.ciaccona.about {
+.about {
   background-color: transparent !important;
 }
 
