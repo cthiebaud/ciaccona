@@ -16,16 +16,16 @@ const template = (data) => `
      style="background-image: ${data.bg}; overflow:hidden;">
     <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%;" >
         <div class="hero-intro flex-shrink-1; align-self-start;" 
-             title="Pin / Unpin ${data.firstname} ${data.lastname}"
+             title="Pin or unpin ${data.firstname} ${data.lastname}"
              style="padding-right: 0.5rem;">
              ${data.firstname}
         </div>
         <div class="hero-intro vert flex-grow-1;" 
-             title="Pin / Unpin ${data.firstname} ${data.lastname}">
+             title="Pin or unpin ${data.firstname} ${data.lastname}">
              ${data.lastname}
         </div>
     </div>
-    <a class="puzzle flex-shrink-1" href="#" title="Pin / Unpin Variation N°${data.v}">
+    <a class="puzzle flex-shrink-1" href="#" title="Pin or unpin ${data.pinUnpinVariationTitle}">
         <svg xmlns="http://www.w3.org/2000/svg" 
             id="gb-puzzle${data.v}-svg" 
             style="overflow: visible; transform: scale(.667);"
@@ -66,6 +66,7 @@ function generateData() {
             hideName: coerceArtist ? ' hide-name' : '',
             fill: colors[coerceVariation || vi % codec.variationsCount].puzzleColor_T,
             stroke: colors[coerceVariation || vi % codec.variationsCount].textColor_T,
+            pinUnpinVariationTitle: vi == 0 ? "theme" : vi == codec.variationsCount - 1 ? "final chord" : `variation n°${vi}`,
         }
         data.push(datum)
         vi++
@@ -82,7 +83,7 @@ loadArtists().then((artists) => {
 
     list.innerHTML += `
     <div id="li-ciaccona" 
-        class="list-item d-flex align-items-center justify-content-center flex-column" 
+        class="list-item d-flex align-items-center justify-content-around flex-column" 
         <div>
         <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
             &nbsp;
@@ -141,11 +142,13 @@ loadArtists().then((artists) => {
             })
             const artistBadge = document.getElementById('li-artist')
             if (coerceArtist) {
-                artistBadge.style.display = 'block'
+                artistBadge.style.display = 'inherit'
                 artistBadge.querySelector('.fullname').innerHTML = artists2.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname
+                document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'none')
             } else {
                 artistBadge.style.display = 'none'
                 artistBadge.querySelector('.fullname').innerHTML = ''
+                document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'inherit')
             }
             setListener()
         }
