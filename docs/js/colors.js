@@ -1,6 +1,6 @@
 import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
 import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
-import clipboard from 'https://cdn.jsdelivr.net/npm/clipboard@2.0.11/+esm'
+// import clipboard from 'https://cdn.jsdelivr.net/npm/clipboard@2.0.11/+esm'
 import codec from "/js/structure.js?v=0.13.3"
 import { jigsawGenerator } from '/js/jigsawShield.js?v=0.13.3'
 import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.13.3"
@@ -259,10 +259,12 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
                  id="gb-puzzle${i}-svg" 
                  class="clipboard-puzzle"
                  width="80%" height="60%" 
-                 title="copy link to clipboard"
                  style="visibility: inherit; overflow: visible; transform: scale(.667);" 
-                 viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}"
-                 data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics ? fullameNoSpaceLowercaseNoDiacritics : ''}&v=${i}">
+                 viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}">
+                 <!-- 
+                 data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics ? fullameNoSpaceLowercaseNoDiacritics : ''}&v=${i}"
+                 title="copy link to clipboard"
+                 -->
                 <path stroke="#${c2.textColor}" stroke-width="3" fill="#${c2.puzzleColor}" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>
             <div id="gb-variation${i}" 
@@ -277,19 +279,21 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
 </div>
 `
         const instanciatedVariation = generateElement(templateVariations)
+        /*
         const jigsawPiece = instanciatedVariation.querySelector(`#gb-puzzle${i}-svg`)
         if (jigsawPiece) {
             var clip = new clipboard(`#gb-puzzle${i}-svg`);
 
             clip.on('success', function (e) {
-                /*
+                / * 
                 console.info('Action:', e.action);
                 console.info('Text:', e.text);
                 console.info('Trigger:', e.trigger);
-                */
+                * /
                 e.clearSelection();
             });
         }
+        */
         temporaryContainer.appendChild(instanciatedVariation);
 
         // bumpers
