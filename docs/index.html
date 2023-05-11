@@ -294,7 +294,7 @@
                     <form class="px-4 py-3">
 
                         <div class="dropdown-item d-flex p-0">
-                            <a id="ciaccona" class="ms-auto" href="#" style="overflow:hidden; height: 4rem; width: 100%;" aria-label="Ciaccona">
+                            <a id="ciaccona" class="ms-auto" href="#" style="overflow:hidden; height: 4rem; width: 203px;" aria-label="Ciaccona">
                                 <!-- label><img src="svg/2bars.svg" style="height:48px"></!-->
                                 <!-- object type="text/html" data="/puzzle/demo.html" style="Width: 250px; height:72px;" seamless></!-->
                             </a>
@@ -386,6 +386,8 @@
         import hammerjs from "https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/+esm"
         import config from "/js/config.js?v=0.13.3"
 
+        if (pane) config.pane = pane
+
         // transform packery event into promise
         const allesIstVollbracht = new Promise((resolve) => {
             window.addEventListener('allesistvollbracht', (event) => {
@@ -395,16 +397,22 @@
         })
 
         function setOrTogglePane(newPane) {
-            if (typeof newPane === 'undefined' || !(newPane === 0 || newPane === 1)) {
-                if (config.pane === 0) {
-                    config.pane = 1
+            if (typeof newPane === 'undefined' || newPane === null) {
+                // toggle
+                if (config.pane === 'left') {
+                    config.pane = 'right'
                 } else {
-                    config.pane = 0
+                    config.pane = 'left'
                 }
+            } else if (newPane === 'left' || newPane === 'right') {
+                // set
+                config.pane = newPane
             } else {
-                config.pane = newPane % 2
+                // do nothing
+                return
             }
-            if (config.pane === 0) {
+
+            if (config.pane === 'left') {
                 document.getElementById('right').style.visibility = 'hidden'
                 // document.getElementById('right').style.display = 'none'
                 document.getElementById('left').style.visibility = 'visible'
@@ -428,38 +436,51 @@
 
         const hammer = new hammerjs(document.getElementById('theContainerCol'), {});
         hammer.on('swipeleft', function (ev) {
-            setOrTogglePane(1)
+            setOrTogglePane('right')
         });
         hammer.on('swiperight', function (ev) {
-            setOrTogglePane(0)
+            setOrTogglePane('left')
         });
 
         window.addEventListener("ciacconaLoaded", (event) => {
-            console.log("ciaccona.html fully loaded and parsed");
-            console.log('shout calcBrickWidth event ...')
+            console.log('ciaccona.html ready, shout calcBrickWidth event ...')
             window.dispatchEvent(new Event('calcBrickWidth'));
             /*
             document.querySelectorAll('#gb-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
-                    setOrTogglePane(0)
+                    setOrTogglePane('left')
                 })
             })
             */
         });
 
         window.addEventListener("artistsLoaded", (event) => {
-            console.log("index.html fully loaded and parsed");
-            console.log('shout calcItemWidth event ...')
+            console.log("artists.html, shout calcItemWidth event ...");
             window.dispatchEvent(new Event('calcItemWidth'));
             /*
             document.querySelectorAll('#li-ciaccona a').forEach(a => {
                 a.setAttribute('href', '#')
                 a.addEventListener('click', ev => {
-                    setOrTogglePane(1)
+                    setOrTogglePane('right')
                 })
             })
             */
+        });
+
+        fetch('/puzzle/demo.html').then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            loadData(html, 'a#ciaccona').then(function (html) {
+                // console.info('I\'m a callback');
+            });
+            /*
+            document.querySelector('a#ciaccona').addEventListener('click', e => {
+                setOrTogglePane()
+            }) 
+            */
+        }).catch(function (err) {
+            console.warn('Something went wrong.', err);
         });
 
         console.log('waiting for allesIstVollbracht event ...')
@@ -467,19 +488,6 @@
             console.log('ALLES IST VOLLBRACHT !!!')
             setOrTogglePane(config.pane)
         })
-
-        fetch('/puzzle/demo.html').then(function (response) {
-            return response.text();
-        }).then(function (html) {
-            loadData(html, 'a#ciaccona').then(function (html) {
-                console.info('I\'m a callback');
-            });
-            document.querySelector('a#ciaccona').addEventListener('click', e => {
-                setOrTogglePane()
-            })
-        }).catch(function (err) {
-            console.warn('Something went wrong.', err);
-        });
 
     </script>
 </body>

@@ -96,14 +96,12 @@ loadArtists().then((artists) => {
             &nbsp;
             -->
         </div>
-        <div id="li-artist" class="p-2" style="white-space: nowrap; display:none;">
+        <div id="li-artist" class="magnificent-card p-2" aria-label="Artist" style="white-space: nowrap; display:none;">
             <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;"></span>
-            <!--
             <a id="youtube-url" class="btn btn-lihjt icon-base icon-youtube_external_link text-muted" target="_youtube" href="#" aria-label="Original Video...">
             </a>
             <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
             </a>
-            --!
         </div>
         </div>
     </div>`
@@ -118,7 +116,7 @@ loadArtists().then((artists) => {
     window.dispatchEvent(event);
 
     readyToPack.then((result) => {
-        console.log("let's pack")
+        console.log("about to create packery ...")
         const thePackery = new packeryLayout('#list', {
             itemSelector: ".list-item", // #theContainer #theContainerCol .artists#list 
             percentPosition: false,

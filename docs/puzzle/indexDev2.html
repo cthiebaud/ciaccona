@@ -20,8 +20,8 @@
         #thePuzzle {
             width: calc(var(--width) + var(--xn) * var(--gutter));
             height: calc(var(--height) + var(--yn) * var(--gutter));
-            width: 600px;
-            height: 400px;
+            /* width: 550px;
+            height: 550px; */
             margin: auto;
             background-color: lightgray;
         }
@@ -125,7 +125,7 @@
             shuffle = true
         }
 
-        const gutter = 60
+        const gutter = 50
         document.getElementById('gutter-sizer').style.width = `${gutter}px`
 
         const _default = {
@@ -162,12 +162,22 @@
         const _2bars = {
             xn: 4,
             yn: 1,
-            width:   405.83,              // 1325.363006591797, // 
-            height:  98.85,               // 98.43204498291016, // 
-            image:   "/svg/2bars.svg",    // "/svg/8bars.svg",  // 
-            backgroundColor: 'white',
+            width:   405.83,              // 
+            height:  98.85,               // 
+            image:   "/svg/2bars.svg",    // 
+            stroke: 'silver',
+            backgroundColor: 'transparent',
         }
-        const _ = _2bars
+        const _8bars = {
+            xn: 16,
+            yn: 1,
+            width:   1325.363006591797, // 
+            height:  98.43204498291016, // 
+            image:   "/svg/8bars.svg",  // 
+            stroke: 'lightgray',
+            backgroundColor: 'transparent',
+        }
+        const _ = _8bars
         _.scale = 1
         _.total = _.xn * _.yn
         const marginX = _.width / (_.xn * 2)
