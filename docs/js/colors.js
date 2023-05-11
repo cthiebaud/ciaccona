@@ -264,8 +264,8 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
                  style="visibility: inherit; overflow: visible; transform: scale(.667);" 
                  viewBox="${jigsawGenerator.getJigsawViewBox(i + 1)}">
                  <!-- 
-                 title="copy link to clipboard"
                  data-clipboard-text="${thisURL.origin}/?a=${fullameNoSpaceLowercaseNoDiacritics ? fullameNoSpaceLowercaseNoDiacritics : ''}&v=${i}"
+                 title="copy link to clipboard"
                  -->
                  <path stroke="#${c2.textColor}" stroke-width="3" fill="#${c2.puzzleColor}" d="${jigsawGenerator.getJigsawPath(i + 1)}"></path>
             </svg>

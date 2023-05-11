@@ -43,7 +43,7 @@
           right: 0;
           left: 0;
           overflow: visible;
-          cursor: pointer;
+          cursor: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"%3E%3Cpath fill="%23fff" stroke="%23000" stroke-linejoin="round" stroke-width="1.5" d="M8 6v12l10-6L8 6Z"/%3E%3C/svg%3E') 16 16,auto;
         }
       }
       .list-artist#li-ciaccona {
@@ -113,14 +113,14 @@
     filter: grayscale(0.1667);
     div.hide-name {
       &:first-child {
-        color: #57728b;
-        mix-blend-mode: multiply;
+        color: transparent;
       }
     }
   }
   .hero-intro {
     position: relative;
     padding: 0px 0.333rem;
+    cursor: pointer;
     &::after {
       content: "";
       position: absolute;
@@ -142,4 +142,3 @@
     }
   }
 }
-
