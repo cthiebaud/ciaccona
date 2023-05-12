@@ -4,7 +4,7 @@ import bezierEasing from 'https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/+esm'
 import codec from "/js/structure.js?v=0.13.3"
 import { jigsawGenerator } from '/js/jigsawShield.js?v=0.13.3'
 import { shuffleArray, normalizeVraiment, logFunc, generateElement } from "/js/utils.js?v=0.13.3"
-import MagnificienTitle from "/js/magnificent-title.js?v=0.13.3"
+import MagnificentTitle from "/js/magnificent-title.js?v=0.13.3"
 
 function getColorArray(transparencyParam) {
     let _first_color_ = [
@@ -145,7 +145,7 @@ function createColoredBadges(idContainer, fullameNoSpaceLowercaseNoDiacritics) {
 
     const temporaryContainer = generateElement("<template>");
     
-    temporaryContainer.appendChild(generateElement(new MagnificienTitle('grid-brick', fullameNoSpaceLowercaseNoDiacritics ? 3 : 2).templateForTheme));
+    temporaryContainer.appendChild(generateElement(new MagnificentTitle('grid-brick', fullameNoSpaceLowercaseNoDiacritics ? 3 : 2).templateForTheme));
 
     const templateForArtist =
         `
