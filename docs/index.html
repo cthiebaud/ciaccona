@@ -292,13 +292,6 @@
                 <ul class="dropdown-menu" aria-labelledby="configMenuLink">
                     <form class="px-4 py-3">
 
-                        <div class="dropdown-item d-flex p-0">
-                            <a id="ciaccona" class="ms-auto" href="#" style="overflow:hidden; height: 4rem; width: 203px;" aria-label="Ciaccona">
-                                <!-- label><img src="svg/2bars.svg" style="height:48px"></!-->
-                                <!-- object type="text/html" data="/puzzle/demo.html" style="Width: 250px; height:72px;" seamless></!-->
-                            </a>
-                        </div>
-                        <hr class="dropdown-divider">
                         <div class="label">Show Score …</div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" data-score-display="firstBar" id="firstBarChecked">
@@ -378,7 +371,6 @@
     </main>
 
     <script src="/lib/bootstrap.bundle-5.2.3.min.js"></script>
-    <script src="/fetch-data-loader.js"></script>
     <script async type="module" src="/artists.js?v=0.13.3"></script>
     <script async type="module" src="/ciaccona.js?v=0.13.3"></script>
     <script async type="module">
@@ -452,21 +444,6 @@
         window.addEventListener("artistsLoaded", (event) => {
             console.log("artists.html, shout calcItemWidth event ...");
             window.dispatchEvent(new Event('calcItemWidth'));
-        });
-
-        fetch('/puzzle/demo.html').then(function (response) {
-            return response.text();
-        }).then(function (html) {
-            loadData(html, 'a#ciaccona').then(function (html) {
-                // console.info('I\'m a callback');
-            });
-            /*
-            document.querySelector('a#ciaccona').addEventListener('click', e => {
-                setOrTogglePane()
-            }) 
-            */
-        }).catch(function (err) {
-            console.warn('Something went wrong.', err);
         });
 
         console.log('waiting for allesIstVollbracht event ...')
