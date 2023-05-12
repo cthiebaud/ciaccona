@@ -363,12 +363,12 @@
             </div>
             <div id="theContainerCol" class="col">
                 <div class='both'>
-                    <div id="left" class="fullparent">
+                    <div id="left" class="fullparent" style="opacity: 0;">
                         <div id="list" class="artists" style="color:white; margin: .5rem 0;">
                             <div class="gutter-sizer"></div>
                         </div>
                     </div>
-                    <div id="right" class="fullparent">
+                    <div id="right" class="fullparent" style="opacity: 0;">
                         <div id="grid" class="ciaccona">
                         </div>
                     </div>
@@ -386,6 +386,9 @@
         import config from "/js/config.js?v=0.13.3"
 
         if (pane) config.pane = pane
+
+        // console.log(config.pane)
+        document.getElementById(config.pane).style.opacity = 1
 
         // transform packery event into promise
         const allesIstVollbracht = new Promise((resolve) => {
@@ -444,27 +447,11 @@
         window.addEventListener("ciacconaLoaded", (event) => {
             console.log('ciaccona.html ready, shout calcBrickWidth event ...')
             window.dispatchEvent(new Event('calcBrickWidth'));
-            /*
-            document.querySelectorAll('#gb-ciaccona a').forEach(a => {
-                a.setAttribute('href', '#')
-                a.addEventListener('click', ev => {
-                    setOrTogglePane('left')
-                })
-            })
-            */
         });
 
         window.addEventListener("artistsLoaded", (event) => {
             console.log("artists.html, shout calcItemWidth event ...");
             window.dispatchEvent(new Event('calcItemWidth'));
-            /*
-            document.querySelectorAll('#li-ciaccona a').forEach(a => {
-                a.setAttribute('href', '#')
-                a.addEventListener('click', ev => {
-                    setOrTogglePane('right')
-                })
-            })
-            */
         });
 
         fetch('/puzzle/demo.html').then(function (response) {
@@ -486,6 +473,13 @@
         Promise.allSettled([allesIstVollbracht]).then((results) => {
             console.log('ALLES IST VOLLBRACHT !!!')
             setOrTogglePane(config.pane)
+            document.querySelectorAll('#right, #left').forEach(E => E.style.opacity = 1)
+            document.querySelectorAll('#magnificent-title-ciaccona a').forEach(a => {
+                a.setAttribute('href', '#')
+                a.addEventListener('click', ev => {
+                    setOrTogglePane(a.dataset.pane)
+                })
+            })
         })
 
     </script>
