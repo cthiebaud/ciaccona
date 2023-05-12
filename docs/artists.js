@@ -1,4 +1,5 @@
 import packeryLayout from 'https://cdn.jsdelivr.net/npm/packery@2.1.2/+esm'
+import ImagesLoaded from "https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/+esm"
 import codec from "/js/structure.js?v=0.13.3"
 import { colorArray } from "/js/colors.js?v=0.13.3"
 import { loadArtists } from "/js/artists.js?v=0.13.3"
@@ -15,7 +16,7 @@ const template = (data) => `
      data-a="${data.a}" 
      data-v="${data.v}" 
      style="background-image: ${data.bg}; overflow:hidden;">
-    <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%;" >
+    <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%; visibility: hidden;" >
         <div class="hero-intro flex-shrink-1; align-self-start;" 
              title="Pin or unpin ${data.firstname} ${data.lastname}"
              style="padding-right: 0.5rem;">
@@ -26,7 +27,7 @@ const template = (data) => `
              ${data.lastname}
         </div>
     </div>
-    <a class="puzzle flex-shrink-1" href="#" title="Pin or unpin ${data.pinUnpinVariationTitle}">
+    <a class="puzzle flex-shrink-1" href="#" title="Pin or unpin ${data.pinUnpinVariationTitle}" style="visibility: hidden;">
         <svg xmlns="http://www.w3.org/2000/svg" 
             id="gb-puzzle${data.v}-svg" 
             style="overflow: visible; transform: scale(.667);"
@@ -94,35 +95,28 @@ loadArtists().then((artists) => {
 `
 
     list.innerHTML += new MagnificentTitle('list-item', 1).templateForTheme + liArtist
-    /*
-    `
-    <div id="magnificent-title-ciaccona" 
-        class="list-item d-flex align-items-center justify-content-around flex-column" 
-        <div>
-        <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
-            &nbsp;
-            <div style="margin: auto; font-size: 28px;">Ciaccona</div>
-            &nbsp;
-            <svg id="arrow_in_right" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
-                <path fill="#00000060" fill-rule="evenodd"
-                    d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
-            </svg>
-            &nbsp;
-        </a>
-        </div>
-    </div>`
-    */
+
     arrayOfArtists = shuffle ? shuffleArray(artists.artists) : artists.artists
     data = generateData(arrayOfArtists)
     data.forEach(d => {
         list.innerHTML += `<div class="list-item">${template(d)}</div>`
     })
 
+    var listArtistElements = document.querySelectorAll('.list-artist')
+    const imgLoad = new ImagesLoaded(listArtistElements, { background: true }, function () {
+    });
+    imgLoad.on('progress', function (instance, image) {
+        image.element.querySelectorAll('.list-artist *').forEach(E => E.style.visibility = 'inherit')
+    });
+
     const event = new Event("artistsLoaded");
     window.dispatchEvent(event);
 
     readyToPack.then((result) => {
         console.log("about to create packery ...")
+
+        document.querySelectorAll
+
         const thePackery = new packeryLayout('#list', {
             itemSelector: ".list-item", // #theContainer #theContainerCol .artists#list 
             percentPosition: false,
