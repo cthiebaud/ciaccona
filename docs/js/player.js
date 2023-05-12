@@ -42,7 +42,7 @@ function selectAndScrollToVariation(source, variation, options) {
     const selector = `.grid-brick#gb${variation}`
     let scrollToSelector = selector
     if (variation === 0) {
-        scrollToSelector = '.grid-brick#gb-ciaccona'
+        scrollToSelector = '.grid-brick#magnificent-title-ciaccona'
     }
 
     document.querySelectorAll('.grid-brick.hasScore').forEach(el => {
@@ -191,7 +191,20 @@ const setBrickClickEvent = (_plyer, timings) => {
 
     }
 
-    document.querySelectorAll(".brick.hasScore .score").forEach((b) => b.addEventListener('click', handleBrickClick, true))
+    document.querySelectorAll(".brick.hasScore .score").forEach((b) => {
+        b.addEventListener('click', handleBrickClick, true)
+
+        b.addEventListener("scrollend", (event) => {
+            console.log(b.scrollLeft)
+            if (b.scrollLeft === 0 && !_plyer.playing) {
+                const bar = parseInt(b.parentNode.dataset.bar)
+                const theBar = timings.bars[bar]
+                console.log("Dear plyr, I'd like you to seek at bar <", bar, ">, thanks.")
+                _plyer.currentTime = theBar.duration.asMilliseconds() / 1000
+            }
+
+        }, true);
+    })
 }
 
 export default function createPlayer(selector, timings, ignore_all_events) {
@@ -286,9 +299,11 @@ export default function createPlayer(selector, timings, ignore_all_events) {
                 INIT_EVENT_HANDLERS()
 
                 let theStartingBar = timings.bars[0]
-                let theLastStartingBarIndex = config.startBarOfLastSelectedVariation
-                if (theLastStartingBarIndex != null) {
-                    theStartingBar = timings.bars[theLastStartingBarIndex]
+                if (config.autoplay) {
+                    const theLastStartingBarIndex = config.startBarOfLastSelectedVariation
+                    if (theLastStartingBarIndex != null) {
+                        theStartingBar = timings.bars[theLastStartingBarIndex]
+                    }
                 }
                 console.log("Dear plyr, I'd like you to seek at bar <", theStartingBar.index, "> (", theStartingBar["Time Recorded"], "), thanks.")
                 _plyer.currentTime = theStartingBar.duration.asMilliseconds() / 1000

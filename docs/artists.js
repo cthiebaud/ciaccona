@@ -4,6 +4,7 @@ import { colorArray } from "/js/colors.js?v=0.13.3"
 import { loadArtists } from "/js/artists.js?v=0.13.3"
 import { shuffleArray, generateElement } from "/js/utils.js?v=0.13.3"
 import { jigsawGenerator } from '/js/jigsawShield.js?v=0.13.3'
+import MagnificienTitle from "/js/magnificent-title.js?v=0.13.3"
 
 const bg = (a, v) => `url('https://musicollator.github.io/ciaccona-stationary/artists/${a}/${a}-${v}.webp')`
 
@@ -81,32 +82,36 @@ loadArtists().then((artists) => {
 
     list.querySelectorAll('.list-artist').forEach(E => E.remove())
 
-    list.innerHTML += `
-    <div id="li-ciaccona" 
+    const liArtist = `<div id="artist-badge" class="p-2" style="white-space: nowrap; display:none;">
+    <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;"></span>
+    <!--
+    <a id="youtube-url" class="btn btn-lihjt icon-base icon-youtube_external_link text-muted" target="_youtube" href="#" aria-label="Original Video...">
+    </a>
+    <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
+    </a>
+    --!
+</div>
+`
+
+    list.innerHTML += new MagnificienTitle('list-item', 1).templateForTheme + liArtist
+    /*
+    `
+    <div id="magnificent-title-ciaccona" 
         class="list-item d-flex align-items-center justify-content-around flex-column" 
         <div>
-        <div class="magnificent-card p-2" aria-label="Ciaccona...">
+        <a class="magnificent-card p-2" href="/ciaccona.html" aria-label="Ciaccona...">
             &nbsp;
             <div style="margin: auto; font-size: 28px;">Ciaccona</div>
             &nbsp;
-            <!--
             <svg id="arrow_in_right" class="align-self-center" style="width:32px; height:32px;" viewBox="0 0 20 20">
                 <path fill="#00000060" fill-rule="evenodd"
                     d="M7.392 5.06 5.938 6.408 8.366 9H0v2h8.366l-2.428 2.544 1.454 1.362 4.671-4.948L7.392 5.06ZM10 0v4h2V2h6v16h-6v-2h-2v4h10V0H10Z" />
             </svg>
             &nbsp;
-            -->
-        </div>
-        <div id="li-artist" class="magnificent-card p-2" aria-label="Artist" style="white-space: nowrap; display:none;">
-            <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;"></span>
-            <a id="youtube-url" class="btn btn-lihjt icon-base icon-youtube_external_link text-muted" target="_youtube" href="#" aria-label="Original Video...">
-            </a>
-            <a id="social" class="share btn btn-lihjt icon-base icon-share text-muted" target="_facebook" href="#" aria-label="Share...">
-            </a>
-        </div>
+        </a>
         </div>
     </div>`
-
+    */
     arrayOfArtists = shuffle ? shuffleArray(artists.artists) : artists.artists
     data = generateData(arrayOfArtists)
     data.forEach(d => {
@@ -134,23 +139,37 @@ loadArtists().then((artists) => {
 
         setListener()
 
+        const artistBadge = document.getElementById('artist-badge')
+        if (artistBadge) {
+            artistBadge.addEventListener('click', (event) => {
+                event.stopPropagation()
+                event.preventDefault()
+                coerceArtist = undefined
+                data = generateData(arrayOfArtists)
+                forceRedraw()
+            })
+        }
+
+
         function displayArtist() {
-            const artistBadge = document.getElementById('li-artist')
-            if (coerceArtist) {
-                artistBadge.style.display = 'block'
-                artistBadge.querySelector('.fullname').innerHTML = artists2.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname
-                document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'none')
-            } else {
-                artistBadge.style.display = 'none'
-                artistBadge.querySelector('.fullname').innerHTML = ''
-                document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'inherit')
+            const artistBadge = document.getElementById('artist-badge')
+            if (artistBadge) {
+                if (coerceArtist) {
+                    artistBadge.style.display = 'block'
+                    artistBadge.querySelector('.fullname').innerHTML = artists2.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname
+                    document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'none')
+                } else {
+                    artistBadge.style.display = 'none'
+                    artistBadge.querySelector('.fullname').innerHTML = ''
+                    document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'inherit')
+                }
             }
         }
 
         displayArtist()
 
         function forceRedraw() {
-            document.querySelectorAll('.list-item:not(#li-ciaccona)').forEach(E => {
+            document.querySelectorAll('.list-item:not(#magnificent-title-ciaccona)').forEach(E => {
                 const i = E.children[0].dataset.index
                 const newChild = generateElement(template(data[i]))
                 E.replaceChild(newChild, E.children[0])
@@ -166,7 +185,7 @@ loadArtists().then((artists) => {
                 if (event.currentTarget === event.target) {
                     event.stopPropagation()
                     event.preventDefault()
-                    window.location = `/?a=${event.target.dataset.a}` // &v=${event.target.dataset.v}
+                    window.location = `/?a=${event.target.dataset.a}&v=${event.target.dataset.v}`
                 }
             }))
             document.querySelectorAll('.list-artist .puzzle').forEach(E => E.addEventListener('click', (event) => {
@@ -188,13 +207,6 @@ loadArtists().then((artists) => {
                 } else {
                     coerceArtist = event.currentTarget.parentNode.parentNode.dataset.a
                 }
-                data = generateData(arrayOfArtists)
-                forceRedraw()
-            }))
-            document.querySelectorAll('#li-artist').forEach(E => E.addEventListener('click', (event) => {
-                event.stopPropagation()
-                event.preventDefault()
-                coerceArtist = undefined
                 data = generateData(arrayOfArtists)
                 forceRedraw()
             }))
