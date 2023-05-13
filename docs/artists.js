@@ -9,14 +9,14 @@ import MagnificentTitle from "/js/magnificent-title.js?v=0.13.3"
 
 const bg = (a, v) => `url('https://musicollator.github.io/ciaccona-stationary/artists/${a}/${a}-${v}.webp')`
 
-const template = (data) => `
+const template = (data, first) => `
 <div id="li-artist${data.v}" 
      class="list-artist hero"  
      data-index="${data.index}" 
      data-a="${data.a}" 
      data-v="${data.v}" 
      style="background-image: ${data.bg}; overflow:hidden;">
-    <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%; visibility: hidden;" >
+    <div class="d-flex flex-column justify-content-start${data.hideName}" style="height:100%; ${first ? 'visibility: hidden;' : ''}" >
         <div class="hero-intro flex-shrink-1; align-self-start;" 
              title="Pin or unpin ${data.firstname} ${data.lastname}"
              style="padding-right: 0.5rem;">
@@ -27,7 +27,7 @@ const template = (data) => `
              ${data.lastname}
         </div>
     </div>
-    <a class="puzzle flex-shrink-1" href="#" title="Pin or unpin ${data.pinUnpinVariationTitle}" style="visibility: hidden;">
+    <a class="puzzle flex-shrink-1" href="#" title="Pin or unpin ${data.pinUnpinVariationTitle}" style="${first ? 'visibility: hidden;' : ''}">
         <svg xmlns="http://www.w3.org/2000/svg" 
             id="gb-puzzle${data.v}-svg" 
             style="overflow: visible; transform: scale(.667);"
@@ -83,8 +83,8 @@ loadArtists().then((artists) => {
 
     list.querySelectorAll('.list-artist').forEach(E => E.remove())
 
-    const liArtist = `<div id="artist-badge" class="p-2" style="white-space: nowrap; display:none;">
-    <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;"></span>
+    const liArtist = `<div id="artist-badge" class="p-2" style="white-space: nowrap; visibility: hidden; margin: 0 auto;">
+    <span class="fullname" style="color: #d0d0d0; font-size: 1.4rem;">&nbsp;</span>
     <!--
     <a id="youtube-url" class="btn btn-lihjt icon-base icon-youtube_external_link text-muted" target="_youtube" href="#" aria-label="Original Video...">
     </a>
@@ -94,12 +94,12 @@ loadArtists().then((artists) => {
 </div>
 `
 
-    list.innerHTML += new MagnificentTitle('list-item', 1).templateForTheme + liArtist
+    list.innerHTML += new MagnificentTitle('list-item', 1, liArtist).templateForTheme
 
     arrayOfArtists = shuffle ? shuffleArray(artists.artists) : artists.artists
     data = generateData(arrayOfArtists)
     data.forEach(d => {
-        list.innerHTML += `<div class="list-item">${template(d)}</div>`
+        list.innerHTML += `<div class="list-item">${template(d, true)}</div>`
     })
 
     var listArtistElements = document.querySelectorAll('.list-artist')
@@ -114,9 +114,6 @@ loadArtists().then((artists) => {
 
     readyToPack.then((result) => {
         console.log("about to create packery ...")
-
-        document.querySelectorAll
-
         const thePackery = new packeryLayout('#list', {
             itemSelector: ".list-item", // #theContainer #theContainerCol .artists#list 
             percentPosition: false,
@@ -149,12 +146,12 @@ loadArtists().then((artists) => {
             const artistBadge = document.getElementById('artist-badge')
             if (artistBadge) {
                 if (coerceArtist) {
-                    artistBadge.style.display = 'block'
+                    artistBadge.style.visibility = 'inherit'
                     artistBadge.querySelector('.fullname').innerHTML = artists2.getArtistFromNameNoSpaceLowercaseNoDiacritics(coerceArtist).fullname
                     document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'none')
                 } else {
-                    artistBadge.style.display = 'none'
-                    artistBadge.querySelector('.fullname').innerHTML = ''
+                    artistBadge.style.visibility = 'hidden'
+                    artistBadge.querySelector('.fullname').innerHTML = '&nbsp;'
                     document.querySelectorAll('.list-artist .hero-intro:not(.vert)').forEach(E => E.style.display = 'inherit')
                 }
             }
